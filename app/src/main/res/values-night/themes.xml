@@ -1,16 +1,51 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Amazingtalkerrecruitandroid" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+    <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
+    <style name="Base.Theme.Amazingtalkerrecruit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/amazingtalker_white</item>
+        <item name="colorPrimaryVariant">@color/amazingtalker_gray_50</item>
+        <item name="colorOnPrimary">@color/amazingtalker_white</item>
+        <item name="colorPrimaryDark">@color/amazingtalker_green_900</item>
+        <item name="colorOnSurface">@color/amazingtalker_black</item>
+        <item name="colorAccent">@color/amazingtalker_gray_50</item>
+        <item name="colorSurface">@color/amazingtalker_black</item>
+        <item name="colorSecondary">@color/amazingtalker_black</item>
+        <item name="android:colorBackground">@color/amazingtalker_white</item>
     </style>
+
+    <style name="Theme.Amazingtalkerrecruit" parent="Base.Theme.Amazingtalkerrecruit"/>
+
+    <style name="Theme.Amazingtalkerrecruit.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="Theme.Amazingtalkerrecruit.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+
+    <style name="TextAppearance.Amazingtalkerrecruit.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" >
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!--預設文字樣式 移除原生padding-->
+    <style name="NoPaddingTextView" parent="TextAppearance.AppCompat">
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!--類別標題文字-->
+    <style name="CategoryTitleText" parent="NoPaddingTextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/base_headline</item>
+        <item name="android:textColor">@color/amazingtalker_black</item>
+    </style>
+
+    <!--課程標題文字-->
+    <style name="CoursesTitleText" parent="NoPaddingTextView">
+        <item name="android:textSize">@dimen/base_titleline</item>
+        <item name="android:textColor">@color/amazingtalker_black</item>
+    </style>
+
 </resources>

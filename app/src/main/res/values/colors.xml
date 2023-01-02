@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="amazingtalker_black">#de000000</color>
+    <color name="amazingtalker_gray_50">#fafafa</color>
+    <color name="amazingtalker_gray_50_a600">#99fafafa</color>
+    <color name="amazingtalker_green_300">#f7ffff</color>
+    <color name="amazingtalker_green_500">#e3f9f9</color>
+    <color name="amazingtalker_green_700">#5bb0b6</color>
+    <color name="amazingtalker_green_900">#0a7070</color>
+    <color name="amazingtalker_white">#ffffffff</color>
+    <color name="amazingtalker_yellow_300">#f8f99f</color>
+    <color name="amazingtalker_yellow_500">#ffff63</color>
 </resources>

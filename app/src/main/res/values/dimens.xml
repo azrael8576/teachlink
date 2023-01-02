@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--base字型大小-->
+    <dimen name="base_headline">17dp</dimen>
+    <dimen name="base_titleline">15dp</dimen>
+
+    <!--base通用邊距-->
+    <dimen name="margin_normal">12dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+
+    <!--圖示長寬-->
+    <dimen name="card_item_image_height">72dp</dimen>
+    <dimen name="card_item_image_width">120dp</dimen>
+
+    <!--卡牌-->
+    <dimen name="card_side_margin">16dp</dimen>
+    <dimen name="card_bottom_margin">22dp</dimen>
+    <dimen name="card_image_corner_radius">12dp</dimen>
+</resources>
