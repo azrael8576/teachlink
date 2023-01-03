@@ -57,10 +57,10 @@ class ScheduleViewModel internal constructor(
 
         var betweenWeekMonday =
             1 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-        _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.plusDays(betweenWeekMonday.toLong())
+        _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.plusDays(betweenWeekMonday.toLong())
         var betweenWeekSunday =
             7 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-        _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.plusDays(betweenWeekSunday.toLong())
+        _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.plusDays(betweenWeekSunday.toLong())
 
         val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
