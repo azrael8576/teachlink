@@ -23,8 +23,10 @@ import com.alex.amazingtalker_recruit_android.viewmodels.WeekAction
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.*
+import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class ScheduleFragment : Fragment() {
@@ -33,6 +35,7 @@ class ScheduleFragment : Fragment() {
     private val viewModel: ScheduleViewModel by viewModels {
         InjectorUtils.provideScheduleViewModelFactory()
     }
+    private var mCurrentTabTag = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +58,8 @@ class ScheduleFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     Log.e(TAG, "======onTabSelected====" + tab.tag)
                     //                        Handler().postDelayed(Runnable { tablayout.getTabAt(5)?.select() }, 100)
+                    mCurrentTabTag = tab.tag.toString()
+                    updateAdapterList(adapter, viewModel.amazingtalkerTeacherScheduleUnitList.value)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -105,7 +110,7 @@ class ScheduleFragment : Fragment() {
                         setCustomView(R.layout.custom_tab)
                         customView?.minimumWidth = tabWidth
                         customView?.minimumHeight = tabHeight
-                        tag = elementToLocalTime.toString()
+                        tag = elementToLocalTime
                         val dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
                         text = dateFormatter.format(elementToLocalTime)
                         binding.tablayout.addTab(this)
@@ -135,8 +140,22 @@ class ScheduleFragment : Fragment() {
         }
 
         viewModel.amazingtalkerTeacherScheduleUnitList.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            updateAdapterList(adapter, it)
         }
+    }
+
+    private fun updateAdapterList(
+        adapter: ScheduleTimeListAdapter,
+        it: List<AmazingtalkerTeacherScheduleUnit>?
+    ) {
+        var currentTabLocalTime = Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
+            .atOffset(ZoneOffset.UTC)
+            .atZoneSameInstant(ZoneId.systemDefault())
+            .toOffsetDateTime()
+
+        adapter.submitList(it?.filter {item ->
+            item.start.dayOfYear == currentTabLocalTime.dayOfYear
+        })
     }
 
     override fun onDestroyView() {

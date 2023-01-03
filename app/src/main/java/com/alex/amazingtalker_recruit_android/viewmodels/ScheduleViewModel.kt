@@ -102,7 +102,14 @@ class ScheduleViewModel internal constructor(
     fun updateWeek(action: WeekAction) {
         when (action) {
             WeekAction.ACTION_LAST_WEEK -> {
-                resetWeekDate(_weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1))
+                var lasWeekMondayLocalDate = _weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1)
+                if (lasWeekMondayLocalDate != null) {
+                    if (lasWeekMondayLocalDate < OffsetDateTime.now( ZoneOffset.UTC )) {
+                        resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
+                    } else {
+                        resetWeekDate(_weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1))
+                    }
+                }
             }
 
             WeekAction.ACTION_NEXT_WEEK -> {
