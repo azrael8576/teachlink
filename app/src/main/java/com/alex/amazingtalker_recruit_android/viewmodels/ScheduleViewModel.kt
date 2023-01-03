@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alex.amazingtalker_recruit_android.data.AmazingtalkerRepository
 import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleResponse
+import com.alex.amazingtalker_recruit_android.data.Resource
 import com.alex.amazingtalker_recruit_android.utilities.TEST_DATA_TEACHER_NAME
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -25,8 +26,8 @@ class ScheduleViewModel internal constructor(
     private val _currentTeacherNameValue = MutableLiveData<String>()
     val currentTeacherNameValue : LiveData<String> get() = _currentTeacherNameValue
 
-    private val _currentSearchResult: MutableLiveData<AmazingtalkerTeacherScheduleResponse> = MutableLiveData()
-    val currentSearchResult: LiveData<AmazingtalkerTeacherScheduleResponse>
+    private val _currentSearchResult: MutableLiveData<Resource<AmazingtalkerTeacherScheduleResponse>> = MutableLiveData()
+    val currentSearchResult: LiveData<Resource<AmazingtalkerTeacherScheduleResponse>>
         get() = _currentSearchResult
 
     private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
@@ -84,13 +85,11 @@ class ScheduleViewModel internal constructor(
         }
     }
 
-    fun getAmazingtalkerTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
-        _currentTeacherNameValue.value = teacherName
+    private fun getAmazingtalkerTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
         viewModelScope.launch {
-            val newResult: AmazingtalkerTeacherScheduleResponse =
+            _currentTeacherNameValue.value = teacherName
+            _currentSearchResult.value =
                 amazingtalkerRepository.getTeacherScheduleResultStream(teacherName, startedAtUTC)
-
-            _currentSearchResult.value = newResult
         }
     }
 

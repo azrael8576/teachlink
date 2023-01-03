@@ -18,7 +18,7 @@ data class AmazingtalkerTeacherSchedule(
  *
  * For UI rendering
  */
-data class AmazingtalkerTeacherScheduleUnit(
+data class AmazingtalkerTeacherScheduleThirtyMinuteUnit(
     val start: String,
     val end: String,
     val state: String,

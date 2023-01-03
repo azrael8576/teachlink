@@ -6,18 +6,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alex.amazingtalker_recruit_android.adapters.ScheduleTimeListAdapter
+import com.alex.amazingtalker_recruit_android.data.Resource
 import com.alex.amazingtalker_recruit_android.databinding.FragmentScheduleBinding
 import com.alex.amazingtalker_recruit_android.utilities.InjectorUtils
 import com.alex.amazingtalker_recruit_android.viewmodels.ScheduleViewModel
 import com.alex.amazingtalker_recruit_android.viewmodels.WeekAction
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class ScheduleFragment : Fragment() {
@@ -108,7 +112,34 @@ class ScheduleFragment : Fragment() {
         }
 
         viewModel.currentSearchResult.observe(viewLifecycleOwner) {
-            adapter.submitList(it.bookeds)
+
+            when (it) {
+                is Resource.Success -> {
+//                    var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(it.value.bookeds[1].start)).atOffset(
+//                        ZoneOffset.UTC)
+//                    val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(it.value.bookeds[1].end)).atOffset(
+//                        ZoneOffset.UTC)
+//                    val list: MutableList<OffsetDateTime> = ArrayList()
+//                    while (startDate < endDate) {
+//                        list.add(startDate)
+//                        startDate = startDate.plusMinutes(30)
+//                        if (startDate > endDate) {
+//                            if (startDate != endDate) {
+//                                list.add(endDate)
+//                            }
+//                        }
+//                    }
+//
+//                    list.forEach {
+//                        Log.e(TAG, "subscribeUi: ${it.toString()}", )
+//                    }
+                    adapter.submitList(it.value.bookeds)
+                }
+
+                is Resource.Failure -> {
+                    Toast.makeText(requireContext(), "Api Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
