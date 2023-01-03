@@ -2,16 +2,18 @@ package com.alex.amazingtalker_recruit_android.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherSchedule
+import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
+import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
 import com.alex.amazingtalker_recruit_android.databinding.ListItemScheduleTimeBinding
 
 /**
  * Adapter for the [scheduleTimeRecyclerview] in [ScheduleFragment].
  */
-class ScheduleTimeListAdapter : ListAdapter<AmazingtalkerTeacherSchedule, RecyclerView.ViewHolder>(ScheduleTimeListDiffCallback()) {
+class ScheduleTimeListAdapter : ListAdapter<AmazingtalkerTeacherScheduleUnit, RecyclerView.ViewHolder>(ScheduleTimeListDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ScheduleTimeListViewHolder(
             ListItemScheduleTimeBinding.inflate(
@@ -31,26 +33,32 @@ class ScheduleTimeListAdapter : ListAdapter<AmazingtalkerTeacherSchedule, Recycl
         private val binding: ListItemScheduleTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: AmazingtalkerTeacherSchedule) {
+        fun bind(item: AmazingtalkerTeacherScheduleUnit) {
             binding.apply {
-                hahowClassCategory.text = item.start.toString()
+                textScheduleUnitLocalTime.text = item.start.toString() + item.state
+                textScheduleUnitLocalTime.isEnabled = (item.state == ScheduleUnitState.AVAILABLE)
+
+                textScheduleUnitLocalTime.setOnClickListener {
+                    //TODO
+                    Toast.makeText(binding.root.context, "TODO: navTo ${item.toString()}", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
 }
 
-private class ScheduleTimeListDiffCallback : DiffUtil.ItemCallback<AmazingtalkerTeacherSchedule>() {
+private class ScheduleTimeListDiffCallback : DiffUtil.ItemCallback<AmazingtalkerTeacherScheduleUnit>() {
 
     override fun areItemsTheSame(
-        oldItem: AmazingtalkerTeacherSchedule,
-        newItem: AmazingtalkerTeacherSchedule
+        oldItem: AmazingtalkerTeacherScheduleUnit,
+        newItem: AmazingtalkerTeacherScheduleUnit
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: AmazingtalkerTeacherSchedule,
-        newItem: AmazingtalkerTeacherSchedule
+        oldItem: AmazingtalkerTeacherScheduleUnit,
+        newItem: AmazingtalkerTeacherScheduleUnit
     ): Boolean {
         return oldItem == newItem
     }

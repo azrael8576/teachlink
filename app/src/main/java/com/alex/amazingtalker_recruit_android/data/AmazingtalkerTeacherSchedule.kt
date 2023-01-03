@@ -1,6 +1,12 @@
 package com.alex.amazingtalker_recruit_android.data
 
 import com.google.gson.annotations.SerializedName
+import java.time.OffsetDateTime
+
+
+enum class ScheduleUnitState {
+    AVAILABLE, BOOKED
+}
 
 /**
  * Data class that represents a schedule from Amazingtalker Teacher.
@@ -18,8 +24,8 @@ data class AmazingtalkerTeacherSchedule(
  *
  * For UI rendering
  */
-data class AmazingtalkerTeacherScheduleThirtyMinuteUnit(
-    val start: String,
-    val end: String,
-    val state: String,
+data class AmazingtalkerTeacherScheduleUnit(
+    val start: OffsetDateTime,
+    val end: OffsetDateTime,
+    val state: ScheduleUnitState,
 )

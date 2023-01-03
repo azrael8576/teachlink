@@ -5,4 +5,4 @@ package com.alex.amazingtalker_recruit_android.utilities
  */
 const val AMAZING_TALKER_SERVICE_BASE_URL = "https://tw.amazingtalker.com/v1/guest/"
 const val TEST_DATA_TEACHER_NAME = "jamie-coleman"
-const val TEST_DATA_TIME_STARTED_AT = "2023-02-26T16:00:00.000Z"
+const val AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT : Long = 30

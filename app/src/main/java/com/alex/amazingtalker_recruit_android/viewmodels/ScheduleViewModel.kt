@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerRepository
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleResponse
-import com.alex.amazingtalker_recruit_android.data.Resource
+import com.alex.amazingtalker_recruit_android.data.*
 import com.alex.amazingtalker_recruit_android.utilities.TEST_DATA_TEACHER_NAME
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -29,6 +27,10 @@ class ScheduleViewModel internal constructor(
     private val _currentSearchResult: MutableLiveData<Resource<AmazingtalkerTeacherScheduleResponse>> = MutableLiveData()
     val currentSearchResult: LiveData<Resource<AmazingtalkerTeacherScheduleResponse>>
         get() = _currentSearchResult
+
+    private val _amazingtalkerTeacherScheduleUnitList: MutableLiveData<List<AmazingtalkerTeacherScheduleUnit>> = MutableLiveData()
+    val amazingtalkerTeacherScheduleUnitList: LiveData<List<AmazingtalkerTeacherScheduleUnit>>
+        get() = _amazingtalkerTeacherScheduleUnitList
 
     private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
     val apiQueryStartedAtUTC : LiveData<OffsetDateTime> get() = _apiQueryStartedAtUTC
@@ -91,6 +93,10 @@ class ScheduleViewModel internal constructor(
             _currentSearchResult.value =
                 amazingtalkerRepository.getTeacherScheduleResultStream(teacherName, startedAtUTC)
         }
+    }
+
+    fun setAmazingtalkerTeacherScheduleUnitList(amazingtalkerTeacherScheduleUnitList: List<AmazingtalkerTeacherScheduleUnit>) {
+        _amazingtalkerTeacherScheduleUnitList.value = amazingtalkerTeacherScheduleUnitList.sortedBy { scheduleUnit -> scheduleUnit.start }
     }
 
     fun updateWeek(action: WeekAction) {

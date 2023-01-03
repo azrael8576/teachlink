@@ -85,7 +85,6 @@
                         app:tabMode="scrollable"
                         app:tabPaddingEnd="0dp"
                         app:tabPaddingStart="0dp"
-                        app:tabSelectedTextColor="@color/amazingtalker_yellow_500"
                         style="@style/Base.Widget.Design.TabLayout"/>
 
                     <View style="@style/horizontal_split_light"/>
@@ -102,7 +101,6 @@
         android:id="@+id/schedule_time_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/amazingtalker_yellow_500"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="3"
         tools:listitem="@layout/list_item_schedule_time"

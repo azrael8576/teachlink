@@ -11,17 +11,20 @@ import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alex.amazingtalker_recruit_android.adapters.ScheduleTimeListAdapter
+import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
 import com.alex.amazingtalker_recruit_android.data.Resource
+import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
 import com.alex.amazingtalker_recruit_android.databinding.FragmentScheduleBinding
+import com.alex.amazingtalker_recruit_android.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
+import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils
 import com.alex.amazingtalker_recruit_android.utilities.InjectorUtils
 import com.alex.amazingtalker_recruit_android.viewmodels.ScheduleViewModel
 import com.alex.amazingtalker_recruit_android.viewmodels.WeekAction
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import java.time.Instant
+import kotlinx.coroutines.*
 import java.time.OffsetDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class ScheduleFragment : Fragment() {
@@ -112,34 +115,27 @@ class ScheduleFragment : Fragment() {
         }
 
         viewModel.currentSearchResult.observe(viewLifecycleOwner) {
-
             when (it) {
                 is Resource.Success -> {
-//                    var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(it.value.bookeds[1].start)).atOffset(
-//                        ZoneOffset.UTC)
-//                    val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(it.value.bookeds[1].end)).atOffset(
-//                        ZoneOffset.UTC)
-//                    val list: MutableList<OffsetDateTime> = ArrayList()
-//                    while (startDate < endDate) {
-//                        list.add(startDate)
-//                        startDate = startDate.plusMinutes(30)
-//                        if (startDate > endDate) {
-//                            if (startDate != endDate) {
-//                                list.add(endDate)
-//                            }
-//                        }
-//                    }
-//
-//                    list.forEach {
-//                        Log.e(TAG, "subscribeUi: ${it.toString()}", )
-//                    }
-                    adapter.submitList(it.value.bookeds)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val scheduleUnitList = async {
+                            val scheduleUnitList = mutableListOf<AmazingtalkerTeacherScheduleUnit>()
+                            scheduleUnitList.plus(DateTimeUtils.getIntervalTimeByScheduleList(it.value.availables, AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT, ScheduleUnitState.AVAILABLE))
+                                .plus(DateTimeUtils.getIntervalTimeByScheduleList(it.value.bookeds, AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT, ScheduleUnitState.BOOKED))
+                        }
+                        viewModel.setAmazingtalkerTeacherScheduleUnitList(scheduleUnitList.await())
+                    }
                 }
 
                 is Resource.Failure -> {
                     Toast.makeText(requireContext(), "Api Failed", Toast.LENGTH_SHORT).show()
                 }
+                else -> {}
             }
+        }
+
+        viewModel.amazingtalkerTeacherScheduleUnitList.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 
