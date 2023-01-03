@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ScheduleFragment">
+    tools:context=".ScheduleFragment"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/amazingtalker_green_700"
-            app:expandedTitleMarginEnd="10dp"
-            app:expandedTitleMarginStart="10dp"
-            app:title="@string/app_name"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,33 +29,83 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/amazingtalker_green_700"
+                    android:background="@color/amazingtalker_gray_50"
                     android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/button_last_week"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="25dp"
+                        android:scaleType="centerCrop"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/arrow_left_gray" />
+
+                    <TextView
+                        android:id="@+id/text_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_horizontal"
+                        android:textSize="16dp"
+                        tools:text="2022-01-02 - 1-8" />
+
+                    <ImageButton
+                        android:id="@+id/button_next_week"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="25dp"
+                        android:scaleType="centerCrop"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/arrow_right_gray" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/amazingtalker_yellow_500"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginVertical="15dp"
+                    android:layout_marginHorizontal="20dp">
+
+                    <View style="@style/horizontal_split_light"/>
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tablayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@color/amazingtalker_white"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tabMinWidth="0dp"
+                        app:tabMode="scrollable"
+                        app:tabPaddingEnd="0dp"
+                        app:tabPaddingStart="0dp"
+                        app:tabSelectedTextColor="@color/amazingtalker_yellow_500"
+                        style="@style/Base.Widget.Design.TabLayout"/>
+
+                    <View style="@style/horizontal_split_light"/>
 
                 </LinearLayout>
 
             </LinearLayout>
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
     
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/schedule_time_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/amazingtalker_yellow_500"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_item_schedule_time"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

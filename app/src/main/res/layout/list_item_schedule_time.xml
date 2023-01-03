@@ -2,19 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/card_bottom_margin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/amazingtalker_green_900"
-    tools:context=".LoginActivity">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/hahow_class_category"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LogIn"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingBottom="12dp"
+        style="@style/CategoryTitleText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="14dp"
+        tools:text="programming" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
