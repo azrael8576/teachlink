@@ -46,11 +46,11 @@ class ScheduleViewModel internal constructor(
 
     init {
         // Set initial values for the order
-        resetScheduleViewModel()
+        resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
     }
 
-    fun resetScheduleViewModel() {
-        _apiQueryStartedAtUTC.value = OffsetDateTime.now( ZoneOffset.UTC )
+    private fun resetWeekDate(apiQueryStartedAtUTC: OffsetDateTime?) {
+        _apiQueryStartedAtUTC.value = apiQueryStartedAtUTC!!
 
         var betweenWeekMonday =
             1 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
@@ -97,45 +97,11 @@ class ScheduleViewModel internal constructor(
     fun updateWeek(action: WeekAction) {
         when (action) {
             WeekAction.ACTION_LAST_WEEK -> {
-                _apiQueryStartedAtUTC.value = _weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1)
-
-                var betweenWeekMonday =
-                    1 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-                _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.plusDays(betweenWeekMonday.toLong())
-                var betweenWeekSunday =
-                    7 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-                _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.plusDays(betweenWeekSunday.toLong())
-
-                val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
-                _weekLocalDateText.value =
-                    "${weekStartFormatter.format(_weekMondayLocalDate.value)} - ${weekEndFormatter.format(_weekSundayLocalDate.value)}"
-
-                getDateTabOptions(_apiQueryStartedAtUTC.value)
-                getAmazingtalkerTeacherScheduleResponse(
-                    TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-                        ChronoUnit.SECONDS).toString())
+                resetWeekDate(_weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1))
             }
 
             WeekAction.ACTION_NEXT_WEEK -> {
-                _apiQueryStartedAtUTC.value = _weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(1)
-
-                var betweenWeekMonday =
-                    1 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-                _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.plusDays(betweenWeekMonday.toLong())
-                var betweenWeekSunday =
-                    7 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-                _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.plusDays(betweenWeekSunday.toLong())
-
-                val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
-                _weekLocalDateText.value =
-                    "${weekStartFormatter.format(_weekMondayLocalDate.value)} - ${weekEndFormatter.format(_weekSundayLocalDate.value)}"
-
-                getDateTabOptions(_apiQueryStartedAtUTC.value)
-                getAmazingtalkerTeacherScheduleResponse(
-                    TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-                        ChronoUnit.SECONDS).toString())
+                resetWeekDate(_weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(1))
             }
         }
     }
