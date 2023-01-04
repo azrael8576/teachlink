@@ -156,6 +156,8 @@ class ScheduleFragment : Fragment() {
         adapter: ScheduleTimeListAdapter,
         it: List<AmazingtalkerTeacherScheduleUnit>?
     ) {
+        if (mCurrentTabTag.isEmpty()) return
+
         var currentTabLocalTime = Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
             .atOffset(ZoneOffset.UTC)
             .getLocalOffsetDateTime()
