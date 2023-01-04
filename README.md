@@ -39,7 +39,7 @@
 ### 畫面呈現
 
 #### SAMSUNG GALAXY Note 5
-![image](https://github.com/azrael8576/hahow-recruit-android/blob/master/hahow-recruit-android.gif)
+![image](https://github.com/azrael8576/amazingtalker-recruit-android/blob/main/amazingtalker_recruit_android_demo.gif)
 
 ## 原需求文件
 [amazingtalker.notion.site/Android Assignment Option B](https://amazingtalker.notion.site/Android-Assignment-Option-B-dea9791324b744098a87297924daabd8 "amazingtalker.notion.site/Android Assignment Option B")
