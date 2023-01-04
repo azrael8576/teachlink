@@ -1,4 +1,4 @@
-## Project Documentation
+##   Project Documentation
 
     ├─ adapters
     ├─ data
@@ -14,7 +14,7 @@
 * `utilities/*.*` : App公用類 e.g. app常數, Utils相關類
 * `viewmodels/*.*` : ViewModel, ViewModelFactory.
 
-## 設計概念
+##  設計概念
 
 * 採 MVVM Design Pattern
 * 開啟畫面由 LoginActivity 模擬登入 or 驗證身分頁
@@ -22,7 +22,7 @@
 * 日期 Tablayout 僅顯示今日以後之日期 Tab
 
 
-### Third Party Library 
+##  Third Party Library 
 
 * ViewModel : ViewModel From Jetpack
 * LiveData : LiveData From Jetpack
@@ -32,11 +32,13 @@
 * Gson ：解析 JSON 資料格式
 * navigation.safeargs ：Fragment 間資料傳遞
 
-## 備註
+##  備註
 #### DataBinding 未導入：本人習慣僅用 ViewBinding 開發, 因 DataBinding 相對難追 code
 
+##  TODO
+#### * 一週時間以週日為起始時間
 
-### 畫面呈現
+##  畫面呈現
 
 #### SAMSUNG GALAXY Note 5
 ![image](https://github.com/azrael8576/amazingtalker-recruit-android/blob/main/amazingtalker_recruit_android_demo.gif)
