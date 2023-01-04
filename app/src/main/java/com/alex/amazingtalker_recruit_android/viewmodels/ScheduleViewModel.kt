@@ -53,6 +53,10 @@ class ScheduleViewModel internal constructor(
     init {
         // Set initial values for the order
         resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
+        setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
+        postAmazingtalkerTeacherScheduleResponse(
+            TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
+                ChronoUnit.SECONDS).toString())
     }
 
     private fun resetWeekDate(apiQueryStartedAt: OffsetDateTime?) {
@@ -67,14 +71,9 @@ class ScheduleViewModel internal constructor(
         val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
         _weekLocalDateText.value =
             "${weekStartFormatter.format(_weekMondayLocalDate.value)} - ${weekEndFormatter.format(_weekSundayLocalDate.value)}"
-
-        getDateTabOptions(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
-        getAmazingtalkerTeacherScheduleResponse(
-            TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-            ChronoUnit.SECONDS).toString())
     }
 
-    private fun getDateTabOptions(offsetDateTime: OffsetDateTime) {
+    private fun setDateTabOptionsByLocalOffsetDateTime(offsetDateTime: OffsetDateTime) {
         val options = mutableListOf<OffsetDateTime>()
         var offsetDateTime = offsetDateTime
         val nowTimeDayOfWeekValue = offsetDateTime.dayOfWeek.value
@@ -88,7 +87,7 @@ class ScheduleViewModel internal constructor(
         }
     }
 
-    private fun getAmazingtalkerTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
+    private fun postAmazingtalkerTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
         viewModelScope.launch {
             _currentTeacherNameValue.value = teacherName
             _currentSearchResult.value =
@@ -107,14 +106,26 @@ class ScheduleViewModel internal constructor(
                 if (lasWeekMondayLocalDate != null) {
                     if (lasWeekMondayLocalDate < OffsetDateTime.now( ZoneId.systemDefault() )) {
                         resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
+                        setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
+                        postAmazingtalkerTeacherScheduleResponse(
+                            TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
+                                ChronoUnit.SECONDS).toString())
                     } else {
                         resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(-1))
+                        setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
+                        postAmazingtalkerTeacherScheduleResponse(
+                            TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
+                                ChronoUnit.SECONDS).toString())
                     }
                 }
             }
 
             WeekAction.ACTION_NEXT_WEEK -> {
                 resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(1))
+                setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
+                postAmazingtalkerTeacherScheduleResponse(
+                    TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
+                        ChronoUnit.SECONDS).toString())
             }
         }
     }
