@@ -18,6 +18,7 @@ import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
 import com.alex.amazingtalker_recruit_android.databinding.FragmentScheduleBinding
 import com.alex.amazingtalker_recruit_android.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
 import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils
+import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils.getLocalOffsetDateTime
 import com.alex.amazingtalker_recruit_android.utilities.InjectorUtils
 import com.alex.amazingtalker_recruit_android.viewmodels.ScheduleViewModel
 import com.alex.amazingtalker_recruit_android.viewmodels.WeekAction
@@ -58,7 +59,6 @@ class ScheduleFragment : Fragment() {
             tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     Log.e(TAG, "======onTabSelected====" + tab.tag)
-                    //                        Handler().postDelayed(Runnable { tablayout.getTabAt(5)?.select() }, 100)
                     mCurrentTabTag = tab.tag.toString()
                     updateAdapterList(adapter, viewModel.amazingtalkerTeacherScheduleUnitList.value)
                 }
@@ -72,13 +72,18 @@ class ScheduleFragment : Fragment() {
                 }
             })
 
+            Toast.makeText(context,
+                String.format(
+                    requireContext().getString(R.string.inquirying_teacher_calendar, viewModel.currentTeacherNameValue.value)
+                ), Toast.LENGTH_SHORT).show();
+
             setHasOptionsMenu(true)
         }
     }
 
     private fun subscribeUi(binding: FragmentScheduleBinding, adapter: ScheduleTimeListAdapter) {
         viewModel.weekMondayLocalDate.observe(viewLifecycleOwner) {
-            if (it < OffsetDateTime.now()) {
+            if (it < OffsetDateTime.now( ZoneId.systemDefault() )) {
                 binding.buttonLastWeek.colorFilter = null
                 binding.buttonLastWeek.setOnClickListener(null)
             } else {
@@ -109,13 +114,12 @@ class ScheduleFragment : Fragment() {
                 binding.tablayout.removeAllTabs()
                 options.forEachIndexed { _, element ->
                     binding.tablayout.newTab().run {
-                        var elementToLocalTime = element.atZoneSameInstant(ZoneId.systemDefault()).toOffsetDateTime()
                         setCustomView(R.layout.custom_tab)
                         customView?.minimumWidth = tabWidth
                         customView?.minimumHeight = tabHeight
-                        tag = elementToLocalTime
+                        tag = element
                         val dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
-                        text = dateFormatter.format(elementToLocalTime)
+                        text = dateFormatter.format(element)
                         binding.tablayout.addTab(this)
                     }
                 }
@@ -154,8 +158,7 @@ class ScheduleFragment : Fragment() {
     ) {
         var currentTabLocalTime = Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
             .atOffset(ZoneOffset.UTC)
-            .atZoneSameInstant(ZoneId.systemDefault())
-            .toOffsetDateTime()
+            .getLocalOffsetDateTime()
 
         var list = it?.filter {item ->
             item.start.dayOfYear == currentTabLocalTime.dayOfYear

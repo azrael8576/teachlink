@@ -26,18 +26,16 @@ object DateTimeUtils {
         for (amazingtalkerTeacherSchedule in amazingtalkerTeacherScheduleList) {
             var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(amazingtalkerTeacherSchedule.start))
                 .atOffset(ZoneOffset.UTC)
-                .atZoneSameInstant(ZoneId.systemDefault())
-                .toOffsetDateTime()
+                .getLocalOffsetDateTime()
             val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(amazingtalkerTeacherSchedule.end))
                 .atOffset(ZoneOffset.UTC)
-                .atZoneSameInstant(ZoneId.systemDefault())
-                .toOffsetDateTime()
+                .getLocalOffsetDateTime()
 
             while (startDate < endDate) {
                 var startDateLocalTime = AmazingtalkerTeacherScheduleUnit(startDate,
                     startDate.plusMinutes(interval),
                     scheduleUnitState,
-                    getDuringDayTypeByOffsetDateTime(startDate))
+                    startDate.getDuringDayType())
 
                 scheduleUnitList.add(startDateLocalTime)
 
@@ -47,7 +45,7 @@ object DateTimeUtils {
                         var endDateLocalTime = AmazingtalkerTeacherScheduleUnit(endDate,
                             endDate.plusMinutes(interval),
                             scheduleUnitState,
-                            getDuringDayTypeByOffsetDateTime(endDate))
+                            endDate.getDuringDayType())
 
                         scheduleUnitList.add(endDateLocalTime)
                     }
@@ -62,14 +60,26 @@ object DateTimeUtils {
      * @param offsetDateTime OffsetDateTime
      * @return DuringDayType
      */
-    fun getDuringDayTypeByOffsetDateTime(offsetDateTime: OffsetDateTime)
+    fun OffsetDateTime.getDuringDayType()
             : DuringDayType {
 
-        return when(offsetDateTime.hour) {
+        return when(this.hour) {
             in 0..11 -> DuringDayType.Morning
             in 12..17 -> DuringDayType.Afternoon
             in 18..23 -> DuringDayType.Evening
             else -> {DuringDayType.Morning}
         }
+    }
+
+    fun OffsetDateTime.getLocalOffsetDateTime()
+            : OffsetDateTime {
+
+        return this.atZoneSameInstant(ZoneId.systemDefault()).toOffsetDateTime()
+    }
+
+    fun OffsetDateTime.getUTCOffsetDateTime()
+            : OffsetDateTime {
+
+        return this.atZoneSameInstant(ZoneOffset.UTC).toOffsetDateTime()
     }
 }

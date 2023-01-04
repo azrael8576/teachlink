@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alex.amazingtalker_recruit_android.data.*
+import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils.getLocalOffsetDateTime
+import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils.getUTCOffsetDateTime
 import com.alex.amazingtalker_recruit_android.utilities.TEST_DATA_TEACHER_NAME
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -52,36 +55,34 @@ class ScheduleViewModel internal constructor(
         resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
     }
 
-    private fun resetWeekDate(apiQueryStartedAtUTC: OffsetDateTime?) {
-        _apiQueryStartedAtUTC.value = apiQueryStartedAtUTC!!
+    private fun resetWeekDate(apiQueryStartedAt: OffsetDateTime?) {
+        _apiQueryStartedAtUTC.value = apiQueryStartedAt!!.getUTCOffsetDateTime()
 
-        var betweenWeekMonday =
-            1 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-        _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.plusDays(betweenWeekMonday.toLong())
-        var betweenWeekSunday =
-            7 - _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value!!
-        _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.plusDays(betweenWeekSunday.toLong())
+        var betweenWeekMonday = DayOfWeek.MONDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
+        _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.plusDays(betweenWeekMonday.toLong())
+        var betweenWeekSunday = DayOfWeek.SUNDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
+        _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.plusDays(betweenWeekSunday.toLong())
 
         val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
         _weekLocalDateText.value =
             "${weekStartFormatter.format(_weekMondayLocalDate.value)} - ${weekEndFormatter.format(_weekSundayLocalDate.value)}"
 
-        getDateTabOptions(_apiQueryStartedAtUTC.value)
+        getDateTabOptions(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
         getAmazingtalkerTeacherScheduleResponse(
             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
             ChronoUnit.SECONDS).toString())
     }
 
-    private fun getDateTabOptions(offsetDateTime: OffsetDateTime?) {
+    private fun getDateTabOptions(offsetDateTime: OffsetDateTime) {
         val options = mutableListOf<OffsetDateTime>()
         var offsetDateTime = offsetDateTime
-        val nowTimeDayOfWeekValue = offsetDateTime?.atZoneSameInstant(ZoneId.systemDefault())?.toOffsetDateTime()?.dayOfWeek?.value
+        val nowTimeDayOfWeekValue = offsetDateTime.dayOfWeek.value
 
         if (nowTimeDayOfWeekValue != null) {
-            repeat(8 - nowTimeDayOfWeekValue) {
+            repeat(DayOfWeek.SUNDAY.value + 1 - nowTimeDayOfWeekValue) {
                 offsetDateTime?.let { it1 -> options.add(it1) }
-                offsetDateTime = offsetDateTime?.plusDays(1)
+                offsetDateTime = offsetDateTime.plusDays(1)
             }
             _dateTabStringList.value = options
         }
@@ -102,18 +103,18 @@ class ScheduleViewModel internal constructor(
     fun updateWeek(action: WeekAction) {
         when (action) {
             WeekAction.ACTION_LAST_WEEK -> {
-                var lasWeekMondayLocalDate = _weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1)
+                var lasWeekMondayLocalDate = _weekMondayLocalDate.value?.plusWeeks(-1)
                 if (lasWeekMondayLocalDate != null) {
-                    if (lasWeekMondayLocalDate < OffsetDateTime.now( ZoneOffset.UTC )) {
+                    if (lasWeekMondayLocalDate < OffsetDateTime.now( ZoneId.systemDefault() )) {
                         resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
                     } else {
-                        resetWeekDate(_weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(-1))
+                        resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(-1))
                     }
                 }
             }
 
             WeekAction.ACTION_NEXT_WEEK -> {
-                resetWeekDate(_weekMondayLocalDate.value?.atZoneSameInstant(ZoneOffset.UTC)?.toOffsetDateTime()?.plusWeeks(1))
+                resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(1))
             }
         }
     }
