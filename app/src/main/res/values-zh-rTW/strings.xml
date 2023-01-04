@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">amazingtalker-recruit-android</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="evening">晚上</string>
+    <string name="your_local_time_zone">您當地的時區: %s</string>
+</resources>

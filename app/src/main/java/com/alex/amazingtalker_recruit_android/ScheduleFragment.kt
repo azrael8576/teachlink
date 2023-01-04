@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.doOnLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.alex.amazingtalker_recruit_android.adapters.ScheduleTimeListAdapter
@@ -83,6 +84,7 @@ class ScheduleFragment : Fragment() {
             } else {
                 binding.buttonLastWeek.setColorFilter(resources.getColor(R.color.amazingtalker_green_900))
                 binding.buttonLastWeek.setOnClickListener(View.OnClickListener {
+                    binding.scheduleTimeRecyclerview.isVisible = false
                     viewModel.updateWeek(WeekAction.ACTION_LAST_WEEK)
                 })
             }
@@ -91,6 +93,7 @@ class ScheduleFragment : Fragment() {
         viewModel.weekSundayLocalDate.observe(viewLifecycleOwner) {
             binding.buttonNextWeek.setColorFilter(resources.getColor(R.color.amazingtalker_green_900))
             binding.buttonNextWeek.setOnClickListener(View.OnClickListener {
+                binding.scheduleTimeRecyclerview.isVisible = false
                 viewModel.updateWeek(WeekAction.ACTION_NEXT_WEEK)
             })
         }
@@ -129,6 +132,7 @@ class ScheduleFragment : Fragment() {
                                 .plus(DateTimeUtils.getIntervalTimeByScheduleList(it.value.bookeds, AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT, ScheduleUnitState.BOOKED))
                         }
                         viewModel.setAmazingtalkerTeacherScheduleUnitList(scheduleUnitList.await())
+                        binding?.scheduleTimeRecyclerview?.isVisible = true
                     }
                 }
 
@@ -153,9 +157,14 @@ class ScheduleFragment : Fragment() {
             .atZoneSameInstant(ZoneId.systemDefault())
             .toOffsetDateTime()
 
-        adapter.submitList(it?.filter {item ->
+        var list = it?.filter {item ->
             item.start.dayOfYear == currentTabLocalTime.dayOfYear
-        })
+        }
+
+        if (list != null) {
+            adapter.addHeaderAndSubmitList(list)
+            binding?.scheduleTimeRecyclerview?.scrollToPosition(0)
+        }
     }
 
     override fun onDestroyView() {

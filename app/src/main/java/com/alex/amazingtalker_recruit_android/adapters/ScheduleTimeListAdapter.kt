@@ -6,36 +6,143 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.alex.amazingtalker_recruit_android.R
 import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
+import com.alex.amazingtalker_recruit_android.data.DuringDayType
 import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
+import com.alex.amazingtalker_recruit_android.databinding.ListHeaderScheduleTimeBinding
+import com.alex.amazingtalker_recruit_android.databinding.ListItemHeaderScheduleTimeBinding
 import com.alex.amazingtalker_recruit_android.databinding.ListItemScheduleTimeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.time.OffsetDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
+enum class ItemViewType {
+    ITEM_HEADER, ITEM, HEADER
+}
 /**
  * Adapter for the [scheduleTimeRecyclerview] in [ScheduleFragment].
  */
-class ScheduleTimeListAdapter : ListAdapter<AmazingtalkerTeacherScheduleUnit, RecyclerView.ViewHolder>(ScheduleTimeListDiffCallback()) {
+class ScheduleTimeListAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(ScheduleTimeListDiffCallback()) {
+
+    private val adapterScope = CoroutineScope(Dispatchers.Main)
+
+    fun addHeaderAndSubmitList(list: List<AmazingtalkerTeacherScheduleUnit>) {
+
+        adapterScope.launch {
+            val items = listOf(DataItem.Header) + list.groupBy { it.duringDayType }.flatMap {
+                listOf(DataItem.ItemHeader(it.key), *(it.value.map { item ->
+                    DataItem.Item(item)
+                }.toTypedArray()))
+            }
+
+            withContext(Dispatchers.Main) { //update in main ui thread
+                submitList(items)
+            }
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ScheduleTimeListViewHolder(
-            ListItemScheduleTimeBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        return when (viewType) {
+            ItemViewType.HEADER.ordinal -> {
+                HeaderViewHolder(
+                    ListHeaderScheduleTimeBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+            ItemViewType.ITEM_HEADER.ordinal -> {
+                ItemHeaderViewHolder(
+                    ListItemHeaderScheduleTimeBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+            else -> {
+                ScheduleTimeListViewHolder(
+                    ListItemScheduleTimeBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = getItem(position)
-        (holder as ScheduleTimeListViewHolder).bind(data)
+        when (holder) {
+            is HeaderViewHolder -> {
+                holder.bind()
+            }
+
+            is ItemHeaderViewHolder -> {
+                holder.bind(data)
+            }
+
+            is ScheduleTimeListViewHolder -> {
+                holder.bind(data)
+            }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is DataItem.Header -> ItemViewType.HEADER.ordinal
+            is DataItem.ItemHeader -> ItemViewType.ITEM_HEADER.ordinal
+            else -> ItemViewType.ITEM.ordinal
+        }
+    }
+
+    class HeaderViewHolder(
+        private val binding: ListHeaderScheduleTimeBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind() {
+            binding.apply {
+                textView.text = String.format(
+                    binding.root.context.getString(R.string.your_local_time_zone),
+                    ZoneId.systemDefault()
+                )
+            }
+        }
+    }
+
+    class ItemHeaderViewHolder(
+        private val binding: ListItemHeaderScheduleTimeBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: DataItem) {
+            binding.apply {
+                textView.text = when(item.duringDayType){
+                    DuringDayType.Morning -> binding.root.resources.getString(R.string.morning)
+                    DuringDayType.Afternoon -> binding.root.resources.getString(R.string.afternoon)
+                    DuringDayType.Evening -> binding.root.resources.getString(R.string.evening)
+                    else -> binding.root.resources.getString(R.string.morning)
+                }
+            }
+        }
     }
 
     class ScheduleTimeListViewHolder(
         private val binding: ListItemScheduleTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: AmazingtalkerTeacherScheduleUnit) {
+        fun bind(item: DataItem) {
             binding.apply {
-                textScheduleUnitLocalTime.text = item.start.toString() + item.state
+                val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
+
+                textScheduleUnitLocalTime.text = dateTimeFormatter.format(item.start)
                 textScheduleUnitLocalTime.isEnabled = (item.state == ScheduleUnitState.AVAILABLE)
 
                 textScheduleUnitLocalTime.setOnClickListener {
@@ -47,19 +154,50 @@ class ScheduleTimeListAdapter : ListAdapter<AmazingtalkerTeacherScheduleUnit, Re
     }
 }
 
-private class ScheduleTimeListDiffCallback : DiffUtil.ItemCallback<AmazingtalkerTeacherScheduleUnit>() {
+private class ScheduleTimeListDiffCallback : DiffUtil.ItemCallback<DataItem>() {
 
-    override fun areItemsTheSame(
-        oldItem: AmazingtalkerTeacherScheduleUnit,
-        newItem: AmazingtalkerTeacherScheduleUnit
-    ): Boolean {
+    override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(
-        oldItem: AmazingtalkerTeacherScheduleUnit,
-        newItem: AmazingtalkerTeacherScheduleUnit
-    ): Boolean {
+    override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
         return oldItem == newItem
+    }
+}
+
+sealed class DataItem(val itemViewType: ItemViewType) {
+
+    abstract val name: String?
+    abstract val start: OffsetDateTime?
+    abstract val end: OffsetDateTime?
+    abstract val state: ScheduleUnitState?
+    abstract val duringDayType: DuringDayType?
+    abstract val isHeader: Boolean
+
+    object Header : DataItem(ItemViewType.HEADER) {
+        override val name = null
+        override val start = null
+        override val end = null
+        override val state = null
+        override val duringDayType = null
+        override val isHeader = true
+    }
+
+    data class ItemHeader(val duringType: DuringDayType) : DataItem(ItemViewType.ITEM_HEADER) {
+        override val name = null
+        override val start = null
+        override val end = null
+        override val state = null
+        override val duringDayType = duringType
+        override val isHeader = false
+    }
+
+    data class Item(val amazingtalkerTeacherScheduleUnit: AmazingtalkerTeacherScheduleUnit) : DataItem(ItemViewType.ITEM) {
+        override val name = null
+        override val start = amazingtalkerTeacherScheduleUnit.start
+        override val end = amazingtalkerTeacherScheduleUnit.end
+        override val state = amazingtalkerTeacherScheduleUnit.state
+        override val duringDayType = amazingtalkerTeacherScheduleUnit.duringDayType
+        override val isHeader = false
     }
 }

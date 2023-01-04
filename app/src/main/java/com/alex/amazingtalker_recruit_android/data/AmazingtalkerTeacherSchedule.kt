@@ -19,6 +19,12 @@ data class AmazingtalkerTeacherSchedule(
     @field:SerializedName("end") val end: String,
 )
 
+enum class DuringDayType {
+    Morning,
+    Afternoon,
+    Evening
+}
+
 /**
  * Data class that represents sliced into thirty-minute segmentsa schedule from AmazingtalkerTeacherSchedule.
  *
@@ -28,4 +34,5 @@ data class AmazingtalkerTeacherScheduleUnit(
     val start: OffsetDateTime,
     val end: OffsetDateTime,
     val state: ScheduleUnitState,
+    val duringDayType: DuringDayType,
 )

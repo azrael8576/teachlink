@@ -2,8 +2,10 @@ package com.alex.amazingtalker_recruit_android.utilities
 
 import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherSchedule
 import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
+import com.alex.amazingtalker_recruit_android.data.DuringDayType
 import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
 import java.time.Instant
+import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -32,18 +34,42 @@ object DateTimeUtils {
                 .toOffsetDateTime()
 
             while (startDate < endDate) {
-                var startDateLocalTime = AmazingtalkerTeacherScheduleUnit(startDate, startDate.plusMinutes(interval), scheduleUnitState)
+                var startDateLocalTime = AmazingtalkerTeacherScheduleUnit(startDate,
+                    startDate.plusMinutes(interval),
+                    scheduleUnitState,
+                    getDuringDayTypeByOffsetDateTime(startDate))
+
                 scheduleUnitList.add(startDateLocalTime)
 
                 startDate = startDate.plusMinutes(interval)
                 if (startDate > endDate) {
                     if (startDate != endDate) {
-                        var endDateLocalTime = AmazingtalkerTeacherScheduleUnit(endDate, endDate.plusMinutes(interval), scheduleUnitState)
+                        var endDateLocalTime = AmazingtalkerTeacherScheduleUnit(endDate,
+                            endDate.plusMinutes(interval),
+                            scheduleUnitState,
+                            getDuringDayTypeByOffsetDateTime(endDate))
+
                         scheduleUnitList.add(endDateLocalTime)
                     }
                 }
             }
         }
         return scheduleUnitList
+    }
+
+    /**
+     * 判斷時間為上午/下午/晚上
+     * @param offsetDateTime OffsetDateTime
+     * @return DuringDayType
+     */
+    fun getDuringDayTypeByOffsetDateTime(offsetDateTime: OffsetDateTime)
+            : DuringDayType {
+
+        return when(offsetDateTime.hour) {
+            in 0..11 -> DuringDayType.Morning
+            in 12..17 -> DuringDayType.Afternoon
+            in 18..23 -> DuringDayType.Evening
+            else -> {DuringDayType.Morning}
+        }
     }
 }
