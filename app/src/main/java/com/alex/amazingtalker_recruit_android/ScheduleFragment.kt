@@ -173,9 +173,10 @@ class ScheduleFragment : Fragment() {
         adapter: ScheduleTimeListAdapter,
         teacherScheduleUnitList: List<AmazingtalkerTeacherScheduleUnit>?
     ) {
+        if (mCurrentTabTag.isEmpty()) return
 
-        if (getFilterTeacherScheduleUnitListByCurrentTabLocalTime(teacherScheduleUnitList) != null) {
-            getFilterTeacherScheduleUnitListByCurrentTabLocalTime(teacherScheduleUnitList)?.let {
+        if (getTeacherScheduleUnitListByFilterCurrentTabLocalTime(teacherScheduleUnitList) != null) {
+            getTeacherScheduleUnitListByFilterCurrentTabLocalTime(teacherScheduleUnitList)?.let {
                 adapter.addHeaderAndSubmitList(
                     it
                 )
@@ -184,7 +185,7 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun getFilterTeacherScheduleUnitListByCurrentTabLocalTime(
+    private fun getTeacherScheduleUnitListByFilterCurrentTabLocalTime(
         teacherScheduleUnitList: List<AmazingtalkerTeacherScheduleUnit>?
     ): List<AmazingtalkerTeacherScheduleUnit>? {
         var currentTabLocalTime = Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
