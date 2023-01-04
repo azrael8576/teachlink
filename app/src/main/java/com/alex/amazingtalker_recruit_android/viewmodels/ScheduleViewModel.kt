@@ -56,7 +56,7 @@ class ScheduleViewModel internal constructor(
     }
 
     private fun resetWeekDate(apiQueryStartedAt: OffsetDateTime?) {
-        _apiQueryStartedAtUTC.value = apiQueryStartedAt!!.getUTCOffsetDateTime()
+        _apiQueryStartedAtUTC.value = apiQueryStartedAt?.getUTCOffsetDateTime()
 
         var betweenWeekMonday = DayOfWeek.MONDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
         _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.plusDays(betweenWeekMonday.toLong())

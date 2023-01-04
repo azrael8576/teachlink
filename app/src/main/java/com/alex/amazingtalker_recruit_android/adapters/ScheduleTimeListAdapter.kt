@@ -110,9 +110,11 @@ class ScheduleTimeListAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(S
 
         fun bind() {
             binding.apply {
+                val offsetFormatter = DateTimeFormatter.ofPattern("xxx")
                 textView.text = String.format(
                     binding.root.context.getString(R.string.your_local_time_zone),
-                    ZoneId.systemDefault()
+                    ZoneId.systemDefault(),
+                    offsetFormatter.format(OffsetDateTime.now( ZoneId.systemDefault() ).offset)
                 )
             }
         }
