@@ -33,20 +33,4 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <!--類別標題文字-->
-    <style name="TimeSlotButton" parent="NoPaddingTextView">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:textColor">@color/selector_frame_time_color</item>
-        <item name="android:background">@drawable/selector_frame_time_slot</item>
-        <item name="android:gravity">center</item>
-        <item name="android:stateListAnimator">@null</item>
-    </style>
-
-    <!--課程標題文字-->
-    <style name="CoursesTitleText" parent="NoPaddingTextView">
-        <item name="android:textSize">@dimen/base_titleline</item>
-        <item name="android:textColor">@color/amazingtalker_black</item>
-    </style>
-
 </resources>

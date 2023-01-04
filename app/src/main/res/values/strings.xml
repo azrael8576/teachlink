@@ -2,7 +2,7 @@
     <string name="app_name">amazingtalker-recruit-android</string>
     <string name="your_local_time_zone">Your local time zone: %s</string>
     <string name="inquirying_teacher_calendar">You are inquiring about teacher %s\'s calendar</string>
-    <string name="morning">‎Morning</string>
+    <string name="morning">Morning</string>
     <string name="afternoon">Afternoon</string>
     <string name="evening">Evening</string>
 </resources>

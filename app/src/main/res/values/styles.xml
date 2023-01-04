@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 修改tablayout的背景色，提示线的颜色，字体颜色等-->
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
         <item name="tabBackground">@android:color/white</item>
         <item name="tabIndicatorColor">@color/amazingtalker_green_900</item>
@@ -10,16 +9,26 @@
     </style>
 
     <style name="TextAppearance.Design.Tab" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">@dimen/base_headline</item>
         <item name="android:textColor">@color/selector_tab_text_color</item>
         <item name="textAllCaps">true</item>
     </style>
 
     <!--共用 水平分隔線淺灰-->
-    <style name="horizontal_split_light">
+    <style name="HorizontalSplitLight">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/amazingtalker_gray_50</item>
+    </style>
+
+    <!--教師行事曆時間段按鈕-->
+    <style name="TimeSlotButton" parent="NoPaddingTextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/base_headline</item>
+        <item name="android:textColor">@color/selector_frame_time_color</item>
+        <item name="android:background">@drawable/selector_frame_time_slot</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
 </resources>

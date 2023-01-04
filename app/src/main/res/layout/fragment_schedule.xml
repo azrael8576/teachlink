@@ -34,10 +34,10 @@
 
                     <ImageButton
                         android:id="@+id/button_last_week"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/toolbar_item_icon"
+                        android:layout_height="@dimen/toolbar_item_icon"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="25dp"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:scaleType="centerCrop"
                         android:background="@android:color/transparent"
                         android:src="@drawable/arrow_left_gray" />
@@ -49,15 +49,15 @@
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:gravity="center_horizontal"
-                        android:textSize="16dp"
+                        android:textSize="@dimen/base_titleline"
                         tools:text="2022-01-02 - 1-8" />
 
                     <ImageButton
                         android:id="@+id/button_next_week"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/toolbar_item_icon"
+                        android:layout_height="@dimen/toolbar_item_icon"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="25dp"
+                        android:layout_marginEnd="@dimen/margin_large"
                         android:scaleType="centerCrop"
                         android:background="@android:color/transparent"
                         android:src="@drawable/arrow_right_gray" />
@@ -68,10 +68,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginVertical="15dp"
-                    android:layout_marginHorizontal="20dp">
+                    android:layout_marginVertical="@dimen/tab_vertical_margin"
+                    android:layout_marginHorizontal="@dimen/tab_horizontal_margin">
 
-                    <View style="@style/horizontal_split_light"/>
+                    <View style="@style/HorizontalSplitLight"/>
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tablayout"
@@ -87,7 +87,7 @@
                         app:tabPaddingStart="0dp"
                         style="@style/Base.Widget.Design.TabLayout"/>
 
-                    <View style="@style/horizontal_split_light"/>
+                    <View style="@style/HorizontalSplitLight"/>
 
                 </LinearLayout>
 

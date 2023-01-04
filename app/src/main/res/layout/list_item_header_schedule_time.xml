@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="20dp"
-    android:paddingVertical="16dp">
+    android:paddingHorizontal="@dimen/margin_normal"
+    android:paddingVertical="@dimen/margin_small">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/morning"
         android:textStyle="bold"
-        android:textColor="@color/amazingtalker_black"
-        android:textSize="14dp"
+        android:textColor="#727B7A"
+        android:textSize="@dimen/base_titleline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/morning" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

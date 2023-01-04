@@ -58,17 +58,17 @@ class ScheduleFragment : Fragment() {
 
             tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    Log.e(TAG, "======onTabSelected====" + tab.tag)
+                    Log.d(TAG, "======onTabSelected====" + tab.tag)
                     mCurrentTabTag = tab.tag.toString()
                     updateAdapterList(adapter, viewModel.amazingtalkerTeacherScheduleUnitList.value)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
-                    Log.e(TAG, "======onTabUnselected====" + tab.tag)
+                    Log.d(TAG, "======onTabUnselected====" + tab.tag)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    Log.e(TAG, "======onTabReselected====" + tab.tag)
+                    Log.d(TAG, "======onTabReselected====" + tab.tag)
                 }
             })
 

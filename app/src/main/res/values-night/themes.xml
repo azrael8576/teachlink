@@ -33,17 +33,4 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <!--類別標題文字-->
-    <style name="CategoryTitleText" parent="NoPaddingTextView">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/base_headline</item>
-        <item name="android:textColor">@color/amazingtalker_black</item>
-    </style>
-
-    <!--課程標題文字-->
-    <style name="CoursesTitleText" parent="NoPaddingTextView">
-        <item name="android:textSize">@dimen/base_titleline</item>
-        <item name="android:textColor">@color/amazingtalker_black</item>
-    </style>
-
 </resources>
