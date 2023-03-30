@@ -1,4 +1,4 @@
-package com.alex.amazingtalker_recruit_android.adapters
+package com.wei.amazingtalker_recruit.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,13 +6,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.alex.amazingtalker_recruit_android.R
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
-import com.alex.amazingtalker_recruit_android.data.DuringDayType
-import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
-import com.alex.amazingtalker_recruit_android.databinding.ListHeaderScheduleTimeBinding
-import com.alex.amazingtalker_recruit_android.databinding.ListItemHeaderScheduleTimeBinding
-import com.alex.amazingtalker_recruit_android.databinding.ListItemScheduleTimeBinding
+import com.wei.amazingtalker_recruit.R
+import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherScheduleUnit
+import com.wei.amazingtalker_recruit.data.DuringDayType
+import com.wei.amazingtalker_recruit.data.ScheduleUnitState
+import com.wei.amazingtalker_recruit.databinding.ListHeaderScheduleTimeBinding
+import com.wei.amazingtalker_recruit.databinding.ListItemHeaderScheduleTimeBinding
+import com.wei.amazingtalker_recruit.databinding.ListItemScheduleTimeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

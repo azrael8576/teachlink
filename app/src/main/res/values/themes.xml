@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
 
     <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
-    <style name="Base.Theme.Amazingtalkerrecruit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.AmazingtalkerRecruit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/amazingtalker_white</item>
         <item name="colorPrimaryVariant">@color/amazingtalker_gray_50</item>
         <item name="colorOnPrimary">@color/amazingtalker_white</item>
@@ -14,17 +14,17 @@
         <item name="android:colorBackground">@color/amazingtalker_white</item>
     </style>
 
-    <style name="Theme.Amazingtalkerrecruit" parent="Base.Theme.Amazingtalkerrecruit"/>
+    <style name="Theme.AmazingtalkerRecruit" parent="Base.Theme.AmazingtalkerRecruit"/>
 
-    <style name="Theme.Amazingtalkerrecruit.NoActionBar">
+    <style name="Theme.AmazingtalkerRecruit.NoActionBar">
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="windowActionBarOverlay">true</item>
     </style>
 
-    <style name="Theme.Amazingtalkerrecruit.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="Theme.AmazingtalkerRecruit.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
 
-    <style name="TextAppearance.Amazingtalkerrecruit.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" >
+    <style name="TextAppearance.AmazingtalkerRecruit.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" >
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 

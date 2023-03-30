@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.alex.amazingtalker_recruit_android.ScheduleFragment"
+        android:name="com.wei.amazingtalker_recruit.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
 </navigation>

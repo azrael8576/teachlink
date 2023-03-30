@@ -1,8 +1,8 @@
-package com.alex.amazingtalker_recruit_android.data
+package com.wei.amazingtalker_recruit.data
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.alex.amazingtalker_recruit_android.api.AmazingtalkerService
+import com.wei.amazingtalker_recruit.api.AmazingtalkerService
 
 class AmazingtalkerRepository(private val service: AmazingtalkerService) : BaseRepository(){
 

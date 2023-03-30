@@ -1,4 +1,4 @@
-package com.alex.amazingtalker_recruit_android
+package com.wei.amazingtalker_recruit
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -11,17 +11,17 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.alex.amazingtalker_recruit_android.adapters.ScheduleTimeListAdapter
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
-import com.alex.amazingtalker_recruit_android.data.Resource
-import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
-import com.alex.amazingtalker_recruit_android.databinding.FragmentScheduleBinding
-import com.alex.amazingtalker_recruit_android.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
-import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils
-import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils.getLocalOffsetDateTime
-import com.alex.amazingtalker_recruit_android.utilities.InjectorUtils
-import com.alex.amazingtalker_recruit_android.viewmodels.ScheduleViewModel
-import com.alex.amazingtalker_recruit_android.viewmodels.WeekAction
+import com.wei.amazingtalker_recruit.adapters.ScheduleTimeListAdapter
+import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherScheduleUnit
+import com.wei.amazingtalker_recruit.data.Resource
+import com.wei.amazingtalker_recruit.data.ScheduleUnitState
+import com.wei.amazingtalker_recruit.databinding.FragmentScheduleBinding
+import com.wei.amazingtalker_recruit.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
+import com.wei.amazingtalker_recruit.utilities.DateTimeUtils
+import com.wei.amazingtalker_recruit.utilities.DateTimeUtils.getLocalOffsetDateTime
+import com.wei.amazingtalker_recruit.utilities.InjectorUtils
+import com.wei.amazingtalker_recruit.viewmodels.ScheduleViewModel
+import com.wei.amazingtalker_recruit.viewmodels.WeekAction
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.*

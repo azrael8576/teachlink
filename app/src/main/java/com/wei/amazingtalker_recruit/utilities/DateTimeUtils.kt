@@ -1,9 +1,9 @@
-package com.alex.amazingtalker_recruit_android.utilities
+package com.wei.amazingtalker_recruit.utilities
 
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherSchedule
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleUnit
-import com.alex.amazingtalker_recruit_android.data.DuringDayType
-import com.alex.amazingtalker_recruit_android.data.ScheduleUnitState
+import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherSchedule
+import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherScheduleUnit
+import com.wei.amazingtalker_recruit.data.DuringDayType
+import com.wei.amazingtalker_recruit.data.ScheduleUnitState
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId

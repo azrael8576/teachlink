@@ -1,4 +1,4 @@
-package com.alex.amazingtalker_recruit_android
+package com.wei.amazingtalker_recruit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

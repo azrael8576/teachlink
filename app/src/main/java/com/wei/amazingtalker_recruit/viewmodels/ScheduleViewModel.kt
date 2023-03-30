@@ -1,13 +1,13 @@
-package com.alex.amazingtalker_recruit_android.viewmodels
+package com.wei.amazingtalker_recruit.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alex.amazingtalker_recruit_android.data.*
-import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils.getLocalOffsetDateTime
-import com.alex.amazingtalker_recruit_android.utilities.DateTimeUtils.getUTCOffsetDateTime
-import com.alex.amazingtalker_recruit_android.utilities.TEST_DATA_TEACHER_NAME
+import com.wei.amazingtalker_recruit.data.*
+import com.wei.amazingtalker_recruit.utilities.DateTimeUtils.getLocalOffsetDateTime
+import com.wei.amazingtalker_recruit.utilities.DateTimeUtils.getUTCOffsetDateTime
+import com.wei.amazingtalker_recruit.utilities.TEST_DATA_TEACHER_NAME
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.OffsetDateTime

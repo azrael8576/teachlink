@@ -1,8 +1,8 @@
-package com.alex.amazingtalker_recruit_android.utilities
+package com.wei.amazingtalker_recruit.utilities
 
-import com.alex.amazingtalker_recruit_android.api.AmazingtalkerService
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerRepository
-import com.alex.amazingtalker_recruit_android.viewmodels.ScheduleViewModelFactory
+import com.wei.amazingtalker_recruit.api.AmazingtalkerService
+import com.wei.amazingtalker_recruit.data.AmazingtalkerRepository
+import com.wei.amazingtalker_recruit.viewmodels.ScheduleViewModelFactory
 
 /**
  * Static methods used to inject classes needed for various Activities and Fragments.

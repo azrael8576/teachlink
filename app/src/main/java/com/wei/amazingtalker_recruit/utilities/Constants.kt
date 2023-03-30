@@ -1,4 +1,4 @@
-package com.alex.amazingtalker_recruit_android.utilities
+package com.wei.amazingtalker_recruit.utilities
 
 /**
  * Constants used throughout the app.

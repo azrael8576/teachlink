@@ -1,8 +1,8 @@
-package com.alex.amazingtalker_recruit_android.viewmodels
+package com.wei.amazingtalker_recruit.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerRepository
+import com.wei.amazingtalker_recruit.data.AmazingtalkerRepository
 
 /**
  * Factory for creating a [ScheduleViewModel] with a constructor that takes a [AmazingtalkerRepository].

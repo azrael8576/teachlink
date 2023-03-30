@@ -1,4 +1,4 @@
-package com.alex.amazingtalker_recruit_android.data
+package com.wei.amazingtalker_recruit.data
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

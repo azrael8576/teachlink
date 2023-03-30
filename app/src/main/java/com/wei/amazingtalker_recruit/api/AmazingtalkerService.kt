@@ -1,7 +1,7 @@
-package com.alex.amazingtalker_recruit_android.api
+package com.wei.amazingtalker_recruit.api
 
-import com.alex.amazingtalker_recruit_android.data.AmazingtalkerTeacherScheduleResponse
-import com.alex.amazingtalker_recruit_android.utilities.AMAZING_TALKER_SERVICE_BASE_URL
+import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherScheduleResponse
+import com.wei.amazingtalker_recruit.utilities.AMAZING_TALKER_SERVICE_BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
