@@ -15,12 +15,13 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import javax.inject.Inject
 
 enum class WeekAction {
     ACTION_LAST_WEEK, ACTION_NEXT_WEEK
 }
 
-class ScheduleViewModel internal constructor(
+class ScheduleViewModel @Inject constructor(
     private val amazingtalkerRepository: AmazingtalkerRepository
 ) : ViewModel() {
 

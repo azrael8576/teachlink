@@ -21,6 +21,7 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.inject.Inject
 
 enum class ItemViewType {
     ITEM_HEADER, ITEM, HEADER
@@ -28,7 +29,7 @@ enum class ItemViewType {
 /**
  * Adapter for the [scheduleTimeRecyclerview] in [ScheduleFragment].
  */
-class ScheduleTimeListAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(ScheduleTimeListDiffCallback()) {
+class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, RecyclerView.ViewHolder>(ScheduleTimeListDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Main)
 

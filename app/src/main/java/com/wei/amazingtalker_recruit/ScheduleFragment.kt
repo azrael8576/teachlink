@@ -19,24 +19,25 @@ import com.wei.amazingtalker_recruit.databinding.FragmentScheduleBinding
 import com.wei.amazingtalker_recruit.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
 import com.wei.amazingtalker_recruit.utilities.DateTimeUtils
 import com.wei.amazingtalker_recruit.utilities.DateTimeUtils.getLocalOffsetDateTime
-import com.wei.amazingtalker_recruit.utilities.InjectorUtils
 import com.wei.amazingtalker_recruit.viewmodels.ScheduleViewModel
 import com.wei.amazingtalker_recruit.viewmodels.WeekAction
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ScheduleFragment : Fragment() {
 
+    @Inject lateinit var viewModel: ScheduleViewModel
+    @Inject lateinit var adapter: ScheduleTimeListAdapter
     private var binding: FragmentScheduleBinding? = null
-    private val viewModel: ScheduleViewModel by viewModels {
-        InjectorUtils.provideScheduleViewModelFactory()
-    }
     private var mCurrentTabTag = ""
 
     override fun onCreateView(
@@ -52,7 +53,6 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            val adapter = ScheduleTimeListAdapter()
             scheduleTimeRecyclerview.adapter = adapter
             subscribeUi(this, adapter)
             addOnTabSelectedListener(this, adapter)
