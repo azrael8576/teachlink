@@ -1,9 +1,9 @@
 package com.wei.amazingtalker_recruit.utilities
 
-import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherSchedule
-import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherScheduleUnit
-import com.wei.amazingtalker_recruit.data.DuringDayType
-import com.wei.amazingtalker_recruit.data.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
+import com.wei.amazingtalker_recruit.core.network.model.DuringDayType
+import com.wei.amazingtalker_recruit.core.network.model.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.network.model.TeacherSchedule
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -18,21 +18,21 @@ object DateTimeUtils {
      * @param interval 時間間隔(單位：分鐘)
      * @return MutableList<AmazingtalkerTeacherScheduleUnit>
      */
-    fun getIntervalTimeByScheduleList(amazingtalkerTeacherScheduleList: List<AmazingtalkerTeacherSchedule>, interval: Long, scheduleUnitState: ScheduleUnitState)
-            : MutableList<AmazingtalkerTeacherScheduleUnit> {
+    fun getIntervalTimeByScheduleList(teacherScheduleList: List<TeacherSchedule>, interval: Long, scheduleUnitState: ScheduleUnitState)
+            : MutableList<TeacherScheduleUnit> {
 
-        val scheduleUnitList = mutableListOf<AmazingtalkerTeacherScheduleUnit>()
+        val scheduleUnitList = mutableListOf<TeacherScheduleUnit>()
 
-        for (amazingtalkerTeacherSchedule in amazingtalkerTeacherScheduleList) {
-            var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(amazingtalkerTeacherSchedule.start))
+        for (teacherSchedule in teacherScheduleList) {
+            var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.start))
                 .atOffset(ZoneOffset.UTC)
                 .getLocalOffsetDateTime()
-            val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(amazingtalkerTeacherSchedule.end))
+            val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.end))
                 .atOffset(ZoneOffset.UTC)
                 .getLocalOffsetDateTime()
 
             while (startDate < endDate) {
-                var startDateLocalTime = AmazingtalkerTeacherScheduleUnit(startDate,
+                var startDateLocalTime = TeacherScheduleUnit(startDate,
                     startDate.plusMinutes(interval),
                     scheduleUnitState,
                     startDate.getDuringDayType())
@@ -42,7 +42,7 @@ object DateTimeUtils {
                 startDate = startDate.plusMinutes(interval)
                 if (startDate > endDate) {
                     if (startDate != endDate) {
-                        var endDateLocalTime = AmazingtalkerTeacherScheduleUnit(endDate,
+                        var endDateLocalTime = TeacherScheduleUnit(endDate,
                             endDate.plusMinutes(interval),
                             scheduleUnitState,
                             endDate.getDuringDayType())

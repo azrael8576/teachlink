@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
+import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.data.*
 import com.wei.amazingtalker_recruit.utilities.DateTimeUtils.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.utilities.DateTimeUtils.getUTCOffsetDateTime
@@ -22,19 +24,19 @@ enum class WeekAction {
 }
 
 class ScheduleViewModel @Inject constructor(
-    private val amazingtalkerRepository: AmazingtalkerRepository
+    private val teacherScheduleRepository: TeacherScheduleRepository
 ) : ViewModel() {
 
     private val _currentTeacherNameValue = MutableLiveData<String>()
     val currentTeacherNameValue : LiveData<String> get() = _currentTeacherNameValue
 
-    private val _currentSearchResult: MutableLiveData<Resource<AmazingtalkerTeacherScheduleResponse>> = MutableLiveData()
-    val currentSearchResult: LiveData<Resource<AmazingtalkerTeacherScheduleResponse>>
+    private val _currentSearchResult: MutableLiveData<Resource<NetworkTeacherSchedule>> = MutableLiveData()
+    val currentSearchResult: LiveData<Resource<NetworkTeacherSchedule>>
         get() = _currentSearchResult
 
-    private val _amazingtalkerTeacherScheduleUnitList: MutableLiveData<List<AmazingtalkerTeacherScheduleUnit>> = MutableLiveData()
-    val amazingtalkerTeacherScheduleUnitList: LiveData<List<AmazingtalkerTeacherScheduleUnit>>
-        get() = _amazingtalkerTeacherScheduleUnitList
+    private val _teacherScheduleUnitList: MutableLiveData<List<TeacherScheduleUnit>> = MutableLiveData()
+    val teacherScheduleUnitList: LiveData<List<TeacherScheduleUnit>>
+        get() = _teacherScheduleUnitList
 
     private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
     val apiQueryStartedAtUTC : LiveData<OffsetDateTime> get() = _apiQueryStartedAtUTC
@@ -55,7 +57,7 @@ class ScheduleViewModel @Inject constructor(
         // Set initial values for the order
         resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
-        postAmazingtalkerTeacherScheduleResponse(
+        postTeacherScheduleResponse(
             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
                 ChronoUnit.SECONDS).toString())
     }
@@ -88,16 +90,16 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    private fun postAmazingtalkerTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
+    private fun postTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
         viewModelScope.launch {
             _currentTeacherNameValue.value = teacherName
             _currentSearchResult.value =
-                amazingtalkerRepository.getTeacherScheduleResultStream(teacherName, startedAtUTC)
+                teacherScheduleRepository.getTeacherSchedule(teacherName, startedAtUTC)
         }
     }
 
-    fun setAmazingtalkerTeacherScheduleUnitList(amazingtalkerTeacherScheduleUnitList: List<AmazingtalkerTeacherScheduleUnit>) {
-        _amazingtalkerTeacherScheduleUnitList.value = amazingtalkerTeacherScheduleUnitList.sortedBy { scheduleUnit -> scheduleUnit.start }
+    fun setTeacherScheduleUnitList(teacherScheduleUnitList: List<TeacherScheduleUnit>) {
+        _teacherScheduleUnitList.value = teacherScheduleUnitList.sortedBy { scheduleUnit -> scheduleUnit.start }
     }
 
     fun updateWeek(action: WeekAction) {
@@ -108,13 +110,13 @@ class ScheduleViewModel @Inject constructor(
                     if (lasWeekMondayLocalDate < OffsetDateTime.now( ZoneId.systemDefault() )) {
                         resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
                         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
-                        postAmazingtalkerTeacherScheduleResponse(
+                        postTeacherScheduleResponse(
                             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
                                 ChronoUnit.SECONDS).toString())
                     } else {
                         resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(-1))
                         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
-                        postAmazingtalkerTeacherScheduleResponse(
+                        postTeacherScheduleResponse(
                             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
                                 ChronoUnit.SECONDS).toString())
                     }
@@ -124,7 +126,7 @@ class ScheduleViewModel @Inject constructor(
             WeekAction.ACTION_NEXT_WEEK -> {
                 resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(1))
                 setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
-                postAmazingtalkerTeacherScheduleResponse(
+                postTeacherScheduleResponse(
                     TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
                         ChronoUnit.SECONDS).toString())
             }

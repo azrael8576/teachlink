@@ -4,7 +4,7 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class AmazingtalkerApplication : Application() {
+class AtApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

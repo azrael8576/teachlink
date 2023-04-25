@@ -10,10 +10,12 @@ ext {
             lifeCycle  : '2.2.0',
             navigation : '2.5.3',
             coroutines: '1.3.0-M2',
-            gson : '2.10',
             okhttp_interceptor  : '4.7.2',
             retrofit2 : '2.9.0',
-            hilt: '2.45'
+            retrofitKotlinxSerializationJson : '0.8.0',
+            hilt: '2.45',
+            kotlinxDatetime: '0.4.0',
+            kotlinxSerializationJson: '1.4.1'
     ]
     libs = [
             publicLibs : [
@@ -48,10 +50,8 @@ ext {
                     core    : [
                             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${libVersion.coroutines}",
                             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libVersion.coroutines}"
-                    ]
-            ],
-            gsonLibs       : [
-                    core    : "com.google.code.gson:gson:${libVersion.gson}"
+                    ],
+                    test: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${libVersion.coroutines}"
             ],
             okhttpInterceptorLibs  : [
                     core    : [
@@ -64,9 +64,18 @@ ext {
                             "com.squareup.retrofit2:converter-gson:${libVersion.retrofit2}"
                     ]
             ],
+            retrofitKotlinxSerializationJsonLibs  : [
+                    core    : "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${libVersion.retrofitKotlinxSerializationJson}",
+            ],
             hiltLibs  : [
                     core    : "com.google.dagger:hilt-android:${libVersion.hilt}",
                     compiler: "com.google.dagger:hilt-compiler:${libVersion.hilt}"
+            ],
+            kotlinxDatetimeLibs  : [
+                    core    : "org.jetbrains.kotlinx:kotlinx-datetime:${libVersion.kotlinxDatetime}"
+            ],
+            kotlinxSerializationJsonLibs  : [
+                    core    : "org.jetbrains.kotlinx:kotlinx-serialization-json:${libVersion.kotlinxSerializationJson}"
             ]
     ]
 }

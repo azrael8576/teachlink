@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wei.amazingtalker_recruit.R
-import com.wei.amazingtalker_recruit.data.AmazingtalkerTeacherScheduleUnit
-import com.wei.amazingtalker_recruit.data.DuringDayType
-import com.wei.amazingtalker_recruit.data.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
+import com.wei.amazingtalker_recruit.core.network.model.DuringDayType
+import com.wei.amazingtalker_recruit.core.network.model.ScheduleUnitState
 import com.wei.amazingtalker_recruit.databinding.ListHeaderScheduleTimeBinding
 import com.wei.amazingtalker_recruit.databinding.ListItemHeaderScheduleTimeBinding
 import com.wei.amazingtalker_recruit.databinding.ListItemScheduleTimeBinding
@@ -26,6 +26,7 @@ import javax.inject.Inject
 enum class ItemViewType {
     ITEM_HEADER, ITEM, HEADER
 }
+
 /**
  * Adapter for the [scheduleTimeRecyclerview] in [ScheduleFragment].
  */
@@ -33,7 +34,7 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
 
     private val adapterScope = CoroutineScope(Dispatchers.Main)
 
-    fun addHeaderAndSubmitList(list: List<AmazingtalkerTeacherScheduleUnit>) {
+    fun addHeaderAndSubmitList(list: List<TeacherScheduleUnit>) {
 
         adapterScope.launch {
             val items = listOf(DataItem.Header) + list.groupBy { it.duringDayType }.flatMap {
@@ -195,7 +196,7 @@ sealed class DataItem(val itemViewType: ItemViewType) {
         override val isHeader = false
     }
 
-    data class Item(val amazingtalkerTeacherScheduleUnit: AmazingtalkerTeacherScheduleUnit) : DataItem(ItemViewType.ITEM) {
+    data class Item(val amazingtalkerTeacherScheduleUnit: TeacherScheduleUnit) : DataItem(ItemViewType.ITEM) {
         override val name = null
         override val start = amazingtalkerTeacherScheduleUnit.start
         override val end = amazingtalkerTeacherScheduleUnit.end
