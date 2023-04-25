@@ -1,0 +1,36 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+    <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
+    <style name="Base.Theme.AmazingtalkerRecruit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/amazingtalker_white</item>
+        <item name="colorPrimaryVariant">@color/amazingtalker_gray_50</item>
+        <item name="colorOnPrimary">@color/amazingtalker_white</item>
+        <item name="colorPrimaryDark">@color/amazingtalker_green_900</item>
+        <item name="colorOnSurface">@color/amazingtalker_black</item>
+        <item name="colorAccent">@color/amazingtalker_gray_50</item>
+        <item name="colorSurface">@color/amazingtalker_black</item>
+        <item name="colorSecondary">@color/amazingtalker_black</item>
+        <item name="android:colorBackground">@color/amazingtalker_white</item>
+    </style>
+
+    <style name="Theme.AmazingtalkerRecruit" parent="Base.Theme.AmazingtalkerRecruit"/>
+
+    <style name="Theme.AmazingtalkerRecruit.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="Theme.AmazingtalkerRecruit.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+
+    <style name="TextAppearance.AmazingtalkerRecruit.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" >
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!--預設文字樣式 移除原生padding-->
+    <style name="NoPaddingTextView" parent="TextAppearance.AppCompat">
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+</resources>

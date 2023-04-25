@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
 }
@@ -11,17 +11,17 @@ apply plugin: 'org.jetbrains.kotlin.android.extensions'
 def config = rootProject.ext
 
 android {
-    namespace 'com.wei.amazingtalker_recruit'
+    namespace 'com.wei.amazingtalker_recruit.feature.teacherschedule'
     compileSdk config.android.compileSdk
 
     defaultConfig {
-        applicationId "com.wei.amazingtalker_recruit"
         minSdk config.android.minSdk
         targetSdk config.android.targetSdk
-        versionCode 1
+        versionCode config.android.version
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -47,13 +47,19 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':feature:teacherschedule')
+
+    implementation project(path: ':core:network')
+    implementation project(path: ':core:common')
+    implementation project(path: ':core:data')
 
     // PublicLibs
     implementation config.libs.publicLibs.core
     coreLibraryDesugaring config.libs.publicLibs.desugar_jdk
     testImplementation config.libs.publicLibs.test
     testImplementation config.libs.publicLibs.androidtest
+
+    // LifeCycle
+    implementation config.libs.lifeCycleLibs.core
 
     // Navigation
     implementation config.libs.navigationLibs.core
@@ -64,4 +70,5 @@ dependencies {
     // Hilt
     implementation config.libs.hiltLibs.core
     kapt config.libs.hiltLibs.compiler
+
 }

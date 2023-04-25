@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "amazingtalker-recruit"
 include ':app'
 include ':core:network'
+include ':core:data'
+include ':core:common'
+include ':feature:teacherschedule'

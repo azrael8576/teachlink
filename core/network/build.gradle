@@ -34,13 +34,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-//    implementation project(path: ':app')
-
     // PublicLibs
     implementation config.libs.publicLibs.core
     coreLibraryDesugaring config.libs.publicLibs.desugar_jdk
@@ -55,10 +53,6 @@ dependencies {
 
     // RetrofitKotlinxSerializationJson
     implementation config.libs.retrofitKotlinxSerializationJsonLibs.core
-
-    // Hilt
-    implementation config.libs.hiltLibs.core
-    kapt config.libs.hiltLibs.compiler
 
     // Hilt
     implementation config.libs.hiltLibs.core

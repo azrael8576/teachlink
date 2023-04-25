@@ -1,27 +1,25 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
 }
 
 apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
 def config = rootProject.ext
 
 android {
-    namespace 'com.wei.amazingtalker_recruit'
+    namespace 'com.wei.amazingtalker_recruit.core.data'
     compileSdk config.android.compileSdk
 
     defaultConfig {
-        applicationId "com.wei.amazingtalker_recruit"
         minSdk config.android.minSdk
         targetSdk config.android.targetSdk
-        versionCode 1
+        versionCode config.android.version
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,21 +31,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
-    buildFeatures {
-        viewBinding true
-    }
-    androidExtensions {
-        experimental = true
-    }
 }
 
 dependencies {
-    implementation project(path: ':feature:teacherschedule')
+    implementation project(path: ':core:common')
+    implementation project(path: ':core:network')
 
     // PublicLibs
     implementation config.libs.publicLibs.core
@@ -55,13 +47,10 @@ dependencies {
     testImplementation config.libs.publicLibs.test
     testImplementation config.libs.publicLibs.androidtest
 
-    // Navigation
-    implementation config.libs.navigationLibs.core
-
-    // Coroutines
-    implementation config.libs.coroutinesLibs.core
-
     // Hilt
     implementation config.libs.hiltLibs.core
     kapt config.libs.hiltLibs.compiler
+
+    // Retrofit2
+    implementation config.libs.retrofit2Libs.core
 }
