@@ -7,26 +7,31 @@ plugins {
 
 apply plugin: 'kotlin-kapt'
 
-def config = rootProject.ext
+def androidID = rootProject.ext.androidID
+def libs = rootProject.ext.libs
 
 android {
     namespace 'com.wei.amazingtalker_recruit.core.network'
-    compileSdk config.android.compileSdk
+    compileSdk androidID.compileSdk
 
     defaultConfig {
-        minSdk config.android.minSdk
-        targetSdk config.android.targetSdk
-        versionCode config.android.version
-        versionName "1.0"
+        minSdk androidID.minSdk
+        targetSdk androidID.targetSdk
+        versionCode androidID.versionCode
+        versionName androidID.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner androidID.testInstrumentationRunner
     }
 
+
     buildTypes {
+        debug {
+            buildConfigField("String","ServerUrl","${AmazingTalkerServerUrl}")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String","ServerUrl","${AmazingTalkerServerUrl}")
         }
     }
     compileOptions {
@@ -40,30 +45,29 @@ android {
 
 dependencies {
     // PublicLibs
-    implementation config.libs.publicLibs.core
-    coreLibraryDesugaring config.libs.publicLibs.desugar_jdk
-    testImplementation config.libs.publicLibs.test
-    testImplementation config.libs.publicLibs.androidtest
+    implementation libs.publicLibs.core
+    coreLibraryDesugaring libs.publicLibs.desugar_jdk
+    testImplementation libs.publicLibs.test
 
     // Okhttp Interceptor
-    implementation config.libs.okhttpInterceptorLibs.core
+    implementation libs.okhttpInterceptorLibs.core
 
     // Retrofit2
-    implementation config.libs.retrofit2Libs.core
+    implementation libs.retrofit2Libs.core
 
     // RetrofitKotlinxSerializationJson
-    implementation config.libs.retrofitKotlinxSerializationJsonLibs.core
+    implementation libs.retrofitKotlinxSerializationJsonLibs.core
 
     // Hilt
-    implementation config.libs.hiltLibs.core
-    kapt config.libs.hiltLibs.compiler
+    implementation libs.hiltLibs.core
+    kapt libs.hiltLibs.compiler
 
     // Coroutines
-    implementation config.libs.coroutinesLibs.core
+    implementation libs.coroutinesLibs.core
 
     // KotlinxDatetime
-    implementation config.libs.kotlinxDatetimeLibs.core
+    implementation libs.kotlinxDatetimeLibs.core
 
     // KotlinxSerializationJson
-    implementation config.libs.kotlinxSerializationJsonLibs.core
+    implementation libs.kotlinxSerializationJsonLibs.core
 }

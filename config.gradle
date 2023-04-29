@@ -1,25 +1,36 @@
 ext {
-    android = [
-            compileSdk : 32,
-            minSdk     : 23,
-            targetSdk  : 32,
-            versionCode: 1,
-            versionName: "1.0"
+    //TODO 測試環境 feature 模組獨立運行
+    isRelease = true
+
+    androidID = [
+            compileSdk               : 32,
+            minSdk                   : 23,
+            targetSdk                : 32,
+            versionCode              : 1,
+            versionName              : "1.0",
+
+            testInstrumentationRunner: "androidx.test.runner.AndroidJUnitRunner"
     ]
+
+    appID = [
+            app: "com.wei.amazingtalker_recruit"
+    ]
+
     libVersion = [
-            lifeCycle  : '2.2.0',
-            navigation : '2.5.3',
-            coroutines: '1.3.0-M2',
-            okhttp_interceptor  : '4.7.2',
-            retrofit2 : '2.9.0',
-            retrofitKotlinxSerializationJson : '0.8.0',
-            hilt: '2.45',
-            kotlinxDatetime: '0.4.0',
-            kotlinxSerializationJson: '1.4.1'
+            lifeCycle                       : '2.2.0',
+            navigation                      : '2.5.3',
+            coroutines                      : '1.3.0-M2',
+            okhttp_interceptor              : '4.7.2',
+            retrofit2                       : '2.9.0',
+            retrofitKotlinxSerializationJson: '0.8.0',
+            hilt                            : '2.45',
+            kotlinxDatetime                 : '0.4.0',
+            kotlinxSerializationJson        : '1.4.1'
     ]
+
     libs = [
-            publicLibs : [
-                    core    : [
+            publicLibs                          : [
+                    core       : [
                             "androidx.legacy:legacy-support-v4:1.0.0",
                             "androidx.core:core-ktx:1.7.0",
                             "androidx.appcompat:appcompat:1.5.1",
@@ -27,55 +38,55 @@ ext {
                             "androidx.constraintlayout:constraintlayout:2.1.4"
                     ],
                     desugar_jdk: "com.android.tools:desugar_jdk_libs:1.1.5",
-                    test: "junit:junit:4.13.2",
-                    androidtest: [
+                    test       : [
+                            "junit:junit:4.13.2",
                             "androidx.test.ext:junit:1.1.4",
                             "androidx.test.espresso:espresso-core:3.5.0"
                     ]
             ],
-            lifeCycleLibs  : [
-                    core    : [
+            lifeCycleLibs                       : [
+                    core: [
                             "androidx.lifecycle:lifecycle-livedata-ktx:${libVersion.lifeCycle}",
                             "androidx.lifecycle:lifecycle-viewmodel-ktx:${libVersion.lifeCycle}",
                             "androidx.lifecycle:lifecycle-extensions:${libVersion.lifeCycle}"
                     ]
             ],
-            navigationLibs  : [
-                    core    : [
+            navigationLibs                      : [
+                    core: [
                             "androidx.navigation:navigation-fragment-ktx:${libVersion.navigation}",
                             "androidx.navigation:navigation-ui-ktx:${libVersion.navigation}"
                     ]
             ],
-            coroutinesLibs  : [
-                    core    : [
+            coroutinesLibs                      : [
+                    core: [
                             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${libVersion.coroutines}",
                             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libVersion.coroutines}"
                     ],
                     test: "org.jetbrains.kotlinx:kotlinx-coroutines-test:${libVersion.coroutines}"
             ],
-            okhttpInterceptorLibs  : [
-                    core    : [
+            okhttpInterceptorLibs               : [
+                    core: [
                             "com.squareup.okhttp3:logging-interceptor:${libVersion.okhttp_interceptor}"
                     ]
             ],
-            retrofit2Libs  : [
-                    core    : [
+            retrofit2Libs                       : [
+                    core: [
                             "com.squareup.retrofit2:retrofit:${libVersion.retrofit2}",
                             "com.squareup.retrofit2:converter-gson:${libVersion.retrofit2}"
                     ]
             ],
-            retrofitKotlinxSerializationJsonLibs  : [
-                    core    : "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${libVersion.retrofitKotlinxSerializationJson}",
+            retrofitKotlinxSerializationJsonLibs: [
+                    core: "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${libVersion.retrofitKotlinxSerializationJson}",
             ],
-            hiltLibs  : [
+            hiltLibs                            : [
                     core    : "com.google.dagger:hilt-android:${libVersion.hilt}",
                     compiler: "com.google.dagger:hilt-compiler:${libVersion.hilt}"
             ],
-            kotlinxDatetimeLibs  : [
-                    core    : "org.jetbrains.kotlinx:kotlinx-datetime:${libVersion.kotlinxDatetime}"
+            kotlinxDatetimeLibs                 : [
+                    core: "org.jetbrains.kotlinx:kotlinx-datetime:${libVersion.kotlinxDatetime}"
             ],
-            kotlinxSerializationJsonLibs  : [
-                    core    : "org.jetbrains.kotlinx:kotlinx-serialization-json:${libVersion.kotlinxSerializationJson}"
+            kotlinxSerializationJsonLibs        : [
+                    core: "org.jetbrains.kotlinx:kotlinx-serialization-json:${libVersion.kotlinxSerializationJson}"
             ]
     ]
 }

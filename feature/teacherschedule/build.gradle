@@ -8,21 +8,22 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
-def config = rootProject.ext
+def androidID = rootProject.ext.androidID
+def libs = rootProject.ext.libs
 
 android {
     namespace 'com.wei.amazingtalker_recruit.feature.teacherschedule'
-    compileSdk config.android.compileSdk
+    compileSdk androidID.compileSdk
 
     defaultConfig {
-        minSdk config.android.minSdk
-        targetSdk config.android.targetSdk
-        versionCode config.android.version
-        versionName "1.0"
+        minSdk androidID.minSdk
+        targetSdk androidID.targetSdk
+        versionCode androidID.versionCode
+        versionName androidID.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner androidID.testInstrumentationRunner
     }
+
 
     buildTypes {
         release {
@@ -53,22 +54,21 @@ dependencies {
     implementation project(path: ':core:data')
 
     // PublicLibs
-    implementation config.libs.publicLibs.core
-    coreLibraryDesugaring config.libs.publicLibs.desugar_jdk
-    testImplementation config.libs.publicLibs.test
-    testImplementation config.libs.publicLibs.androidtest
+    implementation libs.publicLibs.core
+    coreLibraryDesugaring libs.publicLibs.desugar_jdk
+    testImplementation libs.publicLibs.test
 
     // LifeCycle
-    implementation config.libs.lifeCycleLibs.core
+    implementation libs.lifeCycleLibs.core
 
     // Navigation
-    implementation config.libs.navigationLibs.core
+    implementation libs.navigationLibs.core
 
     // Coroutines
-    implementation config.libs.coroutinesLibs.core
+    implementation libs.coroutinesLibs.core
 
     // Hilt
-    implementation config.libs.hiltLibs.core
-    kapt config.libs.hiltLibs.compiler
+    implementation libs.hiltLibs.core
+    kapt libs.hiltLibs.compiler
 
 }

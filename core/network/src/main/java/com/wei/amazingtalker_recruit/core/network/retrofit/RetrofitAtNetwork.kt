@@ -2,6 +2,7 @@ package com.wei.amazingtalker_recruit.core.network.retrofit;
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.wei.amazingtalker_recruit.core.network.AtNetworkDataSource
+import com.wei.amazingtalker_recruit.core.network.BuildConfig
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -15,7 +16,7 @@ import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val AMAZING_TALKER_SERVICE_BASE_URL = "https://tw.amazingtalker.com/v1/guest/"
+const val AMAZING_TALKER_SERVICE_BASE_URL = BuildConfig.ServerUrl
 
 /**
  * Retrofit API declaration for AmazingTalker Network API
