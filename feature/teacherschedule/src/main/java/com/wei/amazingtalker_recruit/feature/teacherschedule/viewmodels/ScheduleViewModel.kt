@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
-import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils.getUTCOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
@@ -23,6 +24,7 @@ enum class WeekAction {
     ACTION_LAST_WEEK, ACTION_NEXT_WEEK
 }
 
+@HiltViewModel
 class ScheduleViewModel @Inject constructor(
     private val teacherScheduleRepository: TeacherScheduleRepository
 ) : ViewModel() {

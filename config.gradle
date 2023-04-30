@@ -1,5 +1,5 @@
 ext {
-    //TODO 測試環境 feature 模組獨立運行
+    //TODO 測試環境下, feature 模組能獨立作為 application 運行
     isRelease = true
 
     androidID = [
@@ -54,8 +54,11 @@ ext {
             navigationLibs                      : [
                     core: [
                             "androidx.navigation:navigation-fragment-ktx:${libVersion.navigation}",
-                            "androidx.navigation:navigation-ui-ktx:${libVersion.navigation}"
-                    ]
+                            "androidx.navigation:navigation-ui-ktx:${libVersion.navigation}",
+                            "androidx.navigation:navigation-dynamic-features-fragment:${libVersion.navigation}",
+                            "androidx.navigation:navigation-compose:${libVersion.navigation}"
+                    ],
+                    classpath: "androidx.navigation:navigation-safe-args-gradle-plugin:${libVersion.navigation}"
             ],
             coroutinesLibs                      : [
                     core: [

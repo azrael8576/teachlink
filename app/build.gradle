@@ -1,12 +1,9 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
 }
-
-apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
 def androidID = rootProject.ext.androidID
 def appID = rootProject.ext.appID
@@ -42,9 +39,6 @@ android {
     }
     buildFeatures {
         viewBinding true
-    }
-    androidExtensions {
-        experimental = true
     }
 }
 

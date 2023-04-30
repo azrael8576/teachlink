@@ -1,8 +1,8 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.utilities
 
-import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
-import com.wei.amazingtalker_recruit.core.network.model.DuringDayType
-import com.wei.amazingtalker_recruit.core.network.model.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.data.model.DuringDayType
+import com.wei.amazingtalker_recruit.core.data.model.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.core.network.model.TeacherSchedule
 import java.time.Instant
 import java.time.OffsetDateTime

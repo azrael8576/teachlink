@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
-
-apply plugin: 'kotlin-kapt'
 
 def androidID = rootProject.ext.androidID
 def libs = rootProject.ext.libs

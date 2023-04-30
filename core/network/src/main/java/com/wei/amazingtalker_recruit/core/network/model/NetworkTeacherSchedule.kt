@@ -17,9 +17,7 @@ data class NetworkTeacherSchedule(
 )
 
 
-enum class ScheduleUnitState {
-  AVAILABLE, BOOKED
-}
+
 
 /**
  * Data class that represents a schedule from Amazingtalker Teacher.
@@ -33,22 +31,4 @@ data class TeacherSchedule(
   val start: String,
   @SerialName("end")
   val end: String,
-)
-
-enum class DuringDayType {
-  Morning,
-  Afternoon,
-  Evening
-}
-
-/**
- * Data class that represents sliced into thirty-minute segmentsa schedule from AmazingtalkerTeacherSchedule.
- *
- * For UI rendering
- */
-data class TeacherScheduleUnit(
-  val start: OffsetDateTime,
-  val end: OffsetDateTime,
-  val state: ScheduleUnitState,
-  val duringDayType: DuringDayType,
 )

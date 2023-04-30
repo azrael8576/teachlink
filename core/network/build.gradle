@@ -1,11 +1,10 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.plugin.serialization'
 }
-
-apply plugin: 'kotlin-kapt'
 
 def androidID = rootProject.ext.androidID
 def libs = rootProject.ext.libs

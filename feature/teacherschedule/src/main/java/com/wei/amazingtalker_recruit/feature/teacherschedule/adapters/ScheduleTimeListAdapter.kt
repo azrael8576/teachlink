@@ -6,9 +6,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
-import com.wei.amazingtalker_recruit.core.network.model.DuringDayType
-import com.wei.amazingtalker_recruit.core.network.model.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.data.model.DuringDayType
+import com.wei.amazingtalker_recruit.core.data.model.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.ListHeaderScheduleTimeBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.ListItemHeaderScheduleTimeBinding
@@ -23,6 +23,10 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
+interface OnItemClickListener {
+    fun onItemClick(item: TeacherScheduleUnit)
+}
+
 enum class ItemViewType {
     ITEM_HEADER, ITEM, HEADER
 }
@@ -30,11 +34,17 @@ enum class ItemViewType {
 /**
  * Adapter for the [scheduleTimeRecyclerview] in [ScheduleFragment].
  */
-class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, RecyclerView.ViewHolder>(
-    ScheduleTimeListDiffCallback()
-) {
+class ScheduleTimeListAdapter @Inject constructor() :
+    ListAdapter<DataItem, RecyclerView.ViewHolder>(
+        ScheduleTimeListDiffCallback()
+    ) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Main)
+    private var onItemClickListener: OnItemClickListener? = null
+
+    fun setOnClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     fun addHeaderAndSubmitList(list: List<TeacherScheduleUnit>) {
 
@@ -62,6 +72,7 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
                     )
                 )
             }
+
             ItemViewType.ITEM_HEADER.ordinal -> {
                 ItemHeaderViewHolder(
                     ListItemHeaderScheduleTimeBinding.inflate(
@@ -71,6 +82,7 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
                     )
                 )
             }
+
             else -> {
                 ScheduleTimeListViewHolder(
                     ListItemScheduleTimeBinding.inflate(
@@ -95,7 +107,7 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
             }
 
             is ScheduleTimeListViewHolder -> {
-                holder.bind(data)
+                holder.bind(data as DataItem.Item)
             }
         }
     }
@@ -108,7 +120,7 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
         }
     }
 
-    class HeaderViewHolder(
+    inner class HeaderViewHolder(
         private val binding: ListHeaderScheduleTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -118,19 +130,19 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
                 textView.text = String.format(
                     binding.root.context.getString(R.string.your_local_time_zone),
                     ZoneId.systemDefault(),
-                    offsetFormatter.format(OffsetDateTime.now( ZoneId.systemDefault() ).offset)
+                    offsetFormatter.format(OffsetDateTime.now(ZoneId.systemDefault()).offset)
                 )
             }
         }
     }
 
-    class ItemHeaderViewHolder(
+    inner class ItemHeaderViewHolder(
         private val binding: ListItemHeaderScheduleTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: DataItem) {
             binding.apply {
-                textView.text = when(item.duringDayType){
+                textView.text = when (item.duringDayType) {
                     DuringDayType.Morning -> binding.root.resources.getString(R.string.morning)
                     DuringDayType.Afternoon -> binding.root.resources.getString(R.string.afternoon)
                     DuringDayType.Evening -> binding.root.resources.getString(R.string.evening)
@@ -140,11 +152,11 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
         }
     }
 
-    class ScheduleTimeListViewHolder(
+    inner class ScheduleTimeListViewHolder(
         private val binding: ListItemScheduleTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: DataItem) {
+        fun bind(item: DataItem.Item) {
             binding.apply {
                 val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
@@ -152,8 +164,7 @@ class ScheduleTimeListAdapter @Inject constructor(): ListAdapter<DataItem, Recyc
                 textScheduleUnitLocalTime.isEnabled = (item.state == ScheduleUnitState.AVAILABLE)
 
                 textScheduleUnitLocalTime.setOnClickListener {
-                    //TODO
-                    Toast.makeText(binding.root.context, "TODO: navTo ${item.toString()}", Toast.LENGTH_SHORT).show();
+                    onItemClickListener?.onItemClick(item.teacherScheduleUnit)
                 }
             }
         }
@@ -198,14 +209,14 @@ sealed class DataItem(val itemViewType: ItemViewType) {
         override val isHeader = false
     }
 
-    data class Item(val amazingtalkerTeacherScheduleUnit: TeacherScheduleUnit) : DataItem(
+    data class Item(val teacherScheduleUnit: TeacherScheduleUnit) : DataItem(
         ItemViewType.ITEM
     ) {
         override val name = null
-        override val start = amazingtalkerTeacherScheduleUnit.start
-        override val end = amazingtalkerTeacherScheduleUnit.end
-        override val state = amazingtalkerTeacherScheduleUnit.state
-        override val duringDayType = amazingtalkerTeacherScheduleUnit.duringDayType
+        override val start = teacherScheduleUnit.start
+        override val end = teacherScheduleUnit.end
+        override val state = teacherScheduleUnit.state
+        override val duringDayType = teacherScheduleUnit.duringDayType
         override val isHeader = false
     }
 }

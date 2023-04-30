@@ -10,11 +10,14 @@ import android.widget.Toast
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.wei.amazingtalker_recruit.core.network.model.ScheduleUnitState
-import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleUnit
+import com.wei.amazingtalker_recruit.core.data.model.ScheduleUnitState
+import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.core.result.Resource
+import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
@@ -32,10 +35,10 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), OnItemClickListener {
 
-    @Inject lateinit var viewModel: ScheduleViewModel
     @Inject lateinit var adapter: ScheduleTimeListAdapter
+    private val viewModel: ScheduleViewModel by viewModels()
     private var binding: FragmentScheduleBinding? = null
     private var mCurrentTabTag = ""
 
@@ -52,6 +55,7 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
+            adapter.setOnClickListener(this@ScheduleFragment)
             scheduleTimeRecyclerview.adapter = adapter
             subscribeUi(this, adapter)
             addOnTabSelectedListener(this, adapter)
@@ -199,5 +203,11 @@ class ScheduleFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onItemClick(item: TeacherScheduleUnit) {
+        //TODO nav event 抽取至 viewModel
+        val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
+        findNavController().navigate(action)
     }
 }
