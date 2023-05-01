@@ -22,7 +22,6 @@ android {
         testInstrumentationRunner androidID.testInstrumentationRunner
     }
 
-
     buildTypes {
         debug {
             buildConfigField("String", "ServerUrl", "${AmazingTalkerServerUrl}")
@@ -33,10 +32,12 @@ android {
             buildConfigField("String", "ServerUrl", "${AmazingTalkerServerUrl}")
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }

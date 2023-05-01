@@ -6,11 +6,8 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
-def androidID = rootProject.ext.androidID
-def libs = rootProject.ext.libs
-
 android {
-    namespace 'com.wei.amazingtalker_recruit.core.model'
+    namespace 'com.wei.amazingtalker_recruit.core.domain'
     compileSdk androidID.compileSdk
 
     defaultConfig {
@@ -41,6 +38,8 @@ android {
 
 dependencies {
     implementation project(path: ':core:common')
+    implementation project(path: ':core:data')
+    implementation project(path: ':core:model')
 
     // PublicLibs
     implementation libs.publicLibs.core
