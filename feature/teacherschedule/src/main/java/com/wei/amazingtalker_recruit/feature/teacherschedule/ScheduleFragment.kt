@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.wei.amazingtalker_recruit.core.domain.GetTeacherScheduleTimeUseCase
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
 import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
@@ -21,8 +22,7 @@ import com.wei.amazingtalker_recruit.core.result.Resource
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
-import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
-import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils
+import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEACHER_SCHEDULE_TIME_INTERVAL
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.WeekAction
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +39,8 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
 
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
+    @Inject
+    lateinit var getTeacherScheduleTimeUseCase: GetTeacherScheduleTimeUseCase
     private val viewModel: ScheduleViewModel by viewModels()
     private var binding: FragmentScheduleBinding? = null
     private var mCurrentTabTag = ""
@@ -124,16 +126,16 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
 
                             scheduleTimeList
                                 .plus(
-                                    DateTimeUtils.getIntervalTimeByScheduleList(
+                                    getTeacherScheduleTimeUseCase(
                                         it.value.available,
-                                        AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT,
+                                        TEACHER_SCHEDULE_TIME_INTERVAL,
                                         ScheduleTimeState.AVAILABLE
                                     )
                                 )
                                 .plus(
-                                    DateTimeUtils.getIntervalTimeByScheduleList(
+                                    getTeacherScheduleTimeUseCase(
                                         it.value.booked,
-                                        AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT,
+                                        TEACHER_SCHEDULE_TIME_INTERVAL,
                                         ScheduleTimeState.BOOKED
                                     )
                                 )

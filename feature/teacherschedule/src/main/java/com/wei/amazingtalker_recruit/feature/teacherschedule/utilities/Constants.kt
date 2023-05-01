@@ -1,7 +1,7 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.utilities
 
 /**
- * Constants used throughout the app.
+ * Constants used throughout the feature:teacherschedule.
  */
 const val TEST_DATA_TEACHER_NAME = "jamie-coleman"
-const val AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT: Long = 30
+const val TEACHER_SCHEDULE_TIME_INTERVAL: Long = 30

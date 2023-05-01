@@ -29,6 +29,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
@@ -40,6 +41,7 @@ dependencies {
     implementation project(path: ':core:common')
     implementation project(path: ':core:data')
     implementation project(path: ':core:model')
+    implementation project(path: ':core:network')
 
     // PublicLibs
     implementation libs.publicLibs.core
