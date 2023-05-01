@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
+    id 'com.google.dagger.hilt.android'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 def androidID = rootProject.ext.androidID
@@ -43,5 +45,9 @@ dependencies {
 
     // Okhttp Interceptor
     implementation libs.okhttpInterceptorLibs.core
+
+    // Hilt
+    implementation libs.hiltLibs.core
+    kapt libs.hiltLibs.compiler
 
 }

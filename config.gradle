@@ -57,8 +57,7 @@ ext {
                             "androidx.navigation:navigation-ui-ktx:${libVersion.navigation}",
                             "androidx.navigation:navigation-dynamic-features-fragment:${libVersion.navigation}",
                             "androidx.navigation:navigation-compose:${libVersion.navigation}"
-                    ],
-                    classpath: "androidx.navigation:navigation-safe-args-gradle-plugin:${libVersion.navigation}"
+                    ]
             ],
             coroutinesLibs                      : [
                     core: [

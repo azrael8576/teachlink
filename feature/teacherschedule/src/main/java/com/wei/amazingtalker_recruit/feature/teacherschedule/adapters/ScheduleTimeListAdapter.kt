@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wei.amazingtalker_recruit.core.data.model.DuringDayType
 import com.wei.amazingtalker_recruit.core.data.model.ScheduleUnitState
 import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
+import com.wei.amazingtalker_recruit.core.network.AtDispatchers
+import com.wei.amazingtalker_recruit.core.network.Dispatcher
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.ListHeaderScheduleTimeBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.ListItemHeaderScheduleTimeBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.ListItemScheduleTimeBinding
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,12 +37,14 @@ enum class ItemViewType {
 /**
  * Adapter for the [scheduleTimeRecyclerview] in [ScheduleFragment].
  */
-class ScheduleTimeListAdapter @Inject constructor() :
+class ScheduleTimeListAdapter @Inject constructor(
+    @Dispatcher(AtDispatchers.Default) private val defaultDispatcher: CoroutineDispatcher,
+) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(
         ScheduleTimeListDiffCallback()
     ) {
 
-    private val adapterScope = CoroutineScope(Dispatchers.Main)
+    private val computationScope = CoroutineScope(defaultDispatcher)
     private var onItemClickListener: OnItemClickListener? = null
 
     fun setOnClickListener(onItemClickListener: OnItemClickListener) {
@@ -48,7 +53,7 @@ class ScheduleTimeListAdapter @Inject constructor() :
 
     fun addHeaderAndSubmitList(list: List<TeacherScheduleUnit>) {
 
-        adapterScope.launch {
+        computationScope.launch {
             val items = listOf(DataItem.Header) + list.groupBy { it.duringDayType }.flatMap {
                 listOf(DataItem.ItemHeader(it.key), *(it.value.map { item ->
                     DataItem.Item(item)

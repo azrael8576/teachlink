@@ -1,16 +1,28 @@
 package com.wei.amazingtalker_recruit.core.data.repository
 
 import android.util.Log
+import com.wei.amazingtalker_recruit.core.network.AtDispatchers
+import com.wei.amazingtalker_recruit.core.network.Dispatcher
 import com.wei.amazingtalker_recruit.core.result.Resource
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import javax.inject.Inject
 
-abstract class BaseRepository {
+interface BaseRepository {
 
-    suspend fun <T> safeApiCall(apiCall : suspend () -> T ): Resource<T> {
+    val ioDispatcher: CoroutineDispatcher
 
-        return withContext(Dispatchers.IO){
+    suspend fun <T> safeApiCall(apiCall: suspend () -> T): Resource<T>
+}
+
+open class BaseRepositoryImpl @Inject constructor(
+    @Dispatcher(AtDispatchers.IO) override val ioDispatcher: CoroutineDispatcher
+) : BaseRepository {
+
+    override suspend fun <T> safeApiCall(apiCall: suspend () -> T): Resource<T> {
+
+        return withContext(ioDispatcher){
             try{
                 Resource.Success(apiCall.invoke())
             } catch(throwable : Throwable){
