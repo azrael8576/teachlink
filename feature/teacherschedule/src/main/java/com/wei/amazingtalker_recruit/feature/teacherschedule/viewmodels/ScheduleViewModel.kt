@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
+import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils.getUTCOffsetDateTime
@@ -37,10 +37,10 @@ class ScheduleViewModel @Inject constructor(
     val currentSearchResult: LiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>>
         get() = _currentSearchResult
 
-    private val _teacherScheduleUnitList: MutableLiveData<List<TeacherScheduleUnit>> =
+    private val _teacherScheduleTimeList: MutableLiveData<List<TeacherScheduleTime>> =
         MutableLiveData()
-    val teacherScheduleUnitList: LiveData<List<TeacherScheduleUnit>>
-        get() = _teacherScheduleUnitList
+    val teacherScheduleTimeList: LiveData<List<TeacherScheduleTime>>
+        get() = _teacherScheduleTimeList
 
     private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
     val apiQueryStartedAtUTC: LiveData<OffsetDateTime> get() = _apiQueryStartedAtUTC
@@ -112,9 +112,9 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun setTeacherScheduleUnitList(teacherScheduleUnitList: List<TeacherScheduleUnit>) {
-        _teacherScheduleUnitList.value =
-            teacherScheduleUnitList.sortedBy { scheduleUnit -> scheduleUnit.start }
+    fun setTeacherScheduleTimeList(teacherScheduleTimeList: List<TeacherScheduleTime>) {
+        _teacherScheduleTimeList.value =
+            teacherScheduleTimeList.sortedBy { scheduleTime -> scheduleTime.start }
     }
 
     fun updateWeek(action: WeekAction) {

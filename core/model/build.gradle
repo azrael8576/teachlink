@@ -1,16 +1,16 @@
 plugins {
     id 'com.android.library'
-    id 'com.google.dagger.hilt.android'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.dagger.hilt.android'
 }
 
 def androidID = rootProject.ext.androidID
 def libs = rootProject.ext.libs
 
 android {
-    namespace 'com.wei.amazingtalker_recruit.feature.teacherschedule'
+    namespace 'com.wei.amazingtalker_recruit.core.model'
     compileSdk androidID.compileSdk
 
     defaultConfig {
@@ -22,7 +22,6 @@ android {
         testInstrumentationRunner androidID.testInstrumentationRunner
     }
 
-
     buildTypes {
         release {
             minifyEnabled false
@@ -32,39 +31,21 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
-    buildFeatures {
-        viewBinding true
-    }
 }
 
 dependencies {
-
-    implementation project(path: ':core:network')
     implementation project(path: ':core:common')
-    implementation project(path: ':core:data')
-    implementation project(path: ':core:model')
 
     // PublicLibs
     implementation libs.publicLibs.core
     coreLibraryDesugaring libs.publicLibs.desugar_jdk
     testImplementation libs.publicLibs.test
 
-    // LifeCycle
-    implementation libs.lifeCycleLibs.core
-
-    // Navigation
-    implementation libs.navigationLibs.core
-
-    // Coroutines
-    implementation libs.coroutinesLibs.core
-
     // Hilt
     implementation libs.hiltLibs.core
     kapt libs.hiltLibs.compiler
-
 }

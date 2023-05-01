@@ -14,8 +14,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.wei.amazingtalker_recruit.core.data.model.ScheduleUnitState
-import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
+import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
+import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
 import com.wei.amazingtalker_recruit.core.result.Resource
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
@@ -83,7 +83,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.d(TAG, "======onTabSelected====$ tab.tag")
                 mCurrentTabTag = tab.tag.toString()
-                updateAdapterList(adapter, viewModel.teacherScheduleUnitList.value)
+                updateAdapterList(adapter, viewModel.teacherScheduleTimeList.value)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -119,26 +119,26 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             when (it) {
                 is Resource.Success -> {
                     CoroutineScope(Dispatchers.Main).launch {
-                        val scheduleUnitList = async {
-                            val scheduleUnitList = mutableListOf<TeacherScheduleUnit>()
+                        val scheduleTimeList = async {
+                            val scheduleTimeList = mutableListOf<TeacherScheduleTime>()
 
-                            scheduleUnitList
+                            scheduleTimeList
                                 .plus(
                                     DateTimeUtils.getIntervalTimeByScheduleList(
                                         it.value.available,
                                         AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT,
-                                        ScheduleUnitState.AVAILABLE
+                                        ScheduleTimeState.AVAILABLE
                                     )
                                 )
                                 .plus(
                                     DateTimeUtils.getIntervalTimeByScheduleList(
                                         it.value.booked,
                                         AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT,
-                                        ScheduleUnitState.BOOKED
+                                        ScheduleTimeState.BOOKED
                                     )
                                 )
                         }
-                        viewModel.setTeacherScheduleUnitList(scheduleUnitList.await() as List<TeacherScheduleUnit>)
+                        viewModel.setTeacherScheduleTimeList(scheduleTimeList.await() as List<TeacherScheduleTime>)
                         binding?.scheduleTimeRecyclerview?.isVisible = true
                     }
                 }
@@ -151,7 +151,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             }
         }
 
-        viewModel.teacherScheduleUnitList.observe(viewLifecycleOwner) {
+        viewModel.teacherScheduleTimeList.observe(viewLifecycleOwner) {
             updateAdapterList(adapter, it)
         }
     }
@@ -199,12 +199,12 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
 
     private fun updateAdapterList(
         adapter: ScheduleTimeListAdapter,
-        teacherScheduleUnitList: List<TeacherScheduleUnit>?
+        teacherScheduleTimeList: List<TeacherScheduleTime>?
     ) {
         if (mCurrentTabTag.isEmpty()) return
 
-        if (getTeacherScheduleUnitListByFilterCurrentTabLocalTime(teacherScheduleUnitList) != null) {
-            getTeacherScheduleUnitListByFilterCurrentTabLocalTime(teacherScheduleUnitList)?.let {
+        if (getTeacherScheduleTimeListByFilterCurrentTabLocalTime(teacherScheduleTimeList) != null) {
+            getTeacherScheduleTimeListByFilterCurrentTabLocalTime(teacherScheduleTimeList)?.let {
                 adapter.addHeaderAndSubmitList(
                     it
                 )
@@ -213,15 +213,15 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         }
     }
 
-    private fun getTeacherScheduleUnitListByFilterCurrentTabLocalTime(
-        teacherScheduleUnitList: List<TeacherScheduleUnit>?
-    ): List<TeacherScheduleUnit>? {
+    private fun getTeacherScheduleTimeListByFilterCurrentTabLocalTime(
+        teacherScheduleTimeList: List<TeacherScheduleTime>?
+    ): List<TeacherScheduleTime>? {
         var currentTabLocalTime =
             Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
                 .atOffset(ZoneOffset.UTC)
                 .getLocalOffsetDateTime()
 
-        return teacherScheduleUnitList?.filter { item ->
+        return teacherScheduleTimeList?.filter { item ->
             item.start.dayOfYear == currentTabLocalTime.dayOfYear
         }
     }
@@ -231,7 +231,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         binding = null
     }
 
-    override fun onItemClick(item: TeacherScheduleUnit) {
+    override fun onItemClick(item: TeacherScheduleTime) {
         //TODO nav event 抽取至 viewModel
         val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
         findNavController().navigate(action)

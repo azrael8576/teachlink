@@ -2,13 +2,12 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.wei.amazingtalker_recruit.core.data.model.DuringDayType
-import com.wei.amazingtalker_recruit.core.data.model.ScheduleUnitState
-import com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit
+import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
+import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
+import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
 import com.wei.amazingtalker_recruit.core.network.AtDispatchers
 import com.wei.amazingtalker_recruit.core.network.Dispatcher
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
@@ -27,7 +26,7 @@ import java.util.*
 import javax.inject.Inject
 
 interface OnItemClickListener {
-    fun onItemClick(item: TeacherScheduleUnit)
+    fun onItemClick(item: TeacherScheduleTime)
 }
 
 enum class ItemViewType {
@@ -51,7 +50,7 @@ class ScheduleTimeListAdapter @Inject constructor(
         this.onItemClickListener = onItemClickListener;
     }
 
-    fun addHeaderAndSubmitList(list: List<TeacherScheduleUnit>) {
+    fun addHeaderAndSubmitList(list: List<TeacherScheduleTime>) {
 
         computationScope.launch {
             val items = listOf(DataItem.Header) + list.groupBy { it.duringDayType }.flatMap {
@@ -165,11 +164,11 @@ class ScheduleTimeListAdapter @Inject constructor(
             binding.apply {
                 val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
-                textScheduleUnitLocalTime.text = dateTimeFormatter.format(item.start)
-                textScheduleUnitLocalTime.isEnabled = (item.state == ScheduleUnitState.AVAILABLE)
+                textScheduleLocalTime.text = dateTimeFormatter.format(item.start)
+                textScheduleLocalTime.isEnabled = (item.state == ScheduleTimeState.AVAILABLE)
 
-                textScheduleUnitLocalTime.setOnClickListener {
-                    onItemClickListener?.onItemClick(item.teacherScheduleUnit)
+                textScheduleLocalTime.setOnClickListener {
+                    onItemClickListener?.onItemClick(item.teacherScheduleTime)
                 }
             }
         }
@@ -192,7 +191,7 @@ sealed class DataItem(val itemViewType: ItemViewType) {
     abstract val name: String?
     abstract val start: OffsetDateTime?
     abstract val end: OffsetDateTime?
-    abstract val state: ScheduleUnitState?
+    abstract val state: ScheduleTimeState?
     abstract val duringDayType: DuringDayType?
     abstract val isHeader: Boolean
 
@@ -214,14 +213,14 @@ sealed class DataItem(val itemViewType: ItemViewType) {
         override val isHeader = false
     }
 
-    data class Item(val teacherScheduleUnit: TeacherScheduleUnit) : DataItem(
+    data class Item(val teacherScheduleTime: TeacherScheduleTime) : DataItem(
         ItemViewType.ITEM
     ) {
         override val name = null
-        override val start = teacherScheduleUnit.start
-        override val end = teacherScheduleUnit.end
-        override val state = teacherScheduleUnit.state
-        override val duringDayType = teacherScheduleUnit.duringDayType
+        override val start = teacherScheduleTime.start
+        override val end = teacherScheduleTime.end
+        override val state = teacherScheduleTime.state
+        override val duringDayType = teacherScheduleTime.duringDayType
         override val isHeader = false
     }
 }

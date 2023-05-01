@@ -1,23 +1,18 @@
-package com.wei.amazingtalker_recruit.core.data.model
+package com.wei.amazingtalker_recruit.core.model.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
 
-/**
- * Data class that represents sliced into thirty-minute segmentsa schedule from AmazingtalkerTeacherSchedule.
- *
- * For UI rendering
- */
 @Parcelize
-data class TeacherScheduleUnit(
+data class TeacherScheduleTime(
     val start: OffsetDateTime,
     val end: OffsetDateTime,
-    val state: ScheduleUnitState,
+    val state: ScheduleTimeState,
     val duringDayType: DuringDayType,
 ) : Parcelable
 
-enum class ScheduleUnitState {
+enum class ScheduleTimeState {
     AVAILABLE, BOOKED
 }
 

@@ -50,16 +50,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/arrow_left_gray" />
 
-                    <ImageButton
-                        android:id="@+id/button_next_week"
-                        android:layout_width="@dimen/toolbar_item_icon"
-                        android:layout_height="@dimen/toolbar_item_icon"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/margin_large"
-                        android:background="@android:color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/arrow_right_gray" />
-
                     <TextView
                         android:id="@+id/text_week"
                         android:layout_width="wrap_content"
@@ -69,6 +59,16 @@
                         android:gravity="center_horizontal"
                         android:textSize="@dimen/base_titleline"
                         tools:text="2022-01-02 - 1-8" />
+
+                    <ImageButton
+                        android:id="@+id/button_next_week"
+                        android:layout_width="@dimen/toolbar_item_icon"
+                        android:layout_height="@dimen/toolbar_item_icon"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:background="@android:color/transparent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/arrow_right_gray" />
 
                 </LinearLayout>
 

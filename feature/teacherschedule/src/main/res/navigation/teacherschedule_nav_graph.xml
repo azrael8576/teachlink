@@ -21,8 +21,8 @@
         android:label="fragment_schedule_detail"
         tools:layout="@layout/fragment_schedule_detail">
         <argument
-            android:name="teacherScheduleUnit"
-            app:argType="com.wei.amazingtalker_recruit.core.data.model.TeacherScheduleUnit"
+            android:name="teacherScheduleTime"
+            app:argType="com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime"
             app:nullable="false" />
     </fragment>
 </navigation>

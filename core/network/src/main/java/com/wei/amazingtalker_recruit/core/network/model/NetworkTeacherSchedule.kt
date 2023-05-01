@@ -11,22 +11,13 @@ import java.time.OffsetDateTime
 @Serializable
 data class NetworkTeacherSchedule(
   @SerialName("available")
-  val available: List<TeacherSchedule> = listOf(),
+  val available: List<TeacherScheduleItem> = listOf(),
   @SerialName("booked")
-  val booked: List<TeacherSchedule> = listOf(),
+  val booked: List<TeacherScheduleItem> = listOf(),
 )
 
-
-
-
-/**
- * Data class that represents a schedule from Amazingtalker Teacher.
- *
- * Not all of the fields returned from the API are represented here; only the ones used in this
- * project are listed below. For a full list of fields, consult the API documentation
- */
 @Serializable
-data class TeacherSchedule(
+data class TeacherScheduleItem(
   @SerialName("start")
   val start: String,
   @SerialName("end")
