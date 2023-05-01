@@ -25,12 +25,12 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String","ServerUrl","${AmazingTalkerServerUrl}")
+            buildConfigField("String", "ServerUrl", "${AmazingTalkerServerUrl}")
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String","ServerUrl","${AmazingTalkerServerUrl}")
+            buildConfigField("String", "ServerUrl", "${AmazingTalkerServerUrl}")
         }
     }
     compileOptions {

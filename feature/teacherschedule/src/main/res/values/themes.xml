@@ -14,7 +14,7 @@
         <item name="android:colorBackground">@color/amazingtalker_white</item>
     </style>
 
-    <style name="Theme.AmazingtalkerRecruit" parent="Base.Theme.AmazingtalkerRecruit"/>
+    <style name="Theme.AmazingtalkerRecruit" parent="Base.Theme.AmazingtalkerRecruit" />
 
     <style name="Theme.AmazingtalkerRecruit.NoActionBar">
         <item name="android:navigationBarColor">@android:color/transparent</item>
@@ -22,9 +22,9 @@
         <item name="windowActionBarOverlay">true</item>
     </style>
 
-    <style name="Theme.AmazingtalkerRecruit.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
+    <style name="Theme.AmazingtalkerRecruit.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="TextAppearance.AmazingtalkerRecruit.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5" >
+    <style name="TextAppearance.AmazingtalkerRecruit.Toolbar.Text" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 

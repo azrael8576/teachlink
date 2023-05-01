@@ -37,7 +37,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ScheduleFragment : Fragment(), OnItemClickListener {
 
-    @Inject lateinit var adapter: ScheduleTimeListAdapter
+    @Inject
+    lateinit var adapter: ScheduleTimeListAdapter
     private val viewModel: ScheduleViewModel by viewModels()
     private var binding: FragmentScheduleBinding? = null
     private var mCurrentTabTag = ""
@@ -60,16 +61,24 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             subscribeUi(this, adapter)
             addOnTabSelectedListener(this, adapter)
 
-            Toast.makeText(context,
+            Toast.makeText(
+                context,
                 String.format(
-                    requireContext().getString(R.string.inquirying_teacher_calendar, viewModel.currentTeacherNameValue.value)
-                ), Toast.LENGTH_SHORT).show();
+                    requireContext().getString(
+                        R.string.inquirying_teacher_calendar,
+                        viewModel.currentTeacherNameValue.value
+                    )
+                ), Toast.LENGTH_SHORT
+            ).show();
 
             setHasOptionsMenu(true)
         }
     }
 
-    private fun addOnTabSelectedListener(binding: FragmentScheduleBinding, adapter: ScheduleTimeListAdapter) {
+    private fun addOnTabSelectedListener(
+        binding: FragmentScheduleBinding,
+        adapter: ScheduleTimeListAdapter
+    ) {
         binding.tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.d(TAG, "======onTabSelected====$ tab.tag")
@@ -114,8 +123,20 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                             val scheduleUnitList = mutableListOf<TeacherScheduleUnit>()
 
                             scheduleUnitList
-                                .plus(DateTimeUtils.getIntervalTimeByScheduleList(it.value.available, AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT, ScheduleUnitState.AVAILABLE))
-                                .plus(DateTimeUtils.getIntervalTimeByScheduleList(it.value.booked, AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT, ScheduleUnitState.BOOKED))
+                                .plus(
+                                    DateTimeUtils.getIntervalTimeByScheduleList(
+                                        it.value.available,
+                                        AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT,
+                                        ScheduleUnitState.AVAILABLE
+                                    )
+                                )
+                                .plus(
+                                    DateTimeUtils.getIntervalTimeByScheduleList(
+                                        it.value.booked,
+                                        AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT,
+                                        ScheduleUnitState.BOOKED
+                                    )
+                                )
                         }
                         viewModel.setTeacherScheduleUnitList(scheduleUnitList.await() as List<TeacherScheduleUnit>)
                         binding?.scheduleTimeRecyclerview?.isVisible = true
@@ -125,6 +146,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                 is Resource.Failure -> {
                     Toast.makeText(requireContext(), "Api Failed", Toast.LENGTH_SHORT).show()
                 }
+
                 else -> {}
             }
         }
@@ -135,7 +157,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setButtonLastWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {
-        if (it < OffsetDateTime.now( ZoneId.systemDefault() )) {
+        if (it < OffsetDateTime.now(ZoneId.systemDefault())) {
             binding.buttonLastWeek.colorFilter = null
             binding.buttonLastWeek.setOnClickListener(null)
         } else {
@@ -155,7 +177,10 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         })
     }
 
-    private fun putTabToTablayoutByOptions(binding: FragmentScheduleBinding, options: MutableList<OffsetDateTime>) {
+    private fun putTabToTablayoutByOptions(
+        binding: FragmentScheduleBinding,
+        options: MutableList<OffsetDateTime>
+    ) {
         val tabWidth = binding.tablayout.width / 3
         val tabHeight = binding.tablayout.height
         binding.tablayout.removeAllTabs()
@@ -191,11 +216,12 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     private fun getTeacherScheduleUnitListByFilterCurrentTabLocalTime(
         teacherScheduleUnitList: List<TeacherScheduleUnit>?
     ): List<TeacherScheduleUnit>? {
-        var currentTabLocalTime = Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
-            .atOffset(ZoneOffset.UTC)
-            .getLocalOffsetDateTime()
+        var currentTabLocalTime =
+            Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
+                .atOffset(ZoneOffset.UTC)
+                .getLocalOffsetDateTime()
 
-         return teacherScheduleUnitList?.filter {item ->
+        return teacherScheduleUnitList?.filter { item ->
             item.start.dayOfYear == currentTabLocalTime.dayOfYear
         }
     }

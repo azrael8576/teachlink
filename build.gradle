@@ -18,4 +18,4 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.10' apply false
 }
 
-apply from:"config.gradle"
+apply from: "config.gradle"

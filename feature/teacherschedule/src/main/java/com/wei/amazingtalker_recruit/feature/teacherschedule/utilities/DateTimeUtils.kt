@@ -18,7 +18,11 @@ object DateTimeUtils {
      * @param interval 時間間隔(單位：分鐘)
      * @return MutableList<AmazingtalkerTeacherScheduleUnit>
      */
-    fun getIntervalTimeByScheduleList(teacherScheduleList: List<TeacherSchedule>, interval: Long, scheduleUnitState: ScheduleUnitState)
+    fun getIntervalTimeByScheduleList(
+        teacherScheduleList: List<TeacherSchedule>,
+        interval: Long,
+        scheduleUnitState: ScheduleUnitState
+    )
             : MutableList<TeacherScheduleUnit> {
 
         val scheduleUnitList = mutableListOf<TeacherScheduleUnit>()
@@ -32,20 +36,24 @@ object DateTimeUtils {
                 .getLocalOffsetDateTime()
 
             while (startDate < endDate) {
-                var startDateLocalTime = TeacherScheduleUnit(startDate,
+                var startDateLocalTime = TeacherScheduleUnit(
+                    startDate,
                     startDate.plusMinutes(interval),
                     scheduleUnitState,
-                    startDate.getDuringDayType())
+                    startDate.getDuringDayType()
+                )
 
                 scheduleUnitList.add(startDateLocalTime)
 
                 startDate = startDate.plusMinutes(interval)
                 if (startDate > endDate) {
                     if (startDate != endDate) {
-                        var endDateLocalTime = TeacherScheduleUnit(endDate,
+                        var endDateLocalTime = TeacherScheduleUnit(
+                            endDate,
                             endDate.plusMinutes(interval),
                             scheduleUnitState,
-                            endDate.getDuringDayType())
+                            endDate.getDuringDayType()
+                        )
 
                         scheduleUnitList.add(endDateLocalTime)
                     }
@@ -63,11 +71,13 @@ object DateTimeUtils {
     fun OffsetDateTime.getDuringDayType()
             : DuringDayType {
 
-        return when(this.hour) {
+        return when (this.hour) {
             in 0..11 -> DuringDayType.Morning
             in 12..17 -> DuringDayType.Afternoon
             in 18..23 -> DuringDayType.Evening
-            else -> {DuringDayType.Morning}
+            else -> {
+                DuringDayType.Morning
+            }
         }
     }
 

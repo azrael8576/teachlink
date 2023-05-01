@@ -9,14 +9,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/text_schedule_unit_local_time"
+        style="@style/TimeSlotButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/time_slot_vertical_margin"
         android:paddingHorizontal="@dimen/time_slot_horizontal_margin"
+        android:paddingVertical="@dimen/time_slot_vertical_margin"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/TimeSlotButton"
         tools:text="22:00" />
 
     <androidx.constraintlayout.widget.Guideline

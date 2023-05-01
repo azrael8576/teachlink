@@ -30,52 +30,64 @@ class ScheduleViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _currentTeacherNameValue = MutableLiveData<String>()
-    val currentTeacherNameValue : LiveData<String> get() = _currentTeacherNameValue
+    val currentTeacherNameValue: LiveData<String> get() = _currentTeacherNameValue
 
-    private val _currentSearchResult: MutableLiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>> = MutableLiveData()
+    private val _currentSearchResult: MutableLiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>> =
+        MutableLiveData()
     val currentSearchResult: LiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>>
         get() = _currentSearchResult
 
-    private val _teacherScheduleUnitList: MutableLiveData<List<TeacherScheduleUnit>> = MutableLiveData()
+    private val _teacherScheduleUnitList: MutableLiveData<List<TeacherScheduleUnit>> =
+        MutableLiveData()
     val teacherScheduleUnitList: LiveData<List<TeacherScheduleUnit>>
         get() = _teacherScheduleUnitList
 
     private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
-    val apiQueryStartedAtUTC : LiveData<OffsetDateTime> get() = _apiQueryStartedAtUTC
+    val apiQueryStartedAtUTC: LiveData<OffsetDateTime> get() = _apiQueryStartedAtUTC
 
     private val _weekMondayLocalDate = MutableLiveData<OffsetDateTime>()
-    val weekMondayLocalDate : LiveData<OffsetDateTime> get() = _weekMondayLocalDate
+    val weekMondayLocalDate: LiveData<OffsetDateTime> get() = _weekMondayLocalDate
 
     private val _weekSundayLocalDate = MutableLiveData<OffsetDateTime>()
-    val weekSundayLocalDate : LiveData<OffsetDateTime> get() = _weekSundayLocalDate
+    val weekSundayLocalDate: LiveData<OffsetDateTime> get() = _weekSundayLocalDate
 
     private val _weekLocalDateText = MutableLiveData<String>()
-    val weekLocalDateText : LiveData<String> get() = _weekLocalDateText
+    val weekLocalDateText: LiveData<String> get() = _weekLocalDateText
 
     private val _dateTabStringList = MutableLiveData<MutableList<OffsetDateTime>>()
-    val dateTabStringList : LiveData<MutableList<OffsetDateTime>> get() = _dateTabStringList
+    val dateTabStringList: LiveData<MutableList<OffsetDateTime>> get() = _dateTabStringList
 
     init {
         // Set initial values for the order
-        resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
+        resetWeekDate(OffsetDateTime.now(ZoneOffset.UTC))
         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
         postTeacherScheduleResponse(
             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-                ChronoUnit.SECONDS).toString())
+                ChronoUnit.SECONDS
+            ).toString()
+        )
     }
 
     private fun resetWeekDate(apiQueryStartedAt: OffsetDateTime?) {
         _apiQueryStartedAtUTC.value = apiQueryStartedAt?.getUTCOffsetDateTime()
 
-        var betweenWeekMonday = DayOfWeek.MONDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
-        _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.plusDays(betweenWeekMonday.toLong())
-        var betweenWeekSunday = DayOfWeek.SUNDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
-        _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.plusDays(betweenWeekSunday.toLong())
+        var betweenWeekMonday =
+            DayOfWeek.MONDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
+        _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()
+            ?.plusDays(betweenWeekMonday.toLong())
+        var betweenWeekSunday =
+            DayOfWeek.SUNDAY.value - _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()?.dayOfWeek?.value!!
+        _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()
+            ?.plusDays(betweenWeekSunday.toLong())
 
         val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
         _weekLocalDateText.value =
-            "${weekStartFormatter.format(_weekMondayLocalDate.value)} - ${weekEndFormatter.format(_weekSundayLocalDate.value)}"
+            "${weekStartFormatter.format(_weekMondayLocalDate.value)} - ${
+                weekEndFormatter.format(
+                    _weekSundayLocalDate.value
+                )
+            }"
     }
 
     private fun setDateTabOptionsByLocalOffsetDateTime(offsetDateTime: OffsetDateTime) {
@@ -101,7 +113,8 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun setTeacherScheduleUnitList(teacherScheduleUnitList: List<TeacherScheduleUnit>) {
-        _teacherScheduleUnitList.value = teacherScheduleUnitList.sortedBy { scheduleUnit -> scheduleUnit.start }
+        _teacherScheduleUnitList.value =
+            teacherScheduleUnitList.sortedBy { scheduleUnit -> scheduleUnit.start }
     }
 
     fun updateWeek(action: WeekAction) {
@@ -109,18 +122,22 @@ class ScheduleViewModel @Inject constructor(
             WeekAction.ACTION_LAST_WEEK -> {
                 var lasWeekMondayLocalDate = _weekMondayLocalDate.value?.plusWeeks(-1)
                 if (lasWeekMondayLocalDate != null) {
-                    if (lasWeekMondayLocalDate < OffsetDateTime.now( ZoneId.systemDefault() )) {
-                        resetWeekDate(OffsetDateTime.now( ZoneOffset.UTC ))
+                    if (lasWeekMondayLocalDate < OffsetDateTime.now(ZoneId.systemDefault())) {
+                        resetWeekDate(OffsetDateTime.now(ZoneOffset.UTC))
                         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
                         postTeacherScheduleResponse(
                             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-                                ChronoUnit.SECONDS).toString())
+                                ChronoUnit.SECONDS
+                            ).toString()
+                        )
                     } else {
                         resetWeekDate(_weekMondayLocalDate.value?.plusWeeks(-1))
                         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
                         postTeacherScheduleResponse(
                             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-                                ChronoUnit.SECONDS).toString())
+                                ChronoUnit.SECONDS
+                            ).toString()
+                        )
                     }
                 }
             }
@@ -130,7 +147,9 @@ class ScheduleViewModel @Inject constructor(
                 setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value?.getLocalOffsetDateTime()!!)
                 postTeacherScheduleResponse(
                     TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value?.truncatedTo(
-                        ChronoUnit.SECONDS).toString())
+                        ChronoUnit.SECONDS
+                    ).toString()
+                )
             }
         }
     }

@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="jamie-coleman"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="jamie-coleman" />
 
     <TextView
         android:id="@+id/tv_start"
@@ -22,9 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="08:00"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:text="08:00" />
 
     <TextView
         android:id="@+id/tv_end"
@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="08:30"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_start" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_start"
+        tools:text="08:30" />
 
     <TextView
         android:id="@+id/tv_state"
@@ -42,9 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="AVAILABLE"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_end" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_end"
+        tools:text="AVAILABLE" />
 
     <TextView
         android:id="@+id/tv_during_day_type"
@@ -52,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        tools:text="上午"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_state" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_state"
+        tools:text="上午" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_back"

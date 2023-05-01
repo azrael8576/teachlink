@@ -22,20 +22,22 @@ open class BaseRepositoryImpl @Inject constructor(
 
     override suspend fun <T> safeApiCall(apiCall: suspend () -> T): Resource<T> {
 
-        return withContext(ioDispatcher){
-            try{
+        return withContext(ioDispatcher) {
+            try {
                 Resource.Success(apiCall.invoke())
-            } catch(throwable : Throwable){
-                when(throwable){
+            } catch (throwable: Throwable) {
+                when (throwable) {
                     is IllegalArgumentException -> {
                         Log.e("BaseRepository: ", throwable.message.toString())
                         Resource.Exception(throwable.message.toString())
                     }
-                    is HttpException ->{
-                        Resource.Failure(false,throwable.code(),throwable.response()?.errorBody())
+
+                    is HttpException -> {
+                        Resource.Failure(false, throwable.code(), throwable.response()?.errorBody())
                     }
+
                     else -> {
-                        Resource.Failure(true,null,null)
+                        Resource.Failure(true, null, null)
                     }
                 }
             }
