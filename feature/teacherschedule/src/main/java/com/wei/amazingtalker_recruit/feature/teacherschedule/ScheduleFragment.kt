@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
 import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
 import com.wei.amazingtalker_recruit.core.result.Resource
@@ -22,7 +23,6 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTi
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.AMAZINGTALKER_TEACHER_SCHEDULE_INTERVAL_TIME_UNIT
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils
-import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.DateTimeUtils.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.WeekAction
 import dagger.hilt.android.AndroidEntryPoint

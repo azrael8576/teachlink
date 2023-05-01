@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.model
+package com.wei.amazingtalker_recruit.core.models
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
