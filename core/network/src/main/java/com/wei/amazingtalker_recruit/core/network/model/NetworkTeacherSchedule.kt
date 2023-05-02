@@ -11,13 +11,13 @@ import java.time.OffsetDateTime
 @Serializable
 data class NetworkTeacherSchedule(
   @SerialName("available")
-  val available: List<NetworkTeacherScheduleTimeSlots> = listOf(),
+  val available: List<NetworkTimeSlots> = listOf(),
   @SerialName("booked")
-  val booked: List<NetworkTeacherScheduleTimeSlots> = listOf(),
+  val booked: List<NetworkTimeSlots> = listOf(),
 )
 
 @Serializable
-data class NetworkTeacherScheduleTimeSlots(
+data class NetworkTimeSlots(
   @SerialName("start")
   val startUtc: String,
   @SerialName("end")

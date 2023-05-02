@@ -37,10 +37,10 @@ class ScheduleDetailFragment : Fragment() {
             //TODO subscribeUi()
             //TODO OnClickListener()
             tvName.text = "This is Test Data: $TEST_DATA_TEACHER_NAME"
-            tvStart.text = args.teacherScheduleTime.start.toString()
-            tvEnd.text = args.teacherScheduleTime.end.toString()
-            tvState.text = args.teacherScheduleTime.state.name
-            tvDuringDayType.text = args.teacherScheduleTime.duringDayType.name
+            tvStart.text = args.intervalScheduleTimeSlot.start.toString()
+            tvEnd.text = args.intervalScheduleTimeSlot.end.toString()
+            tvState.text = args.intervalScheduleTimeSlot.state.name
+            tvDuringDayType.text = args.intervalScheduleTimeSlot.duringDayType.name
 
             btnBack.setOnClickListener {
                 findNavController().popBackStack()

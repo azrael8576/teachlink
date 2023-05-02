@@ -2,9 +2,9 @@ package com.wei.amazingtalker_recruit.core.domain
 
 import com.wei.amazingtalker_recruit.core.extensions.getDuringDayType
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
-import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
-import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
-import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherScheduleTimeSlots
+import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
+import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
+import com.wei.amazingtalker_recruit.core.network.model.NetworkTimeSlots
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -18,14 +18,16 @@ import javax.inject.Inject
  * @return MutableList<TeacherScheduleTime>  切分後的 Schedule 物件
  */
 class GetTeacherScheduleTimeUseCase @Inject constructor() {
+// TODO 替換 GetLocalAvailableTimeSlotsUseCase
+// TODO 替換 GetLocalUnavailableTimeSlotsUseCase
 
     operator fun invoke(
-        teacherScheduleList: List<NetworkTeacherScheduleTimeSlots>,
+        teacherScheduleList: List<NetworkTimeSlots>,
         timeInterval: Long,
-        scheduleTimeState: ScheduleTimeState
-    ): MutableList<TeacherScheduleTime> {
+        scheduleState: ScheduleState
+    ): MutableList<IntervalScheduleTimeSlot> {
 
-        val scheduleTimeList = mutableListOf<TeacherScheduleTime>()
+        val scheduleTimeList = mutableListOf<IntervalScheduleTimeSlot>()
 
         for (teacherSchedule in teacherScheduleList) {
             var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.startUtc))
@@ -36,10 +38,10 @@ class GetTeacherScheduleTimeUseCase @Inject constructor() {
                 .getLocalOffsetDateTime()
 
             while (startDate < endDate) {
-                var startDateLocalTime = TeacherScheduleTime(
+                var startDateLocalTime = IntervalScheduleTimeSlot(
                     startDate,
                     startDate.plusMinutes(timeInterval),
-                    scheduleTimeState,
+                    scheduleState,
                     startDate.getDuringDayType()
                 )
 
@@ -48,10 +50,10 @@ class GetTeacherScheduleTimeUseCase @Inject constructor() {
                 startDate = startDate.plusMinutes(timeInterval)
                 if (startDate > endDate) {
                     if (startDate != endDate) {
-                        var endDateLocalTime = TeacherScheduleTime(
+                        var endDateLocalTime = IntervalScheduleTimeSlot(
                             endDate,
                             endDate.plusMinutes(timeInterval),
-                            scheduleTimeState,
+                            scheduleState,
                             endDate.getDuringDayType()
                         )
 

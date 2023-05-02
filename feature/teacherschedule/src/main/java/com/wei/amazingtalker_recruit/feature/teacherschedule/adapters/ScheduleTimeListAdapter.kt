@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
+import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.models.DuringDayType
-import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
-import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
 import com.wei.amazingtalker_recruit.core.network.AtDispatchers
 import com.wei.amazingtalker_recruit.core.network.Dispatcher
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
@@ -26,7 +26,7 @@ import java.util.*
 import javax.inject.Inject
 
 interface OnItemClickListener {
-    fun onItemClick(item: TeacherScheduleTime)
+    fun onItemClick(item: IntervalScheduleTimeSlot)
 }
 
 enum class ItemViewType {
@@ -50,7 +50,7 @@ class ScheduleTimeListAdapter @Inject constructor(
         this.onItemClickListener = onItemClickListener;
     }
 
-    fun addHeaderAndSubmitList(list: List<TeacherScheduleTime>) {
+    fun addHeaderAndSubmitList(list: List<IntervalScheduleTimeSlot>) {
 
         computationScope.launch {
             val items = listOf(DataItem.Header) + list.groupBy { it.duringDayType }.flatMap {
@@ -165,10 +165,10 @@ class ScheduleTimeListAdapter @Inject constructor(
                 val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
                 textScheduleLocalTime.text = dateTimeFormatter.format(item.start)
-                textScheduleLocalTime.isEnabled = (item.state == ScheduleTimeState.AVAILABLE)
+                textScheduleLocalTime.isEnabled = (item.state == ScheduleState.AVAILABLE)
 
                 textScheduleLocalTime.setOnClickListener {
-                    onItemClickListener?.onItemClick(item.teacherScheduleTime)
+                    onItemClickListener?.onItemClick(item.intervalScheduleTimeSlot)
                 }
             }
         }
@@ -191,7 +191,7 @@ sealed class DataItem(val itemViewType: ItemViewType) {
     abstract val name: String?
     abstract val start: OffsetDateTime?
     abstract val end: OffsetDateTime?
-    abstract val state: ScheduleTimeState?
+    abstract val state: ScheduleState?
     abstract val duringDayType: DuringDayType?
     abstract val isHeader: Boolean
 
@@ -213,14 +213,14 @@ sealed class DataItem(val itemViewType: ItemViewType) {
         override val isHeader = false
     }
 
-    data class Item(val teacherScheduleTime: TeacherScheduleTime) : DataItem(
+    data class Item(val intervalScheduleTimeSlot: IntervalScheduleTimeSlot) : DataItem(
         ItemViewType.ITEM
     ) {
         override val name = null
-        override val start = teacherScheduleTime.start
-        override val end = teacherScheduleTime.end
-        override val state = teacherScheduleTime.state
-        override val duringDayType = teacherScheduleTime.duringDayType
+        override val start = intervalScheduleTimeSlot.start
+        override val end = intervalScheduleTimeSlot.end
+        override val state = intervalScheduleTimeSlot.state
+        override val duringDayType = intervalScheduleTimeSlot.duringDayType
         override val isHeader = false
     }
 }

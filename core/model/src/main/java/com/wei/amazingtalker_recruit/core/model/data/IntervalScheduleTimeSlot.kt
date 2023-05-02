@@ -6,13 +6,9 @@ import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
 
 @Parcelize
-data class TeacherScheduleTime(
+data class IntervalScheduleTimeSlot(
     val start: OffsetDateTime,
     val end: OffsetDateTime,
-    val state: ScheduleTimeState,
+    val state: ScheduleState,
     val duringDayType: DuringDayType,
 ) : Parcelable
-
-enum class ScheduleTimeState {
-    AVAILABLE, BOOKED
-}

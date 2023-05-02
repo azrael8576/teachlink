@@ -14,10 +14,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.wei.amazingtalker_recruit.core.domain.GetLocalAvailableTimeSlotsUseCase
 import com.wei.amazingtalker_recruit.core.domain.GetTeacherScheduleTimeUseCase
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
-import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
-import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
+import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
+import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.result.Resource
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
@@ -122,25 +123,25 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                 is Resource.Success -> {
                     CoroutineScope(Dispatchers.Main).launch {
                         val scheduleTimeList = async {
-                            val scheduleTimeList = mutableListOf<TeacherScheduleTime>()
+                            val scheduleTimeList = mutableListOf<IntervalScheduleTimeSlot>()
 
                             scheduleTimeList
                                 .plus(
                                     getTeacherScheduleTimeUseCase(
                                         it.value.available,
                                         TEACHER_SCHEDULE_TIME_INTERVAL,
-                                        ScheduleTimeState.AVAILABLE
+                                        ScheduleState.AVAILABLE
                                     )
                                 )
                                 .plus(
                                     getTeacherScheduleTimeUseCase(
                                         it.value.booked,
                                         TEACHER_SCHEDULE_TIME_INTERVAL,
-                                        ScheduleTimeState.BOOKED
+                                        ScheduleState.BOOKED
                                     )
                                 )
                         }
-                        viewModel.setTeacherScheduleTimeList(scheduleTimeList.await() as List<TeacherScheduleTime>)
+                        viewModel.setTeacherScheduleTimeList(scheduleTimeList.await() as List<IntervalScheduleTimeSlot>)
                         binding?.scheduleTimeRecyclerview?.isVisible = true
                     }
                 }
@@ -201,7 +202,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
 
     private fun updateAdapterList(
         adapter: ScheduleTimeListAdapter,
-        teacherScheduleTimeList: List<TeacherScheduleTime>?
+        teacherScheduleTimeList: List<IntervalScheduleTimeSlot>?
     ) {
         if (mCurrentTabTag.isEmpty()) return
 
@@ -216,8 +217,8 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     }
 
     private fun getTeacherScheduleTimeListByFilterCurrentTabLocalTime(
-        teacherScheduleTimeList: List<TeacherScheduleTime>?
-    ): List<TeacherScheduleTime>? {
+        teacherScheduleTimeList: List<IntervalScheduleTimeSlot>?
+    ): List<IntervalScheduleTimeSlot>? {
         var currentTabLocalTime =
             Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(mCurrentTabTag))
                 .atOffset(ZoneOffset.UTC)
@@ -233,7 +234,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         binding = null
     }
 
-    override fun onItemClick(item: TeacherScheduleTime) {
+    override fun onItemClick(item: IntervalScheduleTimeSlot) {
         //TODO nav event 抽取至 viewModel
         val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
         findNavController().navigate(action)

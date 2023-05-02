@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
+import com.wei.amazingtalker_recruit.core.domain.GetLocalAvailableTimeSlotsUseCase
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.extensions.getUTCOffsetDateTime
-import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
+import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,9 +38,9 @@ class ScheduleViewModel @Inject constructor(
     val currentSearchResult: LiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>>
         get() = _currentSearchResult
 
-    private val _teacherScheduleTimeList: MutableLiveData<List<TeacherScheduleTime>> =
+    private val _teacherScheduleTimeList: MutableLiveData<List<IntervalScheduleTimeSlot>> =
         MutableLiveData()
-    val teacherScheduleTimeList: LiveData<List<TeacherScheduleTime>>
+    val teacherScheduleTimeList: LiveData<List<IntervalScheduleTimeSlot>>
         get() = _teacherScheduleTimeList
 
     private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
@@ -112,7 +113,7 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun setTeacherScheduleTimeList(teacherScheduleTimeList: List<TeacherScheduleTime>) {
+    fun setTeacherScheduleTimeList(teacherScheduleTimeList: List<IntervalScheduleTimeSlot>) {
         _teacherScheduleTimeList.value =
             teacherScheduleTimeList.sortedBy { scheduleTime -> scheduleTime.start }
     }
