@@ -4,7 +4,7 @@ import com.wei.amazingtalker_recruit.core.extensions.getDuringDayType
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeState
 import com.wei.amazingtalker_recruit.core.model.data.TeacherScheduleTime
-import com.wei.amazingtalker_recruit.core.network.model.TeacherScheduleItem
+import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherScheduleTimeSlots
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class GetTeacherScheduleTimeUseCase @Inject constructor() {
 
     operator fun invoke(
-        teacherScheduleList: List<TeacherScheduleItem>,
+        teacherScheduleList: List<NetworkTeacherScheduleTimeSlots>,
         timeInterval: Long,
         scheduleTimeState: ScheduleTimeState
     ): MutableList<TeacherScheduleTime> {
@@ -28,10 +28,10 @@ class GetTeacherScheduleTimeUseCase @Inject constructor() {
         val scheduleTimeList = mutableListOf<TeacherScheduleTime>()
 
         for (teacherSchedule in teacherScheduleList) {
-            var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.start))
+            var startDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.startUtc))
                 .atOffset(ZoneOffset.UTC)
                 .getLocalOffsetDateTime()
-            val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.end))
+            val endDate = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(teacherSchedule.endUtc))
                 .atOffset(ZoneOffset.UTC)
                 .getLocalOffsetDateTime()
 

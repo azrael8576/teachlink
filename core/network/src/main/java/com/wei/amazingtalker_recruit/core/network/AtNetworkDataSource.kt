@@ -7,6 +7,6 @@ import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
  */
 interface AtNetworkDataSource {
 
-    suspend fun getTeacherSchedule(teacherName: String, startedAt: String? = null): NetworkTeacherSchedule
+    suspend fun getTeacherAvailability(teacherName: String, startedAt: String? = null): NetworkTeacherSchedule
 
 }

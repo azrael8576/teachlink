@@ -108,7 +108,7 @@ class ScheduleViewModel @Inject constructor(
         viewModelScope.launch {
             _currentTeacherNameValue.value = teacherName
             _currentSearchResult.value =
-                teacherScheduleRepository.getTeacherSchedule(teacherName, startedAtUTC)
+                teacherScheduleRepository.getTeacherAvailability(teacherName, startedAtUTC)
         }
     }
 

@@ -26,9 +26,9 @@ interface RetrofitAtNetworkApi {
      * https://en.amazingtalker.com/v1/guest/teachers/jamie-coleman/schedule?started_at=2023-02-26T16:00:00.000Z
      */
     @GET("teachers/{teacherName}/schedule")
-    suspend fun getTeacherSchedule(
+    suspend fun getTeacherAvailability(
         @Path("teacherName") teacherName: String,
-        @Query("started_at") startedAt: String?,
+        @Query("started_at") startUtc: String?,
     ): NetworkTeacherSchedule
 }
 
@@ -60,11 +60,11 @@ class RetrofitAtNetwork @Inject constructor() : AtNetworkDataSource {
         .build()
         .create(RetrofitAtNetworkApi::class.java)
 
-    override suspend fun getTeacherSchedule(
+    override suspend fun getTeacherAvailability(
         teacherName: String,
-        startedAt: String?
+        startUtc: String?
     ): NetworkTeacherSchedule {
-        return networkApi.getTeacherSchedule(teacherName, startedAt)
+        return networkApi.getTeacherAvailability(teacherName, startUtc)
     }
 
 }

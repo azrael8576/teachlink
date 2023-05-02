@@ -11,8 +11,8 @@ class TeacherScheduleRepository @Inject constructor(
     @Dispatcher(AtDispatchers.IO) ioDispatcher: CoroutineDispatcher
 ) : BaseRepositoryImpl(ioDispatcher) {
 
-    suspend fun getTeacherSchedule(teacherName: String, started_at: String) = safeApiCall {
-        network.getTeacherSchedule(teacherName, started_at)
+    suspend fun getTeacherAvailability(teacherName: String, started_at: String) = safeApiCall {
+        network.getTeacherAvailability(teacherName, started_at)
     }
 
 }
