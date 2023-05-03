@@ -3,7 +3,7 @@ package com.wei.amazingtalker_recruit.core.domain
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.result.Resource
+import com.wei.amazingtalker_recruit.core.result.Result
 import com.wei.amazingtalker_recruit.core.utils.TimezoneManager
 import java.time.Instant
 import java.time.OffsetDateTime
@@ -28,7 +28,7 @@ class GetLocalAvailableTimeSlotsUseCase @Inject constructor(
         val teacherScheduleResource =
             teacherScheduleRepository.getTeacherAvailability(teacherName, startTime)
 
-        return if (teacherScheduleResource is Resource.Success) {
+        return if (teacherScheduleResource is Result.Success) {
             val teacherSchedule = teacherScheduleResource.value
 
             // 将 UTC 时间段转换为本地时间

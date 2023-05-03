@@ -19,7 +19,7 @@ import com.wei.amazingtalker_recruit.core.domain.GetTeacherScheduleTimeUseCase
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
-import com.wei.amazingtalker_recruit.core.result.Resource
+import com.wei.amazingtalker_recruit.core.result.Result
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
@@ -120,7 +120,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
 
         viewModel.currentSearchResult.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Success -> {
+                is Result.Success -> {
                     CoroutineScope(Dispatchers.Main).launch {
                         val scheduleTimeList = async {
                             val scheduleTimeList = mutableListOf<IntervalScheduleTimeSlot>()
@@ -146,7 +146,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                     }
                 }
 
-                is Resource.Failure -> {
+                is Result.Failure -> {
                     Toast.makeText(requireContext(), "Api Failed", Toast.LENGTH_SHORT).show()
                 }
 

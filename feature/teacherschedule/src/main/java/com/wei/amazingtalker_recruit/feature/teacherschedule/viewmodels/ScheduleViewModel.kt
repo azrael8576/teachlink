@@ -10,6 +10,7 @@ import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.extensions.getUTCOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
+import com.wei.amazingtalker_recruit.core.result.Result
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -33,9 +34,9 @@ class ScheduleViewModel @Inject constructor(
     private val _currentTeacherNameValue = MutableLiveData<String>()
     val currentTeacherNameValue: LiveData<String> get() = _currentTeacherNameValue
 
-    private val _currentSearchResult: MutableLiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>> =
+    private val _currentSearchResult: MutableLiveData<Result<NetworkTeacherSchedule>> =
         MutableLiveData()
-    val currentSearchResult: LiveData<com.wei.amazingtalker_recruit.core.result.Resource<NetworkTeacherSchedule>>
+    val currentSearchResult: LiveData<Result<NetworkTeacherSchedule>>
         get() = _currentSearchResult
 
     private val _teacherScheduleTimeList: MutableLiveData<List<IntervalScheduleTimeSlot>> =
