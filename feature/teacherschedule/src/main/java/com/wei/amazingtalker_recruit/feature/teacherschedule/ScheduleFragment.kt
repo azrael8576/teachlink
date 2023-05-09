@@ -121,15 +121,13 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                 if (!isUpdateWeek) {
                     when (result) {
                         is DataSourceResult.Success -> {
-                            if (!isUpdateWeek) {
-                                result.data.let {
-                                    adapter.addHeaderAndSubmitList(
-                                        it
-                                    )
-                                }
-                                binding?.scheduleTimeRecyclerview?.scrollToPosition(0)
-                                Timber.d("API Success")
+                            result.data.let {
+                                adapter.addHeaderAndSubmitList(
+                                    it
+                                )
                             }
+                            binding?.scheduleTimeRecyclerview?.scrollToPosition(0)
+                            Timber.d("API Success")
                         }
 
                         is DataSourceResult.Error -> {
