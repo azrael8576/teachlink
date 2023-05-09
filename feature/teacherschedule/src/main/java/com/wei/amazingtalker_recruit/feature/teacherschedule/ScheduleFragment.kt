@@ -1,8 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +9,15 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.wei.amazingtalker_recruit.core.domain.GetLocalAvailableTimeSlotsUseCase
 import com.wei.amazingtalker_recruit.core.domain.GetTeacherScheduleTimeUseCase
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
-import com.wei.amazingtalker_recruit.core.result.Result
+import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
@@ -27,7 +25,7 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEACHER_S
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.WeekAction
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import timber.log.Timber
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -84,79 +82,102 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     ) {
         binding.tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                Log.d(TAG, "======onTabSelected====$ tab.tag")
+                Timber.d("======onTabSelected====${tab.tag}")
+
                 mCurrentTabTag = tab.tag.toString()
                 updateAdapterList(adapter, viewModel.teacherScheduleTimeList.value)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                Log.d(TAG, "======onTabUnselected====$ tab.tag")
+                Timber.d("======onTabUnselected====${tab.tag}")
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                Log.d(TAG, "======onTabReselected====$ tab.tag")
+                Timber.d("======onTabReselected====${tab.tag}")
             }
         })
     }
 
     private fun subscribeUi(binding: FragmentScheduleBinding, adapter: ScheduleTimeListAdapter) {
-        viewModel.weekMondayLocalDate.observe(viewLifecycleOwner) {
-            setButtonLastWeekBehavior(binding, it)
-        }
 
-        viewModel.weekSundayLocalDate.observe(viewLifecycleOwner) {
-            setButtonNextWeekBehavior(binding, it)
-        }
-
-        viewModel.weekLocalDateText.observe(viewLifecycleOwner) {
-            binding.textWeek.text = it
-        }
-
-        viewModel.dateTabStringList.observe(viewLifecycleOwner) { dateTabOffsetDateTimeOptions ->
-            binding.tablayout.doOnLayout {
-                putTabToTablayoutByOptions(binding, dateTabOffsetDateTimeOptions)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.weekMondayLocalDate.collect {
+                setButtonLastWeekBehavior(binding, it)
             }
         }
 
-        viewModel.currentSearchResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is Result.Success -> {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val scheduleTimeList = async {
-                            val scheduleTimeList = mutableListOf<IntervalScheduleTimeSlot>()
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.weekSundayLocalDate.collect {
+                setButtonNextWeekBehavior(binding, it)
+            }
+        }
 
-                            scheduleTimeList
-                                .plus(
-                                    getTeacherScheduleTimeUseCase(
-                                        it.value.available,
-                                        TEACHER_SCHEDULE_TIME_INTERVAL,
-                                        ScheduleState.AVAILABLE
-                                    )
-                                )
-                                .plus(
-                                    getTeacherScheduleTimeUseCase(
-                                        it.value.booked,
-                                        TEACHER_SCHEDULE_TIME_INTERVAL,
-                                        ScheduleState.BOOKED
-                                    )
-                                )
-                        }
-                        viewModel.setTeacherScheduleTimeList(scheduleTimeList.await() as List<IntervalScheduleTimeSlot>)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.weekLocalDateText.collect {
+                binding.textWeek.text = it
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.dateTabStringList.collect { dateTabOffsetDateTimeOptions ->
+                binding.tablayout.doOnLayout {
+                    putTabToTablayoutByOptions(binding, dateTabOffsetDateTimeOptions)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.currentSearchResult.collect { result ->
+                when (result) {
+                    is DataSourceResult.Success -> {
+                        val scheduleTimeList = mutableListOf<IntervalScheduleTimeSlot>()
+
+                        scheduleTimeList.addAll(
+                            getTeacherScheduleTimeUseCase(
+                                result.data.available,
+                                TEACHER_SCHEDULE_TIME_INTERVAL,
+                                ScheduleState.AVAILABLE
+                            )
+                        )
+                        scheduleTimeList.addAll(
+                            getTeacherScheduleTimeUseCase(
+                                result.data.booked,
+                                TEACHER_SCHEDULE_TIME_INTERVAL,
+                                ScheduleState.BOOKED
+                            )
+                        )
+
+                        viewModel.setTeacherScheduleTimeList(scheduleTimeList)
                         binding?.scheduleTimeRecyclerview?.isVisible = true
+
+                        Timber.d("API Success")
+                    }
+
+                    is DataSourceResult.Error -> {
+                        Toast.makeText(requireContext(), "Api Failed", Toast.LENGTH_SHORT).show()
+
+                        Timber.d("API Failed DataSourceResult.Error")
+                    }
+
+                    is DataSourceResult.Loading -> {
+
+                        Timber.d("API Loading")
+                    }
+
+                    else -> {
+
+                        Timber.e("API Else")
                     }
                 }
-
-                is Result.Failure -> {
-                    Toast.makeText(requireContext(), "Api Failed", Toast.LENGTH_SHORT).show()
-                }
-
-                else -> {}
             }
         }
 
-        viewModel.teacherScheduleTimeList.observe(viewLifecycleOwner) {
-            updateAdapterList(adapter, it)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.teacherScheduleTimeList.collect {
+                updateAdapterList(adapter, it)
+            }
         }
+
     }
 
     private fun setButtonLastWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {

@@ -1,18 +1,21 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
-import com.wei.amazingtalker_recruit.core.domain.GetLocalAvailableTimeSlotsUseCase
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.extensions.getUTCOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
-import com.wei.amazingtalker_recruit.core.result.Result
+import com.wei.amazingtalker_recruit.core.result.DataSourceResult
+import com.wei.amazingtalker_recruit.core.result.asDataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
@@ -31,33 +34,35 @@ class ScheduleViewModel @Inject constructor(
     private val teacherScheduleRepository: TeacherScheduleRepository
 ) : ViewModel() {
 
-    private val _currentTeacherNameValue = MutableLiveData<String>()
-    val currentTeacherNameValue: LiveData<String> get() = _currentTeacherNameValue
+    private val _currentTeacherNameValue = MutableStateFlow("")
+    val currentTeacherNameValue: StateFlow<String> get() = _currentTeacherNameValue
 
-    private val _currentSearchResult: MutableLiveData<Result<NetworkTeacherSchedule>> =
-        MutableLiveData()
-    val currentSearchResult: LiveData<Result<NetworkTeacherSchedule>>
-        get() = _currentSearchResult
+    private val _currentSearchResult = MutableStateFlow<DataSourceResult<NetworkTeacherSchedule>>(DataSourceResult.Loading)
+    val currentSearchResult: StateFlow<DataSourceResult<NetworkTeacherSchedule>> get() = _currentSearchResult
 
-    private val _teacherScheduleTimeList: MutableLiveData<List<IntervalScheduleTimeSlot>> =
-        MutableLiveData()
-    val teacherScheduleTimeList: LiveData<List<IntervalScheduleTimeSlot>>
+    private val _teacherScheduleTimeList = MutableStateFlow(emptyList<IntervalScheduleTimeSlot>())
+    val teacherScheduleTimeList: StateFlow<List<IntervalScheduleTimeSlot>>
         get() = _teacherScheduleTimeList
 
-    private val _apiQueryStartedAtUTC = MutableLiveData<OffsetDateTime>()
-    val apiQueryStartedAtUTC: LiveData<OffsetDateTime> get() = _apiQueryStartedAtUTC
+    private val _apiQueryStartedAtUTC = MutableStateFlow(OffsetDateTime.now())
+    val apiQueryStartedAtUTC: StateFlow<OffsetDateTime>
+        get() = _apiQueryStartedAtUTC
 
-    private val _weekMondayLocalDate = MutableLiveData<OffsetDateTime>()
-    val weekMondayLocalDate: LiveData<OffsetDateTime> get() = _weekMondayLocalDate
+    private val _weekMondayLocalDate = MutableStateFlow(OffsetDateTime.now())
+    val weekMondayLocalDate: StateFlow<OffsetDateTime>
+        get() = _weekMondayLocalDate
 
-    private val _weekSundayLocalDate = MutableLiveData<OffsetDateTime>()
-    val weekSundayLocalDate: LiveData<OffsetDateTime> get() = _weekSundayLocalDate
+    private val _weekSundayLocalDate = MutableStateFlow(OffsetDateTime.now())
+    val weekSundayLocalDate: StateFlow<OffsetDateTime>
+        get() = _weekSundayLocalDate
 
-    private val _weekLocalDateText = MutableLiveData<String>()
-    val weekLocalDateText: LiveData<String> get() = _weekLocalDateText
+    private val _weekLocalDateText = MutableStateFlow("")
+    val weekLocalDateText: StateFlow<String>
+        get() = _weekLocalDateText
 
-    private val _dateTabStringList = MutableLiveData<MutableList<OffsetDateTime>>()
-    val dateTabStringList: LiveData<MutableList<OffsetDateTime>> get() = _dateTabStringList
+    private val _dateTabStringList = MutableStateFlow(mutableListOf<OffsetDateTime>())
+    val dateTabStringList: StateFlow<MutableList<OffsetDateTime>>
+        get() = _dateTabStringList.asStateFlow()
 
     init {
         // Set initial values for the order
@@ -109,8 +114,16 @@ class ScheduleViewModel @Inject constructor(
     private fun postTeacherScheduleResponse(teacherName: String, startedAtUTC: String) {
         viewModelScope.launch {
             _currentTeacherNameValue.value = teacherName
-            _currentSearchResult.value =
-                teacherScheduleRepository.getTeacherAvailability(teacherName, startedAtUTC)
+
+            _currentSearchResult.value = teacherScheduleRepository.getTeacherAvailability(teacherName, startedAtUTC)
+                .asDataSourceResult()
+                .stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5_000),
+                    initialValue = DataSourceResult.Loading
+                ).collect{ result ->
+                    _currentSearchResult.value = result
+                }
         }
     }
 

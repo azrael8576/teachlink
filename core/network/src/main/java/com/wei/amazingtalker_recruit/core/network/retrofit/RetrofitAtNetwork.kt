@@ -40,7 +40,7 @@ private const val BASE_URL = AMAZING_TALKER_SERVICE_BASE_URL
 @Singleton
 class RetrofitAtNetwork @Inject constructor() : AtNetworkDataSource {
 
-    private val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+    private val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(logger)

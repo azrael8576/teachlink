@@ -25,7 +25,8 @@ ext {
             retrofitKotlinxSerializationJson: '0.8.0',
             hilt                            : '2.45',
             kotlinxDatetime                 : '0.4.0',
-            kotlinxSerializationJson        : '1.4.1'
+            kotlinxSerializationJson        : '1.4.1',
+            timber                          : '5.0.1'
     ]
 
     libs = [
@@ -89,6 +90,10 @@ ext {
             ],
             kotlinxSerializationJsonLibs        : [
                     core: "org.jetbrains.kotlinx:kotlinx-serialization-json:${libVersion.kotlinxSerializationJson}"
+            ],
+            timberLibs                          : [
+                    core: "com.jakewharton.timber:timber:${libVersion.timber}"
             ]
+
     ]
 }
