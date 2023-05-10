@@ -11,7 +11,7 @@ Amazingtalker-Recruit APP
 - 引入 DI Hilt。
 - LiveData 正被 Flow 取代。
 - MVVM 架構正在遷移至 MVI。
-- Vie w正在遷移至 Jetpack Compose UI。
+- View 正在遷移至 Jetpack Compose UI。
 
 ##   Project Documentation (Deprecated)
 
