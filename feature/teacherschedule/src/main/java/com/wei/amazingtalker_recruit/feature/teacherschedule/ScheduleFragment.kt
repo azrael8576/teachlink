@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -125,7 +126,9 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                                     it
                                 )
                             }
+                            binding.scheduleTimeRecyclerview.isVisible = true
                             binding?.scheduleTimeRecyclerview?.scrollToPosition(0)
+
                             Timber.d("API Success")
                         }
 
@@ -141,6 +144,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                                 snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
                             snackTextView.maxLines = 4
                             snackBar.show()
+                            binding.scheduleTimeRecyclerview.isVisible = false
 
                             Timber.d("API Failed ${result.exception}")
                         }
