@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
@@ -26,6 +28,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class ScheduleFragment : Fragment(), OnItemClickListener {
 
@@ -39,7 +42,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentScheduleBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
@@ -51,25 +54,23 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             adapter.setOnClickListener(this@ScheduleFragment)
             scheduleTimeRecyclerview.adapter = adapter
             subscribeUi(this, adapter)
-            addOnTabSelectedListener(this, adapter)
+            addOnTabSelectedListener(this)
 
-            Toast.makeText(
-                context,
-                String.format(
+            Snackbar.make(
+                root, String.format(
                     requireContext().getString(
                         R.string.inquirying_teacher_calendar,
                         viewModel.currentTeacherNameValue.value
                     )
-                ), Toast.LENGTH_SHORT
-            ).show();
-
-            setHasOptionsMenu(true)
+                ), Snackbar.LENGTH_LONG
+            )
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_700))
+                .show()
         }
     }
 
     private fun addOnTabSelectedListener(
-        binding: FragmentScheduleBinding,
-        adapter: ScheduleTimeListAdapter
+        binding: FragmentScheduleBinding
     ) {
         binding.tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -79,11 +80,9 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                Timber.d("======onTabUnselected====${tab.tag}")
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                Timber.d("======onTabReselected====${tab.tag}")
             }
         })
     }
@@ -131,11 +130,18 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                         }
 
                         is DataSourceResult.Error -> {
-                            Toast.makeText(
-                                requireContext(),
-                                "Api Failed ${result.exception}",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            val snackBar = Snackbar.make(
+                                    binding.root,
+                                    "Api Failed ${result.exception}",
+                                    Snackbar.LENGTH_LONG
+                                ).setTextColor(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_700))
+
+                            val snackBarView = snackBar.view
+                            val snackTextView =
+                                snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                            snackTextView.maxLines = 4
+                            snackBar.show()
+
                             Timber.d("API Failed ${result.exception}")
                         }
 
@@ -159,7 +165,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             binding.buttonLastWeek.colorFilter = null
             binding.buttonLastWeek.setOnClickListener(null)
         } else {
-            binding.buttonLastWeek.setColorFilter(resources.getColor(R.color.amazingtalker_green_900))
+            binding.buttonLastWeek.setColorFilter(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_900))
             binding.buttonLastWeek.setOnClickListener(View.OnClickListener {
                 isUpdateWeek = true
                 viewModel.updateWeek(WeekAction.ACTION_LAST_WEEK)
@@ -168,7 +174,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setButtonNextWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {
-        binding.buttonNextWeek.setColorFilter(resources.getColor(R.color.amazingtalker_green_900))
+        binding.buttonNextWeek.setColorFilter(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_900))
         binding.buttonNextWeek.setOnClickListener(View.OnClickListener {
             isUpdateWeek = true
             viewModel.updateWeek(WeekAction.ACTION_NEXT_WEEK)

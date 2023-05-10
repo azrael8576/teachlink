@@ -68,35 +68,47 @@ class ScheduleViewModel @Inject constructor(
 
     val filteredTimeList: Flow<DataSourceResult<List<IntervalScheduleTimeSlot>>> =
         combine(_teacherScheduleTimeList, _selectedTabTag) { result, tag ->
-            when (result) {
-                is DataSourceResult.Success -> {
-                    if (tag.isNotEmpty()) {
-                        val currentTabLocalTime =
-                            Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(tag))
-                                .atOffset(ZoneOffset.UTC).getLocalOffsetDateTime()
-                        val filteredList = result.data.filter { item ->
-                            item.start.dayOfYear == currentTabLocalTime.dayOfYear
-                        }
+            filterTimeListByTag(result, tag)
+        }
 
-                        DataSourceResult.Success(filteredList)
-                    } else {
-                        DataSourceResult.Success(emptyList())
+    private fun filterTimeListByTag(result: DataSourceResult<MutableList<IntervalScheduleTimeSlot>>, tag: String): DataSourceResult<List<IntervalScheduleTimeSlot>> {
+        return when (result) {
+            is DataSourceResult.Success -> {
+                if (tag.isNotEmpty()) {
+                    val currentTabLocalTime =
+                        Instant.from(DateTimeFormatter.ISO_ZONED_DATE_TIME.parse(tag))
+                            .atOffset(ZoneOffset.UTC).getLocalOffsetDateTime()
+                    val filteredList = result.data.filter { item ->
+                        item.start.dayOfYear == currentTabLocalTime.dayOfYear
                     }
-                }
 
-                is DataSourceResult.Error -> {
-                    DataSourceResult.Error(result.exception)
-                }
-
-                is DataSourceResult.Loading -> {
-                    DataSourceResult.Loading
+                    DataSourceResult.Success(filteredList)
+                } else {
+                    DataSourceResult.Success(emptyList())
                 }
             }
+
+            is DataSourceResult.Error -> {
+                DataSourceResult.Error(result.exception)
+            }
+
+            is DataSourceResult.Loading -> {
+                DataSourceResult.Loading
+            }
         }
+    }
 
     init {
         // Set initial values for the order
-        resetWeekDate(OffsetDateTime.now(ZoneOffset.UTC))
+        refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
+    }
+
+    fun onTabSelected(tag: String) {
+        _selectedTabTag.value = tag
+    }
+
+    private fun refreshWeekData(date: OffsetDateTime) {
+        resetWeekDate(date)
         setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value.getLocalOffsetDateTime())
         postTeacherScheduleResponse(
             TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value.truncatedTo(
@@ -105,18 +117,24 @@ class ScheduleViewModel @Inject constructor(
         )
     }
 
-    fun onTabSelected(tag: String) {
-        _selectedTabTag.value = tag
-    }
-
     private fun resetWeekDate(apiQueryStartedAt: OffsetDateTime) {
-        _apiQueryStartedAtUTC.value = apiQueryStartedAt.getUTCOffsetDateTime()
+        if (apiQueryStartedAt != OffsetDateTime.now(ZoneOffset.UTC)) {
+            _apiQueryStartedAtUTC.value = apiQueryStartedAt
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0)
+                .getUTCOffsetDateTime()
+        }
+        else {
+            _apiQueryStartedAtUTC.value = apiQueryStartedAt.getUTCOffsetDateTime()
+        }
 
-        var betweenWeekMonday =
+        val betweenWeekMonday =
             DayOfWeek.MONDAY.value - _apiQueryStartedAtUTC.value.getLocalOffsetDateTime().dayOfWeek.value
         _weekMondayLocalDate.value = _apiQueryStartedAtUTC.value.getLocalOffsetDateTime()
             .plusDays(betweenWeekMonday.toLong())
-        var betweenWeekSunday =
+        val betweenWeekSunday =
             DayOfWeek.SUNDAY.value - _apiQueryStartedAtUTC.value.getLocalOffsetDateTime().dayOfWeek.value
         _weekSundayLocalDate.value = _apiQueryStartedAtUTC.value.getLocalOffsetDateTime()
             .plusDays(betweenWeekSunday.toLong())
@@ -136,7 +154,7 @@ class ScheduleViewModel @Inject constructor(
         val nowTimeDayOfWeekValue = offsetDateTime.dayOfWeek.value
 
         repeat(DayOfWeek.SUNDAY.value + 1 - nowTimeDayOfWeekValue) {
-            offsetDateTime?.let { it1 -> options.add(it1) }
+            offsetDateTime.let { it1 -> options.add(it1) }
             offsetDateTime = offsetDateTime.plusDays(1)
         }
         _dateTabStringList.value = options
@@ -191,36 +209,16 @@ class ScheduleViewModel @Inject constructor(
     fun updateWeek(action: WeekAction) {
         when (action) {
             WeekAction.ACTION_LAST_WEEK -> {
-                var lasWeekMondayLocalDate = _weekMondayLocalDate.value?.plusWeeks(-1)
-                if (lasWeekMondayLocalDate != null) {
-                    if (lasWeekMondayLocalDate < OffsetDateTime.now(ZoneId.systemDefault())) {
-                        resetWeekDate(OffsetDateTime.now(ZoneOffset.UTC))
-                        setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value.getLocalOffsetDateTime())
-                        postTeacherScheduleResponse(
-                            TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value.truncatedTo(
-                                ChronoUnit.SECONDS
-                            ).toString()
-                        )
-                    } else {
-                        resetWeekDate(_weekMondayLocalDate.value.plusWeeks(-1))
-                        setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value.getLocalOffsetDateTime())
-                        postTeacherScheduleResponse(
-                            TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value.truncatedTo(
-                                ChronoUnit.SECONDS
-                            ).toString()
-                        )
-                    }
+                val lastWeekMondayLocalDate = _weekMondayLocalDate.value.minusWeeks(1)
+                if (lastWeekMondayLocalDate >= OffsetDateTime.now(ZoneId.systemDefault())) {
+                    refreshWeekData(lastWeekMondayLocalDate)
+                } else {
+                    refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
                 }
             }
 
             WeekAction.ACTION_NEXT_WEEK -> {
-                resetWeekDate(_weekMondayLocalDate.value.plusWeeks(1))
-                setDateTabOptionsByLocalOffsetDateTime(_apiQueryStartedAtUTC.value.getLocalOffsetDateTime())
-                postTeacherScheduleResponse(
-                    TEST_DATA_TEACHER_NAME, _apiQueryStartedAtUTC.value.truncatedTo(
-                        ChronoUnit.SECONDS
-                    ).toString()
-                )
+                refreshWeekData(_weekMondayLocalDate.value.plusWeeks(1))
             }
         }
     }

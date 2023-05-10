@@ -24,7 +24,7 @@ class ScheduleDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val fragmentBinding = FragmentScheduleDetailBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
