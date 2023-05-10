@@ -67,7 +67,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                     String.format(
                         requireContext().getString(
                             R.string.inquirying_teacher_calendar,
-                            viewModel.currentTeacherNameValue.value
+                            viewModel.currentTeacherName.value
                         )
                     ),
                     Snackbar.LENGTH_LONG
@@ -97,25 +97,25 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     private fun subscribeUi(binding: FragmentScheduleBinding, adapter: ScheduleTimeListAdapter) {
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weekMondayLocalDate.collect {
+            viewModel.weekStart.collect {
                 setButtonLastWeekBehavior(binding, it)
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weekSundayLocalDate.collect {
+            viewModel.weekEnd.collect {
                 setButtonNextWeekBehavior(binding, it)
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weekLocalDateText.collect {
+            viewModel.weekDateText.collect {
                 binding.textWeek.text = it
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.dateTabStringList.collect { dateTabOffsetDateTimeOptions ->
+            viewModel.dateTabs.collect { dateTabOffsetDateTimeOptions ->
                 binding.tablayout.doOnLayout {
                     putTabToTablayoutByOptions(binding, dateTabOffsetDateTimeOptions)
                 }
@@ -133,7 +133,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                                 )
                             }
                             binding.scheduleTimeRecyclerview.isVisible = true
-                            binding?.scheduleTimeRecyclerview?.scrollToPosition(0)
+                            binding.scheduleTimeRecyclerview?.scrollToPosition(0)
 
                             Timber.d("API Success")
                         }
