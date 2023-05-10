@@ -10,6 +10,7 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -17,6 +18,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.wei.amazingtalker_recruit.core.extensions.observeEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
+import com.wei.amazingtalker_recruit.core.models.Event
 import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
 import com.wei.amazingtalker_recruit.core.models.ShowToastEvent
@@ -40,35 +42,37 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
     private val viewModel: ScheduleViewModel by viewModels()
-    private var binding: FragmentScheduleBinding? = null
     private var isUpdateWeek = false
+    private var _binding: FragmentScheduleBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val fragmentBinding = FragmentScheduleBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
-        return fragmentBinding.root
+        _binding = FragmentScheduleBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply {
+        setupViews()
+        setupObservers()
+    }
+
+    private fun setupViews() {
+        with(binding) {
             adapter.setOnClickListener(this@ScheduleFragment)
             scheduleTimeRecyclerview.adapter = adapter
-            subscribeUi(this, adapter)
-            addOnTabSelectedListener(this)
+            addTabSelectedListener()
 
             viewModel.showSnackBar(
                 Snackbar.make(
                     root,
-                    String.format(
-                        requireContext().getString(
-                            R.string.inquirying_teacher_calendar,
-                            viewModel.currentTeacherName.value
-                        )
+                    getString(
+                        R.string.inquirying_teacher_calendar,
+                        viewModel.currentTeacherName.value
                     ),
                     Snackbar.LENGTH_LONG
                 )
@@ -76,180 +80,195 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         }
     }
 
-    private fun addOnTabSelectedListener(
-        binding: FragmentScheduleBinding
-    ) {
-        binding.tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+    private fun FragmentScheduleBinding.addTabSelectedListener() {
+        tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Timber.d("======onTabSelected====${tab.tag}")
 
-                viewModel.onTabSelected(tab.tag.toString())
+                val date = tab.tag as? OffsetDateTime
+                if (date != null) {
+                    viewModel.onTabSelected(date)
+                } else {
+                    Timber.e("Invalid tab tag, expected OffsetDateTime but got ${tab.tag?.javaClass?.name}")
+                }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
     }
 
-    private fun subscribeUi(binding: FragmentScheduleBinding, adapter: ScheduleTimeListAdapter) {
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weekStart.collect {
-                setButtonLastWeekBehavior(binding, it)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weekEnd.collect {
-                setButtonNextWeekBehavior(binding, it)
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.weekDateText.collect {
-                binding.textWeek.text = it
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.dateTabs.collect { dateTabOffsetDateTimeOptions ->
-                binding.tablayout.doOnLayout {
-                    putTabToTablayoutByOptions(binding, dateTabOffsetDateTimeOptions)
+    private fun setupObservers() {
+        with(viewLifecycleOwner.lifecycleScope) {
+            launchWhenStarted { observeWeekStart() }
+            launchWhenStarted { observeWeekEnd() }
+            launchWhenStarted { observeWeekDateText() }
+            launchWhenStarted { observeDateTabs() }
+            launchWhenStarted { observeFilteredTimeList() }
+            launchWhenStarted {
+                observeEvent(viewModel.events) { event ->
+                    handleEvent(event)
                 }
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.filteredTimeList.collect { result ->
-                if (!isUpdateWeek) {
-                    when (result) {
-                        is DataSourceResult.Success -> {
-                            result.data.let {
-                                adapter.addHeaderAndSubmitList(
-                                    it
-                                )
-                            }
-                            binding.scheduleTimeRecyclerview.isVisible = true
-                            binding.scheduleTimeRecyclerview.scrollToPosition(0)
-
-                            Timber.d("API Success")
-                        }
-
-                        is DataSourceResult.Error -> {
-                            viewModel.showSnackBar(
-                                Snackbar.make(
-                                    binding.root,
-                                    "Api Failed ${result.exception}",
-                                    Snackbar.LENGTH_LONG
-                                ),
-                                maxLines = 4
-                            )
-                            binding.scheduleTimeRecyclerview.isVisible = false
-
-                            Timber.d("API Failed ${result.exception}")
-                        }
-
-                        is DataSourceResult.Loading -> {
-                            Timber.d("API Loading")
-                        }
-                    }
-                }
-
-                if (isUpdateWeek) {
-                    isUpdateWeek = false
-                }
-            }
-
-        }
-
-        // Observe events
-        viewModel.events.observeEvent(viewLifecycleOwner) { event ->
-            when (event) {
-                is NavigateEvent -> {
-                    findNavController().navigate(event.directions)
-                }
-
-                is ShowToastEvent -> {
-                    event.toast.show()
-                }
-
-                is ShowSnackBarEvent -> {
-                    val snackBar = event.snackBar.setTextColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.amazingtalker_green_700
-                        )
-                    )
-
-                    val snackBarView = snackBar.view
-                    val snackTextView =
-                        snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
-                    snackTextView.maxLines = event.maxLines
-                    snackBar.show()
-                }
-                // ...handle other events
-            }
-        }
-
     }
 
-    private fun setButtonLastWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {
-        if (it < OffsetDateTime.now(ZoneId.systemDefault())) {
-            binding.buttonLastWeek.colorFilter = null
-            binding.buttonLastWeek.setOnClickListener(null)
-        } else {
-            binding.buttonLastWeek.setColorFilter(
+    private suspend fun LifecycleCoroutineScope.observeWeekStart() {
+        viewModel.weekStart.collect {
+            setPreviousWeekButtonState(it)
+        }
+    }
+
+    private suspend fun LifecycleCoroutineScope.observeWeekEnd() {
+        viewModel.weekEnd.collect {
+            setNextWeekButtonState(it)
+        }
+    }
+
+    private suspend fun LifecycleCoroutineScope.observeWeekDateText() {
+        viewModel.weekDateText.collect {
+            binding.textWeek.text = it
+        }
+    }
+
+    private suspend fun LifecycleCoroutineScope.observeDateTabs() {
+        viewModel.dateTabs.collect { dates ->
+            binding.tablayout.doOnLayout {
+                setupTabs(dates)
+            }
+        }
+    }
+
+    private suspend fun LifecycleCoroutineScope.observeFilteredTimeList() {
+        viewModel.filteredTimeList.collect { result ->
+            handleTimeListUpdate(result)
+        }
+    }
+
+    private fun handleTimeListUpdate(result: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
+        if (!isUpdateWeek) {
+            when (result) {
+                is DataSourceResult.Success -> {
+                    result.data.let {
+                        adapter.addHeaderAndSubmitList(
+                            it
+                        )
+                    }
+                    binding.scheduleTimeRecyclerview.isVisible = true
+                    binding.scheduleTimeRecyclerview.scrollToPosition(0)
+
+                    Timber.d("API Success")
+                }
+
+                is DataSourceResult.Error -> {
+                    viewModel.showSnackBar(
+                        Snackbar.make(
+                            binding.root,
+                            "Api Failed ${result.exception}",
+                            Snackbar.LENGTH_LONG
+                        ),
+                        maxLines = 4
+                    )
+                    binding.scheduleTimeRecyclerview.isVisible = false
+
+                    Timber.d("API Failed ${result.exception}")
+                }
+
+                is DataSourceResult.Loading -> {
+                    Timber.d("API Loading")
+                }
+            }
+        }
+
+        if (isUpdateWeek) {
+            isUpdateWeek = false
+        }
+    }
+
+
+    private fun handleEvent(event: Event) {
+        when (event) {
+            is NavigateEvent -> {
+                findNavController().navigate(event.directions)
+            }
+
+            is ShowToastEvent -> {
+                event.toast.show()
+            }
+
+            is ShowSnackBarEvent -> {
+                val snackBar = event.snackBar.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.amazingtalker_green_700
+                    )
+                )
+
+                val snackBarView = snackBar.view
+                val snackTextView =
+                    snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                snackTextView.maxLines = event.maxLines
+                snackBar.show()
+            }
+            // ...handle other events
+        }
+    }
+
+    private fun setPreviousWeekButtonState(date: OffsetDateTime) {
+        with(binding.buttonLastWeek) {
+            if (date < OffsetDateTime.now(ZoneId.systemDefault())) {
+                colorFilter = null
+                setOnClickListener(null)
+            } else {
+                setColorFilter(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.amazingtalker_green_900
+                    )
+                )
+                setOnClickListener { viewModel.updateWeek(WeekAction.PREVIOUS_WEEK) }
+            }
+        }
+    }
+
+    private fun setNextWeekButtonState(date: OffsetDateTime) {
+        with(binding.buttonNextWeek) {
+            setColorFilter(
                 ContextCompat.getColor(
                     requireContext(),
                     R.color.amazingtalker_green_900
                 )
             )
-            binding.buttonLastWeek.setOnClickListener(View.OnClickListener {
-                isUpdateWeek = true
-                viewModel.updateWeek(WeekAction.ACTION_LAST_WEEK)
-            })
+            setOnClickListener { viewModel.updateWeek(WeekAction.NEXT_WEEK) }
         }
     }
 
-    private fun setButtonNextWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {
-        binding.buttonNextWeek.setColorFilter(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.amazingtalker_green_900
-            )
-        )
-        binding.buttonNextWeek.setOnClickListener(View.OnClickListener {
-            isUpdateWeek = true
-            viewModel.updateWeek(WeekAction.ACTION_NEXT_WEEK)
-        })
-    }
-
-    private fun putTabToTablayoutByOptions(
-        binding: FragmentScheduleBinding,
+    private fun setupTabs(
         options: MutableList<OffsetDateTime>
     ) {
-        val tabWidth = binding.tablayout.width / 3
-        val tabHeight = binding.tablayout.height
-        binding.tablayout.removeAllTabs()
-        options.forEachIndexed { _, element ->
-            binding.tablayout.newTab().run {
-                setCustomView(R.layout.custom_tab)
-                customView?.minimumWidth = tabWidth
-                customView?.minimumHeight = tabHeight
-                tag = element
-                val dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
-                text = dateFormatter.format(element)
-                binding.tablayout.addTab(this)
+        with(binding.tablayout) {
+            val tabWidth = width / 3
+            val tabHeight = height
+            removeAllTabs()
+            options.forEachIndexed { _, element ->
+                newTab().run {
+                    setCustomView(R.layout.custom_tab)
+                    customView?.minimumWidth = tabWidth
+                    customView?.minimumHeight = tabHeight
+                    tag = element
+                    val dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
+                    text = dateFormatter.format(element)
+                    addTab(this)
+                }
             }
         }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     override fun onItemClick(item: IntervalScheduleTimeSlot) {

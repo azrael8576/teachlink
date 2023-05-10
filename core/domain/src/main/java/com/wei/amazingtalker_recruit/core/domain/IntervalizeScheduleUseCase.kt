@@ -4,9 +4,9 @@ import com.wei.amazingtalker_recruit.core.extensions.getDuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTimeSlots
-import com.wei.amazingtalker_recruit.core.utils.TimezoneManager
 import java.time.Instant
 import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.time.ZonedDateTime
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * @return MutableList<TeacherScheduleTime>  切分後的 Schedule 物件
  */
 class IntervalizeScheduleUseCase @Inject constructor() {
-    private val currentTimezone = TimezoneManager.getCurrentTimezone()
+    private val currentTimezone = ZoneId.systemDefault()
 
     operator fun invoke(
         teacherScheduleList: List<NetworkTimeSlots>,

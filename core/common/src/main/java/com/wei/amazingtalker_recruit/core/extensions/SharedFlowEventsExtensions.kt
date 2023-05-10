@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.core.extensions
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -10,11 +11,11 @@ suspend fun <T> SharedFlowEvents<T>.setEvent(vararg values: T) {
     this.emit(eventList)
 }
 
-fun <T> SharedFlow<List<T>>.observeEvent(
-    lifecycleOwner: LifecycleOwner, action: (T) -> Unit
+fun <T> LifecycleCoroutineScope.observeEvent(
+    events: SharedFlow<List<T>>, action: (T) -> Unit
 ) {
-    lifecycleOwner.lifecycleScope.launchWhenStarted {
-        this@observeEvent.collect {
+    this.launchWhenStarted {
+        events.collect {
             it.forEach { event ->
                 action.invoke(event)
             }

@@ -127,14 +127,15 @@ class ScheduleTimeListAdapter @Inject constructor(
     inner class HeaderViewHolder(
         private val binding: ListHeaderScheduleTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        private val currentTimezone = ZoneId.systemDefault()
 
         fun bind() {
             binding.apply {
                 val offsetFormatter = DateTimeFormatter.ofPattern("xxx")
                 textView.text = String.format(
                     binding.root.context.getString(R.string.your_local_time_zone),
-                    ZoneId.systemDefault(),
-                    offsetFormatter.format(OffsetDateTime.now(ZoneId.systemDefault()).offset)
+                    currentTimezone,
+                    offsetFormatter.format(OffsetDateTime.now(currentTimezone).offset)
                 )
             }
         }
