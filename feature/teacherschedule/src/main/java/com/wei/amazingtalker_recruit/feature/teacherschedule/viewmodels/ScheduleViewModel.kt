@@ -179,9 +179,9 @@ class ScheduleViewModel @Inject constructor(
                         ScheduleState.BOOKED
                     )
                 )
-                scheduleTimeList.sortedBy { scheduleTime -> scheduleTime.start }
+                val sortedList = scheduleTimeList.sortedBy { scheduleTime -> scheduleTime.start }
                 _scheduleTimeList.value =
-                    DataSourceResult.Success(scheduleTimeList)
+                    DataSourceResult.Success(sortedList.toMutableList())
             }
 
             is DataSourceResult.Error -> {

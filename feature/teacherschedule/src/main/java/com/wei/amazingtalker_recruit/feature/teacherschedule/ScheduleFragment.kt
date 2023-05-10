@@ -133,7 +133,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                                 )
                             }
                             binding.scheduleTimeRecyclerview.isVisible = true
-                            binding.scheduleTimeRecyclerview?.scrollToPosition(0)
+                            binding.scheduleTimeRecyclerview.scrollToPosition(0)
 
                             Timber.d("API Success")
                         }
