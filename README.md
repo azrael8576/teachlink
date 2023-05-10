@@ -1,4 +1,19 @@
-##   Project Documentation
+Amazingtalker-Recruit APP
+==================
+
+這是一款名為"Amazingtalker-Recruit APP"的模擬預約教師行事曆應用程式。
+這款 APP 旨在展示如何遵循Android的設計和開發最佳實踐，並且提供實用的參考資訊給開發人員。
+
+**work in progress** 🚧
+這款 APP 正在開發中，並且正在進行多項重要的技術遷移和改進：
+
+- 單一模組正在遷移至模組化結構。
+- 引入 DI Hilt。
+- LiveData 正被 Flow 取代。
+- MVVM 架構正在遷移至 MVI。
+- Vie w正在遷移至 Jetpack Compose UI。
+
+##   Project Documentation (Deprecated)
 
     ├─ adapters
     ├─ data
@@ -14,7 +29,7 @@
 * `utilities/*.*` : App公用類 e.g. app常數, Utils相關類
 * `viewmodels/*.*` : ViewModel, ViewModelFactory.
 
-##  設計概念
+##  設計概念 (Deprecated)
 
 * 採 MVVM Design Pattern
 * 開啟畫面由 LoginActivity 模擬登入 or 驗證身分頁
@@ -22,7 +37,7 @@
 * 日期 Tablayout 僅顯示今日以後之日期 Tab
 
 
-##  Third Party Library 
+##  Third Party Library (Deprecated)
 
 * ViewModel : ViewModel From Jetpack
 * LiveData : LiveData From Jetpack
@@ -32,8 +47,6 @@
 * Gson ：解析 JSON 資料格式
 * navigation.safeargs ：Fragment 間資料傳遞
 
-##  備註
-#### DataBinding 未導入：本人習慣僅用 ViewBinding 開發, 因 DataBinding 相對難追 code
 
 ##  TODO
 #### * 一週時間以週日為起始時間
