@@ -2,14 +2,21 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
 import com.wei.amazingtalker_recruit.core.domain.GetTeacherScheduleTimeUseCase
+import com.wei.amazingtalker_recruit.core.extensions.SharedFlowEvents
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.extensions.getUTCOffsetDateTime
+import com.wei.amazingtalker_recruit.core.extensions.setEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
+import com.wei.amazingtalker_recruit.core.models.Event
+import com.wei.amazingtalker_recruit.core.models.NavigateEvent
+import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.core.result.asDataSourceResult
+import com.wei.amazingtalker_recruit.feature.teacherschedule.ScheduleFragmentDirections
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEACHER_SCHEDULE_TIME_INTERVAL
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,10 +73,25 @@ class ScheduleViewModel @Inject constructor(
 
     private val _selectedTabTag = MutableStateFlow("")
 
+    val events = SharedFlowEvents<Event>()
+
     val filteredTimeList: Flow<DataSourceResult<List<IntervalScheduleTimeSlot>>> =
         combine(_teacherScheduleTimeList, _selectedTabTag) { result, tag ->
             filterTimeListByTag(result, tag)
         }
+
+    fun navigateToScheduleDetail(item: IntervalScheduleTimeSlot) {
+        val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
+        viewModelScope.launch {
+            events.setEvent(NavigateEvent(action))
+        }
+    }
+
+    fun showSnackBar(snackBar: Snackbar, maxLines: Int = 1) {
+        viewModelScope.launch {
+            events.setEvent(ShowSnackBarEvent(snackBar, maxLines))
+        }
+    }
 
     private fun filterTimeListByTag(result: DataSourceResult<MutableList<IntervalScheduleTimeSlot>>, tag: String): DataSourceResult<List<IntervalScheduleTimeSlot>> {
         return when (result) {

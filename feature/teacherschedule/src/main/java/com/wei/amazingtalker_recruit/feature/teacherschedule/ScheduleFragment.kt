@@ -15,7 +15,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.wei.amazingtalker_recruit.core.extensions.observeEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
+import com.wei.amazingtalker_recruit.core.models.NavigateEvent
+import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
+import com.wei.amazingtalker_recruit.core.models.ShowToastEvent
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
@@ -57,16 +61,18 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             subscribeUi(this, adapter)
             addOnTabSelectedListener(this)
 
-            Snackbar.make(
-                root, String.format(
-                    requireContext().getString(
-                        R.string.inquirying_teacher_calendar,
-                        viewModel.currentTeacherNameValue.value
-                    )
-                ), Snackbar.LENGTH_LONG
+            viewModel.showSnackBar(
+                Snackbar.make(
+                    root,
+                    String.format(
+                        requireContext().getString(
+                            R.string.inquirying_teacher_calendar,
+                            viewModel.currentTeacherNameValue.value
+                        )
+                    ),
+                    Snackbar.LENGTH_LONG
+                )
             )
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_700))
-                .show()
         }
     }
 
@@ -133,17 +139,14 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
                         }
 
                         is DataSourceResult.Error -> {
-                            val snackBar = Snackbar.make(
+                            viewModel.showSnackBar(
+                                Snackbar.make(
                                     binding.root,
                                     "Api Failed ${result.exception}",
                                     Snackbar.LENGTH_LONG
-                                ).setTextColor(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_700))
-
-                            val snackBarView = snackBar.view
-                            val snackTextView =
-                                snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
-                            snackTextView.maxLines = 4
-                            snackBar.show()
+                                ),
+                                maxLines = 4
+                            )
                             binding.scheduleTimeRecyclerview.isVisible = false
 
                             Timber.d("API Failed ${result.exception}")
@@ -162,6 +165,35 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
 
         }
 
+        // Observe events
+        viewModel.events.observeEvent(viewLifecycleOwner) { event ->
+            when (event) {
+                is NavigateEvent -> {
+                    findNavController().navigate(event.directions)
+                }
+
+                is ShowToastEvent -> {
+                    event.toast.show()
+                }
+
+                is ShowSnackBarEvent -> {
+                    val snackBar = event.snackBar.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.amazingtalker_green_700
+                        )
+                    )
+
+                    val snackBarView = snackBar.view
+                    val snackTextView =
+                        snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                    snackTextView.maxLines = event.maxLines
+                    snackBar.show()
+                }
+                // ...handle other events
+            }
+        }
+
     }
 
     private fun setButtonLastWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {
@@ -169,7 +201,12 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             binding.buttonLastWeek.colorFilter = null
             binding.buttonLastWeek.setOnClickListener(null)
         } else {
-            binding.buttonLastWeek.setColorFilter(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_900))
+            binding.buttonLastWeek.setColorFilter(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.amazingtalker_green_900
+                )
+            )
             binding.buttonLastWeek.setOnClickListener(View.OnClickListener {
                 isUpdateWeek = true
                 viewModel.updateWeek(WeekAction.ACTION_LAST_WEEK)
@@ -178,7 +215,12 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     }
 
     private fun setButtonNextWeekBehavior(binding: FragmentScheduleBinding, it: OffsetDateTime) {
-        binding.buttonNextWeek.setColorFilter(ContextCompat.getColor(requireContext(), R.color.amazingtalker_green_900))
+        binding.buttonNextWeek.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.amazingtalker_green_900
+            )
+        )
         binding.buttonNextWeek.setOnClickListener(View.OnClickListener {
             isUpdateWeek = true
             viewModel.updateWeek(WeekAction.ACTION_NEXT_WEEK)
@@ -211,8 +253,6 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(item: IntervalScheduleTimeSlot) {
-        //TODO nav event 抽取至 viewModel
-        val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
-        findNavController().navigate(action)
+        viewModel.navigateToScheduleDetail(item)
     }
 }

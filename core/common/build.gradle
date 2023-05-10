@@ -48,6 +48,15 @@ dependencies {
     // Okhttp Interceptor
     implementation libs.okhttpInterceptorLibs.core
 
+    // LifeCycle
+    implementation libs.lifeCycleLibs.core
+
+    // Navigation
+    implementation libs.navigationLibs.core
+
+    // Coroutines
+    implementation libs.coroutinesLibs.core
+
     // Hilt
     implementation libs.hiltLibs.core
     kapt libs.hiltLibs.compiler
