@@ -67,6 +67,10 @@ class ScheduleViewModel @Inject constructor(
 
     private val _selectedTab = MutableStateFlow<OffsetDateTime?>(null)
 
+    private val _selectedIndex = MutableStateFlow(0)
+    val selectedIndex: StateFlow<Int>
+        get() = _selectedIndex
+
     val events = SharedFlowEvents<Event>()
 
     val filteredTimeList: Flow<DataSourceResult<List<IntervalScheduleTimeSlot>>> =
@@ -135,8 +139,9 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    fun onTabSelected(date: OffsetDateTime) {
+    fun onTabSelected(date: OffsetDateTime, position: Int) {
         _selectedTab.value = date
+        _selectedIndex.value = position
     }
 
     fun updateWeek(action: WeekAction) {

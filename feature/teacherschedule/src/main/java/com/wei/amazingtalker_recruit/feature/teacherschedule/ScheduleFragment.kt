@@ -41,7 +41,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
     private val viewModel: ScheduleViewModel by viewModels()
-    private var isUpdateWeek = false
+    private var isUpdatingWeek = false
 
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
         get() = FragmentScheduleBinding::inflate
@@ -51,7 +51,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
         with(binding) {
             adapter.setOnClickListener(this@ScheduleFragment)
             scheduleTimeRecyclerview.adapter = adapter
-            addTabSelectedListener()
 
             viewModel.showSnackBar(
                 Snackbar.make(
@@ -64,25 +63,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
                 )
             )
         }
-    }
-
-    private fun FragmentScheduleBinding.addTabSelectedListener() {
-        tablayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                Timber.d("======onTabSelected====${tab.tag}")
-
-                val date = tab.tag as? OffsetDateTime
-                if (date != null) {
-                    viewModel.onTabSelected(date)
-                } else {
-                    Timber.e("Invalid tab tag, expected OffsetDateTime but got ${tab.tag?.javaClass?.name}")
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
     }
 
     override fun setupObservers() {
@@ -115,6 +95,16 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
     private suspend fun LifecycleCoroutineScope.observeWeekDateText() {
         viewModel.weekDateText.collect {
             binding.textWeek.text = it
+            binding.textWeek.setOnClickListener { view ->
+                //TODO 開啟日曆選單
+                viewModel.showSnackBar(
+                    Snackbar.make(
+                        view,
+                        "TODO 開啟日曆選單, 當前星期為: ${it}",
+                        Snackbar.LENGTH_LONG
+                    )
+                )
+            }
         }
     }
 
@@ -122,6 +112,11 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
         viewModel.dateTabs.collect { dates ->
             binding.tablayout.doOnLayout {
                 setupTabs(dates)
+                // 延遲選擇tab
+                binding.tablayout.post {
+                    // 恢复所選的tab
+                    binding.tablayout.getTabAt(viewModel.selectedIndex.value)?.select()
+                }
             }
         }
     }
@@ -133,7 +128,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
     }
 
     private fun handleTimeListUpdate(result: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
-        if (!isUpdateWeek) {
+        if (!isUpdatingWeek) {
             when (result) {
                 is DataSourceResult.Success -> {
                     result.data.let {
@@ -167,9 +162,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
             }
         }
 
-        if (isUpdateWeek) {
-            isUpdateWeek = false
-        }
+        isUpdatingWeek = false
     }
 
 
@@ -248,8 +241,29 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
                     addTab(this)
                 }
             }
+            addTabSelectedListener(this)
         }
 
+    }
+
+
+    private fun addTabSelectedListener(tabLayout: TabLayout) {
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                Timber.e("======onTabSelected====${tab.tag}")
+
+                val date = tab.tag as? OffsetDateTime
+                if (date != null) {
+                    viewModel.onTabSelected(date, position = tab.position)
+                } else {
+                    Timber.e("Invalid tab tag, expected OffsetDateTime but got ${tab.tag?.javaClass?.name}")
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
     override fun onItemClick(item: IntervalScheduleTimeSlot) {
