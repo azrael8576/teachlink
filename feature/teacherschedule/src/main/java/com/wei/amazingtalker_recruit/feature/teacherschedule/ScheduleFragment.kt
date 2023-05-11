@@ -1,6 +1,5 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.observeEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.models.Event
@@ -37,31 +36,18 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ScheduleFragment : Fragment(), OnItemClickListener {
+class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickListener {
 
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
     private val viewModel: ScheduleViewModel by viewModels()
     private var isUpdateWeek = false
-    private var _binding: FragmentScheduleBinding? = null
-    private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentScheduleBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
+        get() = FragmentScheduleBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupViews()
-        setupObservers()
-    }
 
-    private fun setupViews() {
+    override fun setupViews() {
         with(binding) {
             adapter.setOnClickListener(this@ScheduleFragment)
             scheduleTimeRecyclerview.adapter = adapter
@@ -99,7 +85,7 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
         })
     }
 
-    private fun setupObservers() {
+    override fun setupObservers() {
         with(viewLifecycleOwner.lifecycleScope) {
             launchWhenStarted { observeWeekStart() }
             launchWhenStarted { observeWeekEnd() }
@@ -264,11 +250,6 @@ class ScheduleFragment : Fragment(), OnItemClickListener {
             }
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onItemClick(item: IntervalScheduleTimeSlot) {

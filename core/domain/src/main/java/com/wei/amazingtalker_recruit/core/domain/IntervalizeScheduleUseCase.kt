@@ -4,6 +4,8 @@ import com.wei.amazingtalker_recruit.core.extensions.getDuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTimeSlots
+import timber.log.Timber
+import java.time.Duration
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -19,6 +21,10 @@ import javax.inject.Inject
  */
 class IntervalizeScheduleUseCase @Inject constructor() {
     private val currentTimezone = ZoneId.systemDefault()
+
+    companion object {
+        const val MINUTES_PER_HOUR = 60
+    }
 
     operator fun invoke(
         teacherScheduleList: List<NetworkTimeSlots>,
@@ -36,7 +42,7 @@ class IntervalizeScheduleUseCase @Inject constructor() {
             val endDateTime = utcToLocalTime(teacherSchedule.endUtc)
 
             // 當前時間小於結束時間，繼續創建時間段
-            while (currentDateTime < endDateTime) {
+            while (currentDateTime.isBefore(endDateTime)) {
                 // 創新的時間段並添加到列表
                 val interval = createInterval(currentDateTime, timeInterval, scheduleState)
                 scheduleTimeList.add(interval)
@@ -44,10 +50,12 @@ class IntervalizeScheduleUseCase @Inject constructor() {
                 // 更新當前時間為下一個時間段的開始時間
                 currentDateTime = currentDateTime.plusMinutes(timeInterval)
 
-                // 如果當前時間大於結束時間，則添加最後一個時間段
-                if (currentDateTime > endDateTime && currentDateTime != endDateTime) {
-                    val lastInterval = createInterval(endDateTime, timeInterval, scheduleState)
-                    scheduleTimeList.add(lastInterval)
+                // 如果當前時間大於結束時間，則不添加此區段並拋出異常提示
+                if (currentDateTime.isAfter(endDateTime)) {
+                    val duration = Duration.between(endDateTime, currentDateTime)
+                    val minutes = duration.toMinutes() % MINUTES_PER_HOUR // 取得分鐘數差
+
+                    Timber.e("剩餘時間不足切分: $endDateTime, 欲切分至: $currentDateTime, 差異時間分鐘數: $minutes")
                 }
             }
         }

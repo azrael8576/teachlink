@@ -5,7 +5,7 @@ import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
-import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEACHER_SCHEDULE_TIME_INTERVAL
+import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.SCHEDULE_TIME_INTERVAL
 import javax.inject.Inject
 
 class HandleTeacherScheduleResultUseCase @Inject constructor(
@@ -18,14 +18,14 @@ class HandleTeacherScheduleResultUseCase @Inject constructor(
                 scheduleTimeList.addAll(
                     intervalizeScheduleUseCase(
                         result.data.available,
-                        TEACHER_SCHEDULE_TIME_INTERVAL,
+                        SCHEDULE_TIME_INTERVAL,
                         ScheduleState.AVAILABLE
                     )
                 )
                 scheduleTimeList.addAll(
                     intervalizeScheduleUseCase(
                         result.data.booked,
-                        TEACHER_SCHEDULE_TIME_INTERVAL,
+                        SCHEDULE_TIME_INTERVAL,
                         ScheduleState.BOOKED
                     )
                 )
