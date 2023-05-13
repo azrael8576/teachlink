@@ -4,17 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/amazingtalker_green_900"
-    tools:context=".LoginActivity">
+    tools:context=".LoginFragment">
 
     <TextView
+        android:id="@+id/tv_describe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LogIn"
-        android:textSize="16dp"
-        android:textStyle="bold"
+        android:text="跨功能模組導航:\n Home Module"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_nav_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Login"
+        app:backgroundTint="@color/amazingtalker_green_900"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_describe" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

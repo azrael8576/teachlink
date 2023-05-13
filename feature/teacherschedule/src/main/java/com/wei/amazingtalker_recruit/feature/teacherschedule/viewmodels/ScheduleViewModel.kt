@@ -163,7 +163,7 @@ class ScheduleViewModel @Inject constructor(
 
     fun navigateToScheduleDetail(item: IntervalScheduleTimeSlot) {
         val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
-        postEvent(NavigateEvent(action))
+        postEvent(NavigateEvent.ByDirections(action))
     }
 
     fun showSnackBar(snackBar: Snackbar, maxLines: Int = 1) {

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.observeEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
@@ -21,6 +22,8 @@ import com.wei.amazingtalker_recruit.core.models.Event
 import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
 import com.wei.amazingtalker_recruit.core.models.ShowToastEvent
+import com.wei.amazingtalker_recruit.core.navigation.DeepLinks
+import com.wei.amazingtalker_recruit.core.navigation.navigate
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
@@ -77,6 +80,13 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
                     handleEvent(event)
                 }
             }
+        }
+    }
+
+    override fun init() {
+        if (!TokenManager.isTokenValid) {
+            findNavController().popBackStack(R.id.scheduleFragment, true)
+            findNavController().navigate(DeepLinks.LOGIN)
         }
     }
 
@@ -168,7 +178,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
 
     private fun handleEvent(event: Event) {
         when (event) {
-            is NavigateEvent -> {
+            is NavigateEvent.ByDirections -> {
                 findNavController().navigate(event.directions)
             }
 

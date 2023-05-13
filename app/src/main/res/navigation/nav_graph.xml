@@ -6,4 +6,5 @@
     app:startDestination="@id/teacherschedule_nav_graph">
 
     <include app:graph="@navigation/teacherschedule_nav_graph" />
+    <include app:graph="@navigation/login_nav_graph" />
 </navigation>

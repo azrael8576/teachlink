@@ -38,6 +38,9 @@ class ScheduleDetailFragment : BaseFragment<FragmentScheduleDetailBinding>() {
         }
     }
 
+    override fun init() {
+    }
+
     private fun FragmentScheduleDetailBinding.addOnClickListener() {
         btnBack.setOnClickListener {
             findNavController().popBackStack()

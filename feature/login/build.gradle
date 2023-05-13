@@ -1,20 +1,19 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 def androidID = rootProject.ext.androidID
-def appID = rootProject.ext.appID
 def libs = rootProject.ext.libs
 
 android {
-    namespace appID.app
-    compileSdk androidID.compileSdk
+    namespace 'com.wei.amazingtalker_recruit.feature.login'
+    compileSdk 33
 
     defaultConfig {
-        applicationId appID.app
         minSdk androidID.minSdk
         targetSdk androidID.targetSdk
         versionCode androidID.versionCode
@@ -47,13 +46,14 @@ android {
 
 dependencies {
     implementation project(path: ':core:common')
-    implementation project(path: ':feature:teacherschedule')
-    implementation project(path: ':feature:login')
 
     // PublicLibs
     implementation libs.publicLibs.core
     coreLibraryDesugaring libs.publicLibs.desugar_jdk
     testImplementation libs.publicLibs.test
+
+    // LifeCycle
+    implementation libs.lifeCycleLibs.core
 
     // Navigation
     implementation libs.navigationLibs.core

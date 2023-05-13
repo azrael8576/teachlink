@@ -27,11 +27,14 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         setupObservers()
+        init()
     }
 
     abstract fun setupViews()
 
     abstract fun setupObservers()
+
+    abstract fun init()
 
     override fun onDestroyView() {
         super.onDestroyView()
