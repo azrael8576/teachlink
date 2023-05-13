@@ -40,10 +40,15 @@ private const val BASE_URL = AMAZING_TALKER_SERVICE_BASE_URL
 @Singleton
 class RetrofitAtNetwork @Inject constructor() : AtNetworkDataSource {
 
-    private val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
-
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(logger)
+    private val okHttpCallFactory = OkHttpClient.Builder()
+        .addInterceptor(
+            HttpLoggingInterceptor()
+                .apply {
+                    if (BuildConfig.DEBUG) {
+                        setLevel(HttpLoggingInterceptor.Level.BODY)
+                    }
+                },
+        )
         .build()
 
     private val networkJson = Json {
@@ -52,7 +57,7 @@ class RetrofitAtNetwork @Inject constructor() : AtNetworkDataSource {
 
     private val networkApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .client(client)
+        .callFactory(okHttpCallFactory)
         .addConverterFactory(
             @OptIn(ExperimentalSerializationApi::class)
             networkJson.asConverterFactory("application/json".toMediaType()),

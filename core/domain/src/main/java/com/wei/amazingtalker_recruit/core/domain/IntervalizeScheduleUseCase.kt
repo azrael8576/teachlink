@@ -14,10 +14,10 @@ import javax.inject.Inject
 
 /**
  * 獲取固定間隔本地時刻集合
- * @param teacherScheduleList
+ * @param teacherScheduleList 教師時間段的列表
  * @param timeInterval 時間間隔(單位：分鐘)
- * @param scheduleTimeState
- * @return MutableList<TeacherScheduleTime>  切分後的 Schedule 物件
+ * @param scheduleState 時間段的狀態
+ * @return MutableList<IntervalScheduleTimeSlot> 切分後的時間段物件的列表
  */
 class IntervalizeScheduleUseCase @Inject constructor() {
     private val currentTimezone = ZoneId.systemDefault()
@@ -64,6 +64,13 @@ class IntervalizeScheduleUseCase @Inject constructor() {
         return scheduleTimeList
     }
 
+    /**
+     * 創建時間段物件。
+     * @param startDateTime 開始時間。
+     * @param timeInterval 時間間隔（以分鐘為單位）。
+     * @param scheduleState 時間段的狀態。
+     * @return IntervalScheduleTimeSlot 時間段物件。
+     */
     private fun createInterval(
         startDateTime: OffsetDateTime,
         timeInterval: Long,
@@ -77,6 +84,11 @@ class IntervalizeScheduleUseCase @Inject constructor() {
         )
     }
 
+    /**
+     * 將 UTC 時間轉換為本地時間。
+     * @param utcTime UTC 時間的字串表示。
+     * @return OffsetDateTime 本地時間的 OffsetDateTime 物件。
+     */
     private fun utcToLocalTime(utcTime: String): OffsetDateTime {
         val utcInstant = Instant.parse(utcTime)
         val localDateTime = ZonedDateTime.ofInstant(utcInstant, currentTimezone).toLocalDateTime()
