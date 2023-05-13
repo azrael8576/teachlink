@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -38,26 +40,41 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
      * 分別用於設置視圖，設置觀察者和初始化。
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // 調用 Fragment 的父類方法，這是必須的，以保證視圖的生命周期正常運行
         super.onViewCreated(view, savedInstanceState)
-        setupViews()
-        setupObservers()
-        init()
+
+        // 調用子類實現的 setupViews() 方法，用於設置視圖的各種屬性
+        binding.setupViews()
+
+        // 調用子類實現的 addOnClickListener() 方法，用於為視圖設置 OnClickListener
+        binding.addOnClickListener()
+
+        // 調用子類實現的 setupObservers() 方法，用於設置觀察者，以便根據 LiveData 或其他可觀察對象的變化來更新 UI
+        viewLifecycleOwner.lifecycleScope.setupObservers()
+
+        // 調用子類實現的 initData() 方法，用於進行資料的初始化工作，這可能包括從資料庫獲取資料，或者從網路請求資料等
+        initData()
     }
 
     /**
      * 用於設置視圖的抽象方法，子類必須實現。
      */
-    abstract fun setupViews()
+    abstract fun B.setupViews()
+
+    /**
+     * 用於設置視圖 OnClickListener 的抽象方法，子類必須實現。
+     */
+    abstract fun B.addOnClickListener()
 
     /**
      * 用於設置觀察者的抽象方法，子類必須實現。
      */
-    abstract fun setupObservers()
+    abstract fun LifecycleCoroutineScope.setupObservers()
 
     /**
-     * 用於進行初始化的抽象方法，子類必須實現。
+     * 用於進行初始化資料的抽象方法，子類必須實現。
      */
-    abstract fun init()
+    abstract fun initData()
 
     /**
      * 在 onDestroyView 方法中，將 _binding 設置為 null，以避免內存泄露。

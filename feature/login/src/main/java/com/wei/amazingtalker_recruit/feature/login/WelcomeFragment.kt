@@ -3,7 +3,7 @@ package com.wei.amazingtalker_recruit.feature.login
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.observeEvent
@@ -19,23 +19,21 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentWelcomeBinding
         get() = FragmentWelcomeBinding::inflate
 
-    override fun setupViews() {
-        with(binding) {
-
-        }
-    }
-
-    override fun setupObservers() {
-        with(viewLifecycleOwner.lifecycleScope) {
-            launchWhenStarted {
-                observeEvent(viewModel.events) { event ->
-                    handleEvent(event)
-                }
+    override fun LifecycleCoroutineScope.setupObservers() {
+        launchWhenStarted {
+            observeEvent(viewModel.events) { event ->
+                handleEvent(event)
             }
         }
     }
 
-    override fun init() {
+    override fun FragmentWelcomeBinding.addOnClickListener() {
+    }
+
+    override fun FragmentWelcomeBinding.setupViews() {
+    }
+
+    override fun initData() {
         viewModel.navigateToLogin()
     }
 

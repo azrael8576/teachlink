@@ -3,7 +3,7 @@ package com.wei.amazingtalker_recruit.feature.login
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.observeEvent
@@ -20,23 +20,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
 
-    override fun setupViews() {
-        with(binding) {
-            addOnClickListener()
+    override fun FragmentLoginBinding.setupViews() {
+    }
+
+    override fun FragmentLoginBinding.addOnClickListener() {
+        btnNavLogin.setOnClickListener {
+            viewModel.login()
         }
     }
 
-    override fun setupObservers() {
-        with(viewLifecycleOwner.lifecycleScope) {
-            launchWhenStarted {
-                observeEvent(viewModel.events) { event ->
-                    handleEvent(event)
-                }
+    override fun LifecycleCoroutineScope.setupObservers() {
+        launchWhenStarted {
+            observeEvent(viewModel.events) { event ->
+                handleEvent(event)
             }
         }
     }
 
-    override fun init() {
+    override fun initData() {
     }
 
     private fun handleEvent(event: Event) {
@@ -48,9 +49,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun FragmentLoginBinding.addOnClickListener() {
-        btnNavLogin.setOnClickListener {
-            viewModel.login()
-        }
-    }
 }

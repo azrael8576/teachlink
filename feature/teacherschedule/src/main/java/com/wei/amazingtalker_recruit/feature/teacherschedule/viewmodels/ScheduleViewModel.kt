@@ -1,15 +1,10 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
-import com.wei.amazingtalker_recruit.core.extensions.SharedFlowEvents
+import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
-import com.wei.amazingtalker_recruit.core.extensions.setEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.models.Event
 import com.wei.amazingtalker_recruit.core.models.NavigateEvent
-import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.ScheduleFragmentDirections
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
@@ -39,7 +34,7 @@ class ScheduleViewModel @Inject constructor(
     private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
     private val handleTeacherScheduleResultUseCase: HandleTeacherScheduleResultUseCase,
     private val weekDataHelper: WeekDataHelper
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _currentTeacherName = MutableStateFlow(TEST_DATA_TEACHER_NAME)
     val currentTeacherName: StateFlow<String> get() = _currentTeacherName
@@ -70,8 +65,6 @@ class ScheduleViewModel @Inject constructor(
     private val _selectedIndex = MutableStateFlow(0)
     val selectedIndex: StateFlow<Int>
         get() = _selectedIndex
-
-    val events = SharedFlowEvents<Event>()
 
     val filteredTimeList: Flow<DataSourceResult<List<IntervalScheduleTimeSlot>>> =
         combine(_scheduleTimeList, _selectedTab) { result, date ->
@@ -166,13 +159,4 @@ class ScheduleViewModel @Inject constructor(
         postEvent(NavigateEvent.ByDirections(action))
     }
 
-    fun showSnackBar(snackBar: Snackbar, maxLines: Int = 1) {
-        postEvent(ShowSnackBarEvent(snackBar, maxLines))
-    }
-
-    private fun postEvent(event: Event) {
-        viewModelScope.launch {
-            events.setEvent(event)
-        }
-    }
 }

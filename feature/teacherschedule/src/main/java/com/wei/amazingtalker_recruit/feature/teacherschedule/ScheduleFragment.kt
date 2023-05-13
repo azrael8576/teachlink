@@ -49,41 +49,39 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
         get() = FragmentScheduleBinding::inflate
 
-
-    override fun setupViews() {
-        with(binding) {
-            adapter.setOnClickListener(this@ScheduleFragment)
-            scheduleTimeRecyclerview.adapter = adapter
-
-            viewModel.showSnackBar(
-                Snackbar.make(
-                    root,
-                    getString(
-                        R.string.inquirying_teacher_calendar,
-                        viewModel.currentTeacherName.value
-                    ),
-                    Snackbar.LENGTH_LONG
-                )
-            )
-        }
-    }
-
-    override fun setupObservers() {
-        with(viewLifecycleOwner.lifecycleScope) {
-            launchWhenStarted { observeWeekStart() }
-            launchWhenStarted { observeWeekEnd() }
-            launchWhenStarted { observeWeekDateText() }
-            launchWhenStarted { observeDateTabs() }
-            launchWhenStarted { observeFilteredTimeList() }
-            launchWhenStarted {
-                observeEvent(viewModel.events) { event ->
-                    handleEvent(event)
-                }
+    override fun LifecycleCoroutineScope.setupObservers() {
+        launchWhenStarted { observeWeekStart() }
+        launchWhenStarted { observeWeekEnd() }
+        launchWhenStarted { observeWeekDateText() }
+        launchWhenStarted { observeDateTabs() }
+        launchWhenStarted { observeFilteredTimeList() }
+        launchWhenStarted {
+            observeEvent(viewModel.events) { event ->
+                handleEvent(event)
             }
         }
     }
 
-    override fun init() {
+    override fun FragmentScheduleBinding.addOnClickListener() {
+    }
+
+    override fun FragmentScheduleBinding.setupViews() {
+        adapter.setOnClickListener(this@ScheduleFragment)
+        scheduleTimeRecyclerview.adapter = adapter
+
+        viewModel.showSnackBar(
+            Snackbar.make(
+                root,
+                getString(
+                    R.string.inquirying_teacher_calendar,
+                    viewModel.currentTeacherName.value
+                ),
+                Snackbar.LENGTH_LONG
+            )
+        )
+    }
+
+    override fun initData() {
         if (!TokenManager.isTokenValid) {
             findNavController().popBackStack(R.id.scheduleFragment, true)
             findNavController().navigate(DeepLinks.LOGIN)

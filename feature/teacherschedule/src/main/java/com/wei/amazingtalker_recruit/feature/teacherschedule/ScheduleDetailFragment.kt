@@ -3,7 +3,7 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
@@ -21,27 +21,21 @@ class ScheduleDetailFragment : BaseFragment<FragmentScheduleDetailBinding>() {
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleDetailBinding
         get() = FragmentScheduleDetailBinding::inflate
 
-    override fun setupViews() {
-        with(binding) {
-            tvName.text = "This is Test Data: $TEST_DATA_TEACHER_NAME"
-            tvStart.text = args.intervalScheduleTimeSlot.start.toString()
-            tvEnd.text = args.intervalScheduleTimeSlot.end.toString()
-            tvState.text = args.intervalScheduleTimeSlot.state.name
-            tvDuringDayType.text = args.intervalScheduleTimeSlot.duringDayType.name
-            addOnClickListener()
-        }
+    override fun LifecycleCoroutineScope.setupObservers() {
     }
 
-    override fun setupObservers() {
-        with(viewLifecycleOwner.lifecycleScope) {
-            // launchWhenStarted { observeSomeOneData() }
-        }
+    override fun FragmentScheduleDetailBinding.setupViews() {
+        tvName.text = "TeacherName: $TEST_DATA_TEACHER_NAME"
+        tvStart.text = args.intervalScheduleTimeSlot.start.toString()
+        tvEnd.text = args.intervalScheduleTimeSlot.end.toString()
+        tvState.text = args.intervalScheduleTimeSlot.state.name
+        tvDuringDayType.text = args.intervalScheduleTimeSlot.duringDayType.name
     }
 
-    override fun init() {
+    override fun initData() {
     }
 
-    private fun FragmentScheduleDetailBinding.addOnClickListener() {
+    override fun FragmentScheduleDetailBinding.addOnClickListener() {
         btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
