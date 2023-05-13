@@ -9,14 +9,12 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
-import com.wei.amazingtalker_recruit.core.extensions.observeEvent
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.models.Event
 import com.wei.amazingtalker_recruit.core.models.NavigateEvent
@@ -43,7 +41,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
 
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
-    private val viewModel: ScheduleViewModel by viewModels()
+    override val viewModel: ScheduleViewModel by viewModels()
     private var isUpdatingWeek = false
 
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
@@ -55,11 +53,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
         launchWhenStarted { observeWeekDateText() }
         launchWhenStarted { observeDateTabs() }
         launchWhenStarted { observeFilteredTimeList() }
-        launchWhenStarted {
-            observeEvent(viewModel.events) { event ->
-                handleEvent(event)
-            }
-        }
     }
 
     override fun FragmentScheduleBinding.addOnClickListener() {
@@ -174,7 +167,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickLis
     }
 
 
-    private fun handleEvent(event: Event) {
+    override fun handleEvent(event: Event) {
         when (event) {
             is NavigateEvent.ByDirections -> {
                 findNavController().navigate(event.directions)

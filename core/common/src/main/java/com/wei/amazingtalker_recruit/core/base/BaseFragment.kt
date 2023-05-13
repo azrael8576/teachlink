@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.wei.amazingtalker_recruit.core.extensions.observeEvent
+import com.wei.amazingtalker_recruit.core.models.Event
 
 /**
  * BaseFragment 是一個抽象類，它封裝了共享的 Fragment 邏輯和 ViewBinding。
@@ -25,6 +27,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
      * 用於通過 LayoutInflater、ViewGroup 和 Boolean 參數來創建 ViewBinding 的抽象方法。
      */
     abstract val inflate: (LayoutInflater, ViewGroup?, Boolean) -> B
+    abstract val viewModel: BaseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +52,11 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
         // 調用子類實現的 addOnClickListener() 方法，用於為視圖設置 OnClickListener
         binding.addOnClickListener()
 
-        // 調用子類實現的 setupObservers() 方法，用於設置觀察者，以便根據 LiveData 或其他可觀察對象的變化來更新 UI
+        // 調用子類實現的 setupObservers() 方法，設置 UI狀態 觀察者，以便根據 LiveData 或其他可觀察對象的變化來更新 UI
+        // TODO warning 待 MVI 架構，遷移至 setupStateObservers()
         viewLifecycleOwner.lifecycleScope.setupObservers()
+        // 設置 Events 觀察者，根據 Events 變化通知 handleEvent() 處理
+        setupEventsObservers(viewLifecycleOwner.lifecycleScope)
 
         // 調用子類實現的 initData() 方法，用於進行資料的初始化工作，這可能包括從資料庫獲取資料，或者從網路請求資料等
         initData()
@@ -68,13 +74,30 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
 
     /**
      * 用於設置觀察者的抽象方法，子類必須實現。
+     * warning: 待 MVI 架構遷移後，棄用
      */
     abstract fun LifecycleCoroutineScope.setupObservers()
+
+    /**
+     * 用於處理 Event 對應邏輯，子類必須實現。
+     */
+    abstract fun handleEvent(event: Event)
 
     /**
      * 用於進行初始化資料的抽象方法，子類必須實現。
      */
     abstract fun initData()
+
+    /**
+     * 設置 Events 觀察者方法。
+     */
+    private fun setupEventsObservers(lifecycleScope: LifecycleCoroutineScope) {
+        lifecycleScope.launchWhenStarted {
+            lifecycleScope.observeEvent(viewModel.events) { event ->
+                handleEvent(event)
+            }
+        }
+    }
 
     /**
      * 在 onDestroyView 方法中，將 _binding 設置為 null，以避免內存泄露。
