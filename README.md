@@ -115,7 +115,7 @@
   </tr>
 </table>
 
-Ref: [Android 應用程式模組化指南](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293)
+Ref: [Android 應用程式模組化指南](https://developer.android.com/topic/modularization?hl=zh-tw)
 
 
 # 原需求文件
