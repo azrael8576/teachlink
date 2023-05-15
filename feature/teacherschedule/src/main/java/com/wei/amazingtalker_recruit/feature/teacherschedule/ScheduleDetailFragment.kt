@@ -14,7 +14,7 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.Schedule
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScheduleDetailFragment : BaseFragment<FragmentScheduleDetailBinding>() {
+class ScheduleDetailFragment : BaseFragment<FragmentScheduleDetailBinding, ScheduleDetailViewModel>() {
 
     override val viewModel: ScheduleDetailViewModel by viewModels()
     private val args: ScheduleDetailFragmentArgs by navArgs()

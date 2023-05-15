@@ -12,7 +12,7 @@ import com.wei.amazingtalker_recruit.core.navigation.navigate
 import com.wei.amazingtalker_recruit.feature.login.databinding.FragmentLoginBinding
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     override val viewModel: LoginViewModel by viewModels()
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding

@@ -84,7 +84,6 @@
    <code>authentication/TokenManager</code><br>
    <code>extensions/SharedFlowEventsExtensions</code><br>
    <code>navigation/DeepLinks</code><br>
-   <code>navigation/DispatchersModule</code><br>
       ...
    </td>
   </tr>

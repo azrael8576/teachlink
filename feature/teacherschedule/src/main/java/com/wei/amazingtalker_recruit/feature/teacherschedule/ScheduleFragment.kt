@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(), OnItemClickListener {
+class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel>(), OnItemClickListener {
 
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter

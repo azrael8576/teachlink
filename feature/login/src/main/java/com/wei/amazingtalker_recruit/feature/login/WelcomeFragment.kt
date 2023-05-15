@@ -11,7 +11,7 @@ import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.feature.login.databinding.FragmentWelcomeBinding
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.WelcomeViewModel
 
-class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
+class WelcomeFragment : BaseFragment<FragmentWelcomeBinding, WelcomeViewModel>() {
 
     override val viewModel: WelcomeViewModel by viewModels()
 
