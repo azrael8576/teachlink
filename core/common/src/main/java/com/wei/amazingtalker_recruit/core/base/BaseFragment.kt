@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
-import com.wei.amazingtalker_recruit.core.extensions.observeEvent
+import com.wei.amazingtalker_recruit.core.extensions.state.observeEvent
 import com.wei.amazingtalker_recruit.core.models.Event
 
 /**

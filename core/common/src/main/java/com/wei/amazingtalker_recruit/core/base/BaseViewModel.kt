@@ -3,8 +3,8 @@ package com.wei.amazingtalker_recruit.core.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.snackbar.Snackbar
-import com.wei.amazingtalker_recruit.core.extensions.SharedFlowEvents
-import com.wei.amazingtalker_recruit.core.extensions.setEvent
+import com.wei.amazingtalker_recruit.core.extensions.state.SharedFlowEvents
+import com.wei.amazingtalker_recruit.core.extensions.state.setEvent
 import com.wei.amazingtalker_recruit.core.models.Event
 import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
 import kotlinx.coroutines.launch

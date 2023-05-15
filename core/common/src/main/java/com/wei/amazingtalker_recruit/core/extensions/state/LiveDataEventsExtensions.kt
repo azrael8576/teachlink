@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.extensions
+package com.wei.amazingtalker_recruit.core.extensions.state
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
