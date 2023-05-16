@@ -1,16 +1,9 @@
 package com.wei.amazingtalker_recruit.core.extensions.state
 
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.distinctUntilChanged
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
-import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import kotlin.reflect.KProperty1
 
 
@@ -22,7 +15,7 @@ import kotlin.reflect.KProperty1
 
 /**
  * LiveData.observeState 是一個擴展函式，用於觀察 State 對象的狀態。
- * 它接收一個 LifecycleOwner 和一個 KProperty1 對象，用於指定要觀察的狀態屬性。
+ * 它接收一個 LifecycleOwner 和一個 KProperty 對象，用於指定要觀察的狀態屬性。
  * 當狀態屬性發生變化時，會調用指定的 action 函式進行處理。
  */
 fun <T, A> LiveData<T>.observeState(
