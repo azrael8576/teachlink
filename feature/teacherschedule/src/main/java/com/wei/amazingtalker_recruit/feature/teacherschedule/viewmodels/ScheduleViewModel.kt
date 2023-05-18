@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -40,6 +41,7 @@ class ScheduleViewModel @Inject constructor(
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
     private val _queryDateUtc = MutableStateFlow(OffsetDateTime.now())
     private val _selectedTab = MutableStateFlow<OffsetDateTime?>(null)
+    private var isUpdatingWeek = false
 
     init {
         refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
@@ -48,6 +50,7 @@ class ScheduleViewModel @Inject constructor(
     private fun refreshWeekData(date: OffsetDateTime) {
         updateWeekData(date)
         fetchTeacherSchedule()
+        isUpdatingWeek = false
     }
 
     private fun updateWeekData(date: OffsetDateTime) {
@@ -85,7 +88,9 @@ class ScheduleViewModel @Inject constructor(
     private fun onTabSelected(date: OffsetDateTime, position: Int) {
         _selectedTab.value = date
         updateState { copy(selectedIndex = position) }
-        filterTimeListByDate(_scheduleTimeList.value, _selectedTab.value)
+        if (!isUpdatingWeek) {
+            filterTimeListByDate(_scheduleTimeList.value, _selectedTab.value)
+        }
     }
 
     private fun filterTimeListByDate(
@@ -115,6 +120,7 @@ class ScheduleViewModel @Inject constructor(
     }
 
     private fun updateWeek(action: WeekAction) {
+        isUpdatingWeek = true
         when (action) {
             WeekAction.PREVIOUS_WEEK -> {
                 val lastWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
@@ -141,6 +147,7 @@ class ScheduleViewModel @Inject constructor(
     }
 
     override fun dispatch(action: ScheduleViewAction) {
+        Timber.e("dispatch $action")
         when (action) {
             is ScheduleViewAction.ClickItem -> {
                 navigateToScheduleDetail(action.intervalScheduleTimeSlot)

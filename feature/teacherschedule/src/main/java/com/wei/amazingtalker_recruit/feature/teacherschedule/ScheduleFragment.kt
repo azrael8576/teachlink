@@ -50,7 +50,6 @@ class ScheduleFragment
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
     override val viewModel: ScheduleViewModel by viewModels()
-    private var isUpdatingWeek = false
 
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
         get() = FragmentScheduleBinding::inflate
@@ -74,6 +73,7 @@ class ScheduleFragment
     }
 
     override fun FragmentScheduleBinding.addOnClickListener() {
+        addTabSelectedListener(tablayout)
     }
 
     override fun handleState(
@@ -115,6 +115,7 @@ class ScheduleFragment
             }
 
             states.observeState(viewLifecycleOwner, ScheduleViewState::filteredTimeList) { result ->
+                Timber.e(" filteredTimeList  $result")
                 handleTimeListUpdate(result)
             }
         }
@@ -151,43 +152,41 @@ class ScheduleFragment
     }
 
     private fun handleTimeListUpdate(result: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
-        if (!isUpdatingWeek) {
-            when (result) {
-                is DataSourceResult.Success -> {
-                    result.data.let {
-                        adapter.addHeaderAndSubmitList(
-                            it
-                        )
-                    }
-                    binding.scheduleTimeRecyclerview.isVisible = true
-                    binding.scheduleTimeRecyclerview.scrollToPosition(0)
 
-                    Timber.d("API Success")
-                }
-
-                is DataSourceResult.Error -> {
-                    viewModel.dispatch(
-                        ScheduleViewAction.ShowSnackBar(
-                            Snackbar.make(
-                                binding.root,
-                                "Api Failed ${result.exception}",
-                                Snackbar.LENGTH_LONG
-                            ),
-                            maxLines = 4
-                        )
+        when (result) {
+            is DataSourceResult.Success -> {
+                result.data.let {
+                    adapter.addHeaderAndSubmitList(
+                        it
                     )
-                    binding.scheduleTimeRecyclerview.isVisible = false
-
-                    Timber.d("API Failed ${result.exception}")
                 }
+                binding.scheduleTimeRecyclerview.isVisible = true
+                binding.scheduleTimeRecyclerview.scrollToPosition(0)
 
-                is DataSourceResult.Loading -> {
-                    Timber.d("API Loading")
-                }
+                Timber.d("API Success")
+            }
+
+            is DataSourceResult.Error -> {
+                viewModel.dispatch(
+                    ScheduleViewAction.ShowSnackBar(
+                        Snackbar.make(
+                            binding.root,
+                            "Api Failed ${result.exception}",
+                            Snackbar.LENGTH_LONG
+                        ),
+                        maxLines = 4
+                    )
+                )
+                binding.scheduleTimeRecyclerview.isVisible = false
+
+                Timber.d("API Failed ${result.exception}")
+            }
+
+            is DataSourceResult.Loading -> {
+                Timber.d("API Loading")
             }
         }
 
-        isUpdatingWeek = false
     }
 
     private fun setPreviousWeekButtonState(date: OffsetDateTime) {
@@ -241,7 +240,6 @@ class ScheduleFragment
                     addTab(this)
                 }
             }
-            addTabSelectedListener(this)
         }
 
     }
