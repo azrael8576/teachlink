@@ -8,27 +8,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
+import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.models.Event
-import com.wei.amazingtalker_recruit.core.models.NavigateEvent
-import com.wei.amazingtalker_recruit.core.models.ShowSnackBarEvent
-import com.wei.amazingtalker_recruit.core.models.ShowToastEvent
 import com.wei.amazingtalker_recruit.core.navigation.DeepLinks
 import com.wei.amazingtalker_recruit.core.navigation.navigate
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewEvent
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
-import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.WeekAction
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.StateFlow
 import timber.log.Timber
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -37,7 +38,14 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel>(), OnItemClickListener {
+class ScheduleFragment
+    : BaseFragment<
+        FragmentScheduleBinding,
+        ScheduleViewModel,
+        ScheduleViewAction,
+        ScheduleViewEvent,
+        ScheduleViewState
+        >(), OnItemClickListener {
 
     @Inject
     lateinit var adapter: ScheduleTimeListAdapter
@@ -47,84 +55,98 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
         get() = FragmentScheduleBinding::inflate
 
-    override fun LifecycleCoroutineScope.setupObservers() {
-        launchWhenStarted { observeWeekStart() }
-        launchWhenStarted { observeWeekEnd() }
-        launchWhenStarted { observeWeekDateText() }
-        launchWhenStarted { observeDateTabs() }
-        launchWhenStarted { observeFilteredTimeList() }
+    override fun FragmentScheduleBinding.setupViews() {
+        adapter.setOnClickListener(this@ScheduleFragment)
+        scheduleTimeRecyclerview.adapter = adapter
+
+        viewModel.dispatch(
+            ScheduleViewAction.ShowSnackBar(
+                Snackbar.make(
+                    root,
+                    getString(
+                        R.string.inquirying_teacher_calendar,
+                        viewModel.states.value.currentTeacherName
+                    ),
+                    Snackbar.LENGTH_LONG
+                )
+            )
+        )
     }
 
     override fun FragmentScheduleBinding.addOnClickListener() {
     }
 
-    override fun FragmentScheduleBinding.setupViews() {
-        adapter.setOnClickListener(this@ScheduleFragment)
-        scheduleTimeRecyclerview.adapter = adapter
+    override fun handleState(
+        viewLifecycleOwner: LifecycleOwner,
+        states: StateFlow<ScheduleViewState>
+    ) {
+        states.let { states ->
+            states.observeState(viewLifecycleOwner, ScheduleViewState::weekStart) {
+                setPreviousWeekButtonState(it)
+            }
+            states.observeState(viewLifecycleOwner, ScheduleViewState::weekEnd) {
+                setNextWeekButtonState(it)
+            }
+            states.observeState(viewLifecycleOwner, ScheduleViewState::weekDateText) {
+                binding.textWeek.text = it
+                binding.textWeek.setOnClickListener { view ->
+                    //TODO 開啟日曆選單
+                    viewModel.dispatch(
+                        ScheduleViewAction.ShowSnackBar(
+                            Snackbar.make(
+                                view,
+                                "TODO 開啟日曆選單, 當前星期為: $it",
+                                Snackbar.LENGTH_LONG
+                            )
+                        )
+                    )
+                }
+            }
+            states.observeState(viewLifecycleOwner, ScheduleViewState::dateTabs) { dates ->
+                binding.tablayout.doOnLayout {
+                    Timber.e("observeDateTabs: ${dates.toString()}  binding.tablayout.post ${viewModel.states.value.selectedIndex}")
+                    setupTabs(dates)
+                    // 延遲選擇tab
+                    binding.tablayout.post {
+                        // 恢复所選的tab
+                        binding.tablayout.getTabAt(viewModel.states.value.selectedIndex)?.select()
+                    }
+                }
+            }
 
-        viewModel.showSnackBar(
-            Snackbar.make(
-                root,
-                getString(
-                    R.string.inquirying_teacher_calendar,
-                    viewModel.currentTeacherName.value
-                ),
-                Snackbar.LENGTH_LONG
-            )
-        )
+            states.observeState(viewLifecycleOwner, ScheduleViewState::filteredTimeList) { result ->
+                handleTimeListUpdate(result)
+            }
+        }
+    }
+
+    override fun handleEvent(event: ScheduleViewEvent) {
+        when (event) {
+            is ScheduleViewEvent.NavToScheduleDetail -> {
+                findNavController().navigate(event.navigateEvent.directions)
+            }
+
+            is ScheduleViewEvent.ShowSnackBar -> {
+                val snackBar = event.snackbar.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.amazingtalker_green_700
+                    )
+                )
+
+                val snackBarView = snackBar.view
+                val snackTextView =
+                    snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                snackTextView.maxLines = event.maxLines
+                snackBar.show()
+            }
+        }
     }
 
     override fun initData() {
         if (!TokenManager.isTokenValid) {
             findNavController().popBackStack(R.id.scheduleFragment, true)
             findNavController().navigate(DeepLinks.LOGIN)
-        }
-    }
-
-    private suspend fun LifecycleCoroutineScope.observeWeekStart() {
-        viewModel.weekStart.collect {
-            setPreviousWeekButtonState(it)
-        }
-    }
-
-    private suspend fun LifecycleCoroutineScope.observeWeekEnd() {
-        viewModel.weekEnd.collect {
-            setNextWeekButtonState(it)
-        }
-    }
-
-    private suspend fun LifecycleCoroutineScope.observeWeekDateText() {
-        viewModel.weekDateText.collect {
-            binding.textWeek.text = it
-            binding.textWeek.setOnClickListener { view ->
-                //TODO 開啟日曆選單
-                viewModel.showSnackBar(
-                    Snackbar.make(
-                        view,
-                        "TODO 開啟日曆選單, 當前星期為: ${it}",
-                        Snackbar.LENGTH_LONG
-                    )
-                )
-            }
-        }
-    }
-
-    private suspend fun LifecycleCoroutineScope.observeDateTabs() {
-        viewModel.dateTabs.collect { dates ->
-            binding.tablayout.doOnLayout {
-                setupTabs(dates)
-                // 延遲選擇tab
-                binding.tablayout.post {
-                    // 恢复所選的tab
-                    binding.tablayout.getTabAt(viewModel.selectedIndex.value)?.select()
-                }
-            }
-        }
-    }
-
-    private suspend fun LifecycleCoroutineScope.observeFilteredTimeList() {
-        viewModel.filteredTimeList.collect { result ->
-            handleTimeListUpdate(result)
         }
     }
 
@@ -144,13 +166,15 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
                 }
 
                 is DataSourceResult.Error -> {
-                    viewModel.showSnackBar(
-                        Snackbar.make(
-                            binding.root,
-                            "Api Failed ${result.exception}",
-                            Snackbar.LENGTH_LONG
-                        ),
-                        maxLines = 4
+                    viewModel.dispatch(
+                        ScheduleViewAction.ShowSnackBar(
+                            Snackbar.make(
+                                binding.root,
+                                "Api Failed ${result.exception}",
+                                Snackbar.LENGTH_LONG
+                            ),
+                            maxLines = 4
+                        )
                     )
                     binding.scheduleTimeRecyclerview.isVisible = false
 
@@ -166,35 +190,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
         isUpdatingWeek = false
     }
 
-
-    override fun handleEvent(event: Event) {
-        when (event) {
-            is NavigateEvent.ByDirections -> {
-                findNavController().navigate(event.directions)
-            }
-
-            is ShowToastEvent -> {
-                event.toast.show()
-            }
-
-            is ShowSnackBarEvent -> {
-                val snackBar = event.snackBar.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.amazingtalker_green_700
-                    )
-                )
-
-                val snackBarView = snackBar.view
-                val snackTextView =
-                    snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
-                snackTextView.maxLines = event.maxLines
-                snackBar.show()
-            }
-            // ...handle other events
-        }
-    }
-
     private fun setPreviousWeekButtonState(date: OffsetDateTime) {
         with(binding.buttonLastWeek) {
             if (date < OffsetDateTime.now(ZoneId.systemDefault())) {
@@ -207,7 +202,9 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
                         R.color.amazingtalker_green_900
                     )
                 )
-                setOnClickListener { viewModel.updateWeek(WeekAction.PREVIOUS_WEEK) }
+                setOnClickListener {
+                    viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
+                }
             }
         }
     }
@@ -220,7 +217,9 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
                     R.color.amazingtalker_green_900
                 )
             )
-            setOnClickListener { viewModel.updateWeek(WeekAction.NEXT_WEEK) }
+            setOnClickListener {
+                viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK))
+            }
         }
     }
 
@@ -247,7 +246,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
 
     }
 
-
     private fun addTabSelectedListener(tabLayout: TabLayout) {
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -255,7 +253,7 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
 
                 val date = tab.tag as? OffsetDateTime
                 if (date != null) {
-                    viewModel.onTabSelected(date, position = tab.position)
+                    viewModel.dispatch(ScheduleViewAction.SelectedTab(date, tab.position))
                 } else {
                     Timber.e("Invalid tab tag, expected OffsetDateTime but got ${tab.tag?.javaClass?.name}")
                 }
@@ -268,6 +266,6 @@ class ScheduleFragment : BaseFragment<FragmentScheduleBinding, ScheduleViewModel
     }
 
     override fun onItemClick(item: IntervalScheduleTimeSlot) {
-        viewModel.navigateToScheduleDetail(item)
+        viewModel.dispatch(ScheduleViewAction.ClickItem(item))
     }
 }

@@ -3,39 +3,51 @@ package com.wei.amazingtalker_recruit.feature.login
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
-import com.wei.amazingtalker_recruit.core.models.Event
-import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.feature.login.databinding.FragmentWelcomeBinding
+import com.wei.amazingtalker_recruit.feature.login.state.WelcomeViewAction
+import com.wei.amazingtalker_recruit.feature.login.state.WelcomeViewEvent
+import com.wei.amazingtalker_recruit.feature.login.state.WelcomeViewState
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.WelcomeViewModel
+import kotlinx.coroutines.flow.StateFlow
 
-class WelcomeFragment : BaseFragment<FragmentWelcomeBinding, WelcomeViewModel>() {
+class WelcomeFragment : BaseFragment<
+        FragmentWelcomeBinding,
+        WelcomeViewModel,
+        WelcomeViewAction,
+        WelcomeViewEvent,
+        WelcomeViewState
+        >() {
 
     override val viewModel: WelcomeViewModel by viewModels()
 
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentWelcomeBinding
         get() = FragmentWelcomeBinding::inflate
 
-    override fun LifecycleCoroutineScope.setupObservers() {
+
+    override fun FragmentWelcomeBinding.setupViews() {
     }
 
     override fun FragmentWelcomeBinding.addOnClickListener() {
     }
 
-    override fun FragmentWelcomeBinding.setupViews() {
+    override fun handleState(viewLifecycleOwner: LifecycleOwner, state: StateFlow<WelcomeViewState>) {
+
     }
 
-    override fun initData() {
-        viewModel.navigateToLogin()
-    }
-
-    override fun handleEvent(event: Event) {
+    override fun handleEvent(event: WelcomeViewEvent) {
         when (event) {
-            is NavigateEvent.ByDirections -> {
-                findNavController().navigate(event.directions)
+            is WelcomeViewEvent.NavToLogin -> {
+                findNavController().navigate(event.navigateEvent.directions)
             }
         }
     }
+
+
+    override fun initData() {
+        viewModel.dispatch(WelcomeViewAction.NavToLogin)
+    }
+
 }

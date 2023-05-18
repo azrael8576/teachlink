@@ -3,16 +3,24 @@ package com.wei.amazingtalker_recruit.feature.login
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
-import com.wei.amazingtalker_recruit.core.models.Event
-import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.core.navigation.navigate
 import com.wei.amazingtalker_recruit.feature.login.databinding.FragmentLoginBinding
+import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
+import com.wei.amazingtalker_recruit.feature.login.state.LoginViewEvent
+import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
+import kotlinx.coroutines.flow.StateFlow
 
-class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
+class LoginFragment : BaseFragment<
+        FragmentLoginBinding,
+        LoginViewModel,
+        LoginViewAction,
+        LoginViewEvent,
+        LoginViewState
+        >() {
 
     override val viewModel: LoginViewModel by viewModels()
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
@@ -23,23 +31,23 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
 
     override fun FragmentLoginBinding.addOnClickListener() {
         btnNavLogin.setOnClickListener {
-            viewModel.login()
+            viewModel.dispatch(LoginViewAction.Login)
         }
     }
 
-    override fun LifecycleCoroutineScope.setupObservers() {
+    override fun handleState(viewLifecycleOwner: LifecycleOwner, state: StateFlow<LoginViewState>) {
+    }
+
+    override fun handleEvent(event: LoginViewEvent) {
+        when (event) {
+            is LoginViewEvent.NavToHome -> {
+                findNavController().popBackStack(R.id.loginFragment, true)
+                findNavController().navigate(event.navigateEvent.deepLink)
+            }
+        }
     }
 
     override fun initData() {
-    }
-
-    override fun handleEvent(event: Event) {
-        when (event) {
-            is NavigateEvent.ByDeepLink -> {
-                findNavController().popBackStack(R.id.loginFragment, true)
-                findNavController().navigate(event.deepLink)
-            }
-        }
     }
 
 }
