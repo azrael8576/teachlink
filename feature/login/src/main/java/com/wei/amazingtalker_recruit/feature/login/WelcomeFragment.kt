@@ -33,11 +33,14 @@ class WelcomeFragment : BaseFragment<
     override fun FragmentWelcomeBinding.addOnClickListener() {
     }
 
-    override fun handleState(viewLifecycleOwner: LifecycleOwner, state: StateFlow<WelcomeViewState>) {
+    override fun FragmentWelcomeBinding.handleState(
+        viewLifecycleOwner: LifecycleOwner,
+        state: StateFlow<WelcomeViewState>
+    ) {
 
     }
 
-    override fun handleEvent(event: WelcomeViewEvent) {
+    override fun FragmentWelcomeBinding.handleEvent(event: WelcomeViewEvent) {
         when (event) {
             is WelcomeViewEvent.NavToLogin -> {
                 findNavController().navigate(event.navigateEvent.directions)
@@ -46,7 +49,7 @@ class WelcomeFragment : BaseFragment<
     }
 
 
-    override fun initData() {
+    override fun FragmentWelcomeBinding.initData() {
         viewModel.dispatch(WelcomeViewAction.NavToLogin)
     }
 

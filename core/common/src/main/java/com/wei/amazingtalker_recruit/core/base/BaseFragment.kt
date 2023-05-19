@@ -66,15 +66,15 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, E, S>, A : Ac
         binding.addOnClickListener()
 
         // 設置 States 觀察者，當 States 發生變化時，調用 handleState() 方法來處理這些狀態
-        handleState(viewLifecycleOwner, viewModel.states)
+        binding.handleState(viewLifecycleOwner, viewModel.states)
 
         // 設置 Events 觀察者，當 Events 發生變化時，調用 handleEvent() 方法來處理這些事件
         viewModel.events.observeEvent(viewLifecycleOwner) { event ->
-            handleEvent(event)
+            binding.handleEvent(event)
         }
 
         // 調用子類實現的 initData() 方法，用於進行資料的初始化工作，這可能包括從資料庫獲取資料，或者從網路請求資料等
-        initData()
+        binding.initData()
     }
 
     /**
@@ -91,18 +91,18 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, E, S>, A : Ac
      * 處理來至 ViewModel State Flow 的狀態，由子類實現。
      * 子類應該根據這些狀態來更新 UI。
      */
-    abstract fun handleState(viewLifecycleOwner: LifecycleOwner, states: StateFlow<S>)
+    abstract fun B.handleState(viewLifecycleOwner: LifecycleOwner, states: StateFlow<S>)
 
     /**
      * 處理來至 ViewModel Event Flow 的事件，由子類實現。
      * 子類應該根據這些事件來執行相應的操作。
      */
-    abstract fun handleEvent(event: E)
+    abstract fun B.handleEvent(event: E)
 
     /**
      * 進行初始化資料的抽象方法，由子類實現。
      */
-    abstract fun initData()
+    abstract fun B.initData()
 
     /**
      * 在 onDestroyView 方法中，將 _binding 設置為 null，以避免內存泄露。

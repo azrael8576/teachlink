@@ -73,10 +73,9 @@ class ScheduleFragment
     }
 
     override fun FragmentScheduleBinding.addOnClickListener() {
-        addTabSelectedListener(tablayout)
     }
 
-    override fun handleState(
+    override fun FragmentScheduleBinding.handleState(
         viewLifecycleOwner: LifecycleOwner,
         states: StateFlow<ScheduleViewState>
     ) {
@@ -88,8 +87,8 @@ class ScheduleFragment
                 setNextWeekButtonState(it)
             }
             states.observeState(viewLifecycleOwner, ScheduleViewState::weekDateText) {
-                binding.textWeek.text = it
-                binding.textWeek.setOnClickListener { view ->
+                textWeek.text = it
+                textWeek.setOnClickListener { view ->
                     //TODO 開啟日曆選單
                     viewModel.dispatch(
                         ScheduleViewAction.ShowSnackBar(
@@ -103,13 +102,13 @@ class ScheduleFragment
                 }
             }
             states.observeState(viewLifecycleOwner, ScheduleViewState::dateTabs) { dates ->
-                binding.tablayout.doOnLayout {
+                tablayout.doOnLayout {
                     Timber.e("observeDateTabs: ${dates.toString()}  binding.tablayout.post ${viewModel.states.value.selectedIndex}")
                     setupTabs(dates)
                     // 延遲選擇tab
-                    binding.tablayout.post {
+                    tablayout.post {
                         // 恢复所選的tab
-                        binding.tablayout.getTabAt(viewModel.states.value.selectedIndex)?.select()
+                        tablayout.getTabAt(viewModel.states.value.selectedIndex)?.select()
                     }
                 }
             }
@@ -121,7 +120,7 @@ class ScheduleFragment
         }
     }
 
-    override fun handleEvent(event: ScheduleViewEvent) {
+    override fun FragmentScheduleBinding.handleEvent(event: ScheduleViewEvent) {
         when (event) {
             is ScheduleViewEvent.NavToScheduleDetail -> {
                 findNavController().navigate(event.navigateEvent.directions)
@@ -144,14 +143,14 @@ class ScheduleFragment
         }
     }
 
-    override fun initData() {
+    override fun FragmentScheduleBinding.initData() {
         if (!TokenManager.isTokenValid) {
             findNavController().popBackStack(R.id.scheduleFragment, true)
             findNavController().navigate(DeepLinks.LOGIN)
         }
     }
 
-    private fun handleTimeListUpdate(result: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
+    private fun FragmentScheduleBinding.handleTimeListUpdate(result: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
 
         when (result) {
             is DataSourceResult.Success -> {
@@ -160,8 +159,8 @@ class ScheduleFragment
                         it
                     )
                 }
-                binding.scheduleTimeRecyclerview.isVisible = true
-                binding.scheduleTimeRecyclerview.scrollToPosition(0)
+                scheduleTimeRecyclerview.isVisible = true
+                scheduleTimeRecyclerview.scrollToPosition(0)
 
                 Timber.d("API Success")
             }
@@ -170,14 +169,14 @@ class ScheduleFragment
                 viewModel.dispatch(
                     ScheduleViewAction.ShowSnackBar(
                         Snackbar.make(
-                            binding.root,
+                            root,
                             "Api Failed ${result.exception}",
                             Snackbar.LENGTH_LONG
                         ),
                         maxLines = 4
                     )
                 )
-                binding.scheduleTimeRecyclerview.isVisible = false
+                scheduleTimeRecyclerview.isVisible = false
 
                 Timber.d("API Failed ${result.exception}")
             }
@@ -189,8 +188,8 @@ class ScheduleFragment
 
     }
 
-    private fun setPreviousWeekButtonState(date: OffsetDateTime) {
-        with(binding.buttonLastWeek) {
+    private fun FragmentScheduleBinding.setPreviousWeekButtonState(date: OffsetDateTime) {
+        with(buttonLastWeek) {
             if (date < OffsetDateTime.now(ZoneId.systemDefault())) {
                 colorFilter = null
                 setOnClickListener(null)
@@ -208,8 +207,8 @@ class ScheduleFragment
         }
     }
 
-    private fun setNextWeekButtonState(date: OffsetDateTime) {
-        with(binding.buttonNextWeek) {
+    private fun FragmentScheduleBinding.setNextWeekButtonState(date: OffsetDateTime) {
+        with(buttonNextWeek) {
             setColorFilter(
                 ContextCompat.getColor(
                     requireContext(),
@@ -222,12 +221,13 @@ class ScheduleFragment
         }
     }
 
-    private fun setupTabs(
+    private fun FragmentScheduleBinding.setupTabs(
         options: MutableList<OffsetDateTime>
     ) {
-        with(binding.tablayout) {
+        with(tablayout) {
             val tabWidth = width / 3
             val tabHeight = height
+            // 移除所有 Tabs
             removeAllTabs()
             options.forEachIndexed { _, element ->
                 newTab().run {
@@ -240,11 +240,14 @@ class ScheduleFragment
                     addTab(this)
                 }
             }
+            // 重新添加 TabSelectedListener
+            addTabSelectedListener(tablayout)
         }
 
     }
 
     private fun addTabSelectedListener(tabLayout: TabLayout) {
+        tabLayout.clearOnTabSelectedListeners()
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Timber.e("======onTabSelected====${tab.tag}")

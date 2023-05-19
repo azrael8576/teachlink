@@ -35,10 +35,13 @@ class LoginFragment : BaseFragment<
         }
     }
 
-    override fun handleState(viewLifecycleOwner: LifecycleOwner, state: StateFlow<LoginViewState>) {
+    override fun FragmentLoginBinding.handleState(
+        viewLifecycleOwner: LifecycleOwner,
+        state: StateFlow<LoginViewState>
+    ) {
     }
 
-    override fun handleEvent(event: LoginViewEvent) {
+    override fun FragmentLoginBinding.handleEvent(event: LoginViewEvent) {
         when (event) {
             is LoginViewEvent.NavToHome -> {
                 findNavController().popBackStack(R.id.loginFragment, true)
@@ -47,7 +50,7 @@ class LoginFragment : BaseFragment<
         }
     }
 
-    override fun initData() {
+    override fun FragmentLoginBinding.initData() {
     }
 
 }
