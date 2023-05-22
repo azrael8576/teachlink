@@ -80,6 +80,7 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, E, S>, A : Ac
             binding.checkConditions()
         }
 
+        // TODO: 此區塊應該被抽取至 ViewModel init{}
         // 該方法可能包括從資料庫或網路取得數據，或進行其他任何需要在啟動時執行的初始化工作。
         if (!hasInitializedData) {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {

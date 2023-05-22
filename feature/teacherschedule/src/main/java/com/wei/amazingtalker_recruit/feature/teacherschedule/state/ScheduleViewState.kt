@@ -42,6 +42,6 @@ data class ScheduleViewState(
 
 sealed class ScheduleViewEvent : Event {
     data class NavToScheduleDetail(val navigateEvent: NavigateEvent.ByDirections) : ScheduleViewEvent()
-    data class ShowSnackBar(val message: String, val duration: Int = Snackbar.LENGTH_LONG, val maxLines: Int = 1) : ScheduleViewEvent()
+    data class ShowSnackBar(val resId: Int = 0,val message: String, val duration: Int = Snackbar.LENGTH_LONG, val maxLines: Int = 1) : ScheduleViewEvent()
     object NavPopToLogin : ScheduleViewEvent()
 }

@@ -1,11 +1,13 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
+import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.ScheduleFragmentDirections
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.HandleTeacherScheduleResultUseCase
@@ -42,7 +44,14 @@ class ScheduleViewModel @Inject constructor(
     private val _selectedTab = MutableStateFlow<OffsetDateTime?>(null)
     private var isUpdatingWeek = false
 
+    /**
+     * 在 ViewModel 的 init{} 區塊，Fragment 可能還未進行 UI 事件監聽註冊。因此，此區段內的 postEvent() 方法，
+     * 也即 SharedFlow 的 emit() 操作，可能導致事件的丟失。在這種情況下，Google 官方建議的做法是不區分狀態與事件，
+     * 而是統一使用 StateFlow，並添加標示位來表示事件是否已經被消費。
+     */
     init {
+        Timber.e("ScheduleViewModel init")
+        // TODO: 修復事件丟失問題。由於此區塊在 Fragment 完全創建之前就執行，postEvent() 可能會導致事件丟失。
         refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
     }
 
@@ -64,8 +73,13 @@ class ScheduleViewModel @Inject constructor(
     }
 
     private fun fetchTeacherSchedule() {
+        showSnackBar(
+            resId = R.string.inquirying_teacher_calendar,
+            message = states.value.currentTeacherName,
+            duration = Snackbar.LENGTH_LONG,
+            maxLines = 1
+        )
         viewModelScope.launch {
-
             getTeacherScheduleUseCase(
                 teacherName = states.value.currentTeacherName,
                 startedAtUtc = _queryDateUtc.value.toString()
@@ -156,8 +170,8 @@ class ScheduleViewModel @Inject constructor(
         postEvent(ScheduleViewEvent.NavToScheduleDetail(NavigateEvent.ByDirections(action)))
     }
 
-    private fun showSnackBar(message: String, duration: Int, maxLines: Int) {
-        postEvent(ScheduleViewEvent.ShowSnackBar(message, duration, maxLines))
+    private fun showSnackBar(resId: Int = 0, message: String, duration: Int, maxLines: Int = 1) {
+        postEvent(ScheduleViewEvent.ShowSnackBar(resId = resId, message = message, duration = duration, maxLines = maxLines))
     }
 
     private fun navPopToLogin() {
@@ -165,7 +179,7 @@ class ScheduleViewModel @Inject constructor(
     }
 
     override fun dispatch(action: ScheduleViewAction) {
-        Timber.d("dispatch $action")
+        Timber.e("dispatch $action")
 
         when (action) {
             is ScheduleViewAction.ClickItem -> {
@@ -173,7 +187,7 @@ class ScheduleViewModel @Inject constructor(
             }
 
             is ScheduleViewAction.ShowSnackBar -> {
-                showSnackBar(action.message, action.duration, action.maxLines)
+                showSnackBar(message = action.message, duration = action.duration, maxLines = action.maxLines)
             }
 
             is ScheduleViewAction.UpdateWeek -> {

@@ -60,16 +60,6 @@ class ScheduleFragment
         scheduleTimeRecyclerview.adapter = adapter
         buttonLastWeek.setActiveColorFilter()
         buttonNextWeek.setActiveColorFilter()
-
-        viewModel.dispatch(
-            ScheduleViewAction.ShowSnackBar(
-                getString(
-                    R.string.inquirying_teacher_calendar,
-                    viewModel.states.value.currentTeacherName
-                ),
-                Snackbar.LENGTH_LONG
-            )
-        )
     }
 
     private fun ImageButton.setActiveColorFilter() {
@@ -127,15 +117,18 @@ class ScheduleFragment
     }
 
     override fun FragmentScheduleBinding.handleEvent(event: ScheduleViewEvent) {
+        Timber.e("handleEvent $event")
         when (event) {
             is ScheduleViewEvent.NavToScheduleDetail -> {
                 findNavController().navigate(event.navigateEvent.directions)
             }
 
             is ScheduleViewEvent.ShowSnackBar -> {
+                val message = if (event.resId != 0) getString(R.string.inquirying_teacher_calendar, event.message) else event.message
+
                 val snackBar = Snackbar.make(
                     binding.root,
-                    event.message,
+                    message,
                     event.duration
                 ).setTextColor(
                     ContextCompat.getColor(
@@ -159,6 +152,7 @@ class ScheduleFragment
     }
 
     override fun FragmentScheduleBinding.checkConditions() {
+        Timber.e("checkConditions TokenManager.isTokenValid: ${TokenManager.isTokenValid}")
         if (!TokenManager.isTokenValid) {
             viewModel.dispatch(ScheduleViewAction.IsInvalidToken)
         }

@@ -48,6 +48,7 @@ class WelcomeFragment : BaseFragment<
         }
     }
 
+    // TODO: 此區塊應該被抽取至 ViewModel init{}
     override fun FragmentWelcomeBinding.initData() {
         viewModel.dispatch(WelcomeViewAction.NavToLogin)
     }
