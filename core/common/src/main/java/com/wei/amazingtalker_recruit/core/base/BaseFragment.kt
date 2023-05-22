@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.wei.amazingtalker_recruit.core.extensions.state.observeEvent
 import com.wei.amazingtalker_recruit.core.models.Action
@@ -26,6 +27,7 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, E, S>, A : Ac
 
     private var _binding: B? = null
     protected val binding get() = _binding!!
+    private var hasInitializedData = false
 
     /**
      * 透過 LayoutInflater、ViewGroup 和 Boolean 參數來創建 ViewBinding 的抽象方法。
@@ -73,8 +75,19 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, E, S>, A : Ac
             binding.handleEvent(event)
         }
 
-        // 調用子類實現的 initData() 方法，用於進行資料的初始化工作，這可能包括從資料庫獲取資料，或者從網路請求資料等
-        binding.initData()
+        // 該方法可能包括檢查網路連線、權限或其他任何需要在應用啟動時進行的檢查。
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            binding.checkConditions()
+        }
+
+        // 該方法可能包括從資料庫或網路取得數據，或進行其他任何需要在啟動時執行的初始化工作。
+        if (!hasInitializedData) {
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                binding.initData()
+            }
+            hasInitializedData = true
+        }
+
     }
 
     /**
@@ -100,9 +113,14 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, E, S>, A : Ac
     abstract fun B.handleEvent(event: E)
 
     /**
-     * 進行初始化資料的抽象方法，由子類實現。
+     * 此方法由子類實現，用於進行在視圖創建時需要檢查的條件，這可能包括檢查網路連線狀態、檢查特定權限是否已授予，或進行其他任何需要在視圖創建時進行的檢查。
      */
-    abstract fun B.initData()
+    protected open fun B.checkConditions() {}
+
+    /**
+     * 此方法由子類實現，用於初始化應用數據。這可能包括從資料庫或網路取得初始數據，或進行其他任何需要在視圖創建時進行的初始化工作。
+     */
+    protected open fun B.initData() {}
 
     /**
      * 在 onDestroyView 方法中，將 _binding 設置為 null，以避免內存泄露。

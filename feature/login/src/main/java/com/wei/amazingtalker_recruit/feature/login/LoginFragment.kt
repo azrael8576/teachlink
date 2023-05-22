@@ -50,7 +50,4 @@ class LoginFragment : BaseFragment<
         }
     }
 
-    override fun FragmentLoginBinding.initData() {
-    }
-
 }

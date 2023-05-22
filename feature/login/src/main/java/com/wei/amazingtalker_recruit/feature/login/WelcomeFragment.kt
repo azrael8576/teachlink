@@ -48,7 +48,6 @@ class WelcomeFragment : BaseFragment<
         }
     }
 
-
     override fun FragmentWelcomeBinding.initData() {
         viewModel.dispatch(WelcomeViewAction.NavToLogin)
     }

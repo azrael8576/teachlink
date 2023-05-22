@@ -2,7 +2,6 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewEvent
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewState

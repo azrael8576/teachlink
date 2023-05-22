@@ -1,7 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
@@ -55,17 +54,13 @@ class ScheduleViewModel @Inject constructor(
 
     private fun updateWeekData(date: OffsetDateTime) {
         _queryDateUtc.value = weekDataHelper.resetWeekDate(date)
-        updateState { copy(weekStart = weekDataHelper.getWeekStart(_queryDateUtc.value)) }
-        updateState { copy(weekEnd = weekDataHelper.getWeekEnd(_queryDateUtc.value)) }
         updateState {
             copy(
-                weekDateText = weekDataHelper.getWeekDateText(
-                    states.value.weekStart,
-                    states.value.weekEnd
-                )
+                weekStart = weekDataHelper.getWeekStart(_queryDateUtc.value),
+                weekEnd = weekDataHelper.getWeekEnd(_queryDateUtc.value),
+                dateTabs = weekDataHelper.setDateTabs(_queryDateUtc.value.getLocalOffsetDateTime())
             )
         }
-        updateState { copy(dateTabs = weekDataHelper.setDateTabs(_queryDateUtc.value.getLocalOffsetDateTime())) }
     }
 
     private fun fetchTeacherSchedule() {
@@ -103,18 +98,37 @@ class ScheduleViewModel @Inject constructor(
                     val filteredList = result.data.filter { item ->
                         item.start.dayOfYear == date.dayOfYear
                     }
-                    updateState { copy(filteredTimeList = DataSourceResult.Success(filteredList)) }
+                    updateState {
+                        copy(
+                            filteredTimeList = filteredList,
+                            filteredStatus = DataSourceResult.Success(filteredList)
+                        )
+                    }
                 } else {
-                    updateState { copy(filteredTimeList = DataSourceResult.Success(emptyList())) }
+                    updateState {
+                        copy(
+                            filteredTimeList = emptyList(),
+                            filteredStatus = DataSourceResult.Success(emptyList())
+                        )
+                    }
                 }
             }
 
             is DataSourceResult.Error -> {
-                updateState { copy(filteredTimeList = DataSourceResult.Error(result.exception)) }
+                updateState {
+                    copy(
+                        filteredStatus = DataSourceResult.Error(result.exception)
+                    )
+                }
+                postEvent(ScheduleViewEvent.ShowSnackBar(message = result.exception.toString()))
             }
 
             is DataSourceResult.Loading -> {
-                updateState { copy(filteredTimeList = DataSourceResult.Loading) }
+                updateState {
+                    copy(
+                        filteredStatus = DataSourceResult.Loading
+                    )
+                }
             }
         }
     }
@@ -142,19 +156,24 @@ class ScheduleViewModel @Inject constructor(
         postEvent(ScheduleViewEvent.NavToScheduleDetail(NavigateEvent.ByDirections(action)))
     }
 
-    private fun showSnackBar(snackbar: Snackbar, maxLines: Int) {
-        postEvent(ScheduleViewEvent.ShowSnackBar(snackbar, maxLines))
+    private fun showSnackBar(message: String, duration: Int, maxLines: Int) {
+        postEvent(ScheduleViewEvent.ShowSnackBar(message, duration, maxLines))
+    }
+
+    private fun navPopToLogin() {
+        postEvent(ScheduleViewEvent.NavPopToLogin)
     }
 
     override fun dispatch(action: ScheduleViewAction) {
-        Timber.e("dispatch $action")
+        Timber.d("dispatch $action")
+
         when (action) {
             is ScheduleViewAction.ClickItem -> {
                 navigateToScheduleDetail(action.intervalScheduleTimeSlot)
             }
 
             is ScheduleViewAction.ShowSnackBar -> {
-                showSnackBar(action.snackbar, action.maxLines)
+                showSnackBar(action.message, action.duration, action.maxLines)
             }
 
             is ScheduleViewAction.UpdateWeek -> {
@@ -163,6 +182,10 @@ class ScheduleViewModel @Inject constructor(
 
             is ScheduleViewAction.SelectedTab -> {
                 onTabSelected(action.date, action.position)
+            }
+
+            is ScheduleViewAction.IsInvalidToken -> {
+                navPopToLogin()
             }
         }
     }

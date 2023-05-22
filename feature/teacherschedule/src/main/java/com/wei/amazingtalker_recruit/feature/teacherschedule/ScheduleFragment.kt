@@ -3,6 +3,7 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
@@ -57,22 +58,44 @@ class ScheduleFragment
     override fun FragmentScheduleBinding.setupViews() {
         adapter.setOnClickListener(this@ScheduleFragment)
         scheduleTimeRecyclerview.adapter = adapter
+        buttonLastWeek.setActiveColorFilter()
+        buttonNextWeek.setActiveColorFilter()
 
         viewModel.dispatch(
             ScheduleViewAction.ShowSnackBar(
-                Snackbar.make(
-                    root,
-                    getString(
-                        R.string.inquirying_teacher_calendar,
-                        viewModel.states.value.currentTeacherName
-                    ),
-                    Snackbar.LENGTH_LONG
-                )
+                getString(
+                    R.string.inquirying_teacher_calendar,
+                    viewModel.states.value.currentTeacherName
+                ),
+                Snackbar.LENGTH_LONG
+            )
+        )
+    }
+
+    private fun ImageButton.setActiveColorFilter() {
+        setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.amazingtalker_green_900
             )
         )
     }
 
     override fun FragmentScheduleBinding.addOnClickListener() {
+        buttonLastWeek.setOnClickListener {
+            viewModel.dispatch(
+                ScheduleViewAction.UpdateWeek(
+                    WeekAction.PREVIOUS_WEEK
+                )
+            )
+        }
+        buttonNextWeek.setOnClickListener {
+            viewModel.dispatch(
+                ScheduleViewAction.UpdateWeek(
+                    WeekAction.NEXT_WEEK
+                )
+            )
+        }
     }
 
     override fun FragmentScheduleBinding.handleState(
@@ -83,39 +106,22 @@ class ScheduleFragment
             states.observeState(viewLifecycleOwner, ScheduleViewState::weekStart) {
                 setPreviousWeekButtonState(it)
             }
-            states.observeState(viewLifecycleOwner, ScheduleViewState::weekEnd) {
-                setNextWeekButtonState(it)
-            }
+
             states.observeState(viewLifecycleOwner, ScheduleViewState::weekDateText) {
-                textWeek.text = it
-                textWeek.setOnClickListener { view ->
-                    //TODO 開啟日曆選單
-                    viewModel.dispatch(
-                        ScheduleViewAction.ShowSnackBar(
-                            Snackbar.make(
-                                view,
-                                "TODO 開啟日曆選單, 當前星期為: $it",
-                                Snackbar.LENGTH_LONG
-                            )
-                        )
-                    )
-                }
+                setWeekDateTextState(it)
+
             }
             states.observeState(viewLifecycleOwner, ScheduleViewState::dateTabs) { dates ->
-                tablayout.doOnLayout {
-                    Timber.e("observeDateTabs: ${dates.toString()}  binding.tablayout.post ${viewModel.states.value.selectedIndex}")
-                    setupTabs(dates)
-                    // 延遲選擇tab
-                    tablayout.post {
-                        // 恢复所選的tab
-                        tablayout.getTabAt(viewModel.states.value.selectedIndex)?.select()
-                    }
-                }
+                setDateTabsState(dates)
+
             }
 
-            states.observeState(viewLifecycleOwner, ScheduleViewState::filteredTimeList) { result ->
-                Timber.e(" filteredTimeList  $result")
-                handleTimeListUpdate(result)
+            states.observeState(viewLifecycleOwner, ScheduleViewState::filteredTimeList) { list ->
+                handleTimeListUpdate(list)
+            }
+
+            states.observeState(viewLifecycleOwner, ScheduleViewState::filteredStatus) { status ->
+                handleFilteredStatus(status)
             }
         }
     }
@@ -127,7 +133,11 @@ class ScheduleFragment
             }
 
             is ScheduleViewEvent.ShowSnackBar -> {
-                val snackBar = event.snackbar.setTextColor(
+                val snackBar = Snackbar.make(
+                    binding.root,
+                    event.message,
+                    event.duration
+                ).setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
                         R.color.amazingtalker_green_700
@@ -140,52 +150,18 @@ class ScheduleFragment
                 snackTextView.maxLines = event.maxLines
                 snackBar.show()
             }
+
+            is ScheduleViewEvent.NavPopToLogin -> {
+                findNavController().popBackStack(R.id.scheduleFragment, true)
+                findNavController().navigate(DeepLinks.LOGIN)
+            }
         }
     }
 
-    override fun FragmentScheduleBinding.initData() {
+    override fun FragmentScheduleBinding.checkConditions() {
         if (!TokenManager.isTokenValid) {
-            findNavController().popBackStack(R.id.scheduleFragment, true)
-            findNavController().navigate(DeepLinks.LOGIN)
+            viewModel.dispatch(ScheduleViewAction.IsInvalidToken)
         }
-    }
-
-    private fun FragmentScheduleBinding.handleTimeListUpdate(result: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
-
-        when (result) {
-            is DataSourceResult.Success -> {
-                result.data.let {
-                    adapter.addHeaderAndSubmitList(
-                        it
-                    )
-                }
-                scheduleTimeRecyclerview.isVisible = true
-                scheduleTimeRecyclerview.scrollToPosition(0)
-
-                Timber.d("API Success")
-            }
-
-            is DataSourceResult.Error -> {
-                viewModel.dispatch(
-                    ScheduleViewAction.ShowSnackBar(
-                        Snackbar.make(
-                            root,
-                            "Api Failed ${result.exception}",
-                            Snackbar.LENGTH_LONG
-                        ),
-                        maxLines = 4
-                    )
-                )
-                scheduleTimeRecyclerview.isVisible = false
-
-                Timber.d("API Failed ${result.exception}")
-            }
-
-            is DataSourceResult.Loading -> {
-                Timber.d("API Loading")
-            }
-        }
-
     }
 
     private fun FragmentScheduleBinding.setPreviousWeekButtonState(date: OffsetDateTime) {
@@ -194,12 +170,7 @@ class ScheduleFragment
                 colorFilter = null
                 setOnClickListener(null)
             } else {
-                setColorFilter(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.amazingtalker_green_900
-                    )
-                )
+                setActiveColorFilter()
                 setOnClickListener {
                     viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
                 }
@@ -207,16 +178,26 @@ class ScheduleFragment
         }
     }
 
-    private fun FragmentScheduleBinding.setNextWeekButtonState(date: OffsetDateTime) {
-        with(buttonNextWeek) {
-            setColorFilter(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.amazingtalker_green_900
+    private fun FragmentScheduleBinding.setWeekDateTextState(weekDate: String) {
+        textWeek.text = weekDate
+        textWeek.setOnClickListener {
+            //TODO 開啟日曆選單
+            viewModel.dispatch(
+                ScheduleViewAction.ShowSnackBar(
+                    "開啟日曆選單: $weekDate",
+                    Snackbar.LENGTH_LONG
                 )
             )
-            setOnClickListener {
-                viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK))
+        }
+    }
+
+    private fun FragmentScheduleBinding.setDateTabsState(dates: MutableList<OffsetDateTime>) {
+        tablayout.doOnLayout {
+            setupTabs(dates)
+            // 延遲選擇tab
+            tablayout.post {
+                // 恢复所選的tab
+                tablayout.getTabAt(viewModel.states.value.selectedIndex)?.select()
             }
         }
     }
@@ -243,14 +224,13 @@ class ScheduleFragment
             // 重新添加 TabSelectedListener
             addTabSelectedListener(tablayout)
         }
-
     }
 
     private fun addTabSelectedListener(tabLayout: TabLayout) {
         tabLayout.clearOnTabSelectedListeners()
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                Timber.e("======onTabSelected====${tab.tag}")
+                Timber.d("======onTabSelected====${tab.tag}")
 
                 val date = tab.tag as? OffsetDateTime
                 if (date != null) {
@@ -264,6 +244,32 @@ class ScheduleFragment
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
+
+    private fun FragmentScheduleBinding.handleTimeListUpdate(list: List<IntervalScheduleTimeSlot>) {
+        list.let {
+            adapter.addHeaderAndSubmitList(
+                it
+            )
+        }
+    }
+
+    private fun FragmentScheduleBinding.handleFilteredStatus(dataSourceResult: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
+
+        when (dataSourceResult) {
+            is DataSourceResult.Success -> {
+                scheduleTimeRecyclerview.isVisible = true
+                scheduleTimeRecyclerview.scrollToPosition(0)
+            }
+
+            is DataSourceResult.Error -> {
+                scheduleTimeRecyclerview.isVisible = false
+            }
+
+            is DataSourceResult.Loading -> {
+                Timber.d("API Loading")
+            }
+        }
     }
 
     override fun onItemClick(item: IntervalScheduleTimeSlot) {
