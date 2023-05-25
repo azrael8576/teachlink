@@ -5,18 +5,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.models.NavigateEvent
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
-import com.wei.amazingtalker_recruit.feature.teacherschedule.ScheduleFragmentDirections
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.HandleTeacherScheduleResultUseCase
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ErrorMessage
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewEvent
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -34,7 +33,6 @@ class ScheduleViewModel @Inject constructor(
     private val weekDataHelper: WeekDataHelper
 ) : BaseViewModel<
         ScheduleViewAction,
-        ScheduleViewEvent,
         ScheduleViewState
         >(ScheduleViewState()) {
 
@@ -42,16 +40,10 @@ class ScheduleViewModel @Inject constructor(
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
     private val _queryDateUtc = MutableStateFlow(OffsetDateTime.now())
     private val _selectedTab = MutableStateFlow<OffsetDateTime?>(null)
+    private var getScheduleJob: Job? = null
     private var isUpdatingWeek = false
 
-    /**
-     * 在 ViewModel 的 init{} 區塊，Fragment 可能還未進行 UI 事件監聽註冊。因此，此區段內的 postEvent() 方法，
-     * 也即 SharedFlow 的 emit() 操作，可能導致事件的丟失。在這種情況下，Google 官方建議的做法是不區分狀態與事件，
-     * 而是統一使用 StateFlow，並添加標示位來表示事件是否已經被消費。
-     */
     init {
-        Timber.e("ScheduleViewModel init")
-        // TODO: 修復事件丟失問題。由於此區塊在 Fragment 完全創建之前就執行，postEvent() 可能會導致事件丟失。
         refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
     }
 
@@ -73,13 +65,15 @@ class ScheduleViewModel @Inject constructor(
     }
 
     private fun fetchTeacherSchedule() {
+        getScheduleJob?.cancel()
+
         showSnackBar(
             resId = R.string.inquirying_teacher_calendar,
             message = states.value.currentTeacherName,
             duration = Snackbar.LENGTH_LONG,
             maxLines = 1
         )
-        viewModelScope.launch {
+        getScheduleJob = viewModelScope.launch {
             getTeacherScheduleUseCase(
                 teacherName = states.value.currentTeacherName,
                 startedAtUtc = _queryDateUtc.value.toString()
@@ -134,7 +128,7 @@ class ScheduleViewModel @Inject constructor(
                         filteredStatus = DataSourceResult.Error(result.exception)
                     )
                 }
-                postEvent(ScheduleViewEvent.ShowSnackBar(message = result.exception.toString()))
+                showSnackBar(message = result.exception.toString(), maxLines = 3)
             }
 
             is DataSourceResult.Loading -> {
@@ -165,29 +159,38 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToScheduleDetail(item: IntervalScheduleTimeSlot) {
-        val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
-        postEvent(ScheduleViewEvent.NavToScheduleDetail(NavigateEvent.ByDirections(action)))
-    }
-
-    private fun showSnackBar(resId: Int = 0, message: String, duration: Int, maxLines: Int = 1) {
-        postEvent(ScheduleViewEvent.ShowSnackBar(resId = resId, message = message, duration = duration, maxLines = maxLines))
-    }
-
-    private fun navPopToLogin() {
-        postEvent(ScheduleViewEvent.NavPopToLogin)
+    private fun showSnackBar(
+        resId: Int = 0,
+        message: String,
+        duration: Int = Snackbar.LENGTH_LONG,
+        maxLines: Int = 1
+    ) {
+        updateState {
+            copy(
+                errorMessages = errorMessages + ErrorMessage(resId, message, duration, maxLines)
+            )
+        }
     }
 
     override fun dispatch(action: ScheduleViewAction) {
-        Timber.e("dispatch $action")
-
+        Timber.d("dispatch $action")
         when (action) {
-            is ScheduleViewAction.ClickItem -> {
-                navigateToScheduleDetail(action.intervalScheduleTimeSlot)
-            }
 
             is ScheduleViewAction.ShowSnackBar -> {
-                showSnackBar(message = action.message, duration = action.duration, maxLines = action.maxLines)
+                showSnackBar(
+                    resId = action.resId,
+                    message = action.message,
+                    duration = action.duration,
+                    maxLines = action.maxLines
+                )
+            }
+
+            is ScheduleViewAction.SnackBarShown -> {
+                updateState {
+                    copy(
+                        errorMessages = errorMessages.drop(1)
+                    )
+                }
             }
 
             is ScheduleViewAction.UpdateWeek -> {
@@ -198,9 +201,6 @@ class ScheduleViewModel @Inject constructor(
                 onTabSelected(action.date, action.position)
             }
 
-            is ScheduleViewAction.IsInvalidToken -> {
-                navPopToLogin()
-            }
         }
     }
 

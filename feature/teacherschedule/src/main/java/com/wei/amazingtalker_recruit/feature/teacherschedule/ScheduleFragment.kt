@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
@@ -24,8 +23,8 @@ import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
 import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ErrorMessage
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewEvent
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
@@ -44,7 +43,6 @@ class ScheduleFragment
         FragmentScheduleBinding,
         ScheduleViewModel,
         ScheduleViewAction,
-        ScheduleViewEvent,
         ScheduleViewState
         >(), OnItemClickListener {
 
@@ -113,48 +111,27 @@ class ScheduleFragment
             states.observeState(viewLifecycleOwner, ScheduleViewState::filteredStatus) { status ->
                 handleFilteredStatus(status)
             }
-        }
-    }
 
-    override fun FragmentScheduleBinding.handleEvent(event: ScheduleViewEvent) {
-        Timber.e("handleEvent $event")
-        when (event) {
-            is ScheduleViewEvent.NavToScheduleDetail -> {
-                findNavController().navigate(event.navigateEvent.directions)
-            }
+            states.observeState(
+                viewLifecycleOwner,
+                ScheduleViewState::isTokenValid
+            ) { isTokenValid ->
+                if (isTokenValid) return@observeState
 
-            is ScheduleViewEvent.ShowSnackBar -> {
-                val message = if (event.resId != 0) getString(R.string.inquirying_teacher_calendar, event.message) else event.message
-
-                val snackBar = Snackbar.make(
-                    binding.root,
-                    message,
-                    event.duration
-                ).setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.amazingtalker_green_700
-                    )
-                )
-
-                val snackBarView = snackBar.view
-                val snackTextView =
-                    snackBarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
-                snackTextView.maxLines = event.maxLines
-                snackBar.show()
-            }
-
-            is ScheduleViewEvent.NavPopToLogin -> {
                 findNavController().popBackStack(R.id.scheduleFragment, true)
                 findNavController().navigate(DeepLinks.LOGIN)
             }
-        }
-    }
 
-    override fun FragmentScheduleBinding.checkConditions() {
-        Timber.e("checkConditions TokenManager.isTokenValid: ${TokenManager.isTokenValid}")
-        if (!TokenManager.isTokenValid) {
-            viewModel.dispatch(ScheduleViewAction.IsInvalidToken)
+            states.observeState(
+                viewLifecycleOwner,
+                ScheduleViewState::errorMessages
+            ) { errorMessages ->
+                if (errorMessages.isEmpty()) return@observeState
+
+                handleErrorMessage(errorMessages.first())
+                // UI 事件消費後應該通知 ViewModel 重置初始值
+                viewModel.dispatch(ScheduleViewAction.SnackBarShown)
+            }
         }
     }
 
@@ -178,8 +155,7 @@ class ScheduleFragment
             //TODO 開啟日曆選單
             viewModel.dispatch(
                 ScheduleViewAction.ShowSnackBar(
-                    "開啟日曆選單: $weekDate",
-                    Snackbar.LENGTH_LONG
+                    message = "開啟日曆選單: $weekDate",
                 )
             )
         }
@@ -266,7 +242,39 @@ class ScheduleFragment
         }
     }
 
+    private fun FragmentScheduleBinding.handleErrorMessage(errorMessage: ErrorMessage) {
+        val snackBar = createSnackBar(errorMessage)
+        configureSnackBar(snackBar, errorMessage)
+        snackBar.show()
+    }
+
+    private fun createSnackBar(errorMessage: ErrorMessage): Snackbar {
+        val message = getErrorMessage(errorMessage)
+        return Snackbar.make(binding.root, message, errorMessage.duration)
+    }
+
+    private fun getErrorMessage(errorMessage: ErrorMessage): String {
+        return if (errorMessage.resId != 0) getString(
+            R.string.inquirying_teacher_calendar,
+            errorMessage.message
+        )
+        else errorMessage.message
+    }
+
+    private fun configureSnackBar(snackBar: Snackbar, errorMessage: ErrorMessage) {
+        snackBar.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.amazingtalker_green_700
+            )
+        )
+        val snackTextView =
+            snackBar.view.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+        snackTextView.maxLines = errorMessage.maxLines
+    }
+
     override fun onItemClick(item: IntervalScheduleTimeSlot) {
-        viewModel.dispatch(ScheduleViewAction.ClickItem(item))
+        val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
+        findNavController().navigate(action)
     }
 }

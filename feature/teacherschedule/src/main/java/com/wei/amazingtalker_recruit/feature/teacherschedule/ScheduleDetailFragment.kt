@@ -10,7 +10,6 @@ import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleDetailBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewEvent
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +20,6 @@ class ScheduleDetailFragment : BaseFragment<
         FragmentScheduleDetailBinding,
         ScheduleDetailViewModel,
         ScheduleDetailViewAction,
-        ScheduleDetailViewEvent,
         ScheduleDetailViewState
         >() {
 
@@ -61,12 +59,15 @@ class ScheduleDetailFragment : BaseFragment<
                 tvDuringDayType.text = it?.name
             }
         }
-    }
 
-    override fun FragmentScheduleDetailBinding.handleEvent(event: ScheduleDetailViewEvent) {
-        when (event) {
-            is ScheduleDetailViewEvent.NavPopBackStack -> {
-                findNavController().popBackStack()
+        states.let {
+            states.observeState(
+                viewLifecycleOwner,
+                ScheduleDetailViewState::isBackClick
+            ) { isBackClick ->
+                if (isBackClick) {
+                    findNavController().popBackStack()
+                }
             }
         }
     }
