@@ -237,6 +237,7 @@ class ScheduleFragment
             }
 
             is DataSourceResult.Loading -> {
+                scheduleTimeRecyclerview.isVisible = false
                 Timber.d("API Loading")
             }
         }
