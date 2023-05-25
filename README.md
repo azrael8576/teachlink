@@ -1,27 +1,29 @@
 
+
 # Amazingtalker-Recruit
-"Amazingtalker-Recruit" 是一款模擬預約教師行事曆的應用程式。這款 APP 的目標是展示如何遵循 Android 的設計和開發最佳實踐，提供完整的遷移指南，並對開發人員提供實用的參考資訊。
+"Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構，模擬預約教師行事曆的多模塊應用程式。這款 APP 的目標是展示如何遵循 Android 的設計和開發最佳實踐，提供完整的遷移指南，並對開發人員提供實用的參考資訊。
 
 ### 目前已完成的遷移項目：
 
-- 單一模組遷移至模組化結構。
-- LiveData 遷移至 Flow。
-- 引入 DI Hilt。
+- 從單一模組結構遷移至模組化結構。 查看分支：`refactor/modularization`
+- 從 LiveData 遷移至 Flow。 查看分支：`refactor/migrating_livedata_to_flow`
+- 引入 DI Hilt。 查看分支：`refactor/di`
+- 從 MVVM 架構遷移至 MVI。 查看分支：`refactor/mvvm-to-mvi`
 
 ### 🚧 進行中的工作
 
 該 APP 目前仍在開發階段，並正在進行多項重要的技術遷移和改進：
 
-- MVVM 架構正在遷移至 MVI。
 - View 正在遷移至 Jetpack Compose UI。
 
 #  常見類封裝
-在此應用程式中，我們對一些常見的使用情境進行了封裝：
-- <code>BaseFragment</code>  自動訂閱 BaseViewModel Event Flow。
-    - <code>handleEvent()</code>  用於處理對應的 Event 邏輯。
-- <code>BaseViewModel</code>  提供 SharedFlowEvents 供 UI 訂閱。
-- <code>SharedFlowEventsExtensions.kt</code> 封裝 UI Events 流，提供更方便的操作方式。
-- <code>DataSourceResult.kt</code>  封裝數據源結果的密封類別，可能是成功(Success)、錯誤(Error)或正在加載(Loading)的狀態。
+在此應用程式中，我們對於 MVI 架構中常見的使用情境進行了以下封裝：
+- `BaseFragment`：提供了四個抽象方法 (setupViews, addOnClickListener, handleState, initData)，供子類別根據需求實現。
+- `BaseViewModel`：提供 MutableStateFlow 供 UI 訂閱 UI State，並提供 dispatch 抽象方法供子類別實現。
+  > **Note:** 通過 dispatch 統一處理事件分發，有助於 View 與 ViewModel 間的解耦，同時也更利於日誌分析與後續處理。
+- `StateFlowStateExtensions.kt`：封裝 UI StateFlow 流，提供更方便的操作方式。
+- ~~`SharedFlowEventsExtensions.kt`：封裝 UI SharedFlowEvents 流。~~ (**已棄用**)
+- `DataSourceResult.kt`：封裝數據源結果的密封類別，封裝可能是成功(Success)、錯誤(Error)或正在加載(Loading)的狀態。
 
 
 #  Screenshots
@@ -82,7 +84,7 @@
    <td><code>network/AtDispatchers</code><br>
    <code>result/DataSourceResult</code><br>
    <code>authentication/TokenManager</code><br>
-   <code>extensions/SharedFlowEventsExtensions</code><br>
+   <code>extensions/StateFlowStateExtensions</code><br>
    <code>navigation/DeepLinks</code><br>
       ...
    </td>
