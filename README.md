@@ -1,4 +1,5 @@
 
+
 # Amazingtalker-Recruit
 
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構，模擬預約教師行事曆的多模塊 Android 應用程式。這款 APP 的目標是展示如何遵循 Android 的設計和開發最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
@@ -35,6 +36,14 @@
 ## Architecture
 
 "Amazingtalker-Recruit" 遵循了 [Android 官方應用架構指南](https://developer.android.com/topic/architecture)。
+
+### About MVI 最佳做法
+####  UI 事件決策樹：以下圖表顯示尋找處理特定事件用途最佳方式時的決策樹。
+![image](https://developer.android.com/static/topic/libraries/architecture/images/mad-arch-uievents-tree.png?hl=zh-tw)
+#### UI 事件：不要使用   `Channels`, `SharedFlow` 或其他回應式串流向 UI 公開 ViewModel 事件。
+>  產生來源 (`ViewModel`) 超越消耗者 (`UI`，`Compose` 或`檢視畫面`) 時，此處說明的解決方法不一定能夠提交和處理這些事件。這可能會導致開發人員在後續發生問題，而由於這樣會造成應用程式處於不一致的狀態，可能導致發生錯誤，或是使用者可能會錯失重要資訊。
+1) **立即處理一次性的 ViewModel 事件，並將其降為 UI 狀態。**
+2) **使用可觀察的數據持有類型來公開狀態。**
 
 ## Modularization
 
