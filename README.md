@@ -1,5 +1,3 @@
-
-
 # Amazingtalker-Recruit
 
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構，模擬預約教師行事曆的多模塊 Android 應用程式。這款 APP 的目標是展示如何遵循 Android 的設計和開發最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
@@ -16,6 +14,8 @@
 該 APP 目前仍在開發階段，我們正進行以下的技術遷移和改進：
 
 - View 正在遷移至 Jetpack Compose UI。
+- 多 Theme 配置
+- 引入 Baseline Profiles 啟動優化
 
 ## 常見類封裝
 
