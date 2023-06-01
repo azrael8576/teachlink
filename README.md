@@ -62,3 +62,7 @@
 ## 原需求文件
 
 [amazingtalker.notion.site/Android Assignment Option B](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293)
+
+# License
+
+**Amazingtalker-Recruit**  is distributed under the terms of the Apache License (Version 2.0). See the  [license](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE)  for more information.
