@@ -36,7 +36,7 @@ class WelcomeFragment : BaseFragment<
         viewLifecycleOwner: LifecycleOwner,
         states: StateFlow<WelcomeViewState>
     ) {
-        states.let { states ->
+        states.let {
             states.observeState(
                 viewLifecycleOwner,
                 WelcomeViewState::isInitialized

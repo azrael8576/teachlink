@@ -64,7 +64,7 @@ class LiveDataEvents<T> : MutableLiveData<List<T>>() {
          * 當 LiveData 的值發生變化時調用。
          * 如果有待處理的事件，則消費事件並清空事件列表。
          */
-        override fun onChanged(t: List<T>?) {
+        override fun onChanged(value: List<T>) {
             // 當有新的事件時，將標誌位設為 false，並調用真正的觀察者的 onChanged 方法
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(eventList.flatten())

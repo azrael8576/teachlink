@@ -39,7 +39,7 @@ class LoginFragment : BaseFragment<
         viewLifecycleOwner: LifecycleOwner,
         states: StateFlow<LoginViewState>
     ) {
-        states.let { states ->
+        states.let {
             states.observeState(
                 viewLifecycleOwner,
                 LoginViewState::isUserLoggedIn

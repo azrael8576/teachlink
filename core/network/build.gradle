@@ -16,8 +16,6 @@ android {
     defaultConfig {
         minSdk androidID.minSdk
         targetSdk androidID.targetSdk
-        versionCode androidID.versionCode
-        versionName androidID.versionName
 
         testInstrumentationRunner androidID.testInstrumentationRunner
     }

@@ -90,7 +90,7 @@ class ScheduleFragment
         viewLifecycleOwner: LifecycleOwner,
         states: StateFlow<ScheduleViewState>
     ) {
-        states.let { states ->
+        states.let {
             states.observeState(viewLifecycleOwner, ScheduleViewState::weekStart) {
                 setPreviousWeekButtonState(it)
             }
