@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.login.welcome
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -10,27 +11,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.compose.AppTheme
+import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
 
 @Composable
 fun WelcomeScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(
-            text = "Welcome Compose",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
+  Box(
+    modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.primary)
+  ) {
+    Text(
+      text = "Welcome Compose",
+      fontSize = 20.sp,
+      fontWeight = FontWeight.Bold,
+      color = MaterialTheme.colorScheme.onPrimary,
+      modifier = Modifier.align(Alignment.Center)
+    )
+  }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun WelcomeScreenPreview() {
-    AppTheme {
-        WelcomeScreen()
-    }
+  AppTheme {
+    WelcomeScreen()
+  }
 }

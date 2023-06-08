@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
-import com.example.compose.AppTheme
+import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.feature.login.databinding.FragmentWelcomeBinding
