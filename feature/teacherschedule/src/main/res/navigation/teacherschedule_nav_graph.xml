@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/scheduleDetailFragment"
-        android:name="com.wei.amazingtalker_recruit.feature.teacherschedule.ScheduleDetailFragment"
+        android:name="com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.ScheduleDetailFragment"
         android:label="fragment_schedule_detail"
         tools:layout="@layout/fragment_schedule_detail">
         <argument

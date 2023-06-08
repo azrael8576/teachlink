@@ -1,13 +1,17 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule
+package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
+import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.ScheduleDetailFragmentArgs
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleDetailBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewState
@@ -30,36 +34,27 @@ class ScheduleDetailFragment : BaseFragment<
         get() = FragmentScheduleDetailBinding::inflate
 
     override fun FragmentScheduleDetailBinding.setupViews() {
+        composeView.apply {
+            // Dispose the Composition when the view's LifecycleOwner
+            // is destroyed
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            setContent {
+                AppTheme {
+                    ScheduleDetailScreen()
+                }
+            }
+        }
     }
 
     override fun FragmentScheduleDetailBinding.addOnClickListener() {
-        btnBack.setOnClickListener {
-            viewModel.dispatch(ScheduleDetailViewAction.ClickBack)
-        }
     }
 
     override fun FragmentScheduleDetailBinding.handleState(
         viewLifecycleOwner: LifecycleOwner,
         states: StateFlow<ScheduleDetailViewState>
     ) {
-        states.let {
-            states.observeState(viewLifecycleOwner, ScheduleDetailViewState::teacherName) {
-                tvName.text = it.toString()
-            }
-            states.observeState(viewLifecycleOwner, ScheduleDetailViewState::start) {
-                tvStart.text = it.toString()
-            }
-            states.observeState(viewLifecycleOwner, ScheduleDetailViewState::end) {
-                binding.tvEnd.text = it.toString()
-            }
-            states.observeState(viewLifecycleOwner, ScheduleDetailViewState::state) {
-                tvState.text = it?.name
-            }
-            states.observeState(viewLifecycleOwner, ScheduleDetailViewState::duringDayType) {
-                tvDuringDayType.text = it?.name
-            }
-        }
-
         states.let {
             states.observeState(
                 viewLifecycleOwner,

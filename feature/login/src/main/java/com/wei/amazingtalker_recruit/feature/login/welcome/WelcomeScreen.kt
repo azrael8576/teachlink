@@ -22,7 +22,7 @@ fun WelcomeScreen() {
   ) {
     Text(
       text = "Welcome Compose",
-      fontSize = 20.sp,
+      style = MaterialTheme.typography.headlineMedium,
       fontWeight = FontWeight.Bold,
       color = MaterialTheme.colorScheme.onPrimary,
       modifier = Modifier.align(Alignment.Center)

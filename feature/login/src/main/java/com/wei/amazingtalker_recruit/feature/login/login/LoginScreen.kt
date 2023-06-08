@@ -13,10 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
+import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
 @Composable
-fun LoginScreen(onLoginClick: (() -> Unit)? = null) {
+fun LoginScreen(
+  viewModel: LoginViewModel = hiltViewModel()
+) {
   Box(
     modifier = Modifier
       .fillMaxSize()
@@ -28,15 +33,13 @@ fun LoginScreen(onLoginClick: (() -> Unit)? = null) {
     ) {
       Text(
         text = "跨功能模組導航:\n Home Module",
+        style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onBackground,
         modifier = Modifier.align(Alignment.CenterHorizontally)
       )
       Button(
         onClick = {
-          if (onLoginClick != null) {
-            onLoginClick()
-          } else {
-          }
+          viewModel.dispatch(LoginViewAction.Login)
         },
         modifier = Modifier.padding(top = 8.dp)
       ) {

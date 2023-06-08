@@ -38,7 +38,7 @@ class LoginFragment : BaseFragment<
       )
       setContent {
         AppTheme {
-          LoginScreen { viewModel.dispatch(LoginViewAction.Login) }
+          LoginScreen()
         }
       }
     }
