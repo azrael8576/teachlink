@@ -39,7 +39,7 @@ class ScheduleViewModel @Inject constructor(
     private val _scheduleTimeList =
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
     private val _queryDateUtc = MutableStateFlow(OffsetDateTime.now())
-    private val _selectedTab = MutableStateFlow<OffsetDateTime?>(null)
+    private val _selectedTab = MutableStateFlow(OffsetDateTime.now().getLocalOffsetDateTime())
     private var getScheduleJob: Job? = null
     private var isUpdatingWeek = false
 
@@ -98,27 +98,18 @@ class ScheduleViewModel @Inject constructor(
 
     private fun filterTimeListByDate(
         result: DataSourceResult<MutableList<IntervalScheduleTimeSlot>>,
-        date: OffsetDateTime?
+        date: OffsetDateTime
     ) {
         when (result) {
             is DataSourceResult.Success -> {
-                if (date != null) {
-                    val filteredList = result.data.filter { item ->
-                        item.start.dayOfYear == date.dayOfYear
-                    }
-                    updateState {
-                        copy(
-                            filteredTimeList = filteredList,
-                            filteredStatus = DataSourceResult.Success(filteredList)
-                        )
-                    }
-                } else {
-                    updateState {
-                        copy(
-                            filteredTimeList = emptyList(),
-                            filteredStatus = DataSourceResult.Success(emptyList())
-                        )
-                    }
+                val filteredList = result.data.filter { item ->
+                    item.start.dayOfYear == date.dayOfYear
+                }
+                updateState {
+                    copy(
+                        filteredTimeList = filteredList,
+                        filteredStatus = DataSourceResult.Success(filteredList)
+                    )
                 }
             }
 
