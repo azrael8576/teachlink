@@ -21,7 +21,7 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetai
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleDetailViewModel
 
 @Composable
-fun ScheduleDetailScreen(
+internal fun ScheduleDetailScreen(
     viewModel: ScheduleDetailViewModel = hiltViewModel()
 ) {
     val states by viewModel.states.collectAsStateWithLifecycle()
@@ -37,10 +37,26 @@ fun ScheduleDetailScreen(
                 .align(Alignment.TopStart)
         ) {
             Text(text = states.teacherName.toString(), style = MaterialTheme.typography.bodyMedium)
-            Text(text = states.start.toString(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
-            Text(text = states.end.toString(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
-            Text(text = states.state?.name.toString(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
-            Text(text = states.duringDayType?.name.toString(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(
+                text = states.start.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Text(
+                text = states.end.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Text(
+                text = states.state?.name.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Text(
+                text = states.duringDayType?.name.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
 
         Button(

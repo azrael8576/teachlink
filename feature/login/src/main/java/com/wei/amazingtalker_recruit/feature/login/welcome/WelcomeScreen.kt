@@ -10,30 +10,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
 
 @Composable
-fun WelcomeScreen() {
-  Box(
-    modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colorScheme.primary)
-  ) {
-    Text(
-      text = "Welcome Compose",
-      style = MaterialTheme.typography.headlineMedium,
-      fontWeight = FontWeight.Bold,
-      color = MaterialTheme.colorScheme.onPrimary,
-      modifier = Modifier.align(Alignment.Center)
-    )
-  }
+internal fun WelcomeScreen() {
+    Box(
+        modifier = Modifier
+          .fillMaxSize()
+          .background(MaterialTheme.colorScheme.primary)
+    ) {
+        Text(
+            text = "Welcome Compose",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun WelcomeScreenPreview() {
-  AppTheme {
-    WelcomeScreen()
-  }
+    AppTheme {
+        WelcomeScreen()
+    }
 }

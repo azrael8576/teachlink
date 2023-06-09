@@ -2,7 +2,6 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.navArgs
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
-import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.ScheduleDetailFragmentArgs
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleDetailBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewState

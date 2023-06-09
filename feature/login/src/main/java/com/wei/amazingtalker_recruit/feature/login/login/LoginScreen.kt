@@ -19,41 +19,41 @@ import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
 @Composable
-fun LoginScreen(
-  viewModel: LoginViewModel = hiltViewModel()
+internal fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
-  Box(
-    modifier = Modifier
-      .fillMaxSize()
-      .background(MaterialTheme.colorScheme.background),
-    contentAlignment = Alignment.Center
-  ) {
-    Column(
-      horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
+        modifier = Modifier
+          .fillMaxSize()
+          .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
     ) {
-      Text(
-        text = "跨功能模組導航:\n Home Module",
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onBackground,
-        modifier = Modifier.align(Alignment.CenterHorizontally)
-      )
-      Button(
-        onClick = {
-          viewModel.dispatch(LoginViewAction.Login)
-        },
-        modifier = Modifier.padding(top = 8.dp)
-      ) {
-        Text("Login")
-      }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = "跨功能模組導航:\n Home Module",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+            Button(
+                onClick = {
+                    viewModel.dispatch(LoginViewAction.Login)
+                },
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text("Login")
+            }
+        }
     }
-  }
 
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LoginScreenPreview() {
-  AppTheme {
-    LoginScreen()
-  }
+    AppTheme {
+        LoginScreen()
+    }
 }
