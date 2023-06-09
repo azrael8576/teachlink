@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.wei.amazingtalker_recruit.feature.teacherschedule.ScheduleFragment"
+        android:name="com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule">
         <deepLink

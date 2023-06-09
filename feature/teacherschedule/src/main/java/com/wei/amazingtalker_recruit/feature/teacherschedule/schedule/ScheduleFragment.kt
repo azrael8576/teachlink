@@ -1,13 +1,13 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule
+package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
@@ -16,12 +16,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
-import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.navigation.DeepLinks
 import com.wei.amazingtalker_recruit.core.navigation.navigate
-import com.wei.amazingtalker_recruit.core.result.DataSourceResult
-import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.OnItemClickListener
-import com.wei.amazingtalker_recruit.feature.teacherschedule.adapters.ScheduleTimeListAdapter
+import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ErrorMessage
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
@@ -34,8 +32,6 @@ import timber.log.Timber
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class ScheduleFragment
@@ -44,20 +40,30 @@ class ScheduleFragment
         ScheduleViewModel,
         ScheduleViewAction,
         ScheduleViewState
-        >(), OnItemClickListener {
+        >() {
 
-    @Inject
-    lateinit var adapter: ScheduleTimeListAdapter
     override val viewModel: ScheduleViewModel by viewModels()
 
     override val inflate: (LayoutInflater, ViewGroup?, Boolean) -> FragmentScheduleBinding
         get() = FragmentScheduleBinding::inflate
 
     override fun FragmentScheduleBinding.setupViews() {
-        adapter.setOnClickListener(this@ScheduleFragment)
-        scheduleTimeRecyclerview.adapter = adapter
         buttonLastWeek.setActiveColorFilter()
         buttonNextWeek.setActiveColorFilter()
+
+        // ComposeView
+        composeView.apply {
+            // Dispose the Composition when the view's LifecycleOwner
+            // is destroyed
+            setViewCompositionStrategy(
+                ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+            )
+            setContent {
+                AppTheme {
+                    ScheduleScreen()
+                }
+            }
+        }
     }
 
     private fun ImageButton.setActiveColorFilter() {
@@ -104,14 +110,6 @@ class ScheduleFragment
 
             }
 
-            states.observeState(viewLifecycleOwner, ScheduleViewState::filteredTimeList) { list ->
-                handleTimeListUpdate(list)
-            }
-
-            states.observeState(viewLifecycleOwner, ScheduleViewState::filteredStatus) { status ->
-                handleFilteredStatus(status)
-            }
-
             states.observeState(
                 viewLifecycleOwner,
                 ScheduleViewState::isTokenValid
@@ -131,6 +129,21 @@ class ScheduleFragment
                 handleErrorMessage(errorMessages.first())
                 // UI 事件消費後應該通知 ViewModel 重置初始值
                 viewModel.dispatch(ScheduleViewAction.SnackBarShown)
+            }
+
+            states.observeState(
+                viewLifecycleOwner,
+                ScheduleViewState::clickTimeSlots
+            ) { clickTimeSlots ->
+                if (clickTimeSlots.isEmpty()) return@observeState
+
+                val action =
+                    ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(
+                        clickTimeSlots.first()
+                    )
+                findNavController().navigate(action)
+                // UI 事件消費後應該通知 ViewModel 重置初始值
+                viewModel.dispatch(ScheduleViewAction.TimeSlotClicked)
             }
         }
     }
@@ -216,33 +229,6 @@ class ScheduleFragment
         })
     }
 
-    private fun FragmentScheduleBinding.handleTimeListUpdate(list: List<IntervalScheduleTimeSlot>) {
-        list.let {
-            adapter.addHeaderAndSubmitList(
-                it
-            )
-        }
-    }
-
-    private fun FragmentScheduleBinding.handleFilteredStatus(dataSourceResult: DataSourceResult<List<IntervalScheduleTimeSlot>>) {
-
-        when (dataSourceResult) {
-            is DataSourceResult.Success -> {
-                scheduleTimeRecyclerview.isVisible = true
-                scheduleTimeRecyclerview.scrollToPosition(0)
-            }
-
-            is DataSourceResult.Error -> {
-                scheduleTimeRecyclerview.isVisible = false
-            }
-
-            is DataSourceResult.Loading -> {
-                scheduleTimeRecyclerview.isVisible = false
-                Timber.d("API Loading")
-            }
-        }
-    }
-
     private fun FragmentScheduleBinding.handleErrorMessage(errorMessage: ErrorMessage) {
         val snackBar = createSnackBar(errorMessage)
         configureSnackBar(snackBar, errorMessage)
@@ -274,8 +260,4 @@ class ScheduleFragment
         snackTextView.maxLines = errorMessage.maxLines
     }
 
-    override fun onItemClick(item: IntervalScheduleTimeSlot) {
-        val action = ScheduleFragmentDirections.actionScheduleFragmentToScheduleDetailFragment(item)
-        findNavController().navigate(action)
-    }
 }

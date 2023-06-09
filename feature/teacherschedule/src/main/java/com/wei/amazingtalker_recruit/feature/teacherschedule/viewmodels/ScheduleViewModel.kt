@@ -107,8 +107,7 @@ class ScheduleViewModel @Inject constructor(
                 }
                 updateState {
                     copy(
-                        filteredTimeList = filteredList,
-                        filteredStatus = DataSourceResult.Success(filteredList)
+                        timeListUiState = TimeListUiState.Success(timeSlotList = filteredList)
                     )
                 }
             }
@@ -116,7 +115,7 @@ class ScheduleViewModel @Inject constructor(
             is DataSourceResult.Error -> {
                 updateState {
                     copy(
-                        filteredStatus = DataSourceResult.Error(result.exception)
+                        timeListUiState = TimeListUiState.Error
                     )
                 }
                 showSnackBar(message = result.exception.toString(), maxLines = 3)
@@ -125,7 +124,7 @@ class ScheduleViewModel @Inject constructor(
             is DataSourceResult.Loading -> {
                 updateState {
                     copy(
-                        filteredStatus = DataSourceResult.Loading
+                        timeListUiState = TimeListUiState.Loading
                     )
                 }
             }
@@ -163,6 +162,14 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
+    private fun clickTimeSlot(item: IntervalScheduleTimeSlot) {
+        updateState {
+            copy(
+                clickTimeSlots = clickTimeSlots + item
+            )
+        }
+    }
+
     override fun dispatch(action: ScheduleViewAction) {
         Timber.d("dispatch $action")
         when (action) {
@@ -192,7 +199,24 @@ class ScheduleViewModel @Inject constructor(
                 onTabSelected(action.date, action.position)
             }
 
+            is ScheduleViewAction.ClickTimeSlot -> {
+                clickTimeSlot(action.item)
+            }
+
+            ScheduleViewAction.TimeSlotClicked -> {
+                updateState {
+                    copy(
+                        clickTimeSlots = clickTimeSlots.drop(1)
+                    )
+                }
+            }
         }
     }
 
+}
+
+sealed interface TimeListUiState {
+    data class Success(val timeSlotList: List<IntervalScheduleTimeSlot>) : TimeListUiState
+    object Error : TimeListUiState
+    object Loading : TimeListUiState
 }
