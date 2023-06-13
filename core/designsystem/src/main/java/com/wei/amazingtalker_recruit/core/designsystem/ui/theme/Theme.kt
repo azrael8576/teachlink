@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.ui.theme
+package com.wei.amazingtalker_recruit.core.designsystem.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

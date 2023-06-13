@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
 
 @Composable
 internal fun WelcomeScreen() {

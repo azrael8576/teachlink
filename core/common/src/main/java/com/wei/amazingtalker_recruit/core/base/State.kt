@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.models
+package com.wei.amazingtalker_recruit.core.base
 
 
 /**

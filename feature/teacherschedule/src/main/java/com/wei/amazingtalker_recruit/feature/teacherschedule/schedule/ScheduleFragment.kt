@@ -15,10 +15,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.core.navigation.DeepLinks
 import com.wei.amazingtalker_recruit.core.navigation.navigate
-import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ErrorMessage

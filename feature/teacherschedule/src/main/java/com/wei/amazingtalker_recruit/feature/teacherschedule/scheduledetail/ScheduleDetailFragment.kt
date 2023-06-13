@@ -8,8 +8,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
-import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.feature.teacherschedule.databinding.FragmentScheduleDetailBinding
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewState

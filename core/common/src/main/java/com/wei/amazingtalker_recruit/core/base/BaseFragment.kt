@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
-import com.wei.amazingtalker_recruit.core.models.Action
-import com.wei.amazingtalker_recruit.core.models.State
 import kotlinx.coroutines.flow.StateFlow
 
 /**

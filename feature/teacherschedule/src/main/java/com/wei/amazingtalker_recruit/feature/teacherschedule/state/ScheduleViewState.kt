@@ -3,8 +3,8 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.state
 import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.models.Action
-import com.wei.amazingtalker_recruit.core.models.State
+import com.wei.amazingtalker_recruit.core.base.Action
+import com.wei.amazingtalker_recruit.core.base.State
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.TimeListUiState

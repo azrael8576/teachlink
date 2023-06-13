@@ -1,7 +1,7 @@
 package com.wei.amazingtalker_recruit.feature.login.state
 
-import com.wei.amazingtalker_recruit.core.models.Action
-import com.wei.amazingtalker_recruit.core.models.State
+import com.wei.amazingtalker_recruit.core.base.Action
+import com.wei.amazingtalker_recruit.core.base.State
 
 sealed class LoginViewAction : Action {
     object Login : LoginViewAction()

@@ -7,10 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import com.wei.amazingtalker_recruit.core.base.BaseFragment
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.core.extensions.state.observeState
 import com.wei.amazingtalker_recruit.core.navigation.DeepLinks
 import com.wei.amazingtalker_recruit.core.navigation.navigate
-import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.databinding.FragmentLoginBinding
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction

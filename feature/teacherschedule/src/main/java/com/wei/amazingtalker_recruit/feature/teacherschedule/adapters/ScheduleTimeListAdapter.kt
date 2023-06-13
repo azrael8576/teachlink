@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
-import com.wei.amazingtalker_recruit.core.models.DuringDayType
 import com.wei.amazingtalker_recruit.core.network.AtDispatchers
 import com.wei.amazingtalker_recruit.core.network.Dispatcher
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R

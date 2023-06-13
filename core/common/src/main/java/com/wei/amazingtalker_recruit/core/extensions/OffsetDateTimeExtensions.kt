@@ -1,6 +1,6 @@
 package com.wei.amazingtalker_recruit.core.extensions
 
-import com.wei.amazingtalker_recruit.core.models.DuringDayType
+import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset

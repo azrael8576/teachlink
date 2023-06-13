@@ -3,14 +3,13 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
 }
 
 def androidID = rootProject.ext.androidID
 def libs = rootProject.ext.libs
 
 android {
-    namespace 'com.wei.amazingtalker_recruit.feature.teacherschedule'
+    namespace 'com.wei.amazingtalker_recruit.core.designsystem'
     compileSdk androidID.compileSdk
 
     defaultConfig {
@@ -48,23 +47,10 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':core:network')
-    implementation project(path: ':core:common')
-    implementation project(path: ':core:designsystem')
-    implementation project(path: ':core:data')
-    implementation project(path: ':core:model')
-    implementation project(path: ':core:domain')
-
     // PublicLibs
     implementation libs.publicLibs.core
     coreLibraryDesugaring libs.publicLibs.desugar_jdk
     testImplementation libs.publicLibs.test
-
-    // LifeCycle
-    implementation libs.lifeCycleLibs.core
-
-    // Navigation
-    implementation libs.navigationLibs.core
 
     // Coroutines
     implementation libs.coroutinesLibs.core

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.wei.amazingtalker_recruit.core.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 

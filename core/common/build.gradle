@@ -47,6 +47,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':core:model')
+
     // PublicLibs
     implementation libs.publicLibs.core
     coreLibraryDesugaring libs.publicLibs.desugar_jdk

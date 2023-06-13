@@ -2,9 +2,9 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.state
 
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
-import com.wei.amazingtalker_recruit.core.models.Action
-import com.wei.amazingtalker_recruit.core.models.DuringDayType
-import com.wei.amazingtalker_recruit.core.models.State
+import com.wei.amazingtalker_recruit.core.base.Action
+import com.wei.amazingtalker_recruit.core.base.State
+import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import java.time.OffsetDateTime
 
