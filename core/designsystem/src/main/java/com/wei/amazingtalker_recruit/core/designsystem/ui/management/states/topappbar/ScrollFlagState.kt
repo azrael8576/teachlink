@@ -1,6 +1,6 @@
 package com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar
 
-abstract class ScrollFlagState(heightRange: IntRange) : ToolbarState {
+abstract class ScrollFlagState(heightRange: IntRange) : TopAppBarState {
 
     init {
         require(heightRange.first >= 0 && heightRange.last >= heightRange.first) {

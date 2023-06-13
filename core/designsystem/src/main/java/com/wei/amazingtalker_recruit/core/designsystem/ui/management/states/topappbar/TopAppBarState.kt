@@ -3,7 +3,7 @@ package com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.top
 import androidx.compose.runtime.Stable
 
 @Stable
-interface ToolbarState {
+interface TopAppBarState {
     val offset: Float
     val height: Float
     val progress: Float
