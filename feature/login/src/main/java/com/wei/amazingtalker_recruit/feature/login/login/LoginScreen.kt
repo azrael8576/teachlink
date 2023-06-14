@@ -1,12 +1,12 @@
 package com.wei.amazingtalker_recruit.feature.login.login
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,28 +22,30 @@ import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 internal fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    Box(
-        modifier = Modifier
-          .fillMaxSize()
-          .background(MaterialTheme.colorScheme.background),
-        contentAlignment = Alignment.Center
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "跨功能模組導航:\n Home Module",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Button(
-                onClick = {
-                    viewModel.dispatch(LoginViewAction.Login)
-                },
-                modifier = Modifier.padding(top = 8.dp)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text("Login")
+                Text(
+                    text = "跨功能模組導航:\n Home Module",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+                Button(
+                    onClick = {
+                        viewModel.dispatch(LoginViewAction.Login)
+                    },
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    Text("Login")
+                }
             }
         }
     }

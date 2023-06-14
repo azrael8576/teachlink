@@ -1,12 +1,12 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,46 +26,49 @@ internal fun ScheduleDetailScreen(
 ) {
     val states by viewModel.states.collectAsStateWithLifecycle()
 
-    Box(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .align(Alignment.TopStart)
+        Box(
+            modifier = Modifier.fillMaxSize(),
         ) {
-            Text(text = states.teacherName.toString(), style = MaterialTheme.typography.bodyMedium)
-            Text(
-                text = states.start.toString(),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            Text(
-                text = states.end.toString(),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            Text(
-                text = states.state?.name.toString(),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            Text(
-                text = states.duringDayType?.name.toString(),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-        }
+            Column(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(Alignment.TopStart)
+            ) {
+                Text(text = states.teacherName.toString(), style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = states.start.toString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Text(
+                    text = states.end.toString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Text(
+                    text = states.state?.name.toString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Text(
+                    text = states.duringDayType?.name.toString(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
 
-        Button(
-            onClick = { viewModel.dispatch(ScheduleDetailViewAction.ClickBack) },
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(bottom = 16.dp),
-        ) {
-            Text("Back")
+            Button(
+                onClick = { viewModel.dispatch(ScheduleDetailViewAction.ClickBack) },
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(bottom = 16.dp),
+            ) {
+                Text("Back")
+            }
         }
     }
 }
