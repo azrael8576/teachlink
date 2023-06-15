@@ -39,27 +39,26 @@ class ScheduleViewModel @Inject constructor(
     private val _scheduleTimeList =
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
     private val _queryDateUtc = MutableStateFlow(OffsetDateTime.now())
-    private val _selectedTab = MutableStateFlow(OffsetDateTime.now().getLocalOffsetDateTime())
     private var getScheduleJob: Job? = null
-    private var isUpdatingWeek = false
 
     init {
-        refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
+        if (states.value.isTokenValid) {
+            refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
+        }
     }
 
     private fun refreshWeekData(date: OffsetDateTime) {
         updateWeekData(date)
         fetchTeacherSchedule()
-        isUpdatingWeek = false
     }
 
     private fun updateWeekData(date: OffsetDateTime) {
         _queryDateUtc.value = weekDataHelper.resetWeekDate(date)
         updateState {
             copy(
+                selectedIndex = 0,
                 weekStart = weekDataHelper.getWeekStart(_queryDateUtc.value),
-                weekEnd = weekDataHelper.getWeekEnd(_queryDateUtc.value),
-                dateTabs = weekDataHelper.setDateTabs(_queryDateUtc.value.getLocalOffsetDateTime())
+                dateTabs = weekDataHelper.setDateTabs(_queryDateUtc.value.getLocalOffsetDateTime()),
             )
         }
     }
@@ -83,17 +82,23 @@ class ScheduleViewModel @Inject constructor(
                 initialValue = DataSourceResult.Loading
             ).collect { result ->
                 _scheduleTimeList.value = handleTeacherScheduleResultUseCase(result)
-                filterTimeListByDate(_scheduleTimeList.value, _selectedTab.value)
+                filterTimeListByDate(
+                    _scheduleTimeList.value,
+                    states.value.dateTabs[states.value.selectedIndex]
+                )
             }
         }
     }
 
     private fun onTabSelected(date: OffsetDateTime, position: Int) {
-        _selectedTab.value = date
-        updateState { copy(selectedIndex = position) }
-        if (!isUpdatingWeek) {
-            filterTimeListByDate(_scheduleTimeList.value, _selectedTab.value)
+        Timber.d("onTabSelected $date $position")
+        updateState {
+            copy(selectedIndex = position)
         }
+        filterTimeListByDate(
+            _scheduleTimeList.value,
+            states.value.dateTabs[states.value.selectedIndex]
+        )
     }
 
     private fun filterTimeListByDate(
@@ -106,16 +111,20 @@ class ScheduleViewModel @Inject constructor(
                     item.start.dayOfYear == date.dayOfYear
                 }
                 updateState {
+                    Timber.d("filterTimeListByDate Success $date \n $filteredList")
                     copy(
-                        timeListUiState = TimeListUiState.Success(timeSlotList = filteredList)
+                        timeListUiState = TimeListUiState.Success(timeSlotList = filteredList),
+                        isScrollInProgress = true,
                     )
                 }
             }
 
             is DataSourceResult.Error -> {
                 updateState {
+                    Timber.d("filterTimeListByDate Error")
                     copy(
-                        timeListUiState = TimeListUiState.Error
+                        timeListUiState = TimeListUiState.Error,
+                        isScrollInProgress = true,
                     )
                 }
                 showSnackBar(message = result.exception.toString(), maxLines = 3)
@@ -123,8 +132,10 @@ class ScheduleViewModel @Inject constructor(
 
             is DataSourceResult.Loading -> {
                 updateState {
+                    Timber.d("filterTimeListByDate Loading")
                     copy(
-                        timeListUiState = TimeListUiState.Loading
+                        timeListUiState = TimeListUiState.Loading,
+                        isScrollInProgress = true,
                     )
                 }
             }
@@ -132,7 +143,6 @@ class ScheduleViewModel @Inject constructor(
     }
 
     private fun updateWeek(action: WeekAction) {
-        isUpdatingWeek = true
         when (action) {
             WeekAction.PREVIOUS_WEEK -> {
                 val lastWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
@@ -207,6 +217,14 @@ class ScheduleViewModel @Inject constructor(
                 updateState {
                     copy(
                         clickTimeSlots = clickTimeSlots.drop(1)
+                    )
+                }
+            }
+
+            ScheduleViewAction.ListScrolled -> {
+                updateState {
+                    copy(
+                        isScrollInProgress = false
                     )
                 }
             }

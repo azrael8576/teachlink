@@ -1,105 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleFragment">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|snap">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/amazingtalker_gray_50"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/button_last_week"
-                        android:layout_width="@dimen/toolbar_item_icon"
-                        android:layout_height="@dimen/toolbar_item_icon"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/margin_large"
-                        android:background="@android:color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/arrow_left_gray" />
-
-                    <TextView
-                        android:id="@+id/text_week"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:textSize="@dimen/base_titleline"
-                        tools:text="2022-01-02 - 1-8" />
-
-                    <ImageButton
-                        android:id="@+id/button_next_week"
-                        android:layout_width="@dimen/toolbar_item_icon"
-                        android:layout_height="@dimen/toolbar_item_icon"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/margin_large"
-                        android:background="@android:color/transparent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/arrow_right_gray" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/tab_horizontal_margin"
-                    android:layout_marginVertical="@dimen/tab_vertical_margin"
-                    android:orientation="vertical">
-
-                    <View style="@style/HorizontalSplitLight" />
-
-                    <View style="@style/HorizontalSplitLight" />
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tablayout"
-                        style="@style/Base.Widget.Design.TabLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:background="@color/amazingtalker_white"
-                        android:orientation="horizontal"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:tabMinWidth="0dp"
-                        app:tabMode="scrollable"
-                        app:tabPaddingEnd="0dp"
-                        app:tabPaddingStart="0dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/compose_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

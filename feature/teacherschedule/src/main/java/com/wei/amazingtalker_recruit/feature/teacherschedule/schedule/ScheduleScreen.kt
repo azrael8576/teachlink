@@ -1,42 +1,86 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.animation.core.FloatExponentialDecaySpec
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animate
+import androidx.compose.animation.core.animateDecay
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.FixedScrollFlagState
+import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.TopAppBarState
+import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags.EnterAlwaysState
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
-import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
-import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.TimeListUiState
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.OffsetDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+
+private val MinToolbarHeight = 0.dp
+private val MaxToolbarHeight = 160.dp
+
+// Here set toolbar scroll flag
+@Composable
+private fun rememberToolbarState(toolbarHeightRange: IntRange): TopAppBarState {
+    return rememberSaveable(saver = EnterAlwaysState.Saver) {
+        EnterAlwaysState(toolbarHeightRange)
+    }
+}
 
 @VisibleForTesting
 @Composable
@@ -44,39 +88,126 @@ internal fun ScheduleScreen(
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val uiStates: ScheduleViewState by viewModel.states.collectAsStateWithLifecycle()
-    TimeListView(uiStates = uiStates, dispatch = viewModel::dispatch)
+
+    val toolbarHeightRange = with(LocalDensity.current) {
+        MinToolbarHeight.roundToPx()..MaxToolbarHeight.roundToPx()
+    }
+    val toolbarState = rememberToolbarState(toolbarHeightRange)
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                toolbarState.scrollTopLimitReached =
+                    listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+                toolbarState.scrollOffset = toolbarState.scrollOffset - available.y
+                return Offset(0f, toolbarState.consumed)
+            }
+
+            override suspend fun onPostFling(
+                consumed: Velocity,
+                available: Velocity
+            ): Velocity {
+                if (available.y > 0) {
+                    scope.launch {
+                        animateDecay(
+                            initialValue = toolbarState.height + toolbarState.offset,
+                            initialVelocity = available.y,
+                            animationSpec = FloatExponentialDecaySpec()
+                        ) { value, _ ->
+                            toolbarState.scrollTopLimitReached =
+                                listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+                            toolbarState.scrollOffset =
+                                toolbarState.scrollOffset - (value - (toolbarState.height + toolbarState.offset))
+                            if (toolbarState.scrollOffset == 0f) scope.coroutineContext.cancelChildren()
+                        }
+                    }
+                }
+
+                return super.onPostFling(consumed, available)
+            }
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(nestedScrollConnection)
+    ) {
+        ScheduleList(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp)
+                .fillMaxSize()
+                .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = { scope.coroutineContext.cancelChildren() }
+                    )
+                },
+            timeListUiState = uiStates.timeListUiState,
+            listState = listState,
+            contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
+            isScrollInProgress = uiStates.isScrollInProgress,
+            dispatch = viewModel::dispatch,
+        )
+        ScheduleToolbar(
+            progress = toolbarState.progress,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(with(LocalDensity.current) { toolbarState.height.toDp() })
+                .graphicsLayer { translationY = toolbarState.offset },
+            uiStates = uiStates,
+            dispatch = viewModel::dispatch
+        )
+        AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
+    }
 }
 
 @Composable
-internal fun TimeListView(
-    uiStates: ScheduleViewState,
-    dispatch: (ScheduleViewAction) -> Unit,
+internal fun ScheduleList(
+    modifier: Modifier = Modifier,
+    timeListUiState: TimeListUiState,
+    listState: LazyListState = rememberLazyListState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    isScrollInProgress: Boolean = false,
+    dispatch: (ScheduleViewAction) -> Unit
 ) {
-    val nestedScrollInterop = rememberNestedScrollInteropConnection()
-    val listState = rememberLazyListState()
-    val timeListUiState = uiStates.timeListUiState
+    val uiStates by rememberUpdatedState(newValue = timeListUiState)
 
-    // 當 timeListUiState 發生改變時，將會啟動一個新的協程執行，
-    // 滾動到列表的第 0 個位置。
+    Timber.e("timeListUiState = %s", timeListUiState)
     LaunchedEffect(timeListUiState) {
-        listState.scrollToItem(index = 0)
+        if (isScrollInProgress) {
+            listState.scrollToItem(0)
+            dispatch(ScheduleViewAction.ListScrolled)
+        }
     }
 
     // Add the nested scroll connection to your top level @Composable element
     // using the nestedScroll modifier.
     LazyColumn(
         state = listState,
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .nestedScroll(nestedScrollInterop),
+        contentPadding = contentPadding,
+        modifier = modifier,
     ) {
         when (timeListUiState) {
             is TimeListUiState.Success -> {
-                timeListHeader()
-                val groupedTimeSlots = timeListUiState.timeSlotList.groupBy { it.duringDayType }
+                item {
+                    TimeListHeader()
+                }
+                val groupedTimeSlots =
+                    (uiStates as TimeListUiState.Success).timeSlotList.groupBy { it.duringDayType }
                 groupedTimeSlots.forEach { (duringDayType, timeSlots) ->
-                    timeItemHeader(duringDayType)
-                    timeList(timeSlots, dispatch)
+                    item {
+                        TimeItemHeader(duringDayType)
+                    }
+                    itemsIndexed(timeSlots) { _, timeSlot ->
+                        TimeListItem(timeSlot, dispatch)
+                    }
                 }
             }
 
@@ -90,96 +221,198 @@ internal fun TimeListView(
     }
 }
 
-fun LazyListScope.timeListHeader() = item {
-    val currentTimezone = ZoneId.systemDefault()
-    val offsetFormatter = DateTimeFormatter.ofPattern("xxx")
-
-    Text(
-        text = String.format(
-            stringResource(R.string.your_local_time_zone),
-            currentTimezone,
-            offsetFormatter.format(OffsetDateTime.now(currentTimezone).offset)
-        ),
-        fontSize = MaterialTheme.typography.bodySmall.fontSize,
-        modifier = Modifier.padding(top = 16.dp)
-    )
-}
-
-fun LazyListScope.timeItemHeader(duringDayType: DuringDayType) = item {
-    Text(
-        text = when (duringDayType) {
-            DuringDayType.Morning -> stringResource(R.string.morning)
-            DuringDayType.Afternoon -> stringResource(R.string.afternoon)
-            DuringDayType.Evening -> stringResource(R.string.evening)
-            else -> stringResource(R.string.morning)
-        },
-        fontSize = MaterialTheme.typography.bodySmall.fontSize,
-        modifier = Modifier.padding(vertical = 16.dp)
-    )
-}
-
-fun LazyListScope.timeList(
-    timeSlots: List<IntervalScheduleTimeSlot>,
+@Composable
+private fun ScheduleToolbar(
+    modifier: Modifier = Modifier,
+    progress: Float,
+    uiStates: ScheduleViewState,
     dispatch: (ScheduleViewAction) -> Unit
-) = itemsIndexed(timeSlots) { index, timeSlot ->
-    if (timeSlot.state == ScheduleState.AVAILABLE) {
-        AvailableTimeSlot(
-            timeSlot = timeSlot,
-            dispatch = dispatch
-        )
-    } else {
-        UnavailableTimeSlot(
-            timeSlot = timeSlot
-        )
+) {
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shadowElevation = 4.dp,
+        modifier = modifier
+    ) {
+        Column {
+            WeekActionBar(
+                uiStates = uiStates,
+                dispatch = dispatch,
+            )
+            WeekActionBarBottom(
+                selectedIndex = uiStates.selectedIndex,
+                tabs = uiStates.dateTabs,
+                dispatch = dispatch
+            )
+        }
     }
 }
 
 @Composable
-private fun AvailableTimeSlot(
-    timeSlot: IntervalScheduleTimeSlot,
+fun WeekActionBar(
+    uiStates: ScheduleViewState,
     dispatch: (ScheduleViewAction) -> Unit
 ) {
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
+    val context = LocalContext.current
+    val styledAttributes =
+        context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+    val actionBarSizePx = styledAttributes.getDimensionPixelSize(0, 0)
+    val density = context.resources.displayMetrics.density
+    val actionBarSizeDp = actionBarSizePx / density
 
-    Button(
-        onClick = { dispatch(ScheduleViewAction.ClickTimeSlot(timeSlot)) },
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = Modifier
-            .padding(
-                bottom = 12.dp
-            )
-            .fillMaxWidth(0.5f),
-        shape = RoundedCornerShape(12.dp),
+            .height(actionBarSizeDp.dp)
+            .fillMaxWidth()
     ) {
-        Text(
-            text = dateTimeFormatter.format(timeSlot.start),
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val weekStart = uiStates.weekStart
+            val isAvailableWeekStart =
+                weekStart > OffsetDateTime.now(ZoneId.systemDefault())
+            IconButton(
+                onClick = {
+                    if (isAvailableWeekStart) {
+                        dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
+                    }
+                },
+                modifier = Modifier
+                    .padding(start = 13.dp)
+            ) {
+                Image(
+                    painterResource(id = R.drawable.arrow_left_gray),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(dimensionResource(id = R.dimen.toolbar_item_icon)),
+                    colorFilter = if (isAvailableWeekStart) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
+                )
+            }
+
+            val weekDate = uiStates.weekDateText
+            TextButton(
+                modifier = Modifier
+                    .weight(1f),
+                onClick = {
+                    dispatch(
+                        ScheduleViewAction.ShowSnackBar(
+                            message = "開啟日曆選單: $weekDate",
+                        )
+                    )
+                },
+            ) {
+                Text(
+                    text = weekDate,
+                    style = MaterialTheme.typography.titleSmall,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+
+            IconButton(
+                onClick = { dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK)) },
+                modifier = Modifier
+                    .padding(start = 13.dp)
+            ) {
+                Image(
+                    painterResource(id = R.drawable.arrow_right_gray),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(dimensionResource(id = R.dimen.toolbar_item_icon)),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+                )
+            }
+        }
     }
 }
 
 @Composable
-private fun UnavailableTimeSlot(
-    timeSlot: IntervalScheduleTimeSlot
+private fun WeekActionBarBottom(
+    selectedIndex: Int,
+    tabs: MutableList<OffsetDateTime>,
+    dispatch: (ScheduleViewAction) -> Unit
 ) {
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
-
-    OutlinedButton(
-        onClick = {},
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = Modifier
-            .padding(
-                bottom = 12.dp
-            )
-            .fillMaxWidth(0.5f),
-        shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground,
-        ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 16.dp, vertical = 16.dp)
     ) {
-        Text(
-            text = dateTimeFormatter.format(timeSlot.start),
-            modifier = Modifier.padding(vertical = 8.dp)
+        Column {
+            Divider(
+                modifier = Modifier.fillMaxWidth(),
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.surfaceVariant
+            )
+            DateTabLayout(
+                modifier = Modifier.fillMaxSize(),
+                selectedIndex = selectedIndex,
+                tabs = tabs,
+                dispatch = dispatch
+            )
+        }
+    }
+}
+
+enum class ToolbarStatus {
+    Hidden, Visible
+}
+
+@Composable
+fun AnimateToolbarOffset(
+    topAppBarState: TopAppBarState,
+    listState: LazyListState,
+    toolbarHeightRange: IntRange
+) {
+    val toolbarStatus = deriveToolbarStatus(topAppBarState.scrollOffset, toolbarHeightRange)
+
+    LaunchedEffect(topAppBarState, listState.isScrollInProgress) {
+        if (!listState.isScrollInProgress) {
+            when (toolbarStatus) {
+                ToolbarStatus.Hidden -> {
+                    animateTo(topAppBarState, toolbarHeightRange.last.toFloat())
+                }
+
+                ToolbarStatus.Visible -> {
+                    animateTo(topAppBarState, toolbarHeightRange.first.toFloat())
+                }
+            }
+        }
+    }
+}
+
+private fun deriveToolbarStatus(scrollOffset: Float, toolbarHeightRange: IntRange): ToolbarStatus {
+    val largeToolbarHalf = toolbarHeightRange.last / 2f
+
+    return when {
+        scrollOffset > largeToolbarHalf -> ToolbarStatus.Hidden
+        else -> ToolbarStatus.Visible
+    }
+}
+
+private suspend fun animateTo(topAppBarState: TopAppBarState, targetValue: Float) {
+    animate(
+        initialValue = topAppBarState.scrollOffset,
+        targetValue = targetValue,
+        animationSpec = tween(durationMillis = 300, easing = LinearEasing)
+    ) { value, _ ->
+        topAppBarState.scrollOffset = value
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ScheduleToolbarPreview() {
+    AppTheme {
+        ScheduleToolbar(
+            modifier = Modifier.height(MaxToolbarHeight),
+            progress = 0f,
+            uiStates = ScheduleViewState(),
+            dispatch = {}
         )
     }
 }
