@@ -1,6 +1,5 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
-import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.FloatExponentialDecaySpec
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate
@@ -55,11 +54,13 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.FixedScrollFlagState
 import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.TopAppBarState
 import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags.EnterAlwaysState
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
+import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
@@ -82,10 +83,11 @@ private fun rememberToolbarState(toolbarHeightRange: IntRange): TopAppBarState {
     }
 }
 
-@VisibleForTesting
 @Composable
 internal fun ScheduleScreen(
-    viewModel: ScheduleViewModel = hiltViewModel()
+    navController: NavController,
+    tokenInvalidNavigate: () -> Unit,
+    viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
     val uiStates: ScheduleViewState by viewModel.states.collectAsStateWithLifecycle()
 
@@ -133,38 +135,53 @@ internal fun ScheduleScreen(
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-    ) {
-        ScheduleList(
+    LaunchedEffect(uiStates.isTokenValid) {
+        if (!uiStates.isTokenValid) {
+            tokenInvalidNavigate()
+        }
+    }
+
+    LaunchedEffect(uiStates.clickTimeSlots) {
+        if (uiStates.clickTimeSlots.isNotEmpty()) {
+            navController.navigateToScheduleDetail(timeSlot = uiStates.clickTimeSlots.first())
+            viewModel.dispatch(ScheduleViewAction.TimeSlotClicked)
+        }
+    }
+
+    if (uiStates.isTokenValid) {
+        Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .padding(horizontal = 20.dp)
                 .fillMaxSize()
-                .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onPress = { scope.coroutineContext.cancelChildren() }
-                    )
-                },
-            timeListUiState = uiStates.timeListUiState,
-            listState = listState,
-            contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
-            isScrollInProgress = uiStates.isScrollInProgress,
-            dispatch = viewModel::dispatch,
-        )
-        ScheduleToolbar(
-            progress = toolbarState.progress,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(with(LocalDensity.current) { toolbarState.height.toDp() })
-                .graphicsLayer { translationY = toolbarState.offset },
-            uiStates = uiStates,
-            dispatch = viewModel::dispatch
-        )
-        AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
+                .nestedScroll(nestedScrollConnection)
+        ) {
+            ScheduleList(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(horizontal = 20.dp)
+                    .fillMaxSize()
+                    .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = { scope.coroutineContext.cancelChildren() }
+                        )
+                    },
+                timeListUiState = uiStates.timeListUiState,
+                listState = listState,
+                contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
+                isScrollInProgress = uiStates.isScrollInProgress,
+                dispatch = viewModel::dispatch,
+            )
+            ScheduleToolbar(
+                progress = toolbarState.progress,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(with(LocalDensity.current) { toolbarState.height.toDp() })
+                    .graphicsLayer { translationY = toolbarState.offset },
+                uiStates = uiStates,
+                dispatch = viewModel::dispatch
+            )
+            AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
+        }
     }
 }
 
@@ -179,7 +196,7 @@ internal fun ScheduleList(
 ) {
     val uiStates by rememberUpdatedState(newValue = timeListUiState)
 
-    Timber.e("timeListUiState = %s", timeListUiState)
+    Timber.d("timeListUiState = %s", timeListUiState)
     LaunchedEffect(timeListUiState) {
         if (isScrollInProgress) {
             listState.scrollToItem(0)
@@ -407,7 +424,7 @@ private suspend fun animateTo(topAppBarState: TopAppBarState, targetValue: Float
 @Preview(showBackground = true)
 @Composable
 fun ScheduleToolbarPreview() {
-    AppTheme {
+    AtTheme {
         ScheduleToolbar(
             modifier = Modifier.height(MaxToolbarHeight),
             progress = 0f,
@@ -417,10 +434,10 @@ fun ScheduleToolbarPreview() {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ScheduleScreenPreview() {
-    AppTheme {
-        ScheduleScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ScheduleScreenPreview() {
+//    AtTheme {
+//        ScheduleScreen()
+//    }
+//}

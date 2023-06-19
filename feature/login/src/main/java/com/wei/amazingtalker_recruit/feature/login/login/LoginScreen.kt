@@ -9,18 +9,38 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
+import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
 @Composable
+internal fun LoginRoute(
+    onLoginClick: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
+    val uiStates: LoginViewState by viewModel.states.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiStates.isUserLoggedIn) {
+        if (uiStates.isUserLoggedIn) {
+            onLoginClick()
+        }
+    }
+
+    LoginScreen { viewModel.dispatch(LoginViewAction.Login) }
+}
+
+@Composable
 internal fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    login: () -> Unit,
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -40,7 +60,7 @@ internal fun LoginScreen(
                 )
                 Button(
                     onClick = {
-                        viewModel.dispatch(LoginViewAction.Login)
+                        login()
                     },
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
@@ -52,10 +72,10 @@ internal fun LoginScreen(
 
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    AppTheme {
-        LoginScreen()
+    AtTheme {
+        LoginScreen {}
     }
 }

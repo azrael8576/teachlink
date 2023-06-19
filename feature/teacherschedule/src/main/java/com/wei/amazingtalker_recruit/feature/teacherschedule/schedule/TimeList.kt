@@ -3,9 +3,7 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -17,13 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -68,9 +65,8 @@ internal fun TimeListItem(
 ) {
     if (timeSlot.state == ScheduleState.AVAILABLE) {
         AvailableTimeSlot(
-            timeSlot = timeSlot,
-            dispatch = dispatch
-        )
+            timeSlot = timeSlot
+        ) { dispatch(ScheduleViewAction.ClickTimeSlot(timeSlot)) }
     } else {
         UnavailableTimeSlot(
             timeSlot = timeSlot
@@ -81,12 +77,12 @@ internal fun TimeListItem(
 @Composable
 private fun AvailableTimeSlot(
     timeSlot: IntervalScheduleTimeSlot,
-    dispatch: (ScheduleViewAction) -> Unit
+    clickTimeSlot: () -> Unit
 ) {
     val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
     Button(
-        onClick = { dispatch(ScheduleViewAction.ClickTimeSlot(timeSlot)) },
+        onClick = { clickTimeSlot() },
         modifier = Modifier
             .padding(
                 bottom = 12.dp
@@ -131,7 +127,7 @@ private fun UnavailableTimeSlot(
 @Preview(showBackground = true)
 @Composable
 fun TimeListHeaderPreview() {
-    AppTheme {
+    AtTheme {
         TimeListHeader()
     }
 }
@@ -139,7 +135,7 @@ fun TimeListHeaderPreview() {
 @Preview(showBackground = true)
 @Composable
 fun TimeItemHeaderPreview() {
-    AppTheme {
+    AtTheme {
         TimeItemHeader(DuringDayType.Afternoon)
     }
 }
@@ -147,7 +143,7 @@ fun TimeItemHeaderPreview() {
 @Preview(showBackground = true)
 @Composable
 fun AvailableTimeSlotPreview() {
-    AppTheme {
+    AtTheme {
         Box(modifier = Modifier.fillMaxWidth()) {
             AvailableTimeSlot(
                 timeSlot = IntervalScheduleTimeSlot(
@@ -156,7 +152,7 @@ fun AvailableTimeSlotPreview() {
                     state = ScheduleState.AVAILABLE,
                     duringDayType = DuringDayType.Morning
                 ),
-                dispatch = {},
+                clickTimeSlot = { },
             )
         }
     }
@@ -165,7 +161,7 @@ fun AvailableTimeSlotPreview() {
 @Preview(showBackground = true)
 @Composable
 fun UnavailableTimeSlotPreview() {
-    AppTheme {
+    AtTheme {
         Box(modifier = Modifier.fillMaxWidth()) {
             UnavailableTimeSlot(
                 timeSlot = IntervalScheduleTimeSlot(

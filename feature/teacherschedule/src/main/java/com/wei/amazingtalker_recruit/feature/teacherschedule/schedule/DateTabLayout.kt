@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AppTheme
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.defaultDateUtc
@@ -105,7 +105,7 @@ private fun DateTab(
 @Composable
 fun DateTabLayoutPreview() {
     val TestHeight = 70.dp
-    AppTheme {
+    AtTheme {
         Box(modifier = Modifier.height(TestHeight)) {
             DateTabLayout(
                 modifier = Modifier.fillMaxSize(),
