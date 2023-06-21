@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
+package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -104,9 +104,9 @@ private fun DateTab(
 @Preview(showBackground = true)
 @Composable
 fun DateTabLayoutPreview() {
-    val TestHeight = 70.dp
+    val height = 70.dp
     AtTheme {
-        Box(modifier = Modifier.height(TestHeight)) {
+        Box(modifier = Modifier.height(height)) {
             DateTabLayout(
                 modifier = Modifier.fillMaxSize(),
                 selectedIndex = 0,

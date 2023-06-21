@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
+package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box

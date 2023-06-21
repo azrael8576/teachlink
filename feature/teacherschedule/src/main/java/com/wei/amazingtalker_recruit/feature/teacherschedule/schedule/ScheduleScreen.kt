@@ -50,6 +50,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -60,6 +61,11 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topa
 import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags.EnterAlwaysState
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.DateTabLayout
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.ScheduleListPreviewParameterProvider
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeItemHeader
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeListHeader
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeListItem
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
@@ -434,10 +440,24 @@ fun ScheduleToolbarPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun ScheduleScreenPreview() {
-//    AtTheme {
-//        ScheduleScreen()
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun ScheduleListPreview(
+    @PreviewParameter(ScheduleListPreviewParameterProvider::class)
+    timeListUiState: TimeListUiState,
+) {
+    AtTheme {
+        ScheduleList(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp)
+                .fillMaxSize(),
+            timeListUiState = timeListUiState,
+            listState = rememberLazyListState(),
+            contentPadding = PaddingValues(bottom = 0.dp),
+            isScrollInProgress = false,
+            dispatch = { },
+        )
+    }
+}
+

@@ -145,9 +145,9 @@ class ScheduleViewModel @Inject constructor(
     private fun updateWeek(action: WeekAction) {
         when (action) {
             WeekAction.PREVIOUS_WEEK -> {
-                val lastWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
-                if (lastWeekMondayLocalDate >= OffsetDateTime.now(ZoneId.systemDefault())) {
-                    refreshWeekData(lastWeekMondayLocalDate)
+                val previousWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
+                if (previousWeekMondayLocalDate >= OffsetDateTime.now(ZoneId.systemDefault())) {
+                    refreshWeekData(previousWeekMondayLocalDate)
                 } else {
                     refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
                 }
