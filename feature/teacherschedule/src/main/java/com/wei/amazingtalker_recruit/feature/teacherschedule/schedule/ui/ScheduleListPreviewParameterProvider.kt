@@ -5,7 +5,7 @@ import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.PreviewParameterData.timeSlotList
-import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.TimeListUiState
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.TimeListUiState
 import java.time.OffsetDateTime
 
 

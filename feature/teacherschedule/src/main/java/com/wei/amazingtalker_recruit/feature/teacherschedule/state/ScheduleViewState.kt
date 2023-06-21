@@ -8,8 +8,8 @@ import com.wei.amazingtalker_recruit.core.base.State
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
-import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.TimeListUiState
 import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.time.ZoneOffset
 
 enum class WeekAction {
@@ -32,13 +32,9 @@ sealed class ScheduleViewAction : Action {
     object ListScrolled : ScheduleViewAction()
 }
 
-val weekDataHelper = WeekDataHelper()
-val defaultDateUtc = weekDataHelper.resetWeekDate(OffsetDateTime.now(ZoneOffset.UTC))
-
 data class ScheduleViewState(
-    val currentTeacherName: String = TEST_DATA_TEACHER_NAME,
-    val weekStart: OffsetDateTime = weekDataHelper.getWeekStart(defaultDateUtc),
-    val dateTabs: MutableList<OffsetDateTime> = weekDataHelper.setDateTabs(defaultDateUtc.getLocalOffsetDateTime()),
+    val _currentTeacherName: String = TEST_DATA_TEACHER_NAME,
+    val _queryDateUtc: OffsetDateTime = OffsetDateTime.now(ZoneOffset.UTC),
     val selectedIndex: Int = 0,
     val timeListUiState: TimeListUiState = TimeListUiState.Loading,
     val isTokenValid: Boolean = TokenManager.isTokenValid,
@@ -46,11 +42,25 @@ data class ScheduleViewState(
     val clickTimeSlots: List<IntervalScheduleTimeSlot> = listOf(),
     val isScrollInProgress: Boolean = false,
 ) : State {
-    private val weekEnd: OffsetDateTime = weekDataHelper.getWeekEnd(weekStart)
-    val weekDateText: String = weekDataHelper.getWeekDateText(
-        weekStart,
-        weekEnd
-    )
+    private val weekDataHelper = WeekDataHelper()
+
+    val weekStart: OffsetDateTime
+        get() = weekDataHelper.getWeekStart(_queryDateUtc)
+    val dateTabs: MutableList<OffsetDateTime>
+        get() = weekDataHelper.setDateTabs(_queryDateUtc.getLocalOffsetDateTime())
+    private val weekEnd: OffsetDateTime
+        get() = weekDataHelper.getWeekEnd(weekStart)
+    val isAvailablePreviousWeek
+        get() = weekStart > OffsetDateTime.now(ZoneId.systemDefault())
+
+    val weekDateText: String
+        get() =  weekDataHelper.getWeekDateText(weekStart, weekEnd)
+}
+
+sealed interface TimeListUiState {
+    data class Success(val timeSlotList: List<IntervalScheduleTimeSlot>) : TimeListUiState
+    object Error : TimeListUiState
+    object Loading : TimeListUiState
 }
 
 data class ErrorMessage(

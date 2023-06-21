@@ -3,7 +3,6 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
-import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
@@ -12,6 +11,7 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.HandleTeache
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ErrorMessage
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.TimeListUiState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,7 +38,6 @@ class ScheduleViewModel @Inject constructor(
 
     private val _scheduleTimeList =
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
-    private val _queryDateUtc = MutableStateFlow(OffsetDateTime.now())
     private var getScheduleJob: Job? = null
 
     init {
@@ -53,12 +52,10 @@ class ScheduleViewModel @Inject constructor(
     }
 
     private fun updateWeekData(date: OffsetDateTime) {
-        _queryDateUtc.value = weekDataHelper.resetWeekDate(date)
         updateState {
             copy(
                 selectedIndex = 0,
-                weekStart = weekDataHelper.getWeekStart(_queryDateUtc.value),
-                dateTabs = weekDataHelper.setDateTabs(_queryDateUtc.value.getLocalOffsetDateTime()),
+                _queryDateUtc = weekDataHelper.resetWeekDate(date),
             )
         }
     }
@@ -68,14 +65,14 @@ class ScheduleViewModel @Inject constructor(
 
         showSnackBar(
             resId = R.string.inquirying_teacher_calendar,
-            message = states.value.currentTeacherName,
+            message = states.value._currentTeacherName,
             duration = Snackbar.LENGTH_LONG,
             maxLines = 1
         )
         getScheduleJob = viewModelScope.launch {
             getTeacherScheduleUseCase(
-                teacherName = states.value.currentTeacherName,
-                startedAtUtc = _queryDateUtc.value.toString()
+                teacherName = states.value._currentTeacherName,
+                startedAtUtc = states.value._queryDateUtc.toString(),
             ).stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -231,10 +228,4 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-}
-
-sealed interface TimeListUiState {
-    data class Success(val timeSlotList: List<IntervalScheduleTimeSlot>) : TimeListUiState
-    object Error : TimeListUiState
-    object Loading : TimeListUiState
 }

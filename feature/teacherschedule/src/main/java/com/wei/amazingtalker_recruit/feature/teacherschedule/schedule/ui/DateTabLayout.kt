@@ -22,10 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
-import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.defaultDateUtc
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.weekDataHelper
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -33,7 +30,7 @@ import java.time.format.DateTimeFormatter
 internal fun DateTabLayout(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
-    tabs: MutableList<OffsetDateTime>,
+    tabs: List<OffsetDateTime>,
     dispatch: (ScheduleViewAction) -> Unit
 ) {
     val tabWidth = remember { mutableStateOf(0.dp) } // 創建一個共享的寬度數據
@@ -110,7 +107,15 @@ fun DateTabLayoutPreview() {
             DateTabLayout(
                 modifier = Modifier.fillMaxSize(),
                 selectedIndex = 0,
-                tabs = weekDataHelper.setDateTabs(defaultDateUtc.getLocalOffsetDateTime()),
+                tabs = listOf(
+                    OffsetDateTime.parse("2023-06-26T00:00+08:00"),
+                    OffsetDateTime.parse("2023-06-27T00:00+08:00"),
+                    OffsetDateTime.parse("2023-06-28T00:00+08:00"),
+                    OffsetDateTime.parse("2023-06-29T00:00+08:00"),
+                    OffsetDateTime.parse("2023-06-30T00:00+08:00"),
+                    OffsetDateTime.parse("2023-07-01T00:00+08:00"),
+                    OffsetDateTime.parse("2023-07-02T00:00+08:00"),
+                ),
                 dispatch = {}
             )
         }

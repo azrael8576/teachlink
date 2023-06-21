@@ -69,9 +69,9 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeLis
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
+import com.wei.amazingtalker_recruit.feature.teacherschedule.state.TimeListUiState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
-import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.TimeListUiState
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -294,12 +294,9 @@ fun WeekActionBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val weekStart = uiStates.weekStart
-            val isAvailableWeekStart =
-                weekStart > OffsetDateTime.now(ZoneId.systemDefault())
             IconButton(
                 onClick = {
-                    if (isAvailableWeekStart) {
+                    if (uiStates.isAvailablePreviousWeek) {
                         dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
                     }
                 },
@@ -311,7 +308,7 @@ fun WeekActionBar(
                     contentDescription = null,
                     modifier = Modifier
                         .size(dimensionResource(id = R.dimen.toolbar_item_icon)),
-                    colorFilter = if (isAvailableWeekStart) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
+                    colorFilter = if (uiStates.isAvailablePreviousWeek) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
                 )
             }
 
