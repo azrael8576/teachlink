@@ -1,39 +1,35 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.utilities
 
-import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.extensions.getUTCOffsetDateTime
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class WeekDataHelper @Inject constructor() {
-    fun resetWeekDate(apiQueryStartedAt: OffsetDateTime): OffsetDateTime {
-        return if (apiQueryStartedAt != OffsetDateTime.now(ZoneOffset.UTC)) {
-            apiQueryStartedAt
+    fun getQueryDateUtc(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean): OffsetDateTime {
+        return if (resetToStartOfDay) {
+            queryDateLocal
                 .withHour(0)
                 .withMinute(0)
                 .withSecond(0)
                 .withNano(0)
                 .getUTCOffsetDateTime()
         } else {
-            apiQueryStartedAt.getUTCOffsetDateTime()
+            queryDateLocal.getUTCOffsetDateTime()
         }
     }
 
-    fun getWeekStart(queryDateUtc: OffsetDateTime): OffsetDateTime {
+    fun getWeekStart(localTime: OffsetDateTime): OffsetDateTime {
         val betweenWeekMonday =
-            DayOfWeek.MONDAY.value - queryDateUtc.getLocalOffsetDateTime().dayOfWeek.value
-        return queryDateUtc.getLocalOffsetDateTime()
-            .plusDays(betweenWeekMonday.toLong())
+            DayOfWeek.MONDAY.value - localTime.dayOfWeek.value
+        return localTime.plusDays(betweenWeekMonday.toLong())
     }
 
-    fun getWeekEnd(queryDateUtc: OffsetDateTime): OffsetDateTime {
+    fun getWeekEnd(localTime: OffsetDateTime): OffsetDateTime {
         val betweenWeekSunday =
-            DayOfWeek.SUNDAY.value - queryDateUtc.getLocalOffsetDateTime().dayOfWeek.value
-        return queryDateUtc.getLocalOffsetDateTime()
-            .plusDays(betweenWeekSunday.toLong())
+            DayOfWeek.SUNDAY.value - localTime.dayOfWeek.value
+        return localTime.plusDays(betweenWeekSunday.toLong())
     }
 
     fun getWeekDateText(weekStart: OffsetDateTime, weekEnd: OffsetDateTime): String {
@@ -42,9 +38,9 @@ class WeekDataHelper @Inject constructor() {
         return "${weekStartFormatter.format(weekStart)} - ${weekEndFormatter.format(weekEnd)}"
     }
 
-    fun setDateTabs(starLocalTime: OffsetDateTime): MutableList<OffsetDateTime> {
+    fun setDateTabs(localTime: OffsetDateTime): MutableList<OffsetDateTime> {
         val options = mutableListOf<OffsetDateTime>()
-        var offsetDateTime = starLocalTime
+        var offsetDateTime = localTime
         val nowTimeDayOfWeekValue = offsetDateTime.dayOfWeek.value
 
         repeat(DayOfWeek.SUNDAY.value + 1 - nowTimeDayOfWeekValue) {

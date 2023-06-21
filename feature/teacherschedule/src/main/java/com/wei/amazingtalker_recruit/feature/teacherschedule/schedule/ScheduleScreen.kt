@@ -202,7 +202,6 @@ internal fun ScheduleList(
 ) {
     val uiStates by rememberUpdatedState(newValue = timeListUiState)
 
-    Timber.d("timeListUiState = %s", timeListUiState)
     LaunchedEffect(timeListUiState) {
         if (isScrollInProgress) {
             listState.scrollToItem(0)

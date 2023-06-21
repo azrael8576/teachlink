@@ -11,7 +11,7 @@ import timber.log.Timber
 const val welcomeRoute = "welcome_route"
 
 fun NavController.navigateToWelcome(navOptions: NavOptions? = null) {
-    Timber.e("navigateToWelcome")
+    Timber.d("navigateToWelcome")
     this.navigate(welcomeRoute, navOptions)
 }
 

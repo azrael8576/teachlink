@@ -102,14 +102,14 @@ class AtAppState(
 
     // Navigate 登入成功至 Home 頁
     fun tokenValidNavigate() {
-        Timber.e("tokenValidNavigate()")
+        Timber.d("tokenValidNavigate()")
         navController.popBackStack()
         navController.navigateToSchedule()
     }
 
     // Navigate Token 失效
     fun tokenInvalidNavigate() {
-        Timber.e("tokenInvalidNavigate()")
+        Timber.d("tokenInvalidNavigate()")
         val navOptions = NavOptions.Builder()
             .setPopUpTo(navController.graph.startDestinationId, true) // This will pop all screens
             .setLaunchSingleTop(true)

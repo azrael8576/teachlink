@@ -3,6 +3,7 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 import androidx.lifecycle.viewModelScope
 import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
+import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
@@ -42,20 +43,20 @@ class ScheduleViewModel @Inject constructor(
 
     init {
         if (states.value.isTokenValid) {
-            refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
+            refreshWeekData(queryDateLocal = OffsetDateTime.now().getLocalOffsetDateTime())
         }
     }
 
-    private fun refreshWeekData(date: OffsetDateTime) {
-        updateWeekData(date)
+    private fun refreshWeekData(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean = false) {
+        updateWeekData(queryDateLocal, resetToStartOfDay)
         fetchTeacherSchedule()
     }
 
-    private fun updateWeekData(date: OffsetDateTime) {
+    private fun updateWeekData(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean) {
         updateState {
             copy(
                 selectedIndex = 0,
-                _queryDateUtc = weekDataHelper.resetWeekDate(date),
+                _queryDateUtc = weekDataHelper.getQueryDateUtc(queryDateLocal = queryDateLocal, resetToStartOfDay = resetToStartOfDay),
             )
         }
     }
@@ -143,15 +144,15 @@ class ScheduleViewModel @Inject constructor(
         when (action) {
             WeekAction.PREVIOUS_WEEK -> {
                 val previousWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
-                if (previousWeekMondayLocalDate >= OffsetDateTime.now(ZoneId.systemDefault())) {
-                    refreshWeekData(previousWeekMondayLocalDate)
+                if (previousWeekMondayLocalDate >= OffsetDateTime.now().getLocalOffsetDateTime()) {
+                    refreshWeekData(queryDateLocal = previousWeekMondayLocalDate, resetToStartOfDay = true)
                 } else {
-                    refreshWeekData(OffsetDateTime.now(ZoneOffset.UTC))
+                    refreshWeekData(queryDateLocal = OffsetDateTime.now().getLocalOffsetDateTime())
                 }
             }
 
             WeekAction.NEXT_WEEK -> {
-                refreshWeekData(states.value.weekStart.plusWeeks(1))
+                refreshWeekData(queryDateLocal = states.value.weekStart.plusWeeks(1), resetToStartOfDay = true)
             }
         }
     }

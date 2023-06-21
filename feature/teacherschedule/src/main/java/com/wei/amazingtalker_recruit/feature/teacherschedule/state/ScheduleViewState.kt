@@ -45,16 +45,16 @@ data class ScheduleViewState(
     private val weekDataHelper = WeekDataHelper()
 
     val weekStart: OffsetDateTime
-        get() = weekDataHelper.getWeekStart(_queryDateUtc)
+        get() = weekDataHelper.getWeekStart(localTime = _queryDateUtc.getLocalOffsetDateTime())
     val dateTabs: MutableList<OffsetDateTime>
-        get() = weekDataHelper.setDateTabs(_queryDateUtc.getLocalOffsetDateTime())
+        get() = weekDataHelper.setDateTabs(localTime = _queryDateUtc.getLocalOffsetDateTime())
     private val weekEnd: OffsetDateTime
-        get() = weekDataHelper.getWeekEnd(weekStart)
+        get() = weekDataHelper.getWeekEnd(localTime = weekStart)
     val isAvailablePreviousWeek
         get() = weekStart > OffsetDateTime.now(ZoneId.systemDefault())
 
     val weekDateText: String
-        get() =  weekDataHelper.getWeekDateText(weekStart, weekEnd)
+        get() = weekDataHelper.getWeekDateText(weekStart, weekEnd)
 }
 
 sealed interface TimeListUiState {
