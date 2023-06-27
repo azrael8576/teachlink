@@ -13,12 +13,30 @@ class LoginViewModel @Inject constructor() : BaseViewModel<
         LoginViewState
         >(LoginViewState()) {
 
-    // TODO 替換至 login API
     private fun login() {
-        TokenManager.validateToken()
+        // TODO 替換至 login API
+        if ("account" == states.value.account && "password" == states.value.password) {
+            TokenManager.validateToken()
+            updateState {
+                copy(
+                    isUserLoggedIn = TokenManager.isTokenValid,
+                )
+            }
+        }
+    }
+
+    private fun setAccount(account: String) {
         updateState {
             copy(
-                isUserLoggedIn = TokenManager.isTokenValid,
+                account = account,
+            )
+        }
+    }
+
+    private fun setPassword(password: String) {
+        updateState {
+            copy(
+                password = password,
             )
         }
     }
@@ -26,6 +44,8 @@ class LoginViewModel @Inject constructor() : BaseViewModel<
     override fun dispatch(action: LoginViewAction) {
         when (action) {
             is LoginViewAction.Login -> login()
+            is LoginViewAction.SetAccount -> setAccount(account = action.account)
+            is LoginViewAction.SetPassword -> setPassword(password = action.password)
         }
     }
 

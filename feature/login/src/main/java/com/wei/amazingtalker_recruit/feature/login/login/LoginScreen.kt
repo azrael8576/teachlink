@@ -2,17 +2,21 @@ package com.wei.amazingtalker_recruit.feature.login.login
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,11 +39,25 @@ internal fun LoginRoute(
         }
     }
 
-    LoginScreen { viewModel.dispatch(LoginViewAction.Login) }
+    LoginScreen(
+        uiStates = uiStates,
+        setAccount = { account: String ->
+            viewModel.dispatch(LoginViewAction.SetAccount(account))
+        },
+        setPassword = { password: String ->
+            viewModel.dispatch(LoginViewAction.SetPassword(password))
+        },
+        login = {
+            viewModel.dispatch(LoginViewAction.Login)
+        }
+    )
 }
 
 @Composable
 internal fun LoginScreen(
+    uiStates: LoginViewState,
+    setAccount: (String) -> Unit,
+    setPassword: (String) -> Unit,
     login: () -> Unit,
 ) {
     Surface(
@@ -58,6 +76,29 @@ internal fun LoginScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                TextField(
+                    value = uiStates.account,
+                    onValueChange = {
+                        setAccount(it)
+                    },
+                    label = {
+                        Text("Account")
+                    },
+                    singleLine = true,
+                )
+                TextField(
+                    value = uiStates.password,
+                    onValueChange = {
+                        setPassword(it)
+                    },
+                    label = {
+                        Text("Password")
+                    },
+                    singleLine = true,
+                    visualTransformation = PasswordVisualTransformation(),
+                )
+                Spacer(modifier = Modifier.height(32.dp))
                 Button(
                     onClick = {
                         login()
@@ -76,6 +117,11 @@ internal fun LoginScreen(
 @Composable
 fun LoginScreenPreview() {
     AtTheme {
-        LoginScreen {}
+        LoginScreen(
+            uiStates = LoginViewState(),
+            setAccount = {},
+            setPassword = {},
+            login = {}
+        )
     }
 }
