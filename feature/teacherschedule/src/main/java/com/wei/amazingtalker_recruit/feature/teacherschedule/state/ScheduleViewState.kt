@@ -18,13 +18,10 @@ enum class WeekAction {
 
 sealed class ScheduleViewAction : Action {
     data class ShowSnackBar(
-        val resId: Int = 0,
+        val resId: Int? = null,
         val message: String,
-        val duration: Int = Snackbar.LENGTH_LONG,
-        val maxLines: Int = 1
     ) : ScheduleViewAction()
 
-    object SnackBarShown : ScheduleViewAction()
     data class UpdateWeek(val weekAction: WeekAction) : ScheduleViewAction()
     data class SelectedTab(val date: OffsetDateTime, val position: Int) : ScheduleViewAction()
     data class ClickTimeSlot(val item: IntervalScheduleTimeSlot) : ScheduleViewAction()
@@ -38,7 +35,6 @@ data class ScheduleViewState(
     val selectedIndex: Int = 0,
     val timeListUiState: TimeListUiState = TimeListUiState.Loading,
     val isTokenValid: Boolean = TokenManager.isTokenValid,
-    val errorMessages: List<ErrorMessage> = listOf(),
     val clickTimeSlots: List<IntervalScheduleTimeSlot> = listOf(),
     val isScrollInProgress: Boolean = false,
 ) : State {
@@ -62,10 +58,3 @@ sealed interface TimeListUiState {
     object Error : TimeListUiState
     object Loading : TimeListUiState
 }
-
-data class ErrorMessage(
-    val resId: Int = 0,
-    val message: String,
-    val duration: Int = Snackbar.LENGTH_LONG,
-    val maxLines: Int = 1
-)

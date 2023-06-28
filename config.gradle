@@ -1,6 +1,4 @@
 ext {
-    //TODO 測試環境下, feature 模組能獨立作為 application 運行
-    isRelease = true
 
     androidID = [
             compileSdk               : 33,

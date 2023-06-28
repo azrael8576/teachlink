@@ -1,15 +1,16 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
+import com.wei.amazingtalker_recruit.core.manager.SnackbarManager
+import com.wei.amazingtalker_recruit.core.manager.SnackbarState
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
+import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.HandleTeacherScheduleResultUseCase
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ErrorMessage
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.state.TimeListUiState
@@ -23,15 +24,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.OffsetDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
     private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
     private val handleTeacherScheduleResultUseCase: HandleTeacherScheduleResultUseCase,
-    private val weekDataHelper: WeekDataHelper
+    private val weekDataHelper: WeekDataHelper,
+    private val snackbarManager: SnackbarManager,
 ) : BaseViewModel<
         ScheduleViewAction,
         ScheduleViewState
@@ -47,7 +47,10 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    private fun refreshWeekData(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean = false) {
+    private fun refreshWeekData(
+        queryDateLocal: OffsetDateTime,
+        resetToStartOfDay: Boolean = false
+    ) {
         updateWeekData(queryDateLocal, resetToStartOfDay)
         fetchTeacherSchedule()
     }
@@ -56,7 +59,10 @@ class ScheduleViewModel @Inject constructor(
         updateState {
             copy(
                 selectedIndex = 0,
-                _queryDateUtc = weekDataHelper.getQueryDateUtc(queryDateLocal = queryDateLocal, resetToStartOfDay = resetToStartOfDay),
+                _queryDateUtc = weekDataHelper.getQueryDateUtc(
+                    queryDateLocal = queryDateLocal,
+                    resetToStartOfDay = resetToStartOfDay
+                ),
             )
         }
     }
@@ -67,8 +73,6 @@ class ScheduleViewModel @Inject constructor(
         showSnackBar(
             resId = R.string.inquirying_teacher_calendar,
             message = states.value._currentTeacherName,
-            duration = Snackbar.LENGTH_LONG,
-            maxLines = 1
         )
         getScheduleJob = viewModelScope.launch {
             getTeacherScheduleUseCase(
@@ -125,7 +129,7 @@ class ScheduleViewModel @Inject constructor(
                         isScrollInProgress = true,
                     )
                 }
-                showSnackBar(message = result.exception.toString(), maxLines = 3)
+                showSnackBar(snackbarState = SnackbarState.ERROR, message = result.exception.toString())
             }
 
             is DataSourceResult.Loading -> {
@@ -145,27 +149,41 @@ class ScheduleViewModel @Inject constructor(
             WeekAction.PREVIOUS_WEEK -> {
                 val previousWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
                 if (previousWeekMondayLocalDate >= OffsetDateTime.now().getLocalOffsetDateTime()) {
-                    refreshWeekData(queryDateLocal = previousWeekMondayLocalDate, resetToStartOfDay = true)
+                    refreshWeekData(
+                        queryDateLocal = previousWeekMondayLocalDate,
+                        resetToStartOfDay = true
+                    )
                 } else {
                     refreshWeekData(queryDateLocal = OffsetDateTime.now().getLocalOffsetDateTime())
                 }
             }
 
             WeekAction.NEXT_WEEK -> {
-                refreshWeekData(queryDateLocal = states.value.weekStart.plusWeeks(1), resetToStartOfDay = true)
+                refreshWeekData(
+                    queryDateLocal = states.value.weekStart.plusWeeks(1),
+                    resetToStartOfDay = true
+                )
             }
         }
     }
 
     private fun showSnackBar(
-        resId: Int = 0,
+        snackbarState: SnackbarState = SnackbarState.DEFAULT,
+        resId: Int? = null,
         message: String,
-        duration: Int = Snackbar.LENGTH_LONG,
-        maxLines: Int = 1
     ) {
-        updateState {
-            copy(
-                errorMessages = errorMessages + ErrorMessage(resId, message, duration, maxLines)
+        if (resId == null) {
+            snackbarManager.showMessage(
+                state = snackbarState,
+                uiText = UiText.DynamicString(message)
+            )
+        } else {
+            snackbarManager.showMessage(
+                state = snackbarState,
+                uiText = UiText.StringResource(
+                    resId,
+                    listOf(UiText.StringResource.Args.DynamicString(message))
+                )
             )
         }
     }
@@ -186,17 +204,7 @@ class ScheduleViewModel @Inject constructor(
                 showSnackBar(
                     resId = action.resId,
                     message = action.message,
-                    duration = action.duration,
-                    maxLines = action.maxLines
                 )
-            }
-
-            is ScheduleViewAction.SnackBarShown -> {
-                updateState {
-                    copy(
-                        errorMessages = errorMessages.drop(1)
-                    )
-                }
             }
 
             is ScheduleViewAction.UpdateWeek -> {
