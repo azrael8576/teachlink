@@ -1,4 +1,5 @@
 
+
 # Amazingtalker-Recruit
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
@@ -24,8 +25,9 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 ## Require
 
-本專案已升級 Gradle plugin 8.1.0-rc01.(查看分支：`chore/update_agp_8.1.0-rc01` )
-建構此 App 你可能需要。
+本專案已升級 Gradle plugin 8.1.0-rc01 (查看分支：`chore/update_agp_8.1.0-rc01` )
+
+建構此 App 你可能需要以下工具：
 
 - Android Studio 最新版本
 - JDK JavaVersion.VERSION_17
@@ -39,7 +41,7 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 > **Note:** 通過 `dispatch()` 統一處理事件分發，有助於 View 與 ViewModel 間的解耦，同時也更利於日誌分析與後續處理。
 - `StateFlowStateExtensions.kt`：封裝 UI StateFlow 流，提供更方便的操作方式。
 - `DataSourceResult.kt`：封裝數據源結果的密封類別，封裝可能是成功 (`Success`)、錯誤 (`Error`) 或正在加載 (`Loading`) 的狀態。
-- `designsystem/ui/management/states/topappbar/*`：封裝以 Jetpack Compose 實現 Collapsing Toolbar 相關類，並提供`EnterAlwaysCollapsedState`、`EnterAlwaysCollapsedState` 或 `ScrollState` 的滾動行為 flags。
+- `designsystem/ui/management/states/topappbar/*`：封裝以 Jetpack Compose 實現 Collapsing Toolbar 相關類，並提供`EnterAlwaysCollapsedState`、`EnterAlwaysState`、`ExitUntilCollapsedState` 或 `ScrollState` 的滾動行為 flags。
 > **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/amazingtalker-recruit/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker_recruit/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
 
 
