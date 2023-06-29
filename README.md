@@ -21,6 +21,7 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：
 - 從 Groovy 遷移至 Kotlin 的建構配置
+- 引入 Jetpack DataStore 做為本地數據存儲
 - 引入 Baseline Profiles 啟動優化
 
 ## Require
@@ -57,17 +58,17 @@ Dark theme
 
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/dark_theme.gif)
 
-Error 狀態下 Snackbar
+Error Snackbar
 
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/error_snackbar.gif)
 
 ## DesignSystem
 
-本專案採用 [_Material 3 Design 系統_](https://m3.material.io/) 並提供可預覽之 Guideline，詳見 "Amazingtalker-Recruit-UI Guideline"。
+本專案採用 [_Material 3 Design 系統_](https://m3.material.io/) 。
 
-以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果，並為其進行封裝。
+並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果，並為其進行封裝。
 遵循 Google 官方 [_API Guidelines for Jetpack Compose_](https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md) 。
-> **Note:** Google Material 3 尚未 Release 相關 UI 元件 API，截止 2023/06/29
+> **Note:** Google Material 3 尚未 Release Collapsing Toolbar 相關 UI 元件 API，截止 2023/06/29
 
 ## Architecture
 
