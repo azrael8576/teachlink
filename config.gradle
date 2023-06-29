@@ -15,7 +15,13 @@ ext {
     ]
 
     libVersion = [
-            lifeCycle                       : '2.2.0',
+            coreKtx                         : '1.10.1',
+            tracingKtx                      : '1.2.0-rc01',
+            desugar_jdk                     : '1.1.5',
+            junit                           : '4.13.2',
+            androidxTestExtJunit            : '1.1.5',
+            espressoCore                    : '3.5.1',
+            lifeCycle                       : '2.6.1',
             navigation                      : '2.6.0',
             coroutines                      : '1.3.0-M2',
             okhttp_interceptor              : '4.7.2',
@@ -24,31 +30,31 @@ ext {
             hilt                            : '2.45',
             kotlinxDatetime                 : '0.4.0',
             kotlinxSerializationJson        : '1.4.1',
-            timber                          : '5.0.1'
+            timber                          : '5.0.1',
+            composeBom                      : '2023.05.01',
+            hiltNavigationCompose           : '1.0.0',
+            activityCompose                 : '1.7.2',
     ]
 
     libs = [
             publicLibs                          : [
                     core       : [
-                            "androidx.legacy:legacy-support-v4:1.0.0",
-                            "androidx.core:core-ktx:1.7.0",
-                            "androidx.appcompat:appcompat:1.5.1",
-                            "com.google.android.material:material:1.7.0",
-                            "androidx.constraintlayout:constraintlayout:2.1.4",
-                            "androidx.tracing:tracing-ktx:1.2.0-rc01",
+                            "androidx.core:core-ktx:${libVersion.coreKtx}",
+                            "androidx.tracing:tracing-ktx:${libVersion.tracingKtx}",
                     ],
-                    desugar_jdk: "com.android.tools:desugar_jdk_libs:1.1.5",
-                    test       : [
-                            "junit:junit:4.13.2",
-                            "androidx.test.ext:junit:1.1.4",
-                            "androidx.test.espresso:espresso-core:3.5.0"
+                    desugar_jdk: "com.android.tools:desugar_jdk_libs:${libVersion.desugar_jdk}",
+                    test       : "junit:junit:${libVersion.junit}",
+                    androidTest: [
+                            "androidx.test.ext:junit:${libVersion.androidxTestExtJunit}",
+                            "androidx.test.espresso:${libVersion.espressoCore}",
                     ]
             ],
             lifeCycleLibs                       : [
                     core: [
+                            "androidx.lifecycle:lifecycle-runtime-ktx:${libVersion.lifeCycle}",
                             "androidx.lifecycle:lifecycle-livedata-ktx:${libVersion.lifeCycle}",
                             "androidx.lifecycle:lifecycle-viewmodel-ktx:${libVersion.lifeCycle}",
-                            "androidx.lifecycle:lifecycle-extensions:${libVersion.lifeCycle}"
+                            "androidx.lifecycle:lifecycle-runtime-compose:${libVersion.lifeCycle}"
                     ]
             ],
             navigationLibs                      : [
@@ -91,7 +97,41 @@ ext {
             ],
             timberLibs                          : [
                     core: "com.jakewharton.timber:timber:${libVersion.timber}"
-            ]
+            ],
+            composeBomLibs                      : [
+                    core: "androidx.compose:compose-bom:${libVersion.composeBom}"
+            ],
+            material3Libs                       : [
+                    core: [
+                            "androidx.compose.material3:material3",
+                            "androidx.compose.material3:material3-window-size-class"
+                    ]
+            ],
+            uiLibs                              : [
+                    core: [
+                            "androidx.compose.ui:ui",
+                            "androidx.compose.foundation:foundation",
+                    ]
+            ],
+            hiltNavigationComposeLibs           : [
+                    core: "androidx.hilt:hilt-navigation-compose:${libVersion.hiltNavigationCompose}"
+            ],
+            uiToolingPreviewLibs                : [
+                    core : "androidx.compose.ui:ui-tooling-preview",
+                    debug: "androidx.compose.ui:ui-tooling"
+            ],
+            uiTestJunit4Libs                    : [
+                    test: "androidx.compose.ui:ui-test-junit4",
+            ],
+            uiTestManifestLibs                  : [
+                    debug: "androidx.compose.ui:ui-test-manifest",
+            ],
+            activityComposeLibs                 : [
+                    core: "androidx.activity:activity-compose:${libVersion.activityCompose}"
+            ],
+            livedataComposeLibs                 : [
+                    core: "androidx.compose.runtime:runtime-livedata",
+            ],
 
     ]
 }

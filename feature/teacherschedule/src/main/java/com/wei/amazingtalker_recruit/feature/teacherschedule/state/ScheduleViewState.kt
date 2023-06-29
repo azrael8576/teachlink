@@ -1,6 +1,5 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.state
 
-import com.google.android.material.snackbar.Snackbar
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.base.Action

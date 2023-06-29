@@ -28,7 +28,7 @@ interface RetrofitAtNetworkApi {
     @GET("teachers/{teacherName}/schedule")
     suspend fun getTeacherAvailability(
         @Path("teacherName") teacherName: String,
-        @Query("started_at") startUtc: String?,
+        @Query("started_at") startedAt: String?,
     ): NetworkTeacherSchedule
 }
 
@@ -67,9 +67,9 @@ class RetrofitAtNetwork @Inject constructor() : AtNetworkDataSource {
 
     override suspend fun getTeacherAvailability(
         teacherName: String,
-        startUtc: String?
+        startedAt: String?
     ): NetworkTeacherSchedule {
-        return networkApi.getTeacherAvailability(teacherName, startUtc)
+        return networkApi.getTeacherAvailability(teacherName, startedAt)
     }
 
 }

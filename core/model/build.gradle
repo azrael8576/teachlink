@@ -42,6 +42,7 @@ dependencies {
     implementation libs.publicLibs.core
     coreLibraryDesugaring libs.publicLibs.desugar_jdk
     testImplementation libs.publicLibs.test
+    androidTestImplementation libs.publicLibs.androidTest
 
     // Hilt
     implementation libs.hiltLibs.core
