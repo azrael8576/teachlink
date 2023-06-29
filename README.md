@@ -1,3 +1,4 @@
+
 # Amazingtalker-Recruit
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
@@ -23,7 +24,7 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 ## Require
 
-本專案已升級 Gradle plugin 8.1.0-rc01.(查看分支：`chore/update_agp_8.1.0-rc01`  )
+本專案已升級 Gradle plugin 8.1.0-rc01.(查看分支：`chore/update_agp_8.1.0-rc01` )
 建構此 App 你可能需要。
 
 - Android Studio 最新版本
@@ -45,8 +46,17 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 ## Screenshots
 
-#### SAMSUNG GALAXY Note 5
-![image](https://github.com/azrael8576/amazingtalker-recruit-android/blob/main/amazingtalker_recruit_android_demo.gif)
+Light theme
+![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/light_theme.gif)
+
+
+Dark theme
+> **Note:** 展示了在 App 運行中進行組態設定的更改（例如：螢幕方向、深色主題），而不會影響其原有狀態。
+![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/dark_theme.gif)
+
+
+Error 狀態下 Snackbar
+![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/error_snackbar.gif)
 
 ## DesignSystem
 
