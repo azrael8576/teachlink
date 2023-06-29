@@ -48,6 +48,7 @@ import kotlinx.coroutines.flow.StateFlow
  * BaseFragment 提供了一種簡便的方式來處理 ViewBinding，並在 onCreateView 中自動創建和清理。
  * 並且還提供了四個抽象方法 (setupViews, addOnClickListener, handleState, initData)，讓子類可以根據自己的需求實現。
  */
+@Deprecated("專案已全面遷移至 Compose UI　(查看分支：refactor/migrating_to_compose)")
 abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel<A, S>, A : Action, S : State>
     : Fragment() {
 
