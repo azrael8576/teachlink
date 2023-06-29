@@ -47,15 +47,16 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 ## Screenshots
 
 Light theme
-![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/light_theme.gif)
 
+![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/light_theme.gif)
 
 Dark theme
 > **Note:** 展示了在 App 運行中進行組態設定的更改（例如：螢幕方向、深色主題），而不會影響其原有狀態。
+
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/dark_theme.gif)
 
-
 Error 狀態下 Snackbar
+
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/error_snackbar.gif)
 
 ## DesignSystem
