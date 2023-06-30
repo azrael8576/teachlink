@@ -21,6 +21,7 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：
 - 從 Groovy 遷移至 Kotlin 的建構配置
+- UI testing with Compose
 - 引入 Jetpack DataStore 做為本地數據存儲
 - 引入 Baseline Profiles 啟動優化
 
