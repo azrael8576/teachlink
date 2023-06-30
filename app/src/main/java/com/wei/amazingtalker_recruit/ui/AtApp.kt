@@ -111,7 +111,7 @@ suspend fun collectAndShowSnackbar(
             val message = messages.first()
             val text = getMessageText(message, context)
 
-            if (message.state == SnackbarState.ERROR) {
+            if (message.state == SnackbarState.Error) {
                 snackbarHostState.showSnackbar(
                     message = ErrorTextPrefix + text,
                     duration = SnackbarDuration.Long,

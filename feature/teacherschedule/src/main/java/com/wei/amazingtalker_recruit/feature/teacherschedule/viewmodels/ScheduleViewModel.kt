@@ -129,7 +129,7 @@ class ScheduleViewModel @Inject constructor(
                         isScrollInProgress = true,
                     )
                 }
-                showSnackBar(snackbarState = SnackbarState.ERROR, message = result.exception.toString())
+                showSnackBar(snackbarState = SnackbarState.Error, message = result.exception.toString())
             }
 
             is DataSourceResult.Loading -> {
@@ -168,7 +168,7 @@ class ScheduleViewModel @Inject constructor(
     }
 
     private fun showSnackBar(
-        snackbarState: SnackbarState = SnackbarState.DEFAULT,
+        snackbarState: SnackbarState = SnackbarState.Default,
         resId: Int? = null,
         message: String,
     ) {

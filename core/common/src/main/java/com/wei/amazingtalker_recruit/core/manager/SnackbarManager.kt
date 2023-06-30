@@ -9,11 +9,11 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-val ErrorTextPrefix = "Error:"
+const val ErrorTextPrefix = "Error:"
 
 enum class SnackbarState {
-    DEFAULT,
-    ERROR
+    Default,
+    Error
 }
 
 data class Message(val id: Long,val state: SnackbarState, val uiText: UiText)
