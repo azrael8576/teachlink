@@ -22,13 +22,18 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wei.amazingtalker_recruit.R
+import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker_recruit.core.designsystem.ui.component.AtAppSnackbar
 import com.wei.amazingtalker_recruit.core.manager.ErrorTextPrefix
 import com.wei.amazingtalker_recruit.core.manager.Message
@@ -45,14 +50,29 @@ import com.wei.amazingtalker_recruit.navigation.AtNavHost
 )
 @Composable
 fun AtApp(
+    networkMonitor: NetworkMonitor,
     windowSizeClass: WindowSizeClass,
     appState: AtAppState = rememberAtAppState(
+        networkMonitor = networkMonitor,
         windowSizeClass = windowSizeClass,
     ),
-    snackbarManager: SnackbarManager
+    snackbarManager: SnackbarManager,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+
+    val isOffline by appState.isOffline.collectAsStateWithLifecycle()
+
+    // If user is not connected to the internet show a snack bar to inform them.
+    val notConnectedMessage = stringResource(R.string.not_connected)
+    LaunchedEffect(isOffline) {
+        if (isOffline) {
+            snackbarManager.showMessage(
+                state = SnackbarState.Error,
+                uiText = UiText.DynamicString(notConnectedMessage)
+            )
+        }
+    }
 
     LaunchedEffect(key1 = snackbarHostState) {
         collectAndShowSnackbar(snackbarManager, snackbarHostState, context)

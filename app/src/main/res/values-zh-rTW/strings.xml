@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">amazingtalker-recruit</string>
+    <string name="not_connected">⚠️ 您沒有連接到互聯網</string>
 </resources>
