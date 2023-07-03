@@ -5,18 +5,18 @@ plugins {
     id 'kotlin-kapt'
 }
 
-def androidID = rootProject.ext.androidID
-def libs = rootProject.ext.libs
+//def androidID = rootProject.ext.androidID
+//def libs = rootProject.ext.libs
 
 android {
     namespace 'com.wei.amazingtalker_recruit.core.common'
-    compileSdk androidID.compileSdk
+    compileSdk 33
 
     defaultConfig {
-        minSdk androidID.minSdk
-        targetSdk androidID.targetSdk
+        minSdk 23
+        targetSdk 33
 
-        testInstrumentationRunner androidID.testInstrumentationRunner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -50,55 +50,67 @@ dependencies {
     implementation project(path: ':core:model')
 
     // PublicLibs
-    implementation libs.publicLibs.core
-    coreLibraryDesugaring libs.publicLibs.desugar_jdk
-    testImplementation libs.publicLibs.test
-    androidTestImplementation libs.publicLibs.androidTest
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.tracing:tracing-ktx:1.2.0-rc01'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:3.5.1'
 
     // Okhttp Interceptor
-    implementation libs.okhttpInterceptorLibs.core
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
 
     // LifeCycle
-    implementation libs.lifeCycleLibs.core
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.6.1'
 
     // Navigation
-    implementation libs.navigationLibs.core
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.6.0'
+    implementation 'androidx.navigation:navigation-compose:2.6.0'
 
     // Coroutines
-    implementation libs.coroutinesLibs.core
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-M2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-M2'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.0-M2'
 
     // Hilt
-    implementation libs.hiltLibs.core
-    kapt libs.hiltLibs.compiler
+    implementation 'com.google.dagger:hilt-android:2.45'
+    kapt 'com.google.dagger:hilt-compiler:2.45'
 
     // Timber
-    implementation libs.timberLibs.core
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 
     // Compose
-    def composeBom = platform(libs.composeBomLibs.core)
+    def composeBom = platform('androidx.compose:compose-bom:2023.05.01')
     implementation composeBom
     androidTestImplementation composeBom
 
     // Material Design 3
-    implementation libs.material3Libs.core
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material3:material3-window-size-class'
 
     // main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
-    implementation libs.uiLibs.core
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.foundation:foundation'
 
     // Integration with ViewModels and Hilt
-    implementation libs.hiltNavigationComposeLibs.core
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     // Android Studio Preview support
-    implementation libs.uiToolingPreviewLibs.core
-    debugImplementation libs.uiToolingPreviewLibs.debug
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
 
     // UI Tests
-    androidTestImplementation libs.uiTestJunit4Libs.test
-    debugImplementation libs.uiTestManifestLibs.debug
+    implementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
     // Optional - Integration with activities
-    implementation libs.activityComposeLibs.core
+    implementation 'androidx.activity:activity-compose:1.7.2'
+
     // Optional - Integration with LiveData
-    implementation libs.livedataComposeLibs.core
+    implementation 'androidx.compose.runtime:runtime-livedata'
 }
