@@ -11,6 +11,7 @@ import androidx.navigation.NavOptions
  * @param deepLink 深度鏈接對象，包含導航的 URI。
  * @param navOptions (可選)導航選項，包含導航的行為，如應該使用的轉場動畫，是否需要清空導航堆棧等。
  */
+@Deprecated("專案已全面遷移至 Compose UI　(查看分支：refactor/migrating_to_compose)")
 fun NavController.navigate(deepLink: DeepLink, navOptions: NavOptions? = null) {
     // 建立一個深度鏈接請求
     val deepLinkRequest = NavDeepLinkRequest.Builder
