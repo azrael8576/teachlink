@@ -60,7 +60,8 @@ Dark theme
 
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/dark_theme.gif)
 
-Split screen & Error snackbar
+Split screen & Offline error (Error Snackbar)
+> **Note:** 展示了在分屏模式下，App 如何適應不同的螢幕空間，並且在網路狀態變化導致的錯誤情況下，如何以 Snackbar 的形式提供錯誤訊息。
 
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/split_screen.gif)
 
