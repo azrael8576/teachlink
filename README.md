@@ -3,7 +3,7 @@
 # Amazingtalker-Recruit
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
-UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
+UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
 
 這款 APP 的目標是展示如何遵循 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development) 最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
 
@@ -21,6 +21,7 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：
 - 從 Groovy 遷移至 Kotlin 的建構配置
+- Support All Screen Sizes
 - UI testing with Compose
 - 引入 Jetpack DataStore 做為本地數據存儲
 - 引入 Baseline Profiles 啟動優化
@@ -31,7 +32,7 @@ UI 設計採用 [_Material 3 Design 系統_](https://m3.material.io/) ，並以 
 
 建構此 App 你可能需要以下工具：
 
-- Android Studio 最新版本
+- Android Studio Giraffe | 2022.3.1
 - JDK JavaVersion.VERSION_17
 
 
@@ -59,15 +60,15 @@ Dark theme
 
 ![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/dark_theme.gif)
 
-Error Snackbar
+Split screen & Error snackbar
 
-![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/error_snackbar.gif)
+![image](https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/split_screen.gif)
 
 ## DesignSystem
 
-本專案採用 [_Material 3 Design 系統_](https://m3.material.io/) 。
+本專案採用 [_Material 3 Design_](https://m3.material.io/) 。
 
-並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果，並為其進行封裝。
+並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果，並為其進行封裝。  
 遵循 Google 官方 [_API Guidelines for Jetpack Compose_](https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md) 。
 > **Note:** Google Material 3 尚未 Release Collapsing Toolbar 相關 UI 元件 API，截止 2023/06/29
 
@@ -77,7 +78,7 @@ Error Snackbar
 
 ### MVI 最佳實踐
 #### UI 事件決策樹：
-以下圖表顯示尋找處理特定事件用途最佳方式時的決策樹。
+以下圖表顯示尋找處理特定事件用途最佳方式時的決策樹。  
 ![image](https://developer.android.com/static/topic/libraries/architecture/images/mad-arch-uievents-tree.png?hl=zh-tw)
 #### UI 事件：
 不要使用 `Channels`, `SharedFlow` 或其他回應式串流向 UI 公開 ViewModel 事件。
@@ -89,21 +90,21 @@ Error Snackbar
 
 本專案已全面實現模組化。以下是模組的職責及關鍵類別和範例：
 
-| Name | Responsibilities | Key classes and good examples |
-|:----:|:----:|:-----------------:|
-| `app` | 將所有必要元素整合在一起，確保應用程式的正確運作。 | `AtApplication,`<br>`AtNavHost`<br>`TopLevelDestination`<br>`AtApp`<br>`AtAppState` |
-| `feature:1`,<br>`feature:2`<br>... | 負責實現與特定功能或用戶旅程相關的部分。這通常包含 UI 組件、UI 組件預覽和 ViewModel，並從其他模組讀取資料。例如：<br>• [`feature:teacherschedule`](https://github.com/azrael8576/amazingtalker-recruit/tree/main/feature/teacherschedule) 專注於展示教師預約時段的行事曆資訊。<br>• [`feature:login`](https://github.com/azrael8576/amazingtalker-recruit/tree/main/feature/login) 提供歡迎畫面和登入畫面。當 Token 失效時，會利用 deep links 實現跨模組導航，導向此模組。 | `ScheduleScreen,`<br>`ScheduleListPreviewParameterProvider`<br>... |
-| `core:data` | 負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository` |
-| `core:common` | 包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 | `network/AtDispatchers,`<br>`result/DataSourceResult,`<br>`authentication/TokenManager,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`navigation/DeepLinks`<br>`utils/UiText`<br>... |
-| `core:domain` | 包含被多個模組共享的 UseCase。 | `IntervalizeScheduleUseCase` |
-| `core:model` | 提供整個應用程式所使用的模型類別。 | `IntervalScheduleTimeSlot,`<br>`ScheduleTimeSlot` |
-| `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitAtNetworkApi` |
-| `core:designsystem` | 包含整個應用程式 UI 設計相關。<br>eg. theme、UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |
+| Name | Responsibilities | Key classes and good examples |  
+|:----:|:----:|:-----------------:|  
+| `app` | 將所有必要元素整合在一起，確保應用程式的正確運作。 | `AtApplication,`<br>`AtNavHost`<br>`TopLevelDestination`<br>`AtApp`<br>`AtAppState` |  
+| `feature:1`,<br>`feature:2`<br>... | 負責實現與特定功能或用戶旅程相關的部分。這通常包含 UI 組件、UI 組件預覽和 ViewModel，並從其他模組讀取資料。例如：<br>• [`feature:teacherschedule`](https://github.com/azrael8576/amazingtalker-recruit/tree/main/feature/teacherschedule) 專注於展示教師預約時段的行事曆資訊。<br>• [`feature:login`](https://github.com/azrael8576/amazingtalker-recruit/tree/main/feature/login) 提供歡迎畫面和登入畫面。當 Token 失效時，會利用 deep links 實現跨模組導航，導向此模組。 | `ScheduleScreen,`<br>`ScheduleListPreviewParameterProvider`<br>... |  
+| `core:data` | 負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|  
+| `core:common` | 包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 | `network/AtDispatchers,`<br>`result/DataSourceResult,`<br>`authentication/TokenManager,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`navigation/DeepLinks`<br>`utils/UiText`<br>... |  
+| `core:domain` | 包含被多個模組共享的 UseCase。 | `IntervalizeScheduleUseCase` |  
+| `core:model` | 提供整個應用程式所使用的模型類別。 | `IntervalScheduleTimeSlot,`<br>`ScheduleTimeSlot` |  
+| `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitAtNetworkApi` |  
+| `core:designsystem` | 包含整個應用程式 UI 設計相關。<br>eg. theme、UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |  
 
 ## 原需求文件
 
 [_amazingtalker.notion.site/Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293)
-  
-# License  
-  
+
+# License
+
 **Amazingtalker-Recruit** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE) for more information.
