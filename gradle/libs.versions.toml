@@ -18,6 +18,10 @@ timber = "5.0.1"
 androidxComposeBom = "2023.05.01"
 androidxHiltNavigationCompose = "1.0.0"
 androidxActivity = "1.7.2"
+androidGradlePlugin = "8.1.0-rc01"
+kotlin = "1.8.21"
+navigationSafeArgsKotlin = "2.5.3"
+androidxComposeCompiler = "1.4.7"
 
 [libraries]
 
@@ -99,3 +103,9 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationSafeArgsKotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
