@@ -17,5 +17,3 @@ plugins {
     id 'com.google.dagger.hilt.android' version '2.45' apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.10' apply false
 }
-
-apply from: "config.gradle"
