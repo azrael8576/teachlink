@@ -27,6 +27,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // TODO 替換為 release keystore
+            signingConfig signingConfigs.debug
         }
     }
 
