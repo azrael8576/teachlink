@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+
     // PublicLibs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
