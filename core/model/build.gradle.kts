@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.data"
+    namespace = "com.wei.amazingtalker_recruit.core.model"
     compileSdk = 33
 
     defaultConfig {
@@ -20,8 +20,8 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
             )
         }
     }
@@ -37,9 +37,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:network"))
-
     // PublicLibs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
@@ -51,8 +48,4 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-    // Retrofit2
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.converter.gson)
 }
