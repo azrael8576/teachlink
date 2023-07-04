@@ -13,12 +13,13 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "amazingtalker-recruit"
-include ':app'
-include ':core:network'
-include ':core:data'
-include ':core:common'
-include ':feature:teacherschedule'
-include ':core:model'
-include ':core:domain'
-include ':feature:login'
-include ':core:designsystem'
+include(":app")
+include(":core:network")
+include(":core:data")
+include(":core:common")
+include(":core:model")
+include(":core:domain")
+include(":core:designsystem")
+
+include(":feature:login")
+include(":feature:teacherschedule")
