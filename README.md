@@ -1,5 +1,3 @@
-
-
 # Amazingtalker-Recruit
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
@@ -47,6 +45,14 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 - `designsystem/ui/management/states/topappbar/*`：封裝以 Jetpack Compose 實現 Collapsing Toolbar 相關類，並提供`EnterAlwaysCollapsedState`、`EnterAlwaysState`、`ExitUntilCollapsedState` 或 `ScrollState` 的滾動行為 flags。
 > **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/amazingtalker-recruit/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker_recruit/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
 
+## Build
+該應用程序包含常用 `debug` 和 `release` build variants。
+目前兩個版本連線**均為測試環境**。
+
+對於正常開發，請使用該 `debug` variant。對於 UI 性能測試，請使用該 `release` variant。
+
+> **Ref:**
+> Google官方網誌文章 [_Why should you always test Compose performance in release?_](https://github.com/azrael8576/amazingtalker-recruit/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker_recruit/feature/teacherschedule/schedule/ScheduleScreen.kt)
 
 
 ## Screenshots
