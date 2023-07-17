@@ -1,3 +1,8 @@
 <resources>
 
+    <string name="welcome">Welcome Compose</string>
+    <string name="login_title">跨功能模組導航:\n Home Module</string>
+    <string name="account">Account</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>

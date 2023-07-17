@@ -51,7 +51,7 @@ dependencies {
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
-    androidTestImplementation(libs.androidx.test.espresso.core)
+//    androidTestImplementation(libs.androidx.test.espresso.core)
 
     // Okhttp Interceptor
     implementation(libs.okhttp.logging)

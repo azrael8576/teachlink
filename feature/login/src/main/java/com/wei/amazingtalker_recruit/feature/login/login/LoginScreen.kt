@@ -16,12 +16,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
@@ -72,7 +76,7 @@ internal fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "跨功能模組導航:\n Home Module",
+                    text = stringResource(R.string.login_title),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
@@ -83,7 +87,7 @@ internal fun LoginScreen(
                         setAccount(it)
                     },
                     label = {
-                        Text("Account")
+                        Text(stringResource(R.string.account))
                     },
                     singleLine = true,
                 )
@@ -93,7 +97,7 @@ internal fun LoginScreen(
                         setPassword(it)
                     },
                     label = {
-                        Text("Password")
+                        Text(stringResource(R.string.password))
                     },
                     singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
@@ -105,7 +109,7 @@ internal fun LoginScreen(
                     },
                     modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    Text("Login")
+                    Text(stringResource(R.string.login))
                 }
             }
         }

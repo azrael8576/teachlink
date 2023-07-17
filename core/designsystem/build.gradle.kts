@@ -54,7 +54,7 @@ dependencies {
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
-    androidTestImplementation(libs.androidx.test.espresso.core)
+//    androidTestImplementation(libs.androidx.test.espresso.core)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
