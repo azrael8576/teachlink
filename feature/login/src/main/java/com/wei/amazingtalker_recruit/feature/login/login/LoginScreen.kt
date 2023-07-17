@@ -35,6 +35,35 @@ import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
+/**
+ *
+ * UI 事件決策樹
+ * 下圖顯示了一個決策樹，用於查找處理特定事件用例的最佳方法。
+ *
+ *                                                      ┌───────┐
+ *                                                      │ Start │
+ *                                                      └───┬───┘
+ *                                                          ↓
+ *                                       ┌───────────────────────────────────┐
+ *                                       │ Where is event originated?        │
+ *                                       └──────┬─────────────────────┬──────┘
+ *                                              ↓                     ↓
+ *                                              UI                  ViewModel
+ *                                              │                     │
+ *                           ┌─────────────────────────┐      ┌───────────────┐
+ *                           │ When the event requires │      │ Update the UI │
+ *                           │ ...                     │      │ State         │
+ *                           └─┬─────────────────────┬─┘      └───────────────┘
+ *                             ↓                     ↓
+ *                        Business logic      UI behavior logic
+ *                             │                     │
+ *     ┌─────────────────────────────────┐   ┌──────────────────────────────────────┐
+ *     │ Delegate the business logic to  │   │ Modify the UI element state in the   │
+ *     │ the ViewModel                   │   │ UI directly                          │
+ *     └─────────────────────────────────┘   └──────────────────────────────────────┘
+ *
+ *
+ */
 @Composable
 internal fun LoginRoute(
     onLoginNav: () -> Unit,
