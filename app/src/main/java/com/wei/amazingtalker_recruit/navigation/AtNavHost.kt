@@ -39,7 +39,7 @@ fun AtNavHost(
         welcomeGraph(
             navController = navController,
             nestedGraphs = {
-                loginScreen(onLoginClick = { appState.tokenValidNavigate() })
+                loginScreen(onLoginNav = { appState.tokenValidNavigate() })
             }
         )
 

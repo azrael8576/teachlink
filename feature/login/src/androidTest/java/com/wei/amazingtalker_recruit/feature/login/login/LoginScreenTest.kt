@@ -2,17 +2,13 @@ package com.wei.amazingtalker_recruit.feature.login.login
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
-import androidx.compose.ui.test.hasClickAction
-import androidx.compose.ui.test.hasSetTextAction
-import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.printToLog
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
-import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
 import org.junit.Rule
 import org.junit.Test
 import kotlin.properties.ReadOnlyProperty
@@ -48,44 +44,20 @@ class LoginScreenTest {
 
     @Test
     fun showsLoginFrom() {
-        // 準備測試數據和方法
-        val uiStates = LoginViewState(account = "", password = "")
-
-
-        // 設置Compose UI
+        // 設置 Compose UI
         composeTestRule.setContent {
             AtTheme {
                 LoginScreen(
-                    uiStates = uiStates,
-                    setAccount = { },
-                    setPassword = { },
-                    login = { /* Do Nothing */ }
+                    login = { _, _ -> }
                 )
             }
         }
         composeTestRule.onRoot().printToLog("currentLabelExists")
 
-        composeTestRule.onNodeWithText(loginTitle).assertExists()
-
-        composeTestRule.onNode(
-            hasText(account)
-                    and
-                    hasSetTextAction()
-
-        ).assertExists()
-
-        composeTestRule.onNode(
-            hasText(password)
-                    and
-                    hasSetTextAction()
-        ).assertExists()
-
-        composeTestRule.onNode(
-            hasText(login)
-                    and
-                    hasClickAction()
-        ).assertExists()
-
+        composeTestRule.onNodeWithContentDescription(loginTitle).assertExists()
+        composeTestRule.onNodeWithContentDescription(account).assertExists()
+        composeTestRule.onNodeWithContentDescription(password).assertExists()
+        composeTestRule.onNodeWithContentDescription(login).assertExists()
     }
 
 }

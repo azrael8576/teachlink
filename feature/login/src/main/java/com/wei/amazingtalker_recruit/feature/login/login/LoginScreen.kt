@@ -13,7 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,42 +31,44 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
 import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
+import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
+import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
 import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
 @Composable
 internal fun LoginRoute(
-    onLoginClick: () -> Unit,
+    onLoginNav: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val uiStates: LoginViewState by viewModel.states.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiStates.isUserLoggedIn) {
         if (uiStates.isUserLoggedIn) {
-            onLoginClick()
+            onLoginNav()
         }
     }
 
     LoginScreen(
-        uiStates = uiStates,
-        setAccount = { account: String ->
-            viewModel.dispatch(LoginViewAction.SetAccount(account))
-        },
-        setPassword = { password: String ->
-            viewModel.dispatch(LoginViewAction.SetPassword(password))
-        },
-        login = {
-            viewModel.dispatch(LoginViewAction.Login)
+        login = { account: String, password: String ->
+            viewModel.dispatch(LoginViewAction.Login(account, password))
         }
     )
 }
 
 @Composable
 internal fun LoginScreen(
-    uiStates: LoginViewState,
-    setAccount: (String) -> Unit,
-    setPassword: (String) -> Unit,
-    login: () -> Unit,
+    login: (String, String) -> Unit,
 ) {
+    val accountState = rememberSaveable {
+        // TODO : 測試帳號，Release 時需清空
+        mutableStateOf(TEST_ACCOUNT)
+    }
+
+    val passwordState = rememberSaveable {
+        // TODO : 測試密碼，Release 時需清空
+        mutableStateOf(TEST_PASSWORD)
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -75,46 +80,90 @@ internal fun LoginScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = stringResource(R.string.login_title),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
+                Title(Modifier.align(Alignment.CenterHorizontally))
                 Spacer(modifier = Modifier.height(16.dp))
-                TextField(
-                    value = uiStates.account,
-                    onValueChange = {
-                        setAccount(it)
-                    },
-                    label = {
-                        Text(stringResource(R.string.account))
-                    },
-                    singleLine = true,
-                )
-                TextField(
-                    value = uiStates.password,
-                    onValueChange = {
-                        setPassword(it)
-                    },
-                    label = {
-                        Text(stringResource(R.string.password))
-                    },
-                    singleLine = true,
-                    visualTransformation = PasswordVisualTransformation(),
-                )
+                AccountTextField(accountState)
+                PasswordTextField(passwordState)
                 Spacer(modifier = Modifier.height(32.dp))
-                Button(
-                    onClick = {
-                        login()
-                    },
-                    modifier = Modifier.padding(top = 8.dp)
-                ) {
-                    Text(stringResource(R.string.login))
-                }
+                LoginButton(
+                    accountState,
+                    passwordState,
+                    login
+                )
             }
         }
     }
 
+}
+
+@Composable
+private fun Title(modifier: Modifier = Modifier) {
+    val text = stringResource(R.string.login_title)
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = modifier.semantics { contentDescription = text }
+    )
+}
+
+
+@Composable
+private fun AccountTextField(
+    accountState: MutableState<String>,
+) {
+    val text = stringResource(R.string.account)
+    TextField(
+        value = accountState.value,
+        modifier = Modifier
+            .semantics { contentDescription = text },
+        onValueChange = {
+            accountState.value = it
+        },
+        label = {
+            Text(text)
+        },
+        singleLine = true,
+    )
+}
+
+
+@Composable
+private fun PasswordTextField(
+    passwordState: MutableState<String>,
+) {
+    val text = stringResource(R.string.password)
+    TextField(
+        value = passwordState.value,
+        modifier = Modifier
+            .semantics { contentDescription = text },
+        onValueChange = {
+            passwordState.value = it
+        },
+        label = {
+            Text(text)
+        },
+        singleLine = true,
+        visualTransformation = PasswordVisualTransformation(),
+    )
+}
+
+@Composable
+private fun LoginButton(
+    accountState: MutableState<String>,
+    passwordState: MutableState<String>,
+    login: (String, String) -> Unit
+) {
+    val text = stringResource(R.string.login)
+    Button(
+        onClick = {
+            login(accountState.value, passwordState.value)
+        },
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .semantics { contentDescription = text }
+    ) {
+        Text(text)
+    }
 }
 
 @Preview(showBackground = true)
@@ -122,10 +171,7 @@ internal fun LoginScreen(
 fun LoginScreenPreview() {
     AtTheme {
         LoginScreen(
-            uiStates = LoginViewState(),
-            setAccount = {},
-            setPassword = {},
-            login = {}
+            login = { _, _ -> }
         )
     }
 }
