@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleScreen
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleRoute
 
 const val scheduleRoute = "schedule_route"
 
@@ -18,7 +18,7 @@ fun NavGraphBuilder.scheduleScreen(
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
     composable(route = scheduleRoute) {
-        ScheduleScreen(
+        ScheduleRoute(
             navController = navController,
             tokenInvalidNavigate = tokenInvalidNavigate
         )

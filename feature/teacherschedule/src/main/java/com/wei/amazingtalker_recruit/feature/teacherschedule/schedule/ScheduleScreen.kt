@@ -67,19 +67,68 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeIte
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeListHeader
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeListItem
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.TimeListUiState
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels.ScheduleViewModel
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.OffsetDateTime
-import java.time.ZoneId
 
+/**
+ *
+ * UI 事件決策樹
+ * 下圖顯示了一個決策樹，用於查找處理特定事件用例的最佳方法。
+ *
+ *                                                      ┌───────┐
+ *                                                      │ Start │
+ *                                                      └───┬───┘
+ *                                                          ↓
+ *                                       ┌───────────────────────────────────┐
+ *                                       │ Where is event originated?        │
+ *                                       └──────┬─────────────────────┬──────┘
+ *                                              ↓                     ↓
+ *                                              UI                  ViewModel
+ *                                              │                     │
+ *                           ┌─────────────────────────┐      ┌───────────────┐
+ *                           │ When the event requires │      │ Update the UI │
+ *                           │ ...                     │      │ State         │
+ *                           └─┬─────────────────────┬─┘      └───────────────┘
+ *                             ↓                     ↓
+ *                        Business logic      UI behavior logic
+ *                             │                     │
+ *     ┌─────────────────────────────────┐   ┌──────────────────────────────────────┐
+ *     │ Delegate the business logic to  │   │ Modify the UI element state in the   │
+ *     │ the ViewModel                   │   │ UI directly                          │
+ *     └─────────────────────────────────┘   └──────────────────────────────────────┘
+ *
+ *
+ */
 private val MinToolbarHeight = 0.dp
 private val MaxToolbarHeight = 160.dp
+
+@Composable
+internal fun ScheduleRoute(
+    navController: NavController,
+    tokenInvalidNavigate: () -> Unit,
+    viewModel: ScheduleViewModel = hiltViewModel(),
+) {
+    val uiStates: ScheduleViewState by viewModel.states.collectAsStateWithLifecycle()
+
+    LaunchedEffect(uiStates.isTokenValid) {
+        if (!uiStates.isTokenValid) {
+            tokenInvalidNavigate()
+        }
+    }
+
+    LaunchedEffect(uiStates.clickTimeSlots) {
+        if (uiStates.clickTimeSlots.isNotEmpty()) {
+            navController.navigateToScheduleDetail(timeSlot = uiStates.clickTimeSlots.first())
+            viewModel.dispatch(ScheduleViewAction.TimeSlotClicked)
+        }
+    }
+
+    ScheduleScreen(
+        uiStates = uiStates,
+        viewModel = viewModel,
+    )
+}
 
 // Here set toolbar scroll flag
 @Composable
@@ -91,11 +140,9 @@ private fun rememberToolbarState(toolbarHeightRange: IntRange): TopAppBarState {
 
 @Composable
 internal fun ScheduleScreen(
-    navController: NavController,
-    tokenInvalidNavigate: () -> Unit,
+    uiStates: ScheduleViewState,
     viewModel: ScheduleViewModel = hiltViewModel(),
 ) {
-    val uiStates: ScheduleViewState by viewModel.states.collectAsStateWithLifecycle()
 
     val toolbarHeightRange = with(LocalDensity.current) {
         MinToolbarHeight.roundToPx()..MaxToolbarHeight.roundToPx()
@@ -141,20 +188,9 @@ internal fun ScheduleScreen(
         }
     }
 
-    LaunchedEffect(uiStates.isTokenValid) {
-        if (!uiStates.isTokenValid) {
-            tokenInvalidNavigate()
-        }
-    }
-
-    LaunchedEffect(uiStates.clickTimeSlots) {
-        if (uiStates.clickTimeSlots.isNotEmpty()) {
-            navController.navigateToScheduleDetail(timeSlot = uiStates.clickTimeSlots.first())
-            viewModel.dispatch(ScheduleViewAction.TimeSlotClicked)
-        }
-    }
-
     if (uiStates.isTokenValid) {
+        // Add the nested scroll connection to your top level @Composable element
+        // using the nestedScroll modifier.
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -209,8 +245,6 @@ internal fun ScheduleList(
         }
     }
 
-    // Add the nested scroll connection to your top level @Composable element
-    // using the nestedScroll modifier.
     LazyColumn(
         state = listState,
         contentPadding = contentPadding,

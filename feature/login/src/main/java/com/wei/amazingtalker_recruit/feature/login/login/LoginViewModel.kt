@@ -1,9 +1,7 @@
-package com.wei.amazingtalker_recruit.feature.login.viewmodels
+package com.wei.amazingtalker_recruit.feature.login.login
 
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
-import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
-import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
 import dagger.hilt.android.lifecycle.HiltViewModel

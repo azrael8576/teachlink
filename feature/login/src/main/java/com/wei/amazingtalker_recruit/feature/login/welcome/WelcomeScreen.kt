@@ -21,9 +21,36 @@ import androidx.navigation.NavController
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.login.navigation.navigateToLogin
-import com.wei.amazingtalker_recruit.feature.login.state.WelcomeViewState
-import com.wei.amazingtalker_recruit.feature.login.viewmodels.WelcomeViewModel
 
+/**
+ *
+ * UI 事件決策樹
+ * 下圖顯示了一個決策樹，用於查找處理特定事件用例的最佳方法。
+ *
+ *                                                      ┌───────┐
+ *                                                      │ Start │
+ *                                                      └───┬───┘
+ *                                                          ↓
+ *                                       ┌───────────────────────────────────┐
+ *                                       │ Where is event originated?        │
+ *                                       └──────┬─────────────────────┬──────┘
+ *                                              ↓                     ↓
+ *                                              UI                  ViewModel
+ *                                              │                     │
+ *                           ┌─────────────────────────┐      ┌───────────────┐
+ *                           │ When the event requires │      │ Update the UI │
+ *                           │ ...                     │      │ State         │
+ *                           └─┬─────────────────────┬─┘      └───────────────┘
+ *                             ↓                     ↓
+ *                        Business logic      UI behavior logic
+ *                             │                     │
+ *     ┌─────────────────────────────────┐   ┌──────────────────────────────────────┐
+ *     │ Delegate the business logic to  │   │ Modify the UI element state in the   │
+ *     │ the ViewModel                   │   │ UI directly                          │
+ *     └─────────────────────────────────┘   └──────────────────────────────────────┘
+ *
+ *
+ */
 @Composable
 internal fun WelcomeRoute(
     navController: NavController,

@@ -1,9 +1,7 @@
-package com.wei.amazingtalker_recruit.feature.login.viewmodels
+package com.wei.amazingtalker_recruit.feature.login.welcome
 
 import androidx.lifecycle.viewModelScope
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
-import com.wei.amazingtalker_recruit.feature.login.state.WelcomeViewAction
-import com.wei.amazingtalker_recruit.feature.login.state.WelcomeViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule.state
+package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot

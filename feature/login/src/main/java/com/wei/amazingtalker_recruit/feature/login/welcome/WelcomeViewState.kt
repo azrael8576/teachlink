@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.feature.login.state
+package com.wei.amazingtalker_recruit.feature.login.welcome
 
 import com.wei.amazingtalker_recruit.core.base.Action
 import com.wei.amazingtalker_recruit.core.base.State

@@ -1,9 +1,7 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
+package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleDetailViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,18 +22,9 @@ class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
         }
     }
 
-    private fun navPopBackStack() {
-        updateState {
-            copy(
-                isBackClick = true
-            )
-        }
-    }
-
     override fun dispatch(action: ScheduleDetailViewAction) {
         when (action) {
             is ScheduleDetailViewAction.InitNavData -> initNavData(action.intervalScheduleTimeSlot)
-            is ScheduleDetailViewAction.ClickBack -> navPopBackStack()
         }
     }
 }

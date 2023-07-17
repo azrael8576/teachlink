@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule.state
+package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
@@ -12,7 +12,6 @@ sealed class ScheduleDetailViewAction : Action {
     data class InitNavData(val intervalScheduleTimeSlot: IntervalScheduleTimeSlot) :
         ScheduleDetailViewAction()
 
-    object ClickBack : ScheduleDetailViewAction()
 }
 
 data class ScheduleDetailViewState(
@@ -21,5 +20,4 @@ data class ScheduleDetailViewState(
     val end: OffsetDateTime? = null,
     val state: ScheduleState? = null,
     val duringDayType: DuringDayType? = null,
-    val isBackClick: Boolean = false,
 ) : State

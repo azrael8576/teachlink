@@ -29,11 +29,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
-import com.wei.amazingtalker_recruit.feature.login.state.LoginViewAction
-import com.wei.amazingtalker_recruit.feature.login.state.LoginViewState
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
-import com.wei.amazingtalker_recruit.feature.login.viewmodels.LoginViewModel
 
 /**
  *

@@ -20,7 +20,7 @@ import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleViewAction
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

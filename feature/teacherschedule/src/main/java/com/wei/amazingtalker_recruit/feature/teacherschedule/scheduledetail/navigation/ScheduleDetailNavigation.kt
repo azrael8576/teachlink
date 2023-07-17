@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.ScheduleDetailScreen
+import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.ScheduleDetailRoute
 
 const val scheduleDetailRoute = "schedule_detail_route"
 const val timeSlotArg = "timeSlot"
@@ -25,9 +25,15 @@ fun NavController.navigateToScheduleDetail(
 fun NavGraphBuilder.scheduleDetailScreen(navController: NavHostController) {
 
     composable(route = scheduleDetailRoute) {
-        val timeSlot = navController.previousBackStackEntry?.savedStateHandle?.get<IntervalScheduleTimeSlot>(timeSlotArg)
+        val timeSlot =
+            navController.previousBackStackEntry?.savedStateHandle?.get<IntervalScheduleTimeSlot>(
+                timeSlotArg
+            )
         timeSlot?.let {
-            ScheduleDetailScreen(timeSlot = timeSlot, navController = navController)
+            ScheduleDetailRoute(
+                timeSlot = timeSlot,
+                navController = navController
+            )
         }
     }
 }

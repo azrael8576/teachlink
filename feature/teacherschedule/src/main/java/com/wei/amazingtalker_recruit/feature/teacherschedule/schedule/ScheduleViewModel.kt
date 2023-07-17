@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.feature.teacherschedule.viewmodels
+package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
 import androidx.lifecycle.viewModelScope
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
@@ -11,10 +11,6 @@ import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.HandleTeacherScheduleResultUseCase
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewAction
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.ScheduleViewState
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.TimeListUiState
-import com.wei.amazingtalker_recruit.feature.teacherschedule.state.WeekAction
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
