@@ -2,13 +2,19 @@ package com.wei.amazingtalker_recruit.feature.login.login
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
+import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
+import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
 import org.junit.Rule
 import org.junit.Test
 import kotlin.properties.ReadOnlyProperty
@@ -47,9 +53,7 @@ class LoginScreenTest {
         // 設置 Compose UI
         composeTestRule.setContent {
             AtTheme {
-                LoginScreen(
-                    login = { _, _ -> }
-                )
+                LoginScreen(login = { _, _ -> })
             }
         }
         composeTestRule.onRoot().printToLog("currentLabelExists")
@@ -58,6 +62,47 @@ class LoginScreenTest {
         composeTestRule.onNodeWithContentDescription(account).assertExists()
         composeTestRule.onNodeWithContentDescription(password).assertExists()
         composeTestRule.onNodeWithContentDescription(login).assertExists()
+    }
+
+    @Test
+    fun checkAccountValue_whenTextInput() {
+        // 設置 Compose UI
+        val accountState = mutableStateOf("")
+
+        composeTestRule.setContent {
+            AtTheme {
+                AccountTextField(
+                    accountState
+                )
+            }
+        }
+        val resultText = TEST_ACCOUNT
+        // Sets the TextField value
+        composeTestRule.onNodeWithContentDescription(account).performTextInput(resultText)
+
+        // Asserts the TextField has the corresponding value
+        composeTestRule.onNodeWithContentDescription(account).assert(hasText(resultText))
+    }
+
+    @Test
+    fun checkPasswordValue_whenTextInput() {
+        // 設置 Compose UI
+        val passwordState = mutableStateOf("")
+
+        composeTestRule.setContent {
+            AtTheme {
+                PasswordTextField(
+                    passwordState
+                )
+            }
+        }
+        val resultText = TEST_PASSWORD
+        // Sets the TextField value
+        composeTestRule.onNodeWithContentDescription(password).performTextInput(resultText)
+        composeTestRule.onRoot().printToLog("currentLabelExists")
+
+        // Asserts the TextField has the corresponding value
+        composeTestRule.onNodeWithContentDescription(password).assert(hasText("••••••••"))
     }
 
 }

@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="welcome">Welcome Compose</string>
-    <string name="login_title">Modular Navigation:\n Home Module</string>
+    <string name="login_title">跨模組導航：\n Home Module</string>
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="login">Login</string>

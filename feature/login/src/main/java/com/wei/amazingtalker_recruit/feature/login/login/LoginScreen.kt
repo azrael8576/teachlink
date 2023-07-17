@@ -137,7 +137,7 @@ private fun Title(modifier: Modifier = Modifier) {
 
 
 @Composable
-private fun AccountTextField(
+internal fun AccountTextField(
     accountState: MutableState<String>,
 ) {
     val text = stringResource(R.string.account)
@@ -157,7 +157,7 @@ private fun AccountTextField(
 
 
 @Composable
-private fun PasswordTextField(
+internal fun PasswordTextField(
     passwordState: MutableState<String>,
 ) {
     val text = stringResource(R.string.password)
