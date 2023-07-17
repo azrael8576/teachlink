@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleViewAction
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
@@ -31,7 +30,7 @@ internal fun DateTabLayout(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
     tabs: List<OffsetDateTime>,
-    dispatch: (ScheduleViewAction) -> Unit
+    onTabClick: (OffsetDateTime, Int) -> Unit,
 ) {
     val tabWidth = remember { mutableStateOf(0.dp) } // 創建一個共享的寬度數據
 
@@ -61,7 +60,7 @@ internal fun DateTabLayout(
                 selected = selectedTabIndex == index,
                 tab = tab,
                 index = index,
-                onTabClick = dispatch,
+                onTabClick = onTabClick,
                 tabWidth = tabWidth.value
             )
         }
@@ -73,13 +72,13 @@ private fun DateTab(
     selected: Boolean,
     tab: OffsetDateTime,
     index: Int,
-    onTabClick: (ScheduleViewAction) -> Unit,
+    onTabClick: (OffsetDateTime, Int) -> Unit,
     tabWidth: Dp
 ) {
     Tab(
         selected = selected,
         onClick = {
-            onTabClick(ScheduleViewAction.SelectedTab(tab, index))
+            onTabClick(tab, index)
         },
         modifier = Modifier
             .height(70.dp)
@@ -116,7 +115,7 @@ fun DateTabLayoutPreview() {
                     OffsetDateTime.parse("2023-07-01T00:00+08:00"),
                     OffsetDateTime.parse("2023-07-02T00:00+08:00"),
                 ),
-                dispatch = {}
+                onTabClick = { _, _ -> }
             )
         }
     }

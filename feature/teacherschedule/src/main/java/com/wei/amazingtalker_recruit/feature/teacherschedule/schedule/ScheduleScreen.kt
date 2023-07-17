@@ -60,6 +60,7 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topa
 import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.TopAppBarState
 import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags.EnterAlwaysState
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.DateTabLayout
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.ScheduleListPreviewParameterProvider
@@ -126,11 +127,25 @@ internal fun ScheduleRoute(
 
     ScheduleScreen(
         uiStates = uiStates,
-        viewModel = viewModel,
+        onPreviousWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK)) },
+        onNextWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK)) },
+        onWeekDateClick = { viewModel.dispatch(ScheduleViewAction.ShowSnackBar(message = it)) },
+        onTabClick = { date, index ->
+            viewModel.dispatch(
+                ScheduleViewAction.SelectedTab(
+                    date,
+                    index
+                )
+            )
+        },
+        onListScroll = { viewModel.dispatch(ScheduleViewAction.ListScrolled) },
+        onTimeSlotClick = { item -> viewModel.dispatch(ScheduleViewAction.ClickTimeSlot(item)) },
     )
 }
 
-// Here set toolbar scroll flag
+/**
+ * Here set toolbar scroll flag
+ */
 @Composable
 private fun rememberToolbarState(toolbarHeightRange: IntRange): TopAppBarState {
     return rememberSaveable(saver = EnterAlwaysState.Saver) {
@@ -141,7 +156,12 @@ private fun rememberToolbarState(toolbarHeightRange: IntRange): TopAppBarState {
 @Composable
 internal fun ScheduleScreen(
     uiStates: ScheduleViewState,
-    viewModel: ScheduleViewModel = hiltViewModel(),
+    onPreviousWeekClick: () -> Unit,
+    onNextWeekClick: () -> Unit,
+    onWeekDateClick: (String) -> Unit,
+    onTabClick: (OffsetDateTime, Int) -> Unit,
+    onListScroll: () -> Unit,
+    onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
 ) {
 
     val toolbarHeightRange = with(LocalDensity.current) {
@@ -189,8 +209,10 @@ internal fun ScheduleScreen(
     }
 
     if (uiStates.isTokenValid) {
-        // Add the nested scroll connection to your top level @Composable element
-        // using the nestedScroll modifier.
+        /**
+         * Add the nested scroll connection to your top level @Composable element
+         * using the nestedScroll modifier.
+         */
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -211,7 +233,8 @@ internal fun ScheduleScreen(
                 listState = listState,
                 contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
                 isScrollInProgress = uiStates.isScrollInProgress,
-                dispatch = viewModel::dispatch,
+                onListScroll = onListScroll,
+                onTimeSlotClick = onTimeSlotClick,
             )
             ScheduleToolbar(
                 progress = toolbarState.progress,
@@ -220,7 +243,10 @@ internal fun ScheduleScreen(
                     .height(with(LocalDensity.current) { toolbarState.height.toDp() })
                     .graphicsLayer { translationY = toolbarState.offset },
                 uiStates = uiStates,
-                dispatch = viewModel::dispatch
+                onPreviousWeekClick = onPreviousWeekClick,
+                onNextWeekClick = onNextWeekClick,
+                onWeekDateClick = onWeekDateClick,
+                onTabClick = onTabClick,
             )
             AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
         }
@@ -234,14 +260,19 @@ internal fun ScheduleList(
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     isScrollInProgress: Boolean = false,
-    dispatch: (ScheduleViewAction) -> Unit
+    onListScroll: () -> Unit,
+    onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
 ) {
+    /**
+     * 使用 rememberUpdatedState 用於確保在 Compose 函數中的 callback（例如：事件處理器）可以獲取到最新的狀態值。
+     * 例如，你可能會在 Compose 函數中使用 rememberUpdatedState 來保存用於事件處理的狀態。
+     */
     val uiStates by rememberUpdatedState(newValue = timeListUiState)
 
     LaunchedEffect(timeListUiState) {
         if (isScrollInProgress) {
             listState.scrollToItem(0)
-            dispatch(ScheduleViewAction.ListScrolled)
+            onListScroll()
         }
     }
 
@@ -255,14 +286,18 @@ internal fun ScheduleList(
                 item {
                     TimeListHeader()
                 }
-                val groupedTimeSlots =
-                    (uiStates as TimeListUiState.Success).timeSlotList.groupBy { it.duringDayType }
+                val groupedTimeSlots = (uiStates as TimeListUiState.Success).timeSlotList
+                    .groupBy { it.duringDayType }
+
                 groupedTimeSlots.forEach { (duringDayType, timeSlots) ->
                     item {
                         TimeItemHeader(duringDayType)
                     }
                     itemsIndexed(timeSlots) { _, timeSlot ->
-                        TimeListItem(timeSlot, dispatch)
+                        TimeListItem(
+                            timeSlot = timeSlot,
+                            onTimeSlotClick = { onTimeSlotClick(it) },
+                        )
                     }
                 }
             }
@@ -282,7 +317,10 @@ private fun ScheduleToolbar(
     modifier: Modifier = Modifier,
     progress: Float,
     uiStates: ScheduleViewState,
-    dispatch: (ScheduleViewAction) -> Unit
+    onPreviousWeekClick: () -> Unit,
+    onNextWeekClick: () -> Unit,
+    onWeekDateClick: (String) -> Unit,
+    onTabClick: (OffsetDateTime, Int) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -292,12 +330,14 @@ private fun ScheduleToolbar(
         Column {
             WeekActionBar(
                 uiStates = uiStates,
-                dispatch = dispatch,
+                onPreviousWeekClick = onPreviousWeekClick,
+                onNextWeekClick = onNextWeekClick,
+                onWeekDateClick = onWeekDateClick,
             )
             WeekActionBarBottom(
                 selectedIndex = uiStates.selectedIndex,
                 tabs = uiStates.dateTabs,
-                dispatch = dispatch
+                onTabClick = onTabClick
             )
         }
     }
@@ -306,11 +346,12 @@ private fun ScheduleToolbar(
 @Composable
 fun WeekActionBar(
     uiStates: ScheduleViewState,
-    dispatch: (ScheduleViewAction) -> Unit
+    onPreviousWeekClick: () -> Unit,
+    onNextWeekClick: () -> Unit,
+    onWeekDateClick: (String) -> Unit,
 ) {
     val context = LocalContext.current
-    val styledAttributes =
-        context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+    val styledAttributes = context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
     val actionBarSizePx = styledAttributes.getDimensionPixelSize(0, 0)
     val density = context.resources.displayMetrics.density
     val actionBarSizeDp = actionBarSizePx / density
@@ -330,7 +371,7 @@ fun WeekActionBar(
             IconButton(
                 onClick = {
                     if (uiStates.isAvailablePreviousWeek) {
-                        dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
+                        onPreviousWeekClick()
                     }
                 },
                 modifier = Modifier
@@ -341,7 +382,9 @@ fun WeekActionBar(
                     contentDescription = null,
                     modifier = Modifier
                         .size(dimensionResource(id = R.dimen.toolbar_item_icon)),
-                    colorFilter = if (uiStates.isAvailablePreviousWeek) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
+                    colorFilter = if (uiStates.isAvailablePreviousWeek) ColorFilter.tint(
+                        MaterialTheme.colorScheme.primary
+                    ) else null,
                 )
             }
 
@@ -350,11 +393,7 @@ fun WeekActionBar(
                 modifier = Modifier
                     .weight(1f),
                 onClick = {
-                    dispatch(
-                        ScheduleViewAction.ShowSnackBar(
-                            message = "開啟日曆選單: $weekDate",
-                        )
-                    )
+                    onWeekDateClick("開啟日曆選單: $weekDate")
                 },
             ) {
                 Text(
@@ -366,7 +405,7 @@ fun WeekActionBar(
             }
 
             IconButton(
-                onClick = { dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK)) },
+                onClick = onNextWeekClick,
                 modifier = Modifier
                     .padding(start = 13.dp)
             ) {
@@ -386,7 +425,7 @@ fun WeekActionBar(
 private fun WeekActionBarBottom(
     selectedIndex: Int,
     tabs: MutableList<OffsetDateTime>,
-    dispatch: (ScheduleViewAction) -> Unit
+    onTabClick: (OffsetDateTime, Int) -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -405,7 +444,7 @@ private fun WeekActionBarBottom(
                 modifier = Modifier.fillMaxSize(),
                 selectedIndex = selectedIndex,
                 tabs = tabs,
-                dispatch = dispatch
+                onTabClick = onTabClick,
             )
         }
     }
@@ -465,7 +504,10 @@ fun ScheduleToolbarPreview() {
             modifier = Modifier.height(MaxToolbarHeight),
             progress = 0f,
             uiStates = ScheduleViewState(),
-            dispatch = {}
+            onPreviousWeekClick = { },
+            onNextWeekClick = { },
+            onWeekDateClick = { },
+            onTabClick = { _, _ -> },
         )
     }
 }
@@ -486,7 +528,8 @@ fun ScheduleListPreview(
             listState = rememberLazyListState(),
             contentPadding = PaddingValues(bottom = 0.dp),
             isScrollInProgress = false,
-            dispatch = { },
+            onListScroll = { },
+            onTimeSlotClick = { },
         )
     }
 }

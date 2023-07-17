@@ -20,7 +20,6 @@ import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ScheduleViewAction
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -61,12 +60,13 @@ internal fun TimeItemHeader(duringDayType: DuringDayType) {
 @Composable
 internal fun TimeListItem(
     timeSlot: IntervalScheduleTimeSlot,
-    dispatch: (ScheduleViewAction) -> Unit
+    onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit
 ) {
     if (timeSlot.state == ScheduleState.AVAILABLE) {
         AvailableTimeSlot(
-            timeSlot = timeSlot
-        ) { dispatch(ScheduleViewAction.ClickTimeSlot(timeSlot)) }
+            timeSlot = timeSlot,
+            onTimeSlotClick = { onTimeSlotClick(timeSlot) },
+        )
     } else {
         UnavailableTimeSlot(
             timeSlot = timeSlot
@@ -77,12 +77,12 @@ internal fun TimeListItem(
 @Composable
 private fun AvailableTimeSlot(
     timeSlot: IntervalScheduleTimeSlot,
-    clickTimeSlot: () -> Unit
+    onTimeSlotClick: () -> Unit
 ) {
     val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
     Button(
-        onClick = { clickTimeSlot() },
+        onClick = { onTimeSlotClick() },
         modifier = Modifier
             .padding(
                 bottom = 12.dp
@@ -152,7 +152,7 @@ fun AvailableTimeSlotPreview() {
                     state = ScheduleState.AVAILABLE,
                     duringDayType = DuringDayType.Morning
                 ),
-                clickTimeSlot = { },
+                onTimeSlotClick = { },
             )
         }
     }
