@@ -12,6 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,6 +24,7 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
+import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import java.time.OffsetDateTime
 
 /**
@@ -75,8 +79,7 @@ internal fun ScheduleDetailScreen(
 ) {
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -86,39 +89,55 @@ internal fun ScheduleDetailScreen(
                     .padding(8.dp)
                     .align(Alignment.TopStart)
             ) {
+                val teacherName = stringResource(R.string.teacher_name)
                 Text(
                     text = uiStates.teacherName.toString(),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.semantics { contentDescription = teacherName },
                 )
+                val startTime = stringResource(R.string.start_time)
                 Text(
                     text = uiStates.start.toString(),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .semantics { contentDescription = startTime },
                 )
+                val endTime = stringResource(R.string.end_time)
                 Text(
                     text = uiStates.end.toString(),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .semantics { contentDescription = endTime },
                 )
+                val state = stringResource(R.string.state)
                 Text(
                     text = uiStates.state?.name.toString(),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .semantics { contentDescription = state },
                 )
+                val duringDayType = stringResource(R.string.during_day_type)
                 Text(
                     text = uiStates.duringDayType?.name.toString(),
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .semantics { contentDescription = duringDayType },
                 )
             }
 
+            val back = stringResource(R.string.back)
             Button(
                 onClick = onBackClick,
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(bottom = 16.dp),
+                    .padding(bottom = 16.dp)
+                    .semantics { contentDescription = back },
             ) {
-                Text("Back")
+                Text(back)
             }
         }
     }
@@ -138,7 +157,7 @@ fun ScheduleDetailScreenPreview() {
                 state = ScheduleState.BOOKED,
                 duringDayType = DuringDayType.Morning,
             ),
-            onBackClick = {},
+            onBackClick = { },
         )
     }
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- 歡迎頁面 -->
     <string name="welcome">Welcome Compose</string>
+
+    <!-- 登入頁面 -->
     <string name="login_title">跨模組導航：\n Home Module</string>
     <string name="account">Account</string>
     <string name="password">Password</string>

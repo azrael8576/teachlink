@@ -9,6 +9,7 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.printToLog
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
@@ -49,7 +50,7 @@ class LoginScreenTest {
     private val login by composeTestRule.stringResource(R.string.login)
 
     @Test
-    fun showsLoginFrom() {
+    fun loginScreenTest_showsLoginFrom() {
         // 設置 Compose UI
         composeTestRule.setContent {
             AtTheme {
@@ -103,6 +104,27 @@ class LoginScreenTest {
 
         // Asserts the TextField has the corresponding value
         composeTestRule.onNodeWithContentDescription(password).assert(hasText("••••••••"))
+    }
+
+    @Test
+    fun loginScreenTest_loginButtonPressed() {
+        val account = mutableStateOf("account")
+        val password = mutableStateOf("password")
+        var resultText = ""
+
+        composeTestRule.setContent {
+            AtTheme {
+                LoginButton(
+                    accountState = account,
+                    passwordState = password,
+                    login = { account, password -> resultText = account + password}
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithContentDescription(login).performClick()
+
+        assert(resultText == account.value + password.value)
     }
 
 }

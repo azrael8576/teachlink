@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">amazingtalker-recruit</string>
+
+    <!-- 教師行事曆頁面 -->
     <string name="your_local_time_zone">Your local time zone: %1$s GMT %2$s</string>
     <string name="inquirying_teacher_calendar">You are inquiring about teacher %s\'s calendar</string>
     <string name="morning">Morning</string>
     <string name="afternoon">Afternoon</string>
     <string name="evening">Evening</string>
+
+    <!-- 教師行事曆明細頁 -->
+    <string name="teacher_name">Teacher Name</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="state">State</string>
+    <string name="during_day_type">Time</string>
+    <string name="back">Back</string>
 </resources>

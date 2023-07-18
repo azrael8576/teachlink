@@ -174,7 +174,7 @@ internal fun PasswordTextField(
 }
 
 @Composable
-private fun LoginButton(
+internal fun LoginButton(
     accountState: MutableState<String>,
     passwordState: MutableState<String>,
     login: (String, String) -> Unit

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">amazingtalker-recruit</string>
+
+    <!-- 教師行事曆頁面 -->
     <string name="your_local_time_zone">您當地的時區: %1$s GMT %2$s</string>
     <string name="inquirying_teacher_calendar">您正在查詢 %s 老師的行事曆</string>
     <string name="morning">上午</string>
     <string name="afternoon">下午</string>
     <string name="evening">晚上</string>
+
+    <!-- 教師行事曆明細頁 -->
+    <string name="teacher_name">教師名稱</string>
+    <string name="start_time">開始時間</string>
+    <string name="end_time">結束時間</string>
+    <string name="state">狀態</string>
+    <string name="during_day_type">時間</string>
+    <string name="back">上一頁</string>
 </resources>
