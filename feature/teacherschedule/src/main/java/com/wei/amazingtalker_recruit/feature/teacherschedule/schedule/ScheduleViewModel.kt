@@ -68,7 +68,7 @@ class ScheduleViewModel @Inject constructor(
 
         showSnackBar(
             resId = R.string.inquirying_teacher_calendar,
-            message = states.value._currentTeacherName,
+            message = listOf(states.value._currentTeacherName, states.value.weekDateText),
         )
         getScheduleJob = viewModelScope.launch {
             getTeacherScheduleUseCase(
@@ -125,7 +125,7 @@ class ScheduleViewModel @Inject constructor(
                         isScrollInProgress = true,
                     )
                 }
-                showSnackBar(snackbarState = SnackbarState.Error, message = result.exception.toString())
+                showSnackBar(snackbarState = SnackbarState.Error, message = listOf(result.exception.toString()))
             }
 
             is DataSourceResult.Loading -> {
@@ -166,19 +166,21 @@ class ScheduleViewModel @Inject constructor(
     private fun showSnackBar(
         snackbarState: SnackbarState = SnackbarState.Default,
         resId: Int? = null,
-        message: String,
+        message: List<String>,
     ) {
         if (resId == null) {
             snackbarManager.showMessage(
                 state = snackbarState,
-                uiText = UiText.DynamicString(message)
+                uiText = UiText.DynamicString(message.first())
             )
         } else {
             snackbarManager.showMessage(
                 state = snackbarState,
                 uiText = UiText.StringResource(
                     resId,
-                    listOf(UiText.StringResource.Args.DynamicString(message))
+                    message.map {
+                        UiText.StringResource.Args.DynamicString(it)
+                    }.toList()
                 )
             )
         }

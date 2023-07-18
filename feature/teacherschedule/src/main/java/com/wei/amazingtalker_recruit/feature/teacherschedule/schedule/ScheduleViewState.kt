@@ -18,7 +18,7 @@ enum class WeekAction {
 sealed class ScheduleViewAction : Action {
     data class ShowSnackBar(
         val resId: Int? = null,
-        val message: String,
+        val message: List<String>,
     ) : ScheduleViewAction()
 
     data class UpdateWeek(val weekAction: WeekAction) : ScheduleViewAction()

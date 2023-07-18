@@ -4,7 +4,8 @@
 
     <!-- 教師行事曆頁面 -->
     <string name="your_local_time_zone">您當地的時區: %1$s GMT %2$s</string>
-    <string name="inquirying_teacher_calendar">您正在查詢 %s 老師的行事曆</string>
+    <string name="inquirying_teacher_calendar">您正在查詢 %s 老師
+        \n%s 的行事曆。</string>
     <string name="morning">上午</string>
     <string name="afternoon">下午</string>
     <string name="evening">晚上</string>

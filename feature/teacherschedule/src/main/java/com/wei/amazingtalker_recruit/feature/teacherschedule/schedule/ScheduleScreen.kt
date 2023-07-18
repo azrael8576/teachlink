@@ -123,7 +123,7 @@ internal fun ScheduleRoute(
         uiStates = uiStates,
         onPreviousWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK)) },
         onNextWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK)) },
-        onWeekDateClick = { viewModel.dispatch(ScheduleViewAction.ShowSnackBar(message = it)) },
+        onWeekDateClick = { viewModel.dispatch(ScheduleViewAction.ShowSnackBar(message = listOf(it))) },
         onTabClick = { date, index ->
             viewModel.dispatch(
                 ScheduleViewAction.SelectedTab(
