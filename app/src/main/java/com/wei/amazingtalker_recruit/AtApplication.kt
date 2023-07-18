@@ -1,6 +1,7 @@
 package com.wei.amazingtalker_recruit
 
 import android.app.Application
+import com.wei.amazingtalker_recruit.core.common.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
