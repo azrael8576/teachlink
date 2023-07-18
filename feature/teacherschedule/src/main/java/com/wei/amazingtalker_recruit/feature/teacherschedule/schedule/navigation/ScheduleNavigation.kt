@@ -12,7 +12,7 @@ fun NavController.navigateToSchedule(navOptions: NavOptions? = null) {
     this.navigate(scheduleRoute, navOptions)
 }
 
-fun NavGraphBuilder.scheduleScreen(
+fun NavGraphBuilder.scheduleGraph(
     navController: NavController,
     tokenInvalidNavigate: () -> Unit,
     nestedGraphs: NavGraphBuilder.() -> Unit,

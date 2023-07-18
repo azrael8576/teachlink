@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.wei.amazingtalker_recruit.feature.login.login.navigation.loginScreen
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeGraph
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.scheduleRoute
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.scheduleScreen
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.scheduleGraph
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.scheduleDetailScreen
 import com.wei.amazingtalker_recruit.ui.AtAppState
 
@@ -29,7 +29,7 @@ fun AtNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        scheduleScreen(
+        scheduleGraph(
             navController = navController,
             tokenInvalidNavigate = { appState.tokenInvalidNavigate() },
             nestedGraphs = {

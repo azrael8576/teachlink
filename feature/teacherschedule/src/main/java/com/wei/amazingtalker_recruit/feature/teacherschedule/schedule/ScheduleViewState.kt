@@ -23,8 +23,6 @@ sealed class ScheduleViewAction : Action {
 
     data class UpdateWeek(val weekAction: WeekAction) : ScheduleViewAction()
     data class SelectedTab(val date: OffsetDateTime, val position: Int) : ScheduleViewAction()
-    data class ClickTimeSlot(val item: IntervalScheduleTimeSlot) : ScheduleViewAction()
-    object TimeSlotClicked : ScheduleViewAction()
     object ListScrolled : ScheduleViewAction()
 }
 
@@ -34,7 +32,6 @@ data class ScheduleViewState(
     val selectedIndex: Int = 0,
     val timeListUiState: TimeListUiState = TimeListUiState.Loading,
     val isTokenValid: Boolean = TokenManager.isTokenValid,
-    val clickTimeSlots: List<IntervalScheduleTimeSlot> = listOf(),
     val isScrollInProgress: Boolean = false,
 ) : State {
     private val weekDataHelper = WeekDataHelper()

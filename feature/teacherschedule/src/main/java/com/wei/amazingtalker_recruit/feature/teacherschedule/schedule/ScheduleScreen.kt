@@ -118,13 +118,6 @@ internal fun ScheduleRoute(
         }
     }
 
-    LaunchedEffect(uiStates.clickTimeSlots) {
-        if (uiStates.clickTimeSlots.isNotEmpty()) {
-            navController.navigateToScheduleDetail(timeSlot = uiStates.clickTimeSlots.first())
-            viewModel.dispatch(ScheduleViewAction.TimeSlotClicked)
-        }
-    }
-
     ScheduleScreen(
         uiStates = uiStates,
         onPreviousWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK)) },
@@ -139,7 +132,7 @@ internal fun ScheduleRoute(
             )
         },
         onListScroll = { viewModel.dispatch(ScheduleViewAction.ListScrolled) },
-        onTimeSlotClick = { item -> viewModel.dispatch(ScheduleViewAction.ClickTimeSlot(item)) },
+        onTimeSlotClick = { item -> navController.navigateToScheduleDetail(timeSlot = item) },
     )
 }
 

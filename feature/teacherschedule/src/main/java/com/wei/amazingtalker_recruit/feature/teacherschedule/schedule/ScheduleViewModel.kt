@@ -184,14 +184,6 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    private fun clickTimeSlot(item: IntervalScheduleTimeSlot) {
-        updateState {
-            copy(
-                clickTimeSlots = clickTimeSlots + item
-            )
-        }
-    }
-
     override fun dispatch(action: ScheduleViewAction) {
         Timber.d("dispatch $action")
         when (action) {
@@ -209,18 +201,6 @@ class ScheduleViewModel @Inject constructor(
 
             is ScheduleViewAction.SelectedTab -> {
                 onTabSelected(action.date, action.position)
-            }
-
-            is ScheduleViewAction.ClickTimeSlot -> {
-                clickTimeSlot(action.item)
-            }
-
-            ScheduleViewAction.TimeSlotClicked -> {
-                updateState {
-                    copy(
-                        clickTimeSlots = clickTimeSlots.drop(1)
-                    )
-                }
             }
 
             ScheduleViewAction.ListScrolled -> {
