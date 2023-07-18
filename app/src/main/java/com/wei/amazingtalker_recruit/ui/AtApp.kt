@@ -134,7 +134,6 @@ suspend fun collectAndShowSnackbar(
             if (message.state == SnackbarState.Error) {
                 snackbarHostState.showSnackbar(
                     message = ErrorTextPrefix + text,
-                    duration = SnackbarDuration.Long,
                 )
             } else {
                 snackbarHostState.showSnackbar(message = text)
