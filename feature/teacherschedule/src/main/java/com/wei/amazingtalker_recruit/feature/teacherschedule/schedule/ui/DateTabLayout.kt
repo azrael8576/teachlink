@@ -61,7 +61,7 @@ internal fun DateTabLayout(
                 tab = tab,
                 index = index,
                 onTabClick = onTabClick,
-                tabWidth = tabWidth.value
+                tabWidth = { tabWidth.value }
             )
         }
     }
@@ -73,7 +73,7 @@ private fun DateTab(
     tab: OffsetDateTime,
     index: Int,
     onTabClick: (OffsetDateTime, Int) -> Unit,
-    tabWidth: Dp
+    tabWidth: () -> Dp
 ) {
     Tab(
         selected = selected,
@@ -82,7 +82,7 @@ private fun DateTab(
         },
         modifier = Modifier
             .height(70.dp)
-            .width(tabWidth)
+            .width(tabWidth())
     ) {
         val dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
         val textColor =

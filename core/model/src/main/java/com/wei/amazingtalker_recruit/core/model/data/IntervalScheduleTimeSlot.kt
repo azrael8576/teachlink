@@ -3,6 +3,7 @@ package com.wei.amazingtalker_recruit.core.model.data
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
+import androidx.compose.runtime.Stable
 
 /**
  * 表示切分後的時間段的資料類別。
@@ -11,6 +12,7 @@ import java.time.OffsetDateTime
  * @param state 時間段的狀態。
  * @param duringDayType 時間段的上午/下午/晚上類型。
  */
+@Stable
 @Parcelize
 data class IntervalScheduleTimeSlot(
     val start: OffsetDateTime,

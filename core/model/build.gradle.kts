@@ -36,6 +36,14 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
+    }
+
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
@@ -51,4 +59,15 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    // Compose
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
+    // main APIs for the underlying toolkit systems,
+    // such as input and measurement/layout
+    implementation(libs.androidx.compose.ui.core)
+    implementation(libs.androidx.compose.ui.util)
+    implementation(libs.androidx.compose.foundation)
 }

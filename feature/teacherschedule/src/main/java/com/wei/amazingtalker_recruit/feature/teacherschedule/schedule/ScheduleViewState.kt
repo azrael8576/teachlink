@@ -50,7 +50,10 @@ data class ScheduleViewState(
 }
 
 sealed interface TimeListUiState {
-    data class Success(val timeSlotList: List<IntervalScheduleTimeSlot>) : TimeListUiState
+    data class Success(private val timeSlotList: List<IntervalScheduleTimeSlot>) : TimeListUiState {
+        val groupedTimeSlots
+            get() = timeSlotList.groupBy { it.duringDayType }
+    }
     object Error : TimeListUiState
     object Loading : TimeListUiState
 }

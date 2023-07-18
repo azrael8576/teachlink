@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -279,10 +280,8 @@ internal fun ScheduleList(
                 item {
                     TimeListHeader()
                 }
-                val groupedTimeSlots = (uiStates as TimeListUiState.Success).timeSlotList
-                    .groupBy { it.duringDayType }
 
-                groupedTimeSlots.forEach { (duringDayType, timeSlots) ->
+                (uiStates as TimeListUiState.Success).groupedTimeSlots.forEach { (duringDayType, timeSlots) ->
                     item {
                         TimeItemHeader(duringDayType)
                     }
@@ -344,7 +343,8 @@ fun WeekActionBar(
     onWeekDateClick: (String) -> Unit,
 ) {
     val context = LocalContext.current
-    val styledAttributes = context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+    val styledAttributes =
+        context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
     val actionBarSizePx = styledAttributes.getDimensionPixelSize(0, 0)
     val density = context.resources.displayMetrics.density
     val actionBarSizeDp = actionBarSizePx / density
@@ -451,13 +451,18 @@ enum class ToolbarStatus {
 fun AnimateToolbarOffset(
     topAppBarState: TopAppBarState,
     listState: LazyListState,
-    toolbarHeightRange: IntRange
+    toolbarHeightRange: IntRange,
 ) {
-    val toolbarStatus = deriveToolbarStatus(topAppBarState.scrollOffset, toolbarHeightRange)
+    val toolbarStatus = remember {
+        derivedStateOf {
+            deriveToolbarStatus(topAppBarState.scrollOffset, toolbarHeightRange)
+        }
+    }
+    val isScrollInProgress = rememberUpdatedState(newValue = listState.isScrollInProgress)
 
-    LaunchedEffect(topAppBarState, listState.isScrollInProgress) {
-        if (!listState.isScrollInProgress) {
-            when (toolbarStatus) {
+    LaunchedEffect(topAppBarState, isScrollInProgress.value) {
+        if (!isScrollInProgress.value) {
+            when (toolbarStatus.value) {
                 ToolbarStatus.Hidden -> {
                     animateTo(topAppBarState, toolbarHeightRange.last.toFloat())
                 }
