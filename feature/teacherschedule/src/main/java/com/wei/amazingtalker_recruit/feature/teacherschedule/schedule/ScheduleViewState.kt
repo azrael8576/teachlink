@@ -5,6 +5,7 @@ import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.base.Action
 import com.wei.amazingtalker_recruit.core.base.State
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
+import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import java.time.OffsetDateTime
@@ -50,10 +51,7 @@ data class ScheduleViewState(
 }
 
 sealed interface TimeListUiState {
-    data class Success(private val timeSlotList: List<IntervalScheduleTimeSlot>) : TimeListUiState {
-        val groupedTimeSlots
-            get() = timeSlotList.groupBy { it.duringDayType }
-    }
-    object Error : TimeListUiState
+    data class Success(val groupedTimeSlots: Map<DuringDayType, List<IntervalScheduleTimeSlot>>) : TimeListUiState
+    object LoadFailed : TimeListUiState
     object Loading : TimeListUiState
 }

@@ -13,7 +13,7 @@ class ScheduleListPreviewParameterProvider : PreviewParameterProvider<TimeListUi
 
     override val values: Sequence<TimeListUiState> = sequenceOf(
         TimeListUiState.Success(
-            timeSlotList = timeSlotList,
+            groupedTimeSlots = timeSlotList.groupBy { it.duringDayType },
         ),
     )
 }

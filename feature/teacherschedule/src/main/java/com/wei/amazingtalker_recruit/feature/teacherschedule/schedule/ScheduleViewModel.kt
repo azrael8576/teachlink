@@ -105,13 +105,16 @@ class ScheduleViewModel @Inject constructor(
     ) {
         when (result) {
             is DataSourceResult.Success -> {
-                val filteredList = result.data.filter { item ->
-                    item.start.dayOfYear == date.dayOfYear
-                }
+                val groupedTimeSlots = result.data
+                    .filter { item ->
+                        item.start.dayOfYear == date.dayOfYear
+                    }
+                    .groupBy { it.duringDayType }
+
                 updateState {
-                    Timber.d("filterTimeListByDate Success $date \n $filteredList")
+                    Timber.d("filterTimeListByDate Success $date \n $groupedTimeSlots")
                     copy(
-                        timeListUiState = TimeListUiState.Success(timeSlotList = filteredList),
+                        timeListUiState = TimeListUiState.Success(groupedTimeSlots = groupedTimeSlots),
                         isScrollInProgress = true,
                     )
                 }
@@ -119,9 +122,9 @@ class ScheduleViewModel @Inject constructor(
 
             is DataSourceResult.Error -> {
                 updateState {
-                    Timber.d("filterTimeListByDate Error")
+                    Timber.e("filterTimeListByDate Error: ${result.exception.toString()}")
                     copy(
-                        timeListUiState = TimeListUiState.Error,
+                        timeListUiState = TimeListUiState.LoadFailed,
                         isScrollInProgress = true,
                     )
                 }

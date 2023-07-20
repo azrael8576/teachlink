@@ -17,4 +17,6 @@
     <string name="state">狀態</string>
     <string name="during_day_type">時間</string>
     <string name="back">上一頁</string>
+    <string name="loading">Loading...</string>
+    <string name="load_failed">🛠️ LoadFailed</string>
 </resources>
