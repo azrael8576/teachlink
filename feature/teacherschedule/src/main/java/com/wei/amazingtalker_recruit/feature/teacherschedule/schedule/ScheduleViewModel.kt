@@ -10,7 +10,6 @@ import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
-import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.HandleTeacherScheduleResultUseCase
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -25,7 +24,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
     private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
-    private val handleTeacherScheduleResultUseCase: HandleTeacherScheduleResultUseCase,
     private val weekDataHelper: WeekDataHelper,
     private val snackbarManager: SnackbarManager,
 ) : BaseViewModel<
@@ -79,7 +77,7 @@ class ScheduleViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = DataSourceResult.Loading
             ).collect { result ->
-                _scheduleTimeList.value = handleTeacherScheduleResultUseCase(result)
+                _scheduleTimeList.value = result
                 filterTimeListByDate(
                     _scheduleTimeList.value,
                     states.value.dateTabs[states.value.selectedIndex]

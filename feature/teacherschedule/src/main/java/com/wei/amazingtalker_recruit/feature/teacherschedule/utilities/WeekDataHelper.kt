@@ -6,6 +6,9 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
+/**
+ * 輔助處理關於週數據的類別。
+ */
 class WeekDataHelper @Inject constructor() {
     fun getQueryDateUtc(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean): OffsetDateTime {
         return if (resetToStartOfDay) {
