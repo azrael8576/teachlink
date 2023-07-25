@@ -4,13 +4,17 @@ import com.wei.amazingtalker_recruit.core.extensions.getDuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTimeSlots
-import timber.log.Timber
-import java.time.Duration
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import javax.inject.Inject
+
+enum class TimeInterval(val value: Long) {
+    INTERVAL_5(5),
+    INTERVAL_10(10),
+    INTERVAL_30(30),
+}
 
 /**
  * 獲取固定間隔本地時刻集合
@@ -22,46 +26,21 @@ import javax.inject.Inject
 class IntervalizeScheduleUseCase @Inject constructor() {
     private val currentTimezone = ZoneId.systemDefault()
 
-    companion object {
-        const val MINUTES_PER_HOUR = 60
-    }
-
     operator fun invoke(
         teacherScheduleList: List<NetworkTimeSlots>,
-        timeInterval: Long,
+        timeInterval: TimeInterval,
         scheduleState: ScheduleState
-    ): MutableList<IntervalScheduleTimeSlot> {
+    ): List<IntervalScheduleTimeSlot> {
 
-        // 創造一個空間的列表用於存儲生成的時間段
-        val scheduleTimeList = mutableListOf<IntervalScheduleTimeSlot>()
-
-        // 循環處理每個老師的時間段
-        for (teacherSchedule in teacherScheduleList) {
-            // 將 UTC 時間轉換為本地時間
-            var currentDateTime = utcToLocalTime(teacherSchedule.startUtc)
+        return teacherScheduleList.flatMap { teacherSchedule ->
+            val startDateTime = utcToLocalTime(teacherSchedule.startUtc)
             val endDateTime = utcToLocalTime(teacherSchedule.endUtc)
 
-            // 當前時間小於結束時間，繼續創建時間段
-            while (currentDateTime.isBefore(endDateTime)) {
-                // 創新的時間段並添加到列表
-                val interval = createInterval(currentDateTime, timeInterval, scheduleState)
-                scheduleTimeList.add(interval)
-
-                // 更新當前時間為下一個時間段的開始時間
-                currentDateTime = currentDateTime.plusMinutes(timeInterval)
-
-                // 如果當前時間大於結束時間，則不添加此區段並拋出異常提示
-                if (currentDateTime.isAfter(endDateTime)) {
-                    val duration = Duration.between(endDateTime, currentDateTime)
-                    val minutes = duration.toMinutes() % MINUTES_PER_HOUR // 取得分鐘數差
-
-                    Timber.e("剩餘時間不足切分: $endDateTime, 欲切分至: $currentDateTime, 差異時間分鐘數: $minutes")
-                }
-            }
+            generateSequence(startDateTime) { it.plusMinutes(timeInterval.value) }
+                .takeWhile { it.isBefore(endDateTime) }
+                .map { createInterval(it, timeInterval.value, scheduleState, endDateTime) }
+                .toList()
         }
-
-        //返回生成的時間段列表
-        return scheduleTimeList
     }
 
     /**
@@ -69,16 +48,23 @@ class IntervalizeScheduleUseCase @Inject constructor() {
      * @param startDateTime 開始時間。
      * @param timeInterval 時間間隔（以分鐘為單位）。
      * @param scheduleState 時間段的狀態。
+     * @param endDateTime 結束時間。
      * @return IntervalScheduleTimeSlot 時間段物件。
      */
     private fun createInterval(
         startDateTime: OffsetDateTime,
         timeInterval: Long,
-        scheduleState: ScheduleState
+        scheduleState: ScheduleState,
+        endDateTime: OffsetDateTime
     ): IntervalScheduleTimeSlot {
+        val nextDateTime = startDateTime.plusMinutes(timeInterval)
+        if (nextDateTime.isAfter(endDateTime) && !nextDateTime.isEqual(endDateTime)) {
+            throw IllegalStateException("剩餘時間不足切分: ${startDateTime}, 欲切分至: ${nextDateTime}")
+        }
+
         return IntervalScheduleTimeSlot(
             startDateTime,
-            startDateTime.plusMinutes(timeInterval),
+            nextDateTime,
             scheduleState,
             startDateTime.getDuringDayType()
         )

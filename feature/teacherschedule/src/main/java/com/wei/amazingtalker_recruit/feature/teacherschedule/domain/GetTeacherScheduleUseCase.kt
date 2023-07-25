@@ -2,11 +2,11 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.domain
 
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
 import com.wei.amazingtalker_recruit.core.domain.IntervalizeScheduleUseCase
+import com.wei.amazingtalker_recruit.core.domain.TimeInterval
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
 import com.wei.amazingtalker_recruit.core.result.asDataSourceResult
-import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.SCHEDULE_TIME_INTERVAL
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -19,6 +19,8 @@ class GetTeacherScheduleUseCase @Inject constructor(
     private val teacherScheduleRepository: TeacherScheduleRepository,
     private val intervalizeScheduleUseCase: IntervalizeScheduleUseCase
 ) {
+    private val scheduleStateTimeInterval: TimeInterval = TimeInterval.INTERVAL_30
+
     suspend operator fun invoke(
         teacherName: String,
         startedAtUtc: String
@@ -35,14 +37,14 @@ class GetTeacherScheduleUseCase @Inject constructor(
                         scheduleTimeList.addAll(
                             intervalizeScheduleUseCase(
                                 result.data.available,
-                                SCHEDULE_TIME_INTERVAL,
+                                scheduleStateTimeInterval,
                                 ScheduleState.AVAILABLE
                             )
                         )
                         scheduleTimeList.addAll(
                             intervalizeScheduleUseCase(
                                 result.data.booked,
-                                SCHEDULE_TIME_INTERVAL,
+                                scheduleStateTimeInterval,
                                 ScheduleState.BOOKED
                             )
                         )
