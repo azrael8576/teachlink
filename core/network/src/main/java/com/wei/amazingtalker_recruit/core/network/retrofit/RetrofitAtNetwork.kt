@@ -4,19 +4,15 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.wei.amazingtalker_recruit.core.network.AtNetworkDataSource
 import com.wei.amazingtalker_recruit.core.network.BuildConfig
 import com.wei.amazingtalker_recruit.core.network.model.NetworkTeacherSchedule
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
-
-const val AMAZING_TALKER_SERVICE_BASE_URL = BuildConfig.ServerUrl
 
 /**
  * Retrofit API declaration for AmazingTalker Network API
@@ -32,34 +28,21 @@ interface RetrofitAtNetworkApi {
     ): NetworkTeacherSchedule
 }
 
-private const val BASE_URL = AMAZING_TALKER_SERVICE_BASE_URL
+private const val AtBaseUrl = BuildConfig.ServerUrl
 
 /**
  * [Retrofit] backed [AtNetworkDataSource]
  */
 @Singleton
-class RetrofitAtNetwork @Inject constructor() : AtNetworkDataSource {
-
-    private val okHttpCallFactory = OkHttpClient.Builder()
-        .addInterceptor(
-            HttpLoggingInterceptor()
-                .apply {
-                    if (BuildConfig.DEBUG) {
-                        setLevel(HttpLoggingInterceptor.Level.BODY)
-                    }
-                },
-        )
-        .build()
-
-    private val networkJson = Json {
-        ignoreUnknownKeys = true
-    }
+class RetrofitAtNetwork @Inject constructor(
+    networkJson: Json,
+    okhttpCallFactory: Call.Factory,
+) : AtNetworkDataSource {
 
     private val networkApi = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .callFactory(okHttpCallFactory)
+        .baseUrl(AtBaseUrl)
+        .callFactory(okhttpCallFactory)
         .addConverterFactory(
-            @OptIn(ExperimentalSerializationApi::class)
             networkJson.asConverterFactory("application/json".toMediaType()),
         )
         .build()
