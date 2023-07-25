@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
     testImplementation(libs.junit4)
+    androidTestImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
 //    androidTestImplementation(libs.androidx.test.espresso.core)
 
@@ -80,6 +81,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -120,4 +122,21 @@ dependencies {
 
     // Optional - Integration with LiveData
     implementation(libs.androidx.compose.runtime.livedata)
+
+    // Local unit tests
+    implementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.arch.core.test)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.mockk)
+
+    // Instrumentation tests
+    androidTestImplementation(libs.hilt.android.test)
+    kaptAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.androidx.arch.core.test)
+    androidTestImplementation(libs.google.truth)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.okhttp.mockwebserver)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.androidx.test.runner)
 }

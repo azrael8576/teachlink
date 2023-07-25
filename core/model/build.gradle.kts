@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
     testImplementation(libs.junit4)
+    androidTestImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
 //    androidTestImplementation(libs.androidx.test.espresso.core)
 

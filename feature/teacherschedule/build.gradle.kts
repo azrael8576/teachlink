@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
     testImplementation(libs.junit4)
+    androidTestImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
 //    androidTestImplementation(libs.androidx.test.espresso.core)
 
@@ -77,6 +78,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 
     // Hilt
     implementation(libs.hilt.android)

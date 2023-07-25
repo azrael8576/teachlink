@@ -12,6 +12,7 @@ okhttp = "4.7.2"
 retrofit2 = "2.9.0"
 retrofitKotlinxSerializationJson = "0.8.0"
 hilt = "2.45"
+hiltTest = "2.44"
 kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.4.1"
 timber = "5.0.1"
@@ -22,6 +23,10 @@ androidGradlePlugin = "7.4.2"
 kotlin = "1.8.21"
 navigationSafeArgsKotlin = "2.5.3"
 androidxComposeCompiler = "1.4.7"
+androidxTestCore = "1.5.0"
+androidxArchCore = "2.2.0"
+googleTruth = "1.1.5"
+mockk = "1.10.5"
 
 [libraries]
 
@@ -31,8 +36,20 @@ androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", versi
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
+androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTestCore" }
+androidx-arch-core-test = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidxArchCore" }
+google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 # 先註解，說不定還有用
 #androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
+
+# Mockk
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+
+# Instrumentation tests
+hilt-android-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltTest" }
+hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltTest" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestCore" }
 
 # LifeCycle
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
@@ -51,6 +68,7 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 
 # Okhttp Interceptor
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 
 # Retrofit2
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
