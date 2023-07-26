@@ -59,4 +59,11 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
+
+    // Local unit tests
+    implementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.arch.core.test)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.mockk)
 }

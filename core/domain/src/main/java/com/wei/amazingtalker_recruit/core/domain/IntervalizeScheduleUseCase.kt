@@ -51,7 +51,7 @@ class IntervalizeScheduleUseCase @Inject constructor() {
      * @param endDateTime 結束時間。
      * @return IntervalScheduleTimeSlot 時間段物件。
      */
-    private fun createInterval(
+    internal fun createInterval(
         startDateTime: OffsetDateTime,
         timeInterval: Long,
         scheduleState: ScheduleState,
