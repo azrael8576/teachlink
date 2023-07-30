@@ -59,7 +59,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
   
 對於正常開發，請使用該 `debug` variant。對於 UI 性能測試，請使用該 `release` variant。  
   
-> **Note:**  詳見 Google官方網誌文章 [_Why should you always test Compose performance in release?_](https://medium.com/androiddevelopers/why-should-you-always-test-compose-performance-in-release-4168dd0f2c71)  
+> **Note:**  詳見 Google 官方網誌文章 [_Why should you always test Compose performance in release?_](https://medium.com/androiddevelopers/why-should-you-always-test-compose-performance-in-release-4168dd0f2c71)
   
   
 ## Screenshots  
@@ -98,11 +98,9 @@ Split screen & Offline error (Error Snackbar)
 1) **立即處理一次性的 ViewModel 事件，並將其降為 UI 狀態。**  
 2) **使用可觀察的數據持有類型來公開狀態。**  
   
-> **Note:** In some apps, you might have seen ViewModel events being exposed to the UI using  [_Kotlin Channels_](https://kotlinlang.org/docs/channels.html)  or other reactive streams. When the producer (the ViewModel) outlives the consumer (UI—Compose or Views), these solutions don't guarantee the delivery and processing of those events. This can result in future problems for the developer, and it's also an unacceptable user experience for most apps because this could leave the app in an inconsistent state, it could introduce bugs, or the user might miss critical information.
-> 
-> If you’re in one of these situations, reconsider what that one-off ViewModel event actually means for your UI. Handle them immediately and reduce them to UI state. UI state better represents the UI at a given point in time, it gives you more delivery and processing guarantees, it's usually easier to test, and it integrates consistently with the rest of your app.
-> 
-> To learn more about why you shouldn't use the aforementioned APIs with some code examples, read the  [_ViewModel: One-off event antipatterns_](https://medium.com/androiddevelopers/viewmodel-one-off-event-antipatterns-16a1da869b95)  blog post.
+> **Note:** 關於不應使用上述 API 的理由和示例，
+>
+> 請參閱 Google 官方網誌文章 [_ViewModel: One-off event antipatterns_](https://medium.com/androiddevelopers/viewmodel-one-off-event-antipatterns-16a1da869b95)
 
 ## Modularization  
   
