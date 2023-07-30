@@ -121,15 +121,15 @@ Split screen & Offline error (Error Snackbar)
 | `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`TestTeacherScheduleRepository`<br>... |
 
 ## Testing
-為了方便測試，**Amazingtalker-Recruit** 使用依賴注入 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android)。
+**Amazingtalker-Recruit** 採用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來實現依賴注入。大部分的資料元件都被定義成接口，並根據需求綁定對應的具體實現。
 
-大部分的資料層元件都以介面的方式定義。接著，會根據不同的需求，綁定具體實現，來對應用程式中的其他元件提供這些介面。在進行測試時，**Amazingtalker-Recruit** 的顯著特點在於並**未使用**任何的 mocking libraries。反之，我們會透過 Hilt 的測試 API（或者對 `ViewModel` 測試來說，我們會選擇使用手動建構器注入）將正式的實現替換為 test doubles。
+在進行測試時，**Amazingtalker-Recruit** 並**未使用**任何 mocking libraries，而是用 Hilt 的測試 API 來將正式的實現替換成測試版本，這些測試版本實作了相同的接口，但提供更簡單且仍具有真實性的實現方式，並附加一些用於測試的掛鉤。
 
-這些 test doubles 會實作與正式環境相同的介面，並提供一種更簡化（但仍然真實）的實現方式，並附加額外的測試 hooks。這樣的設計方式將減少測試的脆弱性，可以執行更多正式環境的程式碼，而不僅僅只驗證對模擬物件特定呼叫的情形。
+這種設計方法可以減少測試的脆弱性，並能執行更多實際的程式碼，不僅僅是驗證模擬物件的特定呼叫。
 
-範例：
+Examples：
 
--   我們針對每個 repository 設有 `Test` 實作，它們實作了完整的 repository interface，並提供只用於測試的 hooks。`ViewModel` 測試會使用這些 `Test` repository，因此可以透過只用於測試的 hooks 來操作 `Test` repository 的狀態，並驗證結果的行為，而不僅僅是檢查特定的 repository 方法是否被呼叫。
+- 我們為每個 repository 提供了用於測試的實作，它們實現了完整的接口，並有一些只用於測試的掛鉤。我們在測試 `ViewModel` 時，會使用這些測試版的 repository，透過這些測試掛鉤來操控它們的狀態並驗證結果。
 
 ## 原需求文件  
   
