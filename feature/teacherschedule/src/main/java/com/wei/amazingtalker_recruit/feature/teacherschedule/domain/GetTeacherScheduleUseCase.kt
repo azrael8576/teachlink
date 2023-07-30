@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+internal val SCHEDULE_STATE_TIME_INTERVAL : TimeInterval = TimeInterval.INTERVAL_30
+
 /**
  * 用於獲取教師課程表的 use case。它從 [TeacherScheduleRepository] 獲取課程表信息，
  * 並使用 [IntervalizeScheduleUseCase] 將其分解成區間時段。
@@ -19,7 +21,6 @@ class GetTeacherScheduleUseCase @Inject constructor(
     private val teacherScheduleRepository: TeacherScheduleRepository,
     private val intervalizeScheduleUseCase: IntervalizeScheduleUseCase
 ) {
-    private val scheduleStateTimeInterval: TimeInterval = TimeInterval.INTERVAL_30
 
     suspend operator fun invoke(
         teacherName: String,
@@ -37,14 +38,14 @@ class GetTeacherScheduleUseCase @Inject constructor(
                         scheduleTimeList.addAll(
                             intervalizeScheduleUseCase(
                                 result.data.available,
-                                scheduleStateTimeInterval,
+                                SCHEDULE_STATE_TIME_INTERVAL,
                                 ScheduleState.AVAILABLE
                             )
                         )
                         scheduleTimeList.addAll(
                             intervalizeScheduleUseCase(
                                 result.data.booked,
-                                scheduleStateTimeInterval,
+                                SCHEDULE_STATE_TIME_INTERVAL,
                                 ScheduleState.BOOKED
                             )
                         )

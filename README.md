@@ -117,7 +117,8 @@ Split screen & Offline error (Error Snackbar)
 | `core:domain` | 包含被多個模組共享的 UseCase。 | `IntervalizeScheduleUseCase` |    
 | `core:model` | 提供整個應用程式所使用的模型類別。 | `IntervalScheduleTimeSlot,`<br>`ScheduleTimeSlot` |    
 | `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitAtNetworkApi` |    
-| `core:designsystem` | 包含整個應用程式 UI 設計相關。<br>eg. theme、UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |    
+| `core:designsystem` | 包含整個應用程式設計系統相關。<br>eg. app theme、Core UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |
+| `core:testing` | 測試依賴項、repositories 和 util 類。 | *TODO*... |
   
 ## 原需求文件  
   

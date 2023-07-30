@@ -23,3 +23,4 @@ include(":core:designsystem")
 
 include(":feature:login")
 include(":feature:teacherschedule")
+include(":core:testing")
