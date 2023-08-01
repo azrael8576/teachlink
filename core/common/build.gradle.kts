@@ -116,4 +116,8 @@ dependencies {
 
     // Optional - Integration with LiveData
     implementation(libs.androidx.compose.runtime.livedata)
+
+    // For flow test
+    testImplementation(libs.app.cash.turbine)
+    testImplementation(kotlin("test"))
 }

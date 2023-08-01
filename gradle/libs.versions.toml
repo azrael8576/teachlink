@@ -27,6 +27,7 @@ androidxTestCore = "1.5.0"
 androidxArchCore = "2.2.0"
 googleTruth = "1.1.5"
 mockk = "1.10.5"
+turbine = "1.0.0"
 
 [libraries]
 
@@ -120,6 +121,9 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 
 # Optional - Integration with LiveData
 androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+
+# Turbine. A small testing library for kotlinx.coroutines Flow
+app-cash-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

@@ -67,6 +67,11 @@ dependencies {
     // Timber
     implementation(libs.timber)
 
+    // For testing module
+    implementation(libs.hilt.android.test)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.test.runner)
+
     // UI Tests
     implementation(libs.androidx.compose.ui.ui.test.junit4)
     androidTestImplementation(libs.androidx.compose.ui.test)
@@ -78,4 +83,14 @@ dependencies {
     testImplementation(libs.google.truth)
     testImplementation(libs.okhttp.mockwebserver)
     testImplementation(libs.mockk)
+
+    // Instrumentation tests
+    androidTestImplementation(libs.hilt.android.test)
+    kaptAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.androidx.arch.core.test)
+    androidTestImplementation(libs.google.truth)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.okhttp.mockwebserver)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.androidx.test.runner)
 }
