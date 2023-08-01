@@ -116,7 +116,7 @@ Split screen & Offline error (Error Snackbar)
 | `core:model` | 提供整個應用程式所使用的模型類別。 | `IntervalScheduleTimeSlot,`<br>`ScheduleTimeSlot` |    
 | `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitAtNetworkApi` |    
 | `core:designsystem` | 包含整個應用程式設計系統相關。<br>eg. app theme、Core UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |
-| `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`TestTeacherScheduleRepository`<br>... |
+| `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`AtTestRunner,`<br>... |
 
 ## Testing
 **Amazingtalker-Recruit** 採用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來實現依賴注入。大部分的資料元件都被定義成接口，並根據需求綁定對應的具體實現。

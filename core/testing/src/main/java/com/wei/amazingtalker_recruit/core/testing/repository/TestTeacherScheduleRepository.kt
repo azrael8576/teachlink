@@ -47,6 +47,10 @@ class TestTeacherScheduleRepository: TeacherScheduleRepository {
      * A test-only API to cause `getTeacherAvailability()` to throw an exception.
      */
     fun causeError() {
-        errorException = Exception("Test exception")
+        errorException = Exception(ErrorExceptionMessage)
+    }
+
+    companion object {
+        const val ErrorExceptionMessage = "Test exception"
     }
 }

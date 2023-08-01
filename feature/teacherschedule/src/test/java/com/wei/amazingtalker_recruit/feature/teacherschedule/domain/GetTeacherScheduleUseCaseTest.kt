@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.domain
 
+import com.google.common.truth.Truth.assertThat
 import com.wei.amazingtalker_recruit.core.domain.IntervalizeScheduleUseCase
 import com.wei.amazingtalker_recruit.core.domain.TimeInterval
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
@@ -13,7 +14,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -65,13 +65,9 @@ class GetTeacherScheduleUseCaseTest {
 
         // Assert
         val results = resultFlow.toList()
-        assertTrue(results[0] is DataSourceResult.Loading)
-        when (val result = results[1]) {
-            is DataSourceResult.Success -> {
-                assertEquals(expectedIntervalSchedule, result.data)
-            }
-            else -> fail("Unexpected result: $result")
-        }
+        assertThat(results[0]).isInstanceOf(DataSourceResult.Loading::class.java)
+        val result = results[1] as DataSourceResult.Success
+        assertThat(result.data).isEqualTo(expectedIntervalSchedule)
     }
 
     @Test
@@ -82,13 +78,9 @@ class GetTeacherScheduleUseCaseTest {
 
         // Assert
         val results = resultFlow.toList()
-        assertTrue(results[0] is DataSourceResult.Loading)
-        when (val result = results[1]) {
-            is DataSourceResult.Error -> {
-                assertEquals("Test exception", result.exception!!.message)
-            }
-            else -> fail("Unexpected result: $result")
-        }
+        assertThat(results[0]).isInstanceOf(DataSourceResult.Loading::class.java)
+        val result = results[1] as DataSourceResult.Error
+        assertThat(result.exception!!.message).isEqualTo(TestTeacherScheduleRepository.ErrorExceptionMessage)
     }
 
     private fun generateExpectedIntervalSchedule(expectedTeacherSchedule: NetworkTeacherSchedule, scheduleStateTimeInterval: TimeInterval) =

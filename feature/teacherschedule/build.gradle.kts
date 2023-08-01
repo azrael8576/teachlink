@@ -120,4 +120,11 @@ dependencies {
 
     // Optional - Integration with LiveData
     implementation(libs.androidx.compose.runtime.livedata)
+
+    // Local unit tests
+    implementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.arch.core.test)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.mockk)
 }
