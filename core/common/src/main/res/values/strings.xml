@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="generic_hello">Hello</string>
+    <string name="greeting_with_name">Hello, %s!</string>
+    <string name="greeting_with_name_and_weather">Hello, %s! It\'s a %s day today.</string>
+</resources>

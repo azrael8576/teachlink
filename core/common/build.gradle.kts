@@ -120,4 +120,13 @@ dependencies {
     // For flow test
     testImplementation(libs.app.cash.turbine)
     testImplementation(kotlin("test"))
+
+    // Instrumentation tests
+    androidTestImplementation(libs.hilt.android.test)
+    kaptAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.androidx.arch.core.test)
+    androidTestImplementation(libs.google.truth)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.okhttp.mockwebserver)
+    androidTestImplementation(libs.androidx.test.runner)
 }

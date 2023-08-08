@@ -4,7 +4,6 @@ androidxTracing = "1.2.0-rc01"
 androidDesugarJdkLibs = "1.1.5"
 junit4 = "4.13.2"
 androidxTestExt = "1.1.5"
-androidxEspresso = "3.5.1"
 androidxLifecycle = "2.6.1"
 androidxNavigation = "2.6.0"
 kotlinxCoroutines = "1.3.0-M2"
@@ -26,7 +25,6 @@ androidxComposeCompiler = "1.4.7"
 androidxTestCore = "1.5.0"
 androidxArchCore = "2.2.0"
 googleTruth = "1.1.5"
-mockk = "1.10.5"
 turbine = "1.0.0"
 
 [libraries]
@@ -40,12 +38,6 @@ androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.r
 androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTestCore" }
 androidx-arch-core-test = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidxArchCore" }
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
-# 先註解，說不定還有用
-#androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
-
-# Mockk
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 
 # Instrumentation tests
 hilt-android-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltTest" }

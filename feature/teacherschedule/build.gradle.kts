@@ -126,5 +126,4 @@ dependencies {
     testImplementation(libs.androidx.arch.core.test)
     testImplementation(libs.google.truth)
     testImplementation(libs.okhttp.mockwebserver)
-    testImplementation(libs.mockk)
 }
