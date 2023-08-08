@@ -43,15 +43,12 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
     implementation(project(":core:network"))
+    testImplementation(project(":core:testing"))
 
     // PublicLibs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext)
-//    androidTestImplementation(libs.androidx.test.espresso.core)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -59,10 +56,4 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
-
-    // Local unit tests
-    implementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.arch.core.test)
-    testImplementation(libs.google.truth)
-    testImplementation(libs.okhttp.mockwebserver)
 }

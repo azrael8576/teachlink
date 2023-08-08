@@ -50,15 +50,13 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
+    testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
 
     // PublicLibs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext)
-//    androidTestImplementation(libs.androidx.test.espresso.core)
 
     // LifeCycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -73,8 +71,6 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-    testImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.kotlinx.coroutines.test)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -105,14 +101,12 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     debugImplementation(libs.androidx.compose.ui.ui.tooling)
 
-    // UI Tests
-    implementation(libs.androidx.compose.ui.ui.test.junit4)
-    androidTestImplementation(libs.androidx.compose.ui.test)
-    debugImplementation(libs.androidx.compose.ui.testManifest)
-
     // Optional - Integration with activities
     implementation(libs.androidx.activity.compose)
 
     // Optional - Integration with LiveData
     implementation(libs.androidx.compose.runtime.livedata)
+
+    // UI Tests
+    implementation(libs.androidx.compose.ui.ui.test.junit4)
 }

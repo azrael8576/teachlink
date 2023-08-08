@@ -48,7 +48,7 @@ class UiTextTest {
      * 測試動態字符串的 UI 文字是否返回預期的值。
      */
     @Test
-    fun dynamicStringReturnsExpectedValue() {
+    fun dynamicString_returnsExpectedValue() {
         val text = "Hello World"
         val uiText = UiText.DynamicString(text)
 
@@ -63,7 +63,7 @@ class UiTextTest {
      * 測試不帶參數的 UI 文字字符串資源是否返回預期的值。
      */
     @Test
-    fun stringResourceReturnsExpectedValueWithoutArgs() {
+    fun stringResource_returnsExpectedValue_withoutArgs() {
         val uiText = UiText.StringResource(R.string.generic_hello)
 
         composeTestRule.setContent {
@@ -77,7 +77,7 @@ class UiTextTest {
      * 測試帶有單一參數的 UI 文字字符串資源是否返回預期的格式化值。
      */
     @Test
-    fun stringResourceReturnsExpectedValueWithSingleArg() {
+    fun stringResource_returnsExpectedValue_withSingleArg() {
         val argName = "Alice"
         val uiText = UiText.StringResource(
             R.string.greeting_with_name,
@@ -99,7 +99,7 @@ class UiTextTest {
      * 測試帶有多個參數的 UI 文字字符串資源是否返回預期的格式化值。
      */
     @Test
-    fun stringResourceReturnsExpectedValueWithMultipleArgs() {
+    fun stringResource_returnsExpectedValue_withMultipleArgs() {
         val argName = "Alice"
         val argWeather = "sunny"
         val uiText = UiText.StringResource(
@@ -126,7 +126,7 @@ class UiTextTest {
      * 測試帶有嵌套 UI 文字參數的字符串資源是否返回預期的格式化值。
      */
     @Test
-    fun stringResourceReturnsExpectedValueWithNestedUiTextArg() {
+    fun stringResource_returnsExpectedValue_withNestedUiTextArg() {
         val argName = UiText.DynamicString("Alice")
         val argWeather = "sunny"
         val uiText = UiText.StringResource(

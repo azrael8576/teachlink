@@ -49,7 +49,6 @@ dependencies {
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.ext)
-//    androidTestImplementation(libs.androidx.test.espresso.core)
 
     // Hilt
     implementation(libs.hilt.android)

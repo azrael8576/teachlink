@@ -45,20 +45,32 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:network"))
 
+    api(libs.junit4)
+    api(libs.androidx.arch.core.test)
+    api(libs.androidx.compose.ui.test)
+    api(libs.androidx.compose.ui.ui.test.junit4)
+    api(libs.androidx.test.core)
+    api(libs.androidx.test.ext)
+    api(libs.androidx.test.runner)
+    api(libs.kotlinx.coroutines.test)
+    api(libs.hilt.android.test)
+    api(libs.google.truth)
+    api(libs.okhttp.mockwebserver)
+
+    // For flow test
+    api(libs.app.cash.turbine)
+    api(kotlin("test"))
+
+    debugApi(libs.androidx.compose.ui.testManifest)
+
     // PublicLibs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext)
-//    androidTestImplementation(libs.androidx.test.espresso.core)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-    testImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.kotlinx.coroutines.test)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -68,27 +80,10 @@ dependencies {
     implementation(libs.timber)
 
     // For testing module
-    implementation(libs.hilt.android.test)
     kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.test.runner)
+    kaptAndroidTest(libs.hilt.android.compiler)
 
     // UI Tests
     implementation(libs.androidx.compose.ui.ui.test.junit4)
-    androidTestImplementation(libs.androidx.compose.ui.test)
-    debugImplementation(libs.androidx.compose.ui.testManifest)
-
-    // Local unit tests
-    implementation(libs.androidx.test.core)
-    testImplementation(libs.androidx.arch.core.test)
-    testImplementation(libs.google.truth)
-    testImplementation(libs.okhttp.mockwebserver)
-
-    // Instrumentation tests
-    androidTestImplementation(libs.hilt.android.test)
     kaptAndroidTest(libs.hilt.android.compiler)
-    androidTestImplementation(libs.androidx.arch.core.test)
-    androidTestImplementation(libs.google.truth)
-    androidTestImplementation(libs.androidx.test.core)
-    androidTestImplementation(libs.okhttp.mockwebserver)
-    androidTestImplementation(libs.androidx.test.runner)
 }
