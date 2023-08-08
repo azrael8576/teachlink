@@ -75,15 +75,9 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-    // Timber
-    implementation(libs.timber)
-
-    // For testing module
     kapt(libs.hilt.android.compiler)
     kaptAndroidTest(libs.hilt.android.compiler)
 
-    // UI Tests
-    implementation(libs.androidx.compose.ui.ui.test.junit4)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    // Timber
+    implementation(libs.timber)
 }

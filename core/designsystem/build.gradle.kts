@@ -66,33 +66,31 @@ dependencies {
     implementation(libs.timber)
 
     // Compose
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
+    api(platform(libs.androidx.compose.bom))
 
     // Material Design 3
-    implementation(libs.androidx.compose.material3.core)
-    implementation(libs.androidx.compose.material3.windowSizeClass)
+    api(libs.androidx.compose.material3.core)
+    api(libs.androidx.compose.material3.windowSizeClass)
 
     // main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
-    implementation(libs.androidx.compose.ui.core)
-    implementation(libs.androidx.compose.ui.util)
-    implementation(libs.androidx.compose.foundation)
+    api(libs.androidx.compose.ui.core)
+    api(libs.androidx.compose.ui.util)
+    api(libs.androidx.compose.foundation)
 
     // Integration with Navigation and Hilt
-    implementation(libs.androidx.hilt.navigation.compose)
+    api(libs.androidx.hilt.navigation.compose)
 
     // Android Studio Preview support
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    debugImplementation(libs.androidx.compose.ui.ui.tooling)
+    api(libs.androidx.compose.ui.tooling.preview)
+    debugApi(libs.androidx.compose.ui.ui.tooling)
 
     // Optional - Integration with activities
-    implementation(libs.androidx.activity.compose)
+    api(libs.androidx.activity.compose)
 
     // Optional - Integration with LiveData
-    implementation(libs.androidx.compose.runtime.livedata)
+    api(libs.androidx.compose.runtime.livedata)
 
     // UI Tests
-    implementation(libs.androidx.compose.ui.ui.test.junit4)
+    api(libs.androidx.compose.ui.ui.test.junit4)
 }

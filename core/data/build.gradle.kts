@@ -46,9 +46,6 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext)
 
     // Hilt
     implementation(libs.hilt.android)

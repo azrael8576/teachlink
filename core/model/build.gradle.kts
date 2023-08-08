@@ -41,9 +41,6 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
 
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
@@ -52,22 +49,13 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext)
 
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    // Compose
+    // For androidx.compose.runtime.Stable
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
-    androidTestImplementation(composeBom)
-
-    // main APIs for the underlying toolkit systems,
-    // such as input and measurement/layout
     implementation(libs.androidx.compose.ui.core)
-    implementation(libs.androidx.compose.ui.util)
-    implementation(libs.androidx.compose.foundation)
 }
