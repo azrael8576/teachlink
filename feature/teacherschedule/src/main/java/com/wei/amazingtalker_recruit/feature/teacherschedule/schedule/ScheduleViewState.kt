@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
+import androidx.annotation.StringRes
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.base.Action
@@ -8,6 +9,7 @@ import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
+import java.time.Clock
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -18,7 +20,7 @@ enum class WeekAction {
 
 sealed class ScheduleViewAction : Action {
     data class ShowSnackBar(
-        val resId: Int? = null,
+        @StringRes val resId: Int? = null,
         val message: List<String>,
     ) : ScheduleViewAction()
 
@@ -28,8 +30,10 @@ sealed class ScheduleViewAction : Action {
 }
 
 data class ScheduleViewState(
+    val clock: Clock = Clock.systemDefaultZone(),
+    val clockUtc: Clock = Clock.system(ZoneOffset.UTC),
     val _currentTeacherName: String = TEST_DATA_TEACHER_NAME,
-    val _queryDateUtc: OffsetDateTime = OffsetDateTime.now(ZoneOffset.UTC),
+    val _queryDateUtc: OffsetDateTime = OffsetDateTime.now(clockUtc),
     val selectedIndex: Int = 0,
     val timeListUiState: TimeListUiState = TimeListUiState.Loading,
     val isTokenValid: Boolean = TokenManager.isTokenValid,
@@ -44,7 +48,7 @@ data class ScheduleViewState(
     private val weekEnd: OffsetDateTime
         get() = weekDataHelper.getWeekEnd(localTime = weekStart)
     val isAvailablePreviousWeek
-        get() = weekStart > OffsetDateTime.now(ZoneId.systemDefault())
+        get() = weekStart > OffsetDateTime.now(clock)
 
     val weekDateText: String
         get() = weekDataHelper.getWeekDateText(weekStart, weekEnd)

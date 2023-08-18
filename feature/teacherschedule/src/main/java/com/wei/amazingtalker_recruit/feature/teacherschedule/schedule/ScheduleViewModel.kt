@@ -1,5 +1,7 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
+import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.viewModelScope
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
 import com.wei.amazingtalker_recruit.core.extensions.getLocalOffsetDateTime
@@ -7,6 +9,8 @@ import com.wei.amazingtalker_recruit.core.manager.SnackbarManager
 import com.wei.amazingtalker_recruit.core.manager.SnackbarState
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.result.DataSourceResult
+import com.wei.amazingtalker_recruit.core.utils.AtClocks
+import com.wei.amazingtalker_recruit.core.utils.Clocks
 import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.domain.GetTeacherScheduleUseCase
@@ -18,18 +22,26 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.Clock
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
+    @Clocks(AtClocks.DefaultClock) private val clock: Clock,
+    @Clocks(AtClocks.UtcClock) private val clockUtc: Clock,
     private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
     private val weekDataHelper: WeekDataHelper,
     private val snackbarManager: SnackbarManager,
 ) : BaseViewModel<
         ScheduleViewAction,
         ScheduleViewState
-        >(ScheduleViewState()) {
+        >(
+    ScheduleViewState(
+        clock = clock,
+        clockUtc = clockUtc
+    )
+) {
 
     private val _scheduleTimeList =
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
@@ -37,7 +49,7 @@ class ScheduleViewModel @Inject constructor(
 
     init {
         if (states.value.isTokenValid) {
-            refreshWeekData(queryDateLocal = OffsetDateTime.now().getLocalOffsetDateTime())
+            refreshWeekData(queryDateLocal = OffsetDateTime.now(clock).getLocalOffsetDateTime())
         }
     }
 
@@ -97,7 +109,8 @@ class ScheduleViewModel @Inject constructor(
         )
     }
 
-    private fun filterTimeListByDate(
+    @VisibleForTesting
+    fun filterTimeListByDate(
         result: DataSourceResult<MutableList<IntervalScheduleTimeSlot>>,
         date: OffsetDateTime
     ) {
@@ -126,7 +139,10 @@ class ScheduleViewModel @Inject constructor(
                         isScrollInProgress = true,
                     )
                 }
-                showSnackBar(snackbarState = SnackbarState.Error, message = listOf(result.exception.toString()))
+                showSnackBar(
+                    snackbarState = SnackbarState.Error,
+                    message = listOf(result.exception.toString())
+                )
             }
 
             is DataSourceResult.Loading -> {
@@ -145,13 +161,15 @@ class ScheduleViewModel @Inject constructor(
         when (action) {
             WeekAction.PREVIOUS_WEEK -> {
                 val previousWeekMondayLocalDate = states.value.weekStart.minusWeeks(1)
-                if (previousWeekMondayLocalDate >= OffsetDateTime.now().getLocalOffsetDateTime()) {
+                val currentDate = OffsetDateTime.now(clock).getLocalOffsetDateTime()
+
+                if (previousWeekMondayLocalDate >= currentDate) {
                     refreshWeekData(
                         queryDateLocal = previousWeekMondayLocalDate,
                         resetToStartOfDay = true
                     )
                 } else {
-                    refreshWeekData(queryDateLocal = OffsetDateTime.now().getLocalOffsetDateTime())
+                    refreshWeekData(queryDateLocal = currentDate)
                 }
             }
 
@@ -166,7 +184,7 @@ class ScheduleViewModel @Inject constructor(
 
     private fun showSnackBar(
         snackbarState: SnackbarState = SnackbarState.Default,
-        resId: Int? = null,
+        @StringRes resId: Int? = null,
         message: List<String>,
     ) {
         if (resId == null) {

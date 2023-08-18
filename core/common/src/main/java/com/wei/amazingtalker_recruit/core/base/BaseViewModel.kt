@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.core.base
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import com.wei.amazingtalker_recruit.core.extensions.state.setState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,7 +60,8 @@ abstract class BaseViewModel<Action, State>(initialState: State) : ViewModel() {
      *
      * @param transform 一個函數，接收當前狀態，並返回新的狀態。
      */
-    protected fun updateState(transform: State.() -> State) {
+    @VisibleForTesting
+    fun updateState(transform: State.() -> State) {
         _states.setState(transform)
     }
 

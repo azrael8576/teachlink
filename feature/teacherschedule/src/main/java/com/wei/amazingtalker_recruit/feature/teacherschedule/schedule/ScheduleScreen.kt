@@ -124,7 +124,14 @@ internal fun ScheduleRoute(
         uiStates = uiStates,
         onPreviousWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK)) },
         onNextWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK)) },
-        onWeekDateClick = { viewModel.dispatch(ScheduleViewAction.ShowSnackBar(message = listOf(it))) },
+        onWeekDateClick = { resId, message ->
+            viewModel.dispatch(
+                ScheduleViewAction.ShowSnackBar(
+                    resId = resId,
+                    message = listOf(message)
+                )
+            )
+        },
         onTabClick = { date, index ->
             viewModel.dispatch(
                 ScheduleViewAction.SelectedTab(
@@ -153,7 +160,7 @@ internal fun ScheduleScreen(
     uiStates: ScheduleViewState,
     onPreviousWeekClick: () -> Unit,
     onNextWeekClick: () -> Unit,
-    onWeekDateClick: (String) -> Unit,
+    onWeekDateClick: (Int, String) -> Unit,
     onTabClick: (OffsetDateTime, Int) -> Unit,
     onListScroll: () -> Unit,
     onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
@@ -323,7 +330,7 @@ private fun ScheduleToolbar(
     uiStates: ScheduleViewState,
     onPreviousWeekClick: () -> Unit,
     onNextWeekClick: () -> Unit,
-    onWeekDateClick: (String) -> Unit,
+    onWeekDateClick: (Int, String) -> Unit,
     onTabClick: (OffsetDateTime, Int) -> Unit,
 ) {
     Surface(
@@ -352,7 +359,7 @@ fun WeekActionBar(
     uiStates: ScheduleViewState,
     onPreviousWeekClick: () -> Unit,
     onNextWeekClick: () -> Unit,
-    onWeekDateClick: (String) -> Unit,
+    onWeekDateClick: (Int, String) -> Unit,
 ) {
     val context = LocalContext.current
     val styledAttributes =
@@ -398,7 +405,7 @@ fun WeekActionBar(
                 modifier = Modifier
                     .weight(1f),
                 onClick = {
-                    onWeekDateClick("開啟日曆選單: $weekDate")
+                    onWeekDateClick(R.string.clickWeekDate, weekDate)
                 },
             ) {
                 Text(
@@ -516,7 +523,7 @@ fun ScheduleToolbarPreview() {
             uiStates = ScheduleViewState(),
             onPreviousWeekClick = { },
             onNextWeekClick = { },
-            onWeekDateClick = { },
+            onWeekDateClick = { _, _ -> },
             onTabClick = { _, _ -> },
         )
     }

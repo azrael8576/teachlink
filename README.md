@@ -119,7 +119,7 @@ Split screen & Offline error (Error Snackbar)
 | `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`AtTestRunner,`<br>... |
 
 ## Testing
-**Amazingtalker-Recruit** 採用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來實現依賴注入。大部分的資料元件都被定義成接口，並根據需求綁定對應的具體實現。
+**Amazingtalker-Recruit** 採用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來實現依賴注入。大部分資料層的元件都被定義成接口，並根據需求綁定對應的具體實現。
 
 在進行測試時，**Amazingtalker-Recruit** 並**未使用**任何 mocking libraries，而是用 Hilt 的測試 API 來將正式的實現替換成測試版本，這些測試版本實作了相同的接口，但提供更簡單且仍具有真實性的實現方式，並附加一些用於測試的掛鉤。
 
