@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
@@ -20,40 +22,46 @@ import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
+import java.time.Clock
 import java.time.OffsetDateTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 
 @Composable
-internal fun TimeListHeader() {
-    val currentTimezone = ZoneId.systemDefault()
+internal fun TimeListHeader(clock: Clock = Clock.systemDefaultZone()) {
     val offsetFormatter = DateTimeFormatter.ofPattern("xxx")
+    val displayText = String.format(
+        stringResource(R.string.your_local_time_zone),
+        clock,
+        offsetFormatter.format(OffsetDateTime.now(clock).offset)
+    )
 
     Text(
-        text = String.format(
-            stringResource(R.string.your_local_time_zone),
-            currentTimezone,
-            offsetFormatter.format(OffsetDateTime.now(currentTimezone).offset)
-        ),
+        text = displayText,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = MaterialTheme.typography.bodySmall.fontSize,
-        modifier = Modifier.padding(top = 16.dp)
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .semantics { contentDescription = displayText }
     )
 }
 
 @Composable
 internal fun TimeItemHeader(duringDayType: DuringDayType) {
+    val duringDay = when (duringDayType) {
+        DuringDayType.Morning -> stringResource(R.string.morning)
+        DuringDayType.Afternoon -> stringResource(R.string.afternoon)
+        DuringDayType.Evening -> stringResource(R.string.evening)
+        else -> stringResource(R.string.morning)
+    }
+
     Text(
-        text = when (duringDayType) {
-            DuringDayType.Morning -> stringResource(R.string.morning)
-            DuringDayType.Afternoon -> stringResource(R.string.afternoon)
-            DuringDayType.Evening -> stringResource(R.string.evening)
-            else -> stringResource(R.string.morning)
-        },
+        text = duringDay,
         color = MaterialTheme.colorScheme.onSurface,
         fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-        modifier = Modifier.padding(vertical = 16.dp)
+        modifier = Modifier
+            .padding(vertical = 16.dp)
+            .semantics { contentDescription = duringDay }
     )
 }
 
@@ -80,6 +88,9 @@ private fun AvailableTimeSlot(
     onTimeSlotClick: () -> Unit
 ) {
     val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
+    val startTimeText = dateTimeFormatter.format(timeSlot.start)
+    val availableDescription =
+        String.format(stringResource(R.string.available_time_slot), startTimeText)
 
     Button(
         onClick = { onTimeSlotClick() },
@@ -87,11 +98,12 @@ private fun AvailableTimeSlot(
             .padding(
                 bottom = 12.dp
             )
-            .fillMaxWidth(0.5f),
+            .fillMaxWidth(0.5f)
+            .semantics { contentDescription = availableDescription },
         shape = RoundedCornerShape(12.dp),
     ) {
         Text(
-            text = dateTimeFormatter.format(timeSlot.start),
+            text = startTimeText,
             modifier = Modifier.padding(vertical = 8.dp)
         )
     }
@@ -102,6 +114,9 @@ private fun UnavailableTimeSlot(
     timeSlot: IntervalScheduleTimeSlot
 ) {
     val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
+    val startTimeText = dateTimeFormatter.format(timeSlot.start)
+    val unavailableDescription =
+        String.format(stringResource(R.string.unavailable_time_slot), startTimeText)
 
     OutlinedButton(
         onClick = {},
@@ -109,7 +124,8 @@ private fun UnavailableTimeSlot(
             .padding(
                 bottom = 12.dp
             )
-            .fillMaxWidth(0.5f),
+            .fillMaxWidth(0.5f)
+            .semantics { contentDescription = unavailableDescription },
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.background,
@@ -118,7 +134,7 @@ private fun UnavailableTimeSlot(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
     ) {
         Text(
-            text = dateTimeFormatter.format(timeSlot.start),
+            text = startTimeText,
             modifier = Modifier.padding(vertical = 8.dp)
         )
     }

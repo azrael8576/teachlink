@@ -175,7 +175,7 @@ class ScheduleViewModelTest {
         }
 
     @Test
-    fun `dispatch updateWeek action update correct _queryDateUtc when weekAction is PREVIOUS_WEEK and previousWeekMondayLocalDate is earlier than than the current time`() =
+    fun `dispatch updateWeek action update correct _queryDateUtc when weekAction is PREVIOUS_WEEK and previousWeekMondayLocalDate is earlier than the current time`() =
         runTest {
             // Arrange
             expectedState.setState {

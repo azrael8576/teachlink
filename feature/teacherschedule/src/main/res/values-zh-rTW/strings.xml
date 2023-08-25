@@ -10,6 +10,8 @@
     <string name="morning">上午</string>
     <string name="afternoon">下午</string>
     <string name="evening">晚上</string>
+    <string name="previous_week">上一週</string>
+    <string name="next_week">下一週</string>
 
     <!-- 教師行事曆明細頁 -->
     <string name="teacher_name">教師名稱</string>
@@ -20,4 +22,9 @@
     <string name="back">上一頁</string>
     <string name="loading">Loading...</string>
     <string name="load_failed">🛠️ LoadFailed</string>
+
+    <!-- Test tag -->
+    <string name="tag_schedule_list">tag_schedule_list</string>
+    <string name="available_time_slot">空閒時間區段 %s</string>
+    <string name="unavailable_time_slot">忙碌時間區段 %s</string>
 </resources>

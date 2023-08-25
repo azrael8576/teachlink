@@ -8,6 +8,10 @@
     <string name="morning">Morning</string>
     <string name="afternoon">Afternoon</string>
     <string name="evening">Evening</string>
+    <string name="previous_week">Previous Week</string>
+    <string name="next_week">Next Week</string>
+    <string name="available_time_slot">Available Time Slot %s</string>
+    <string name="unavailable_time_slot">Unavailable Time Slot %s</string>
 
     <!-- 教師行事曆明細頁 -->
     <string name="teacher_name">Teacher Name</string>
@@ -18,4 +22,7 @@
     <string name="back">Back</string>
     <string name="loading">Loading...</string>
     <string name="load_failed">🛠️ LoadFailed</string>
+
+    <!-- Test tag -->
+    <string name="tag_schedule_list">tag_schedule_list</string>
 </resources>

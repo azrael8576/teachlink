@@ -47,9 +47,12 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -72,6 +75,7 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeLis
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
+import java.time.Clock
 import java.time.OffsetDateTime
 
 /**
@@ -132,12 +136,9 @@ internal fun ScheduleRoute(
                 )
             )
         },
-        onTabClick = { date, index ->
+        onTabClick = { index, date ->
             viewModel.dispatch(
-                ScheduleViewAction.SelectedTab(
-                    date,
-                    index
-                )
+                ScheduleViewAction.SelectedTab(date = Pair(index, date))
             )
         },
         onListScroll = { viewModel.dispatch(ScheduleViewAction.ListScrolled) },
@@ -161,7 +162,7 @@ internal fun ScheduleScreen(
     onPreviousWeekClick: () -> Unit,
     onNextWeekClick: () -> Unit,
     onWeekDateClick: (Int, String) -> Unit,
-    onTabClick: (OffsetDateTime, Int) -> Unit,
+    onTabClick: (Int, OffsetDateTime) -> Unit,
     onListScroll: () -> Unit,
     onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
 ) {
@@ -230,7 +231,8 @@ internal fun ScheduleScreen(
                         detectTapGestures(
                             onPress = { scope.coroutineContext.cancelChildren() }
                         )
-                    },
+                    }
+                    .testTag(stringResource(R.string.tag_schedule_list)),
                 timeListUiState = uiStates.timeListUiState,
                 listState = listState,
                 contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
@@ -258,6 +260,7 @@ internal fun ScheduleScreen(
 @Composable
 internal fun ScheduleList(
     modifier: Modifier = Modifier,
+    clock: Clock = Clock.systemDefaultZone(),
     timeListUiState: TimeListUiState,
     listState: LazyListState = rememberLazyListState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -286,7 +289,7 @@ internal fun ScheduleList(
         when (timeListUiState) {
             is TimeListUiState.Success -> {
                 item {
-                    TimeListHeader()
+                    TimeListHeader(clock = clock)
                 }
 
                 (uiStates as TimeListUiState.Success).groupedTimeSlots.forEach { (duringDayType, timeSlots) ->
@@ -303,19 +306,24 @@ internal fun ScheduleList(
             }
 
             is TimeListUiState.Loading -> item {
+                val loading = stringResource(R.string.loading)
                 Text(
-                    text = stringResource(R.string.loading),
+                    text = loading,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 20.dp)
+                        .semantics { contentDescription = loading }
                 )
             }
 
             is TimeListUiState.LoadFailed -> item {
+                val loadFailed = stringResource(R.string.load_failed)
                 Text(
                     text = stringResource(R.string.load_failed),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .semantics { contentDescription = loadFailed }
                 )
             }
 
@@ -331,7 +339,7 @@ private fun ScheduleToolbar(
     onPreviousWeekClick: () -> Unit,
     onNextWeekClick: () -> Unit,
     onWeekDateClick: (Int, String) -> Unit,
-    onTabClick: (OffsetDateTime, Int) -> Unit,
+    onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -380,6 +388,7 @@ fun WeekActionBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            val previousWeek = stringResource(R.string.previous_week)
             IconButton(
                 onClick = {
                     if (uiStates.isAvailablePreviousWeek) {
@@ -388,6 +397,7 @@ fun WeekActionBar(
                 },
                 modifier = Modifier
                     .padding(start = 13.dp)
+                    .semantics { contentDescription = previousWeek },
             ) {
                 Image(
                     painterResource(id = R.drawable.arrow_left_gray),
@@ -403,7 +413,8 @@ fun WeekActionBar(
             val weekDate = uiStates.weekDateText
             TextButton(
                 modifier = Modifier
-                    .weight(1f),
+                    .weight(1f)
+                    .semantics { contentDescription = weekDate },
                 onClick = {
                     onWeekDateClick(R.string.clickWeekDate, weekDate)
                 },
@@ -416,10 +427,12 @@ fun WeekActionBar(
                 )
             }
 
+            val nextWeek = stringResource(R.string.next_week)
             IconButton(
                 onClick = onNextWeekClick,
                 modifier = Modifier
                     .padding(start = 13.dp)
+                    .semantics { contentDescription = nextWeek },
             ) {
                 Image(
                     painterResource(id = R.drawable.arrow_right_gray),
@@ -437,7 +450,7 @@ fun WeekActionBar(
 private fun WeekActionBarBottom(
     selectedIndex: Int,
     tabs: MutableList<OffsetDateTime>,
-    onTabClick: (OffsetDateTime, Int) -> Unit,
+    onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,

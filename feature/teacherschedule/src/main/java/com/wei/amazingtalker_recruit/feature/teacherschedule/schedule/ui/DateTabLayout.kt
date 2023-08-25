@@ -30,7 +30,7 @@ internal fun DateTabLayout(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
     tabs: List<OffsetDateTime>,
-    onTabClick: (OffsetDateTime, Int) -> Unit,
+    onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     val tabWidth = remember { mutableStateOf(0.dp) } // 創建一個共享的寬度數據
 
@@ -72,13 +72,13 @@ private fun DateTab(
     selected: Boolean,
     tab: OffsetDateTime,
     index: Int,
-    onTabClick: (OffsetDateTime, Int) -> Unit,
+    onTabClick: (Int, OffsetDateTime) -> Unit,
     tabWidth: () -> Dp
 ) {
     Tab(
         selected = selected,
         onClick = {
-            onTabClick(tab, index)
+            onTabClick(index, tab)
         },
         modifier = Modifier
             .height(70.dp)

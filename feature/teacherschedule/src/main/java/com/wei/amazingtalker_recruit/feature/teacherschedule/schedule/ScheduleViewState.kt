@@ -25,7 +25,7 @@ sealed class ScheduleViewAction : Action {
     ) : ScheduleViewAction()
 
     data class UpdateWeek(val weekAction: WeekAction) : ScheduleViewAction()
-    data class SelectedTab(val date: OffsetDateTime, val position: Int) : ScheduleViewAction()
+    data class SelectedTab(val date: Pair<Int, OffsetDateTime>) : ScheduleViewAction()
     object ListScrolled : ScheduleViewAction()
 }
 
@@ -49,7 +49,6 @@ data class ScheduleViewState(
         get() = weekDataHelper.getWeekEnd(localTime = weekStart)
     val isAvailablePreviousWeek
         get() = weekStart > OffsetDateTime.now(clock)
-
     val weekDateText: String
         get() = weekDataHelper.getWeekDateText(weekStart, weekEnd)
 }

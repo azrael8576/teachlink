@@ -98,7 +98,7 @@ class ScheduleViewModel @Inject constructor(
         }
     }
 
-    private fun onTabSelected(date: OffsetDateTime, position: Int) {
+    private fun onTabSelected(position: Int, date: OffsetDateTime) {
         Timber.d("onTabSelected $date $position")
         updateState {
             copy(selectedIndex = position)
@@ -221,7 +221,7 @@ class ScheduleViewModel @Inject constructor(
             }
 
             is ScheduleViewAction.SelectedTab -> {
-                onTabSelected(action.date, action.position)
+                onTabSelected(action.date.first, action.date.second)
             }
 
             ScheduleViewAction.ListScrolled -> {
