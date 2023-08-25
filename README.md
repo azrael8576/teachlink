@@ -5,29 +5,33 @@
 UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。  
   
 這款 APP 的目標是展示如何遵循 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development) 最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。  
-  
-  
-## 已完成的遷移項目：  
-  
-- 單一模組結構至模組化結構。 查看分支：`refactor/modularization`  
-- LiveData 至 Flow。 查看分支：`refactor/migrating_livedata_to_flow`  
-- 引入 DI Hilt。 查看分支：`refactor/di`  
-- MVVM 架構至 MVI。 查看分支：`refactor/mvvm-to-mvi`  
-- View 遷移至 Jetpack Compose UI，並提供暗黑主題。 查看分支：`refactor/migrating_to_compose`  
-- Frament Navigation 遷移至 Compose Navigation。 查看分支：`refactor/migrating_to_compose_navigation`  
-- Groovy 遷移至 Kotlin 的建構配置。 查看分支：`refactor/groovy_to_kts`  
-- UI testing with Compose 。 查看相關分支，名稱開頭為：`test/ui_test_`
-- Unit Tests 。 查看分支：`test/unit_tests`  
- 
-### 🚧 進行中的工作  
-  
-該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：  
-- 撰寫  [_MAD_](https://developer.android.com/modern-android-development) 遷移指南。
-並抽取 Architecture & Modularization 至獨立文檔。
-- Support All Screen Sizes  
-- 引入 Jetpack DataStore 做為本地數據存儲  
-- 引入 Baseline Profiles 啟動優化  
-  
+
+> [!NOTE]  
+> 查看 [_Amazingtalker-Recruit App：MAD 遷移之旅_](https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
+
+
+## Tech stack
+#### Architecture
+- MVI Architecture (Model - View - Intent)
+#### UI
+- Jetpack Compose
+### Design System
+- Material 3
+#### Asynchronous
+- Coroutines
+- Kotlin Flow
+####  Network
+- [_Retrofit2 & OkHttp3_](https://github.com/square/retrofit): Construct the REST APIs and paging network data.
+#### DI
+- [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android): for dependency injection.
+#### Navigation
+- [_Navigation Compose_](https://developer.android.com/jetpack/compose/navigation): The  [_Navigation component_](https://developer.android.com/guide/navigation)  provides support for  [_Jetpack Compose_](https://developer.android.com/jetpack/compose)  applications.
+#### UI Test Pattern: [_Robot Testing Pattern_](https://jakewharton.com/testing-robots/?source=post_page-----fc820ce250f7--------------------------------)
+- Robot pattern fits with Espresso and allows to create clear and understandable tests.
+#### Test
+- [_Turbine_](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
+- [_Google Truth_](https://github.com/google/truth): Fluent assertions for Java and Android.
+
 ## Require  
   
 **~~**本專案已升級 Gradle plugin 8.1.0-rc01 (查看分支：`chore/update_agp_8.1.0-rc01` )  **~~**  
