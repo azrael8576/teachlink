@@ -15,7 +15,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 #### UI
 - Jetpack Compose
 
-### Design System
+#### Design System
 - Material 3
 
 #### Asynchronous

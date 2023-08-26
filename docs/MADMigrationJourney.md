@@ -3,7 +3,7 @@
 在這段遷移之旅中，您將會深入了解 Amazingtalker-Recruit app的遷移策略。  
 本文旨在指引您理解如何一步一步地將現有的專案重構，符合 [_**Modern Android Development (現代 Android 開發方法)**_](https://developer.android.com/modern-android-development) 的最新架構。
 
-## 已完成的遷移項目：
+### 已完成的遷移項目：
 
 - 單一模組結構至模組化結構。 查看分支：`refactor/modularization`
 - LiveData 至 Flow。 查看分支：`refactor/migrating_livedata_to_flow`
@@ -18,6 +18,7 @@
 ### 🚧 進行中的工作
 
 該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：
+- 引入 UI testing: Robot Testing Pattern。 查看分支：`refactor/robot_testing_pattern`
 - 撰寫 [_MAD_](https://developer.android.com/modern-android-development) 遷移指南。  
 並抽取 Architecture & Modularization 至獨立文檔。
 - Support All Screen Sizes
