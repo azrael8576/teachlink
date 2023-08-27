@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
 import kotlin.properties.ReadOnlyProperty
 
@@ -30,16 +31,23 @@ internal open class WelcomeScreenRobot constructor(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val welcome by composeTestRule.stringResource(R.string.welcome)
+    private val welcomeString by composeTestRule.stringResource(R.string.welcome)
 
     private val welcomeTitle by lazy {
         composeTestRule.onNodeWithContentDescription(
-            welcome,
+            welcomeString,
             useUnmergedTree = true
         )
     }
+    fun setWelcomeScreenContent() {
+        composeTestRule.setContent {
+            AtTheme {
+                WelcomeScreen()
+            }
+        }
+    }
 
-    fun initialElementsShowed() {
+    fun verifyWelcomeElementsDisplayed() {
         welcomeTitle.assertExists().assertIsDisplayed()
     }
 

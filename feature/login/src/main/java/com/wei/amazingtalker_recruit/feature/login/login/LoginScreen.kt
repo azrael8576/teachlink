@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.feature.login.BuildConfig
 import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
@@ -83,16 +84,17 @@ internal fun LoginRoute(
 
 @Composable
 internal fun LoginScreen(
+    //TODO: These are test account credentials for demo purposes. Please ensure to clear them (set to "") before any release or production usage.
+    account: String = if (BuildConfig.DEBUG) TEST_ACCOUNT else "",
+    password: String = if (BuildConfig.DEBUG) TEST_PASSWORD else "",
     login: (String, String) -> Unit,
 ) {
     val accountState = rememberSaveable {
-        // TODO : 測試帳號，Release 時需清空
-        mutableStateOf(TEST_ACCOUNT)
+        mutableStateOf(account)
     }
 
     val passwordState = rememberSaveable {
-        // TODO : 測試密碼，Release 時需清空
-        mutableStateOf(TEST_PASSWORD)
+        mutableStateOf(password)
     }
 
     Surface(

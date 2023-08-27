@@ -20,20 +20,11 @@ class WelcomeScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private fun setWelcomeScreenContent() {
-        composeTestRule.setContent {
-            AtTheme {
-                WelcomeScreen()
-            }
-        }
-    }
-
     @Test
-    fun elementsVisibilityAfterOpeningTheScreen() {
-        setWelcomeScreenContent()
-        
+    fun checkElementsVisibility_afterOpeningTheScreen() {
         welcomeScreenRobot(composeTestRule) {
-            initialElementsShowed()
+            setWelcomeScreenContent()
+            verifyWelcomeElementsDisplayed()
         }
     }
 
