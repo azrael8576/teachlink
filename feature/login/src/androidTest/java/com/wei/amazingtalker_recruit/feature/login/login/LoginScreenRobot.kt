@@ -152,4 +152,3 @@ internal open class LoginResultRobot(
     }
 
 }
-
