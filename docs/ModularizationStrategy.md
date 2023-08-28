@@ -16,7 +16,7 @@ Amazingtalker-Recruit 主要包含以下幾種模組：
 
 - 其他各種模組：例如 `test` 模組，主要用於進行軟體測試。
 
-## Modularization
+## Modules
 
 採用上述模組化策略，Amazingtalker-Recruit 應用程序具有以下模組：
 
