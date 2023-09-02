@@ -13,8 +13,22 @@ android {
         applicationId = "com.wei.amazingtalker_recruit"
         minSdk = 23
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        /**
+         * Version Code: AABCXYZ
+         *
+         * AA: API Level (33)
+         *
+         * BC: Supported screen sizes for this APK.
+         * 12: Small to Normal screens
+         * 34: Large to X-Large screens
+         *
+         * XYZ: App version (050 for 0.5.0)
+         */
+        versionCode = 3313050
+        /**
+         * SemVer major.minor.patch
+         */
+        versionName = "0.5.0"
 
         testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"
     }
