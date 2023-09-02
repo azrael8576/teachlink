@@ -2,7 +2,6 @@ package com.wei.amazingtalker_recruit.feature.login.welcome
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import org.junit.Rule
 import org.junit.Test
 
@@ -24,6 +23,7 @@ class WelcomeScreenTest {
     fun checkElementsVisibility_afterOpeningTheScreen() {
         welcomeScreenRobot(composeTestRule) {
             setWelcomeScreenContent()
+
             verifyWelcomeElementsDisplayed()
         }
     }

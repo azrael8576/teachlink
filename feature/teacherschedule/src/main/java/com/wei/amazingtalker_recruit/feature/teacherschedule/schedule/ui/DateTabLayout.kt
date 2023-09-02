@@ -25,6 +25,8 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
+val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
+
 @Composable
 internal fun DateTabLayout(
     modifier: Modifier = Modifier,
@@ -84,7 +86,6 @@ private fun DateTab(
             .height(70.dp)
             .width(tabWidth())
     ) {
-        val dateFormatter = DateTimeFormatter.ofPattern("E, MMM dd")
         val textColor =
             if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
 

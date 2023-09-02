@@ -38,8 +38,8 @@ class ScheduleViewModel @Inject constructor(
         ScheduleViewState
         >(
     ScheduleViewState(
-        clock = clock,
-        clockUtc = clockUtc
+        currentClock = clock,
+        queryClockUtc = clockUtc
     )
 ) {
 

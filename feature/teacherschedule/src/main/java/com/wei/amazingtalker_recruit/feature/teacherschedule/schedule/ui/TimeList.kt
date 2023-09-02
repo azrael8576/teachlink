@@ -26,28 +26,29 @@ import java.time.Clock
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
+val yourLocalTimeZoneFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("xxx")
+val timeSlotFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
 @Composable
-internal fun TimeListHeader(clock: Clock = Clock.systemDefaultZone()) {
-    val offsetFormatter = DateTimeFormatter.ofPattern("xxx")
-    val displayText = String.format(
+internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
+    val yourLocalTimeZone = String.format(
         stringResource(R.string.your_local_time_zone),
-        clock,
-        offsetFormatter.format(OffsetDateTime.now(clock).offset)
+        clock.zone,
+        yourLocalTimeZoneFormatter.format(OffsetDateTime.now(clock).offset)
     )
 
     Text(
-        text = displayText,
+        text = yourLocalTimeZone,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         fontSize = MaterialTheme.typography.bodySmall.fontSize,
         modifier = Modifier
             .padding(top = 16.dp)
-            .semantics { contentDescription = displayText }
+            .semantics { contentDescription = yourLocalTimeZone }
     )
 }
 
 @Composable
-internal fun TimeItemHeader(duringDayType: DuringDayType) {
+internal fun DuringDay(duringDayType: DuringDayType) {
     val duringDay = when (duringDayType) {
         DuringDayType.Morning -> stringResource(R.string.morning)
         DuringDayType.Afternoon -> stringResource(R.string.afternoon)
@@ -66,7 +67,7 @@ internal fun TimeItemHeader(duringDayType: DuringDayType) {
 }
 
 @Composable
-internal fun TimeListItem(
+internal fun TimeSlot(
     timeSlot: IntervalScheduleTimeSlot,
     onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit
 ) {
@@ -87,8 +88,7 @@ private fun AvailableTimeSlot(
     timeSlot: IntervalScheduleTimeSlot,
     onTimeSlotClick: () -> Unit
 ) {
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
-    val startTimeText = dateTimeFormatter.format(timeSlot.start)
+    val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val availableDescription =
         String.format(stringResource(R.string.available_time_slot), startTimeText)
 
@@ -113,8 +113,7 @@ private fun AvailableTimeSlot(
 private fun UnavailableTimeSlot(
     timeSlot: IntervalScheduleTimeSlot
 ) {
-    val dateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
-    val startTimeText = dateTimeFormatter.format(timeSlot.start)
+    val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val unavailableDescription =
         String.format(stringResource(R.string.unavailable_time_slot), startTimeText)
 
@@ -142,17 +141,17 @@ private fun UnavailableTimeSlot(
 
 @Preview(showBackground = true)
 @Composable
-fun TimeListHeaderPreview() {
+fun YourLocalTimeZoneTextPreview() {
     AtTheme {
-        TimeListHeader()
+        YourLocalTimeZoneText()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun TimeItemHeaderPreview() {
+fun DuringDayPreview() {
     AtTheme {
-        TimeItemHeader(DuringDayType.Afternoon)
+        DuringDay(DuringDayType.Afternoon)
     }
 }
 

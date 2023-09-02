@@ -31,7 +31,7 @@ internal fun scheduleDetailScreenRobot(
     func: ScheduleDetailScreenRobot.() -> Unit
 ) = ScheduleDetailScreenRobot(composeTestRule).apply(func)
 
-internal open class ScheduleDetailScreenRobot constructor(
+internal open class ScheduleDetailScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
@@ -84,20 +84,11 @@ internal open class ScheduleDetailScreenRobot constructor(
 
     private var backClicked: Boolean = false
 
-    val now = OffsetDateTime.now()
-    val testUiState = ScheduleDetailViewState(
-        teacherName = "John Doe",
-        start = now,
-        end = now.plusMinutes(30),
-        state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon,
-    )
-
-    fun setScheduleDetailScreenContent() {
+    fun setScheduleDetailScreenContent(uiStates: ScheduleDetailViewState = ScheduleDetailViewState()) {
         composeTestRule.setContent {
             AtTheme {
                 ScheduleDetailScreen(
-                    uiStates = testUiState,
+                    uiStates = uiStates,
                     onBackClick = { backClicked = true } // Handle back click
                 )
             }
@@ -159,3 +150,12 @@ internal open class ScheduleDetailBackRobot(
     }
 
 }
+
+val now: OffsetDateTime = OffsetDateTime.now()
+val testUiState = ScheduleDetailViewState(
+    teacherName = "John Doe",
+    start = now,
+    end = now.plusMinutes(30),
+    state = ScheduleState.AVAILABLE,
+    duringDayType = DuringDayType.Afternoon,
+)

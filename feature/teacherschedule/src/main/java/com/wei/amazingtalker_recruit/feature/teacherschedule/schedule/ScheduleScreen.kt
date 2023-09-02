@@ -69,9 +69,9 @@ import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.DateTabLayout
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.ScheduleListPreviewParameterProvider
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeItemHeader
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeListHeader
-import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeListItem
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.DuringDay
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.YourLocalTimeZoneText
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeSlot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
@@ -289,15 +289,15 @@ internal fun ScheduleList(
         when (timeListUiState) {
             is TimeListUiState.Success -> {
                 item {
-                    TimeListHeader(clock = clock)
+                    YourLocalTimeZoneText(clock = clock)
                 }
 
                 (uiStates as TimeListUiState.Success).groupedTimeSlots.forEach { (duringDayType, timeSlots) ->
                     item {
-                        TimeItemHeader(duringDayType)
+                        DuringDay(duringDayType)
                     }
                     itemsIndexed(timeSlots) { _, timeSlot ->
-                        TimeListItem(
+                        TimeSlot(
                             timeSlot = timeSlot,
                             onTimeSlotClick = { onTimeSlotClick(it) },
                         )
@@ -310,7 +310,8 @@ internal fun ScheduleList(
                 Text(
                     text = loading,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp)
                         .semantics { contentDescription = loading }
                 )
             }
