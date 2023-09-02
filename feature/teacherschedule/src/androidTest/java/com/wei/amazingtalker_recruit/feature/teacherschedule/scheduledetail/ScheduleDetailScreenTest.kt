@@ -22,7 +22,8 @@ class ScheduleDetailScreenTest {
     @Test
     fun checkElementsValues_afterOpeningTheDetailScreen() {
         scheduleDetailScreenRobot(composeTestRule) {
-            setScheduleDetailScreenContent()
+            setScheduleDetailScreenContent(testUiState)
+
             verifyTeacherNameValue(testUiState.teacherName.toString())
             verifyStartTimeValue(testUiState.start.toString())
             verifyEndTimeValue(testUiState.end.toString())
@@ -35,7 +36,7 @@ class ScheduleDetailScreenTest {
     @Test
     fun checkBackButtonAction_afterPress() {
         scheduleDetailScreenRobot(composeTestRule) {
-            setScheduleDetailScreenContent()
+            setScheduleDetailScreenContent(testUiState)
         } back {
             isBack()
         }

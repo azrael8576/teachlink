@@ -11,7 +11,6 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA
 import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.WeekDataHelper
 import java.time.Clock
 import java.time.OffsetDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 
 enum class WeekAction {
@@ -30,10 +29,10 @@ sealed class ScheduleViewAction : Action {
 }
 
 data class ScheduleViewState(
-    val clock: Clock = Clock.systemDefaultZone(),
-    val clockUtc: Clock = Clock.system(ZoneOffset.UTC),
+    val currentClock: Clock = Clock.systemDefaultZone(),
+    val queryClockUtc: Clock = Clock.system(ZoneOffset.UTC),
     val _currentTeacherName: String = TEST_DATA_TEACHER_NAME,
-    val _queryDateUtc: OffsetDateTime = OffsetDateTime.now(clockUtc),
+    val _queryDateUtc: OffsetDateTime = OffsetDateTime.now(queryClockUtc),
     val selectedIndex: Int = 0,
     val timeListUiState: TimeListUiState = TimeListUiState.Loading,
     val isTokenValid: Boolean = TokenManager.isTokenValid,
@@ -48,7 +47,7 @@ data class ScheduleViewState(
     private val weekEnd: OffsetDateTime
         get() = weekDataHelper.getWeekEnd(localTime = weekStart)
     val isAvailablePreviousWeek
-        get() = weekStart > OffsetDateTime.now(clock)
+        get() = weekStart > OffsetDateTime.now(currentClock)
     val weekDateText: String
         get() = weekDataHelper.getWeekDateText(weekStart, weekEnd)
 }

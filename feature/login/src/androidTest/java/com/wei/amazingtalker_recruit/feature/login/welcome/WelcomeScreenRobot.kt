@@ -24,7 +24,7 @@ internal fun welcomeScreenRobot(
     func: WelcomeScreenRobot.() -> Unit
 ) = WelcomeScreenRobot(composeTestRule).apply(func)
 
-internal open class WelcomeScreenRobot constructor(
+internal open class WelcomeScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =

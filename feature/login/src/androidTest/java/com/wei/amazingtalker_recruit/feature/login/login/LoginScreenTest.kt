@@ -25,6 +25,7 @@ class LoginScreenTest {
     fun checkElementsVisibility_afterOpeningTheScreen() {
         loginScreenRobot(composeTestRule) {
             setLoginScreenContent()
+
             verifyLoginElementsDisplayed()
         }
     }
@@ -33,6 +34,7 @@ class LoginScreenTest {
     fun checkAccountValue_whenTextInput() {
         loginScreenRobot(composeTestRule) {
             setLoginScreenContent()
+
             inputAccountValue(TEST_ACCOUNT)
             verifyAccountValue(TEST_ACCOUNT)
         }
@@ -42,6 +44,7 @@ class LoginScreenTest {
     fun checkPasswordValueObfuscated_whenTextInput() {
         loginScreenRobot(composeTestRule) {
             setLoginScreenContent()
+
             inputPasswordValue(TEST_PASSWORD)
             verifyPasswordValueObfuscated(TEST_PASSWORD)
         }
@@ -51,6 +54,7 @@ class LoginScreenTest {
     fun checkLoginSuccess_withCorrectCredentials() {
         loginScreenRobot(composeTestRule) {
             setLoginScreenContent()
+
             inputAccountValue(TEST_ACCOUNT)
             inputPasswordValue(TEST_PASSWORD)
         } login {
@@ -62,6 +66,7 @@ class LoginScreenTest {
     fun checkLoginFailure_withEmptyCredentials() {
         loginScreenRobot(composeTestRule) {
             setLoginScreenContent()
+
             inputAccountValue("")
             inputPasswordValue("")
         } login {
