@@ -3,12 +3,15 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTopPositionInRootIsEqualTo
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeDown
 import androidx.compose.ui.test.swipeUp
@@ -21,12 +24,14 @@ import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
+import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.dateFormatter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.timeSlotFormatter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.yourLocalTimeZoneFormatter
 import java.time.Clock
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import kotlin.properties.ReadOnlyProperty
 
 
@@ -63,14 +68,20 @@ internal open class ScheduleScreenRobot(
     private val loadFailedString by composeTestRule.stringResource(R.string.load_failed)
     private val testTagScheduleListString by composeTestRule.stringResource(R.string.tag_schedule_list)
 
+    private val fixedClock: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
+    private val fixedClockUtc: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
     private val scheduleViewState = ScheduleViewState(
         isTokenValid = true,
+        currentClock = fixedClock,
+        queryClockUtc = fixedClockUtc,
     )
 
     private var isPreviousWeekClicked: Boolean = false
     private var isNextWeekClicked: Boolean = false
     private var isListScrolled: Boolean = false
     private var isTimeSlotClicked: Boolean = false
+    private var clickedTab: OffsetDateTime? = null
+    private var clickedTabIndex: Int? = null
     private var clickedWeekDate: Pair<Int?, String>? = null
 
     private fun resetInteractionFlags() {
@@ -78,6 +89,8 @@ internal open class ScheduleScreenRobot(
         isNextWeekClicked = false
         isListScrolled = false
         isTimeSlotClicked = false
+        clickedTab = null
+        clickedTabIndex = null
         clickedWeekDate = null
     }
 
@@ -96,6 +109,18 @@ internal open class ScheduleScreenRobot(
     private val weekDateText by lazy {
         composeTestRule.onNodeWithContentDescription(
             scheduleViewState.weekDateText,
+            useUnmergedTree = true
+        )
+    }
+    private val dateTab2 by lazy {
+        composeTestRule.onNodeWithText(
+            dateFormatter.format(scheduleViewState.dateTabs[1]),
+            useUnmergedTree = true
+        )
+    }
+    private val dateTab4 by lazy {
+        composeTestRule.onNodeWithText(
+            dateFormatter.format(scheduleViewState.dateTabs[3]),
             useUnmergedTree = true
         )
     }
@@ -166,9 +191,7 @@ internal open class ScheduleScreenRobot(
     }
 
     fun setScheduleScreenContent(
-        uiStates: ScheduleViewState = ScheduleViewState(
-            isTokenValid = true
-        )
+        uiStates: ScheduleViewState = scheduleViewState
     ) {
         composeTestRule.setContent {
             resetInteractionFlags()
@@ -180,10 +203,9 @@ internal open class ScheduleScreenRobot(
                     onWeekDateClick = { resId, weekDate ->
                         clickedWeekDate = Pair(resId, weekDate)
                     },
-                    onTabClick = { _, _ ->
-                        /**
-                         * 這個 function 已委託由 [DateTabLayoutTest]， 進行獨立測試
-                         */
+                    onTabClick = { index, offsetDateTime ->
+                        clickedTabIndex = index
+                        clickedTab = offsetDateTime
                     },
                     onListScroll = { isListScrolled = true },
                     onTimeSlotClick = { isTimeSlotClicked = true },
@@ -202,6 +224,10 @@ internal open class ScheduleScreenRobot(
 
     fun verifyWeekDateTextDisplayed() {
         weekDateText.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyDateTab2Displayed() {
+        dateTab2.assertExists().assertIsDisplayed()
     }
 
     fun verifyScheduleListDisplayed() {
@@ -266,6 +292,32 @@ internal open class ScheduleScreenRobot(
 
     fun verifyOnWeekDateClickInvoked() {
         assertThat(clickedWeekDate).isNotNull()
+    }
+
+    fun clickDateTab2() {
+        dateTab2.performClick()
+    }
+
+    fun verifyClickedTabIsDateTab2() {
+        assertThat(clickedTabIndex).isEqualTo(1)
+        assertThat(clickedTab).isEqualTo(scheduleViewState.dateTabs[1])
+    }
+
+    fun verifyDateTab4NotDisplayed() {
+        dateTab4.assertExists().assertIsNotDisplayed()
+    }
+
+    fun scrollToDateTab4() {
+        dateTab4.performScrollTo()
+    }
+
+    fun clickDateTab4() {
+        dateTab4.performClick()
+    }
+
+    fun verifyClickedTabIsDateTab4() {
+        assertThat(clickedTabIndex).isEqualTo(3)
+        assertThat(clickedTab).isEqualTo(scheduleViewState.dateTabs[3])
     }
 
     fun verifyYourLocalTimeZoneDisplayed() {

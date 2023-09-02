@@ -12,12 +12,6 @@ import java.time.ZoneOffset
 
 /**
  * UI tests for [ScheduleScreen] composable.
- *
- * 遵循此模型，找到測試使用者介面元素、檢查其屬性、和透過測試規則執行動作：
- * composeTestRule{.finder}{.assertion}{.action}
- *
- * Testing cheatsheet：
- * https://developer.android.com/jetpack/compose/testing-cheatsheet
  */
 class ScheduleScreenTest {
 
@@ -25,7 +19,7 @@ class ScheduleScreenTest {
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *
      * 但若測試案例需查找資源檔 e.g. R.string.welcome。
-     * 使用 createAndroidComposeRule()，作為 composeTestRule
+     * 使用 createAndroidComposeRule<ComponentActivity>()，作為 composeTestRule
      */
     @get:Rule(order = 0)
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
@@ -38,6 +32,7 @@ class ScheduleScreenTest {
             verifyPreviousWeekDisplayed()
             verifyNextWeekDisplayed()
             verifyWeekDateTextDisplayed()
+            verifyDateTab2Displayed()
             verifyScheduleListDisplayed()
         }
     }
@@ -75,16 +70,7 @@ class ScheduleScreenTest {
     @Test
     fun checkPrevWeekClickNotInvoked_whenWeekStartIsBeforeCurrent_afterClick() {
         scheduleScreenRobot(composeTestRule) {
-            // mock currentTime
-            val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
-            val fixedClockUtc = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
-            setScheduleScreenContent(
-                ScheduleViewState(
-                    isTokenValid = true,
-                    currentClock = fixedClock,
-                    queryClockUtc = fixedClockUtc,
-                )
-            )
+            setScheduleScreenContent()
 
             clickPreviousWeek()
             verifyOnPreviousWeekClickInvoked(isInvoked = false)
@@ -128,6 +114,28 @@ class ScheduleScreenTest {
 
             clickWeekDate()
             verifyOnWeekDateClickInvoked()
+        }
+    }
+
+    @Test
+    fun checkTabClickInvoked_afterClickDateTab() {
+        scheduleScreenRobot(composeTestRule) {
+            setScheduleScreenContent()
+
+            clickDateTab2()
+            verifyClickedTabIsDateTab2()
+        }
+    }
+
+    @Test
+    fun checkTabClickInvoked_whenTabOutsideVisibleArea_afterSwipeAndClick() {
+        scheduleScreenRobot(composeTestRule) {
+            setScheduleScreenContent()
+
+            verifyDateTab4NotDisplayed()
+            scrollToDateTab4()
+            clickDateTab4()
+            verifyClickedTabIsDateTab4()
         }
     }
 
