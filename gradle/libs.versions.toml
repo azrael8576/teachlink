@@ -26,6 +26,7 @@ androidxTestCore = "1.5.0"
 androidxArchCore = "2.2.0"
 googleTruth = "1.1.5"
 turbine = "1.0.0"
+datastore = "1.0.0"
 
 [libraries]
 
@@ -116,6 +117,9 @@ androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name =
 
 # Turbine. A small testing library for kotlinx.coroutines Flow
 app-cash-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+
+# DataStore
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
