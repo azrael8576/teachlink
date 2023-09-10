@@ -27,6 +27,8 @@ androidxArchCore = "2.2.0"
 googleTruth = "1.1.5"
 turbine = "1.0.0"
 datastore = "1.0.0"
+protobuf = "3.24.0"
+protobufPlugin = "0.9.4"
 
 [libraries]
 
@@ -121,6 +123,10 @@ app-cash-turbine = { group = "app.cash.turbine", name = "turbine", version.ref =
 # DataStore
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
 
+# Protobuf
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
@@ -128,3 +134,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationSafeArgsKotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }

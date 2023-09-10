@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.protobuf)
     kotlin("kapt")
 }
 
@@ -37,7 +38,28 @@ android {
     }
 }
 
+// Setup protobuf configuration, generating lite Java and Kotlin classes
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+                register("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:model"))
 
     // PublicLibs
     implementation(libs.androidx.core.ktx)
@@ -50,5 +72,12 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore)
+
+    // Protobuf
+    implementation(libs.protobuf.kotlin.lite)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
 
 }

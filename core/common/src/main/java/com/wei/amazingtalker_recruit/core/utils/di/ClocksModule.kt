@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.di
+package com.wei.amazingtalker_recruit.core.utils.di
 
 import com.wei.amazingtalker_recruit.core.utils.AtClocks
 import com.wei.amazingtalker_recruit.core.utils.Clocks
