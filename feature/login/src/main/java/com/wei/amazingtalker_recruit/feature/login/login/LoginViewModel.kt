@@ -1,27 +1,35 @@
 package com.wei.amazingtalker_recruit.feature.login.login
 
-import com.wei.amazingtalker_recruit.core.authentication.TokenManager
+import androidx.lifecycle.viewModelScope
 import com.wei.amazingtalker_recruit.core.base.BaseViewModel
+import com.wei.amazingtalker_recruit.core.data.repository.UserDataRepository
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : BaseViewModel<
+class LoginViewModel @Inject constructor(
+    private val userDataRepository: UserDataRepository
+) : BaseViewModel<
         LoginViewAction,
         LoginViewState
         >(LoginViewState()) {
 
     private fun login(account: String, password: String) {
         // TODO 替換至 login API
-        if (TEST_ACCOUNT == account && TEST_PASSWORD == password) {
-            TokenManager.validateToken()
-            updateState {
-                copy(
-                    isUserLoggedIn = TokenManager.isTokenValid,
-                )
+        viewModelScope.launch {
+            if (TEST_ACCOUNT == account && TEST_PASSWORD == password) {
+                userDataRepository.setTokenString(OffsetDateTime.now().toString())
+
+                updateState {
+                    copy(
+                        isLoginClicked = true,
+                    )
+                }
             }
         }
     }

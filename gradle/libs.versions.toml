@@ -26,9 +26,10 @@ androidxTestCore = "1.5.0"
 androidxArchCore = "2.2.0"
 googleTruth = "1.1.5"
 turbine = "1.0.0"
-datastore = "1.0.0"
+androidxDatastore = "1.0.0"
 protobuf = "3.24.0"
 protobufPlugin = "0.9.4"
+androidxCoreSplashscreen = "1.0.1"
 
 [libraries]
 
@@ -121,11 +122,14 @@ androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name =
 app-cash-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 # DataStore
-androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDatastore" }
 
 # Protobuf
 protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
+
+# Splashscreen
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

@@ -69,8 +69,8 @@ internal fun LoginRoute(
 ) {
     val uiStates: LoginViewState by viewModel.states.collectAsStateWithLifecycle()
 
-    LaunchedEffect(uiStates.isUserLoggedIn) {
-        if (uiStates.isUserLoggedIn) {
+    LaunchedEffect(uiStates.isLoginClicked) {
+        if (uiStates.isLoginClicked) {
             onLoginNav()
         }
     }

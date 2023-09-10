@@ -86,7 +86,6 @@ class ScheduleScreenTest {
                 Clock.fixed(Instant.parse(testCurrentTime).plus(Period.ofWeeks(2)), ZoneOffset.UTC)
             setScheduleScreenContent(
                 ScheduleViewState(
-                    isTokenValid = true,
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
                 )
@@ -147,7 +146,6 @@ class ScheduleScreenTest {
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(
                 ScheduleViewState(
-                    isTokenValid = true,
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
                     timeListUiState = timeListSuccess
@@ -171,7 +169,6 @@ class ScheduleScreenTest {
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(
                 ScheduleViewState(
-                    isTokenValid = true,
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
                     timeListUiState = timeListSuccess
@@ -191,7 +188,6 @@ class ScheduleScreenTest {
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(
                 ScheduleViewState(
-                    isTokenValid = true,
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
                     timeListUiState = timeListSuccess
@@ -206,8 +202,7 @@ class ScheduleScreenTest {
     @Test
     fun checkLoadingElementsVisibility_whenLoading() {
         val loadingUiState = ScheduleViewState(
-            timeListUiState = TimeListUiState.Loading,
-            isTokenValid = true
+            timeListUiState = TimeListUiState.Loading
         )
 
         scheduleScreenRobot(composeTestRule) {
@@ -220,8 +215,7 @@ class ScheduleScreenTest {
     @Test
     fun checkLoadFailedElementsVisibility_whenLoadFailed() {
         val loadFailedUiState = ScheduleViewState(
-            timeListUiState = TimeListUiState.LoadFailed,
-            isTokenValid = true
+            timeListUiState = TimeListUiState.LoadFailed
         )
 
         scheduleScreenRobot(composeTestRule) {

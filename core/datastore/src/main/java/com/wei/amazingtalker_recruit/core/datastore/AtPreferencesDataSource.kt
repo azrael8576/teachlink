@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.core.datastore
 
+import android.util.Log
 import com.wei.amazingtalker_recruit.core.model.data.UserData
 import com.wei.amazingtalker_recruit.core.model.data.ThemeBrand
 import com.wei.amazingtalker_recruit.core.model.data.DarkThemeConfig
@@ -7,6 +8,7 @@ import com.wei.amazingtalker_recruit.core.model.data.LanguageConfig
 
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.map
+import java.io.IOException
 import javax.inject.Inject
 
 class AtPreferencesDataSource @Inject constructor(
@@ -52,5 +54,16 @@ class AtPreferencesDataSource @Inject constructor(
                 },
             )
         }
-    
+
+    suspend fun setTokenString(tokenString: String) {
+        try {
+            userPreferences.updateData {
+                it.copy {
+                    this.tokenString = tokenString
+                }
+            }
+        } catch (ioException: IOException) {
+            Log.e("AtPreferences", "Failed to update user preferences", ioException)
+        }
+    }
 }
