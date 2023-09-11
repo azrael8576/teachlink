@@ -1,15 +1,18 @@
 package com.wei.amazingtalker_recruit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.wei.amazingtalker_recruit.MainActivityUiState.Success
+import com.wei.amazingtalker_recruit.MainActivityUiState.Loading
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.authentication.TokenState
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
@@ -23,7 +26,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var snackbarManager: SnackbarManager
@@ -33,10 +36,23 @@ class MainActivity : AppCompatActivity() {
 
     val viewModel: MainActivityViewModel by viewModels()
 
+    private var uiState: MainActivityUiState = Loading
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
+        setSplashScreenKeepCondition(splashScreen)
         observeUiState()
+    }
+
+    private fun setSplashScreenKeepCondition(splashScreen: SplashScreen) {
+        splashScreen.setKeepOnScreenCondition {
+            when (uiState) {
+                Loading -> true
+                is Success -> false
+            }
+        }
     }
 
     private fun observeUiState() {
@@ -45,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.uiState
                     .filter { it is Success }
                     .collect { updatedState ->
+                        uiState = updatedState
                         handleSuccessState(updatedState as Success)
                     }
             }
