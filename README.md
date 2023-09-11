@@ -8,6 +8,19 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 > [!NOTE]
 > 查看 [Amazingtalker-Recruit：MAD 遷移之旅](https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
 
+## Screenshots
+
+<div style="display: flex; justify-content: space-between;">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/light_theme.gif" alt="Light Theme" width="30%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/dark_theme.gif" alt="Dark Theme" width="30%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/split_screen.gif" alt="Split Screen & Offline Error" width="30%">
+</div>
+
+> **Note:** 這些截圖展示了 App 在不同情境下的適應性：
+> - 螢幕方向與深色主題的動態組態設定，且不影響原有狀態。
+> - 分屏模式下的螢幕空間適應性。
+> - 於網路狀態異常時，透過 Snackbar 顯示錯誤訊息。
+
 ## Tech stack
 #### Architecture
 - MVI Architecture (Model - View - Intent)
@@ -67,19 +80,6 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 對於正常開發，請使用該 `debug` variant。對於 UI 性能測試，請使用該 `release` variant。
 
 > **Note:** 詳見 Google 官方網誌文章 [_Why should you always test Compose performance in release?_](https://medium.com/androiddevelopers/why-should-you-always-test-compose-performance-in-release-4168dd0f2c71)
-
-## Screenshots
-
-<div style="display: flex; justify-content: space-between;">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/light_theme.gif" alt="Light Theme" width="30%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/dark_theme.gif" alt="Dark Theme" width="30%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/split_screen.gif" alt="Split Screen & Offline Error" width="30%">
-</div>
-
-> **Note:** 這些截圖展示了 App 在不同情境下的適應性：
-> - 螢幕方向與深色主題的動態組態設定，且不影響原有狀態。
-> - 分屏模式下的螢幕空間適應性。
-> - 於網路狀態異常時，透過 Snackbar 顯示錯誤訊息。
 
 ## DesignSystem
 
