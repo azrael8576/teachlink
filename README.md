@@ -31,6 +31,9 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 #### Navigation
 - [_Navigation Compose_](https://developer.android.com/jetpack/compose/navigation): The [_Navigation component_](https://developer.android.com/guide/navigation) provides support for [_Jetpack Compose_](https://developer.android.com/jetpack/compose) applications.
 
+#### Data Storage
+- [_Proto DataStore_](https://developer.android.com/topic/libraries/architecture/datastore): A Jetpack solution for storing key-value pairs or typed objects using [_protocol buffers_](https://developers.google.com/protocol-buffers). It leverages Kotlin coroutines and Flow for asynchronous and transactional data storage.
+
 #### Testing
 - [_Turbine_](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
 - [_Google Truth_](https://github.com/google/truth): Fluent assertions for Java and Android.
@@ -68,9 +71,9 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 ## Screenshots
 
 <div style="display: flex; justify-content: space-between;">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/light_theme.gif" alt="Light Theme" width="30%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/dark_theme.gif" alt="Dark Theme" width="30%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/demo/split_screen.gif" alt="Split Screen & Offline Error" width="30%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/light_theme.gif" alt="Light Theme" width="30%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/dark_theme.gif" alt="Dark Theme" width="30%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/split_screen.gif" alt="Split Screen & Offline Error" width="30%">
 </div>
 
 > **Note:** 這些截圖展示了 App 在不同情境下的適應性：

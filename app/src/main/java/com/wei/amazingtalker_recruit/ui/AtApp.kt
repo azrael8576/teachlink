@@ -100,7 +100,6 @@ fun AtApp(
                 )
             },
         ) { padding ->
-            Timber.e("padding: $padding")
             Row(
                 Modifier
                     .fillMaxSize()

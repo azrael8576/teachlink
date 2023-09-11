@@ -14,10 +14,10 @@
 - Groovy 遷移至 Kotlin 的建構配置。 查看分支：`refactor/groovy_to_kts`
 - UI testing with Compose 。 查看相關分支：`test/ui_test_`、`refactor/robot_testing_pattern`
 - Unit Tests 。 查看分支：`test/unit_tests`
+- 引入 Jetpack DataStore 做為本地數據存儲  `feat/datastore_module`
 
 ### 🚧 進行中的工作
 
 該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：
 - Support All Screen Sizes
-- 引入 Jetpack DataStore 做為本地數據存儲
 - 引入 Baseline Profiles 啟動優化
