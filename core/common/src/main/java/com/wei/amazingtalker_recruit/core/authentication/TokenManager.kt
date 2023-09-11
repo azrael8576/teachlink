@@ -1,24 +1,34 @@
 package com.wei.amazingtalker_recruit.core.authentication
 
 /**
- * 用於管理用戶的 token 狀態。
- * 其中的 isTokenValid 屬性代表當前 token 是否有效。
+ * Responsible for managing the state of user's token.
+ * The `isTokenValid` property indicates the validity of the current token.
  */
 object TokenManager {
-    var isTokenValid: Boolean = false
+    var tokenState: TokenState = TokenState.Loading
         private set
 
     /**
-     * 將當前的 token 標記為無效。
+     * Mark the current token as invalid.
      */
-    fun invalidateToken() {
-        isTokenValid = false
+    private fun invalidateToken() {
+        tokenState = TokenState.Invalid
     }
 
     /**
-     * 將當前的 token 標記為有效。
+     * Validate and set the state of the token.
      */
-    fun validateToken() {
-        isTokenValid = true
+    fun validateToken(token: String) {
+        if (token.isNotEmpty()) {
+            tokenState = TokenState.Valid(token)
+        } else {
+            invalidateToken()
+        }
     }
+}
+
+sealed interface TokenState {
+    data class Valid(val token: String) : TokenState
+    object Invalid : TokenState
+    object Loading : TokenState
 }

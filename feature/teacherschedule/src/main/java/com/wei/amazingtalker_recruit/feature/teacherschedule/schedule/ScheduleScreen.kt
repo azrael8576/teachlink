@@ -118,12 +118,6 @@ internal fun ScheduleRoute(
 ) {
     val uiStates: ScheduleViewState by viewModel.states.collectAsStateWithLifecycle()
 
-    LaunchedEffect(uiStates.isTokenValid) {
-        if (!uiStates.isTokenValid) {
-            tokenInvalidNavigate()
-        }
-    }
-
     ScheduleScreen(
         uiStates = uiStates,
         onPreviousWeekClick = { viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK)) },
@@ -211,49 +205,47 @@ internal fun ScheduleScreen(
         }
     }
 
-    if (uiStates.isTokenValid) {
-        /**
-         * Add the nested scroll connection to your top level @Composable element
-         * using the nestedScroll modifier.
-         */
-        Box(
+    /**
+     * Add the nested scroll connection to your top level @Composable element
+     * using the nestedScroll modifier.
+     */
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(nestedScrollConnection)
+    ) {
+        ScheduleList(
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp)
                 .fillMaxSize()
-                .nestedScroll(nestedScrollConnection)
-        ) {
-            ScheduleList(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(horizontal = 20.dp)
-                    .fillMaxSize()
-                    .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { scope.coroutineContext.cancelChildren() }
-                        )
-                    }
-                    .testTag(stringResource(R.string.tag_schedule_list)),
-                timeListUiState = uiStates.timeListUiState,
-                listState = listState,
-                contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
-                isScrollInProgress = uiStates.isScrollInProgress,
-                onListScroll = onListScroll,
-                onTimeSlotClick = onTimeSlotClick,
-            )
-            ScheduleToolbar(
-                progress = toolbarState.progress,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(with(LocalDensity.current) { toolbarState.height.toDp() })
-                    .graphicsLayer { translationY = toolbarState.offset },
-                uiStates = uiStates,
-                onPreviousWeekClick = onPreviousWeekClick,
-                onNextWeekClick = onNextWeekClick,
-                onWeekDateClick = onWeekDateClick,
-                onTabClick = onTabClick,
-            )
-            AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
-        }
+                .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onPress = { scope.coroutineContext.cancelChildren() }
+                    )
+                }
+                .testTag(stringResource(R.string.tag_schedule_list)),
+            timeListUiState = uiStates.timeListUiState,
+            listState = listState,
+            contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
+            isScrollInProgress = uiStates.isScrollInProgress,
+            onListScroll = onListScroll,
+            onTimeSlotClick = onTimeSlotClick,
+        )
+        ScheduleToolbar(
+            progress = toolbarState.progress,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(with(LocalDensity.current) { toolbarState.height.toDp() })
+                .graphicsLayer { translationY = toolbarState.offset },
+            uiStates = uiStates,
+            onPreviousWeekClick = onPreviousWeekClick,
+            onNextWeekClick = onNextWeekClick,
+            onWeekDateClick = onWeekDateClick,
+            onTabClick = onTabClick,
+        )
+        AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
     }
 }
 

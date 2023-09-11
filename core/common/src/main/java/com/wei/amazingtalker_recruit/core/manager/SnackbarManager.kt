@@ -42,4 +42,8 @@ class SnackbarManager @Inject constructor() {
             currentMessages.filterNot { it.id == messageId }
         }
     }
+
+    fun getLastMessage(): Message? {
+        return _messages.value.lastOrNull()
+    }
 }

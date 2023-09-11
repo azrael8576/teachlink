@@ -71,7 +71,6 @@ internal open class ScheduleScreenRobot(
     private val fixedClock: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
     private val fixedClockUtc: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
     private val scheduleViewState = ScheduleViewState(
-        isTokenValid = true,
         currentClock = fixedClock,
         queryClockUtc = fixedClockUtc,
     )

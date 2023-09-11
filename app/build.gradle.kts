@@ -70,6 +70,7 @@ dependencies {
     androidTestImplementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
+    implementation(project(":core:model"))
     implementation(project(":feature:teacherschedule"))
     implementation(project(":feature:login"))
     testImplementation(project(":core:testing"))
@@ -101,4 +102,7 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
+
+    // Splashscreen
+    implementation(libs.androidx.core.splashscreen)
 }

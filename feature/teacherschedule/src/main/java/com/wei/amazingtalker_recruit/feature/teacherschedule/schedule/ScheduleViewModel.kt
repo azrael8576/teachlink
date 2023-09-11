@@ -48,9 +48,7 @@ class ScheduleViewModel @Inject constructor(
     private var getScheduleJob: Job? = null
 
     init {
-        if (states.value.isTokenValid) {
-            refreshWeekData(queryDateLocal = OffsetDateTime.now(clock).getLocalOffsetDateTime())
-        }
+        refreshWeekData(queryDateLocal = OffsetDateTime.now(clock).getLocalOffsetDateTime())
     }
 
     private fun refreshWeekData(

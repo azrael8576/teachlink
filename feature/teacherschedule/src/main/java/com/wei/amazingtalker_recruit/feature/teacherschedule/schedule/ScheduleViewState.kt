@@ -1,7 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
 import androidx.annotation.StringRes
-import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.base.Action
 import com.wei.amazingtalker_recruit.core.base.State
@@ -35,7 +34,6 @@ data class ScheduleViewState(
     val _queryDateUtc: OffsetDateTime = OffsetDateTime.now(queryClockUtc),
     val selectedIndex: Int = 0,
     val timeListUiState: TimeListUiState = TimeListUiState.Loading,
-    val isTokenValid: Boolean = TokenManager.isTokenValid,
     val isScrollInProgress: Boolean = false,
 ) : State {
     private val weekDataHelper = WeekDataHelper()

@@ -1,7 +1,9 @@
 package com.wei.amazingtalker_recruit.core.data.di
 
 import com.wei.amazingtalker_recruit.core.data.repository.DefaultTeacherScheduleRepository
+import com.wei.amazingtalker_recruit.core.data.repository.DefaultUserDataRepository
 import com.wei.amazingtalker_recruit.core.data.repository.TeacherScheduleRepository
+import com.wei.amazingtalker_recruit.core.data.repository.UserDataRepository
 import com.wei.amazingtalker_recruit.core.data.utils.ConnectivityManagerNetworkMonitor
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
 import dagger.Binds
@@ -22,4 +24,9 @@ interface DataModule {
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor,
     ): NetworkMonitor
+
+    @Binds
+    fun bindsUserDataRepository(
+        userDataRepository: DefaultUserDataRepository,
+    ): UserDataRepository
 }
