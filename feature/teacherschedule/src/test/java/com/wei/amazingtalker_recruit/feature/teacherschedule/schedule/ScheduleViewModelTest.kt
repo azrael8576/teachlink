@@ -91,9 +91,9 @@ class ScheduleViewModelTest {
             viewModel.dispatch(action)
 
             // Assert
-            Truth.assertThat(snackbarManager.messages.first()[0].state)
-                .isEqualTo(SnackbarState.Default)
-            Truth.assertThat(snackbarManager.messages.first()[0].uiText).isEqualTo(testUiText)
+            val lastMessage = snackbarManager.getLastMessage()
+            Truth.assertThat(lastMessage?.state).isEqualTo(SnackbarState.Default)
+            Truth.assertThat(lastMessage?.uiText).isEqualTo(testUiText)
         }
 
     @Test
@@ -117,8 +117,9 @@ class ScheduleViewModelTest {
             viewModel.dispatch(action)
 
             // Assert
-            Truth.assertThat(snackbarManager.messages.first()[0].state).isEqualTo(SnackbarState.Default)
-            Truth.assertThat(snackbarManager.messages.first()[0].uiText).isEqualTo(testUiText)
+            val lastMessage = snackbarManager.getLastMessage()
+            Truth.assertThat(lastMessage?.state).isEqualTo(SnackbarState.Default)
+            Truth.assertThat(lastMessage?.uiText).isEqualTo(testUiText)
         }
 
     @Test
@@ -142,8 +143,9 @@ class ScheduleViewModelTest {
             viewModel.dispatch(action)
 
             // Assert
-            Truth.assertThat(snackbarManager.messages.first()[0].state).isEqualTo(SnackbarState.Default)
-            Truth.assertThat(snackbarManager.messages.first()[0].uiText).isEqualTo(testUiText)
+            val lastMessage = snackbarManager.getLastMessage()
+            Truth.assertThat(lastMessage?.state).isEqualTo(SnackbarState.Default)
+            Truth.assertThat(lastMessage?.uiText).isEqualTo(testUiText)
         }
 
     @Test
