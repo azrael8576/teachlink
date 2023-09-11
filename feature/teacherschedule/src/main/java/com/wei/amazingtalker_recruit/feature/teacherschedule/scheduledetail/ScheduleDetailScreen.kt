@@ -2,8 +2,12 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -76,6 +80,7 @@ internal fun ScheduleDetailRoute(
 internal fun ScheduleDetailScreen(
     uiStates: ScheduleDetailViewState,
     onBackClick: () -> Unit,
+    withTopSpacer: Boolean = true
 ) {
 
     Surface(
@@ -89,6 +94,10 @@ internal fun ScheduleDetailScreen(
                     .padding(8.dp)
                     .align(Alignment.TopStart)
             ) {
+                if (withTopSpacer) {
+                    Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+                }
+
                 val teacherName = stringResource(R.string.teacher_name)
                 Text(
                     text = uiStates.teacherName.toString(),

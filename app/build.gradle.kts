@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.wei.amazingtalker_recruit"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.wei.amazingtalker_recruit"
@@ -71,6 +71,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+    implementation(project(":core:datastore"))
     implementation(project(":feature:teacherschedule"))
     implementation(project(":feature:login"))
     testImplementation(project(":core:testing"))
@@ -80,6 +81,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
+
+    implementation(libs.androidx.activity.compose)
 
     // LifeCycle
     implementation(libs.androidx.lifecycle.runtime.ktx)

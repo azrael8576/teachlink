@@ -1,7 +1,6 @@
 package com.wei.amazingtalker_recruit.ui
 
 import android.content.Context
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
@@ -9,18 +8,19 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,12 +37,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wei.amazingtalker_recruit.R
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker_recruit.core.designsystem.ui.component.AtAppSnackbar
+import com.wei.amazingtalker_recruit.core.designsystem.ui.component.AtBackground
 import com.wei.amazingtalker_recruit.core.manager.ErrorTextPrefix
 import com.wei.amazingtalker_recruit.core.manager.Message
 import com.wei.amazingtalker_recruit.core.manager.SnackbarManager
 import com.wei.amazingtalker_recruit.core.manager.SnackbarState
 import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.navigation.AtNavHost
+import timber.log.Timber
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -79,56 +81,60 @@ fun AtApp(
     LaunchedEffect(key1 = snackbarHostState) {
         collectAndShowSnackbar(snackbarManager, snackbarHostState, context)
     }
-
-    Scaffold(
-        modifier = Modifier.semantics {
-            testTagsAsResourceId = true
-        },
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.systemBarsPadding(),
-                snackbar = { snackbarData ->
-                    val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
-                    AtAppSnackbar(snackbarData, isError)
-                }
-            )
-        },
-        containerColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.onBackground,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-    ) { padding ->
-        Row(
-            Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .consumeWindowInsets(padding)
-                .windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Horizontal,
+    AtBackground {
+        Scaffold(
+            modifier = Modifier.semantics {
+                testTagsAsResourceId = true
+            },
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.onBackground,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.systemBarsPadding(),
+                    snackbar = { snackbarData ->
+                        val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                        AtAppSnackbar(snackbarData, isError)
+                    }
+                )
+            },
+        ) { padding ->
+            Timber.e("padding: $padding")
+            Row(
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .consumeWindowInsets(padding)
+                    .windowInsetsPadding(
+                        WindowInsets.safeDrawing.only(
+                            WindowInsetsSides.Horizontal,
+                        ),
                     ),
-                ),
-        ) {
+            ) {
 
-            Column(Modifier.fillMaxSize()) {
-                // Show the top app bar on top level destinations.
-                val destination = appState.currentTopLevelDestination
-                if (destination != null) {
-                    // TODO: AtTopAppBar
-//                    Row(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .background(Color.Red)
-//                    ) {
-//                        Text(text = "AtTopAppBar PlaceHolder")
-//                    }
+                Column(Modifier.fillMaxSize()) {
+                    // Show the top app bar on top level destinations.
+                    val destination = appState.currentTopLevelDestination
+                    if (destination != null) {
+                        // TODO: AtTopAppBar
+                        CenterAlignedTopAppBar(
+                            title = { Text(text = "jamie-coleman") },
+                            navigationIcon = {
+
+                            },
+                            actions = {
+
+                            },
+                            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                containerColor = Color.Transparent,
+                            ),
+                        )
+                    }
+
+                    AtNavHost(appState = appState, isTokenValid = isTokenValid)
                 }
-
-                AtNavHost(appState = appState, isTokenValid = isTokenValid)
             }
-
-            // TODO: We may want to add padding or spacer when the snackbar is shown so that
-            //  content doesn't display behind it.
         }
     }
 }

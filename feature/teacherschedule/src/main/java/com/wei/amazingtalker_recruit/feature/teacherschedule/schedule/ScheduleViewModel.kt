@@ -74,10 +74,6 @@ class ScheduleViewModel @Inject constructor(
     private fun fetchTeacherSchedule() {
         getScheduleJob?.cancel()
 
-        showSnackBar(
-            resId = R.string.inquirying_teacher_calendar,
-            message = listOf(states.value._currentTeacherName, states.value.weekDateText),
-        )
         getScheduleJob = viewModelScope.launch {
             getTeacherScheduleUseCase(
                 teacherName = states.value._currentTeacherName,

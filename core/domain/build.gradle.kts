@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.wei.amazingtalker_recruit.core.domain"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 23
