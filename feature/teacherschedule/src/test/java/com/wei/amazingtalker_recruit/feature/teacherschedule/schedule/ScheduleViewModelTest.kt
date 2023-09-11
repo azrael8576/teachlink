@@ -182,7 +182,7 @@ class ScheduleViewModelTest {
                 copy(
                     selectedIndex = 0,
                     _queryDateUtc = weekDataHelper.getQueryDateUtc(
-                        queryDateLocal = OffsetDateTime.now(clock).getLocalOffsetDateTime(),
+                        queryDateLocal = OffsetDateTime.now(fixedClock).getLocalOffsetDateTime(),
                         resetToStartOfDay = false
                     ),
                 )

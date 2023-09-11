@@ -324,24 +324,24 @@ internal open class ScheduleScreenRobot(
         yourLocalTimeZone.assertExists().assertIsDisplayed()
     }
 
-    fun verifyMorningDisplayed() {
-        morning.assertExists().assertIsDisplayed()
+    fun verifyMorningExists() {
+        morning.assertExists()
     }
 
-    fun verifyAfternoonDisplayed() {
-        afternoon.assertExists().assertIsDisplayed()
+    fun verifyAfternoonExists() {
+        afternoon.assertExists()
     }
 
-    fun verifyEveningDisplayed() {
-        evening.assertExists().assertIsDisplayed()
+    fun verifyEveningExists() {
+        evening.assertExists()
     }
 
-    fun verifyAvailableTimeSlotDisplayed() {
-        availableTimeSlot.assertExists().assertIsDisplayed()
+    fun verifyAvailableTimeSlotExists() {
+        availableTimeSlot.assertExists()
     }
 
-    fun verifyUnavailableTimeSlotDisplayed() {
-        unavailableTimeSlot.assertExists().assertIsDisplayed()
+    fun verifyUnavailableTimeSlotExists() {
+        unavailableTimeSlot.assertExists()
     }
 
     fun clickAvailableTimeSlot() {

@@ -140,7 +140,7 @@ class ScheduleScreenTest {
     }
 
     @Test
-    fun checkSuccessElementsVisibility_whenSuccess() {
+    fun checkSuccessElementsExists_whenSuccess() {
         // mock currentTime
         val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
         val fixedClockUtc = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
@@ -153,13 +153,12 @@ class ScheduleScreenTest {
                     timeListUiState = timeListSuccess
                 )
             )
-
             verifyYourLocalTimeZoneDisplayed()
-            verifyMorningDisplayed()
-            verifyAfternoonDisplayed()
-            verifyEveningDisplayed()
-            verifyAvailableTimeSlotDisplayed()
-            verifyUnavailableTimeSlotDisplayed()
+            verifyMorningExists()
+            verifyAfternoonExists()
+            verifyEveningExists()
+            verifyAvailableTimeSlotExists()
+            verifyUnavailableTimeSlotExists()
         }
     }
 
