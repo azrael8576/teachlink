@@ -74,10 +74,20 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+/**
+ * Light Android background theme
+ */
+val LightAndroidBackgroundTheme = BackgroundTheme(color = LightColors.background)
+
+/**
+ * Dark Android background theme
+ */
+val DarkAndroidBackgroundTheme = BackgroundTheme(color = DarkColors.background)
+
 @Composable
 fun AtTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    androidTheme: Boolean = false,
+    androidTheme: Boolean = true,
     content: @Composable() () -> Unit
 ) {
     // Color scheme
@@ -92,6 +102,7 @@ fun AtTheme(
     )
 
     val backgroundTheme = when {
+        androidTheme -> if (darkTheme) DarkAndroidBackgroundTheme else LightAndroidBackgroundTheme
         else -> defaultBackgroundTheme
     }
 
