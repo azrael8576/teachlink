@@ -16,6 +16,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 </div>
 
 > **Note:** 這些截圖展示了 App 在不同情境下的適應性：
+> - 若 Token 失效時，跳轉至 Login 頁面。
 > - 螢幕方向與深色主題的動態組態設定，且不影響原有狀態。
 > - 分屏模式下的螢幕空間適應性。
 > - 於網路狀態異常時，透過 Snackbar 顯示錯誤訊息。
