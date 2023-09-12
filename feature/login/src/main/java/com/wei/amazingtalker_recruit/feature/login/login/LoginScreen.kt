@@ -1,11 +1,11 @@
 package com.wei.amazingtalker_recruit.feature.login.login
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -105,19 +105,23 @@ internal fun LoginScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Column(
+            LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Title(Modifier.align(Alignment.CenterHorizontally))
-                Spacer(modifier = Modifier.height(16.dp))
-                AccountTextField(accountState)
-                PasswordTextField(passwordState)
-                Spacer(modifier = Modifier.height(32.dp))
-                LoginButton(
-                    accountState,
-                    passwordState,
-                    login
-                )
+                item {
+                    Title()
+                    Spacer(modifier = Modifier.height(32.dp))
+                    AccountTextField(accountState)
+                    PasswordTextField(passwordState)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ForgotPasswordText()
+                    Spacer(modifier = Modifier.height(32.dp))
+                    LoginButton(
+                        accountState,
+                        passwordState,
+                        login
+                    )
+                }
             }
         }
     }
@@ -129,7 +133,7 @@ private fun Title(modifier: Modifier = Modifier) {
     val text = stringResource(R.string.login_title)
     Text(
         text = text,
-        style = MaterialTheme.typography.bodyMedium,
+        style = MaterialTheme.typography.headlineMedium,
         modifier = modifier.semantics { contentDescription = text }
     )
 }
@@ -172,6 +176,14 @@ internal fun PasswordTextField(
         },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
+    )
+}
+
+@Composable
+internal fun ForgotPasswordText() {
+    Text(
+        text = stringResource(R.string.forgot_password),
+        style = MaterialTheme.typography.bodySmall,
     )
 }
 

@@ -30,6 +30,7 @@ androidxDatastore = "1.0.0"
 protobuf = "3.24.0"
 protobufPlugin = "0.9.4"
 androidxCoreSplashscreen = "1.0.1"
+coil = "2.4.0"
 
 [libraries]
 
@@ -130,6 +131,11 @@ protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref 
 
 # Splashscreen
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
+
+# Coil
+coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil-kt-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

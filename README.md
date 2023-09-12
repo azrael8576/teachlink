@@ -11,9 +11,8 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 ## Screenshots
 
 <div style="display: flex; justify-content: space-between;">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/light_theme.gif" alt="Light Theme" width="30%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/dark_theme.gif" alt="Dark Theme" width="30%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/split_screen.gif" alt="Split Screen & Offline Error" width="30%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/light_theme.gif" alt="Light Theme" width="45%">
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/split_screen.gif" alt="Split Screen" width="45%">
 </div>
 
 > **Note:** 這些截圖展示了 App 在不同情境下的適應性：
@@ -46,6 +45,9 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 #### Data Storage
 - [_Proto DataStore_](https://developer.android.com/topic/libraries/architecture/datastore): A Jetpack solution for storing key-value pairs or typed objects using [_protocol buffers_](https://developers.google.com/protocol-buffers). It leverages Kotlin coroutines and Flow for asynchronous and transactional data storage.
+
+#### Image Loading
+- [_Coil_](https://coil-kt.github.io/coil/): An image loading library for Android backed by Kotlin Coroutines.
 
 #### Testing
 - [_Turbine_](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.

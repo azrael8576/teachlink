@@ -1,11 +1,17 @@
 <resources>
 
     <!-- 歡迎頁面 -->
-    <string name="welcome">Welcome Compose</string>
+    <string name="welcome_title">Quality teachers
+        \nwho are like friends.</string>
+    <string name="welcome_message">Access global online tutors for 1-on-1 sessions.
+        \nLearn anytime, anywhere,
+        \nwith courses tailored just for you!</string>
 
     <!-- 登入頁面 -->
-    <string name="login_title">Modular Navigation: \nHome Module</string>
+    <string name="login_title">LOGIN</string>
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="get_started">Get Started</string>
 </resources>
