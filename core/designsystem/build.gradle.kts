@@ -71,6 +71,7 @@ dependencies {
     // Material Design 3
     api(libs.androidx.compose.material3.core)
     api(libs.androidx.compose.material3.windowSizeClass)
+    api(libs.androidx.compose.material.iconsExtended)
 
     // main APIs for the underlying toolkit systems,
     // such as input and measurement/layout

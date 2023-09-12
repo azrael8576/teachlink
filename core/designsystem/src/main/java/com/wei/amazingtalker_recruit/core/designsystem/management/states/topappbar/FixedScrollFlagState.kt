@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar
+package com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar
 
 abstract class FixedScrollFlagState(heightRange: IntRange) : ScrollFlagState(heightRange) {
 

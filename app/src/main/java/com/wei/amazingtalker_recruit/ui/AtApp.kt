@@ -36,15 +36,14 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wei.amazingtalker_recruit.R
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
-import com.wei.amazingtalker_recruit.core.designsystem.ui.component.AtAppSnackbar
-import com.wei.amazingtalker_recruit.core.designsystem.ui.component.AtBackground
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtAppSnackbar
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtBackground
 import com.wei.amazingtalker_recruit.core.manager.ErrorTextPrefix
 import com.wei.amazingtalker_recruit.core.manager.Message
 import com.wei.amazingtalker_recruit.core.manager.SnackbarManager
 import com.wei.amazingtalker_recruit.core.manager.SnackbarState
 import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.navigation.AtNavHost
-import timber.log.Timber
 
 @OptIn(
     ExperimentalMaterial3Api::class,

@@ -1,14 +1,16 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsTopHeight
-import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,7 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.icon.AtIcons
+import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
@@ -84,70 +87,80 @@ internal fun ScheduleDetailScreen(
 ) {
 
     Surface(
-        modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+        modifier = Modifier.fillMaxSize()
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
+        Column{
+            if (withTopSpacer) {
+                Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+            }
+            ScheduleDetailToolbar(onBackClick = onBackClick)
+
+            val teacherName = stringResource(R.string.teacher_name)
+            Text(
+                text = uiStates.teacherName.toString(),
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .semantics { contentDescription = teacherName },
+            )
+            val startTime = stringResource(R.string.start_time)
+            Text(
+                text = uiStates.start.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp)
+                    .semantics { contentDescription = startTime },
+            )
+            val endTime = stringResource(R.string.end_time)
+            Text(
+                text = uiStates.end.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp)
+                    .semantics { contentDescription = endTime },
+            )
+            val state = stringResource(R.string.state)
+            Text(
+                text = uiStates.state?.name.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp)
+                    .semantics { contentDescription = state },
+            )
+            val duringDayType = stringResource(R.string.during_day_type)
+            Text(
+                text = uiStates.duringDayType?.name.toString(),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 8.dp)
+                    .semantics { contentDescription = duringDayType },
+            )
+        }
+    }
+}
+
+@Composable
+private fun ScheduleDetailToolbar(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.fillMaxWidth(),
+    ) {
+        val back = stringResource(R.string.back)
+        IconButton(
+            onClick = { onBackClick() },
+            modifier = Modifier.semantics { contentDescription = back }
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.TopStart)
-            ) {
-                if (withTopSpacer) {
-                    Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                }
-
-                val teacherName = stringResource(R.string.teacher_name)
-                Text(
-                    text = uiStates.teacherName.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.semantics { contentDescription = teacherName },
-                )
-                val startTime = stringResource(R.string.start_time)
-                Text(
-                    text = uiStates.start.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .semantics { contentDescription = startTime },
-                )
-                val endTime = stringResource(R.string.end_time)
-                Text(
-                    text = uiStates.end.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .semantics { contentDescription = endTime },
-                )
-                val state = stringResource(R.string.state)
-                Text(
-                    text = uiStates.state?.name.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .semantics { contentDescription = state },
-                )
-                val duringDayType = stringResource(R.string.during_day_type)
-                Text(
-                    text = uiStates.duringDayType?.name.toString(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .semantics { contentDescription = duringDayType },
-                )
-            }
-
-            val back = stringResource(R.string.back)
-            Button(
-                onClick = onBackClick,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 16.dp)
-                    .semantics { contentDescription = back },
-            ) {
-                Text(back)
-            }
+            Icon(
+                imageVector = AtIcons.ArrowBack,
+                contentDescription = null,
+            )
         }
     }
 }

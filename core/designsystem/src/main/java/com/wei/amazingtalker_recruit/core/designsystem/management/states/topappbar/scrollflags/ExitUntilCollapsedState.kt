@@ -1,11 +1,11 @@
-package com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags
+package com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.scrollflags
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.structuralEqualityPolicy
-import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.FixedScrollFlagState
+import com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.FixedScrollFlagState
 
 class ExitUntilCollapsedState(
     heightRange: IntRange,

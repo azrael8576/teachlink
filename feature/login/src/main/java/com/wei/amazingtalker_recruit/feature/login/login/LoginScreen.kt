@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.BuildConfig
 import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_ACCOUNT
@@ -102,7 +102,9 @@ internal fun LoginScreen(
         color = MaterialTheme.colorScheme.background
     ) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
             LazyColumn(

@@ -17,7 +17,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
@@ -40,9 +40,10 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
     Text(
         text = yourLocalTimeZone,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
-        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+        style = MaterialTheme.typography.bodySmall,
         modifier = Modifier
             .padding(top = 16.dp)
+            .padding(horizontal = 16.dp)
             .semantics { contentDescription = yourLocalTimeZone }
     )
 }
@@ -59,9 +60,10 @@ internal fun DuringDay(duringDayType: DuringDayType) {
     Text(
         text = duringDay,
         color = MaterialTheme.colorScheme.onSurface,
-        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+        style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
-            .padding(vertical = 16.dp)
+            .padding(top = 16.dp)
+            .padding(horizontal = 16.dp)
             .semantics { contentDescription = duringDay }
     )
 }
@@ -85,6 +87,7 @@ internal fun TimeSlot(
 
 @Composable
 private fun AvailableTimeSlot(
+    modifier: Modifier = Modifier,
     timeSlot: IntervalScheduleTimeSlot,
     onTimeSlotClick: () -> Unit
 ) {
@@ -94,10 +97,9 @@ private fun AvailableTimeSlot(
 
     Button(
         onClick = { onTimeSlotClick() },
-        modifier = Modifier
-            .padding(
-                bottom = 12.dp
-            )
+        modifier = modifier
+            .padding(top = 16.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = availableDescription },
         shape = RoundedCornerShape(12.dp),
@@ -111,6 +113,7 @@ private fun AvailableTimeSlot(
 
 @Composable
 private fun UnavailableTimeSlot(
+    modifier: Modifier = Modifier,
     timeSlot: IntervalScheduleTimeSlot
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
@@ -119,10 +122,10 @@ private fun UnavailableTimeSlot(
 
     OutlinedButton(
         onClick = {},
-        modifier = Modifier
-            .padding(
-                bottom = 12.dp
-            )
+        enabled = false,
+        modifier = modifier
+            .padding(top = 16.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = unavailableDescription },
         shape = RoundedCornerShape(12.dp),
@@ -134,6 +137,7 @@ private fun UnavailableTimeSlot(
     ) {
         Text(
             text = startTimeText,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(vertical = 8.dp)
         )
     }

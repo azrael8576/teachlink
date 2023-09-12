@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.designsystem.ui.component
+package com.wei.amazingtalker_recruit.core.designsystem.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.LocalBackgroundTheme
+import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.theme.LocalBackgroundTheme
 
 
 /**

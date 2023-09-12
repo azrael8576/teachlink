@@ -5,7 +5,6 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateDecay
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +19,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,7 +43,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -52,8 +51,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -65,10 +62,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.FixedScrollFlagState
-import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.TopAppBarState
-import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags.EnterAlwaysState
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.icon.AtIcons
+import com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.FixedScrollFlagState
+import com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.TopAppBarState
+import com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.scrollflags.EnterAlwaysState
+import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.DateTabLayout
@@ -221,7 +219,6 @@ internal fun ScheduleScreen(
         ScheduleList(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(horizontal = 20.dp)
                 .fillMaxSize()
                 .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
                 .pointerInput(Unit) {
@@ -300,6 +297,10 @@ internal fun ScheduleList(
                         )
                     }
                 }
+
+                item {
+                    Spacer(Modifier.height(16.dp))
+                }
             }
 
             is TimeListUiState.Loading -> item {
@@ -308,7 +309,7 @@ internal fun ScheduleList(
                     text = loading,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
-                        .padding(top = 20.dp)
+                        .padding(16.dp)
                         .semantics { contentDescription = loading }
                 )
             }
@@ -320,7 +321,7 @@ internal fun ScheduleList(
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier
-                        .padding(top = 20.dp)
+                        .padding(16.dp)
                         .semantics { contentDescription = loadFailed }
                 )
             }
@@ -346,9 +347,7 @@ private fun ScheduleToolbar(
     onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     Surface(
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        shadowElevation = 4.dp,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Column {
             WeekActionBar(
@@ -385,6 +384,7 @@ fun WeekActionBar(
         modifier = Modifier
             .height(actionBarSizeDp.dp)
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
             modifier = Modifier
@@ -399,18 +399,14 @@ fun WeekActionBar(
                         onPreviousWeekClick()
                     }
                 },
-                modifier = Modifier
-                    .padding(start = 13.dp)
-                    .semantics { contentDescription = previousWeek },
+                modifier = Modifier.semantics { contentDescription = previousWeek },
             ) {
-                Image(
-                    painterResource(id = R.drawable.arrow_left_gray),
+                Icon(
+                    imageVector = AtIcons.ArrowBackIosNew,
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.toolbar_item_icon)),
-                    colorFilter = if (uiStates.isAvailablePreviousWeek) ColorFilter.tint(
+                    tint = if (uiStates.isAvailablePreviousWeek)
                         MaterialTheme.colorScheme.primary
-                    ) else null,
+                    else LocalContentColor.current
                 )
             }
 
@@ -425,7 +421,7 @@ fun WeekActionBar(
             ) {
                 Text(
                     text = weekDate,
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -433,17 +429,15 @@ fun WeekActionBar(
 
             val nextWeek = stringResource(R.string.next_week)
             IconButton(
-                onClick = onNextWeekClick,
-                modifier = Modifier
-                    .padding(start = 13.dp)
-                    .semantics { contentDescription = nextWeek },
+                onClick = {
+                    onNextWeekClick()
+                },
+                modifier = Modifier.semantics { contentDescription = nextWeek },
             ) {
-                Image(
-                    painterResource(id = R.drawable.arrow_right_gray),
+                Icon(
+                    imageVector = AtIcons.ArrowForwardIos,
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.toolbar_item_icon)),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -460,10 +454,10 @@ private fun WeekActionBarBottom(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .padding(horizontal = 16.dp,),
     ) {
         Column {
+            Spacer(modifier = Modifier.height(16.dp))
             Divider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp,
@@ -556,7 +550,6 @@ fun ScheduleListPreview(
         ScheduleList(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
-                .padding(horizontal = 20.dp)
                 .fillMaxSize(),
             timeListUiState = timeListUiState,
             listState = rememberLazyListState(),

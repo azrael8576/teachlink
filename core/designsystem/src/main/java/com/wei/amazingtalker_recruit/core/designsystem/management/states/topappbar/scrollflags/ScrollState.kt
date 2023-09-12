@@ -1,13 +1,13 @@
-package com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.scrollflags
+package com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.scrollflags
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.structuralEqualityPolicy
-import com.wei.amazingtalker_recruit.core.designsystem.ui.management.states.topappbar.ScrollFlagState
+import com.wei.amazingtalker_recruit.core.designsystem.management.states.topappbar.ScrollFlagState
 
-class EnterAlwaysState(
+class ScrollState(
     heightRange: IntRange,
     scrollOffset: Float = 0f
 ) : ScrollFlagState(heightRange) {
@@ -23,9 +23,13 @@ class EnterAlwaysState(
     override var scrollOffset: Float
         get() = _scrollOffset
         set(value) {
-            val oldOffset = _scrollOffset
-            _scrollOffset = value.coerceIn(0f, maxHeight.toFloat())
-            _consumed = oldOffset - _scrollOffset
+            if (scrollTopLimitReached) {
+                val oldOffset = _scrollOffset
+                _scrollOffset = value.coerceIn(0f, maxHeight.toFloat())
+                _consumed = oldOffset - _scrollOffset
+            } else {
+                _consumed = 0f
+            }
         }
 
     companion object {
@@ -44,7 +48,7 @@ class EnterAlwaysState(
                     )
                 },
                 restore = {
-                    EnterAlwaysState(
+                    ScrollState(
                         heightRange = (it[minHeightKey] as Int)..(it[maxHeightKey] as Int),
                         scrollOffset = it[scrollOffsetKey] as Float,
                     )

@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.designsystem.ui.theme
+package com.wei.amazingtalker_recruit.core.designsystem.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf

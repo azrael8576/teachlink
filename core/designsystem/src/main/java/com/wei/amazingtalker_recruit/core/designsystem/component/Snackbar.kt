@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.core.designsystem.ui.component
+package com.wei.amazingtalker_recruit.core.designsystem.component
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar

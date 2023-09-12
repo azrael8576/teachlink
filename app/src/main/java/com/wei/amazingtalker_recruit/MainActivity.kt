@@ -22,7 +22,7 @@ import com.wei.amazingtalker_recruit.MainActivityUiState.Success
 import com.wei.amazingtalker_recruit.core.authentication.TokenManager
 import com.wei.amazingtalker_recruit.core.authentication.TokenState
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
-import com.wei.amazingtalker_recruit.core.designsystem.ui.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker_recruit.core.manager.SnackbarManager
 import com.wei.amazingtalker_recruit.core.model.data.DarkThemeConfig
 import com.wei.amazingtalker_recruit.ui.AtApp
