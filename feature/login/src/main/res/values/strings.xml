@@ -8,10 +8,13 @@
         \nCourses tailored just for you!</string>
 
     <!-- 登入頁面 -->
-    <string name="login_title">Login</string>
+    <string name="login_title">Login Title</string>
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="get_started">Get Started</string>
+
+    <!-- Test tag -->
+    <string name="tag_welcome_graphics">tag_welcome_graphics</string>
 </resources>

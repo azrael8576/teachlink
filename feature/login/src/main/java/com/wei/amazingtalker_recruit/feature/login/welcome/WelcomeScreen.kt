@@ -24,8 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -143,6 +146,7 @@ fun WelcomeGraphics(
             modifier = Modifier
                 .padding(start = 16.dp)
                 .align(Alignment.TopCenter)
+                .testTag(stringResource(R.string.tag_welcome_graphics))
         )
     }
 }
@@ -163,22 +167,26 @@ fun WelcomeContent(modifier: Modifier = Modifier) {
 @Composable
 fun WelcomeTitle(modifier: Modifier = Modifier) {
     Spacer(Modifier.height(8.dp))
+    val welcomeTitle = stringResource(R.string.welcome_title)
     Text(
-        modifier = modifier,
+        modifier = modifier.semantics { contentDescription = welcomeTitle},
         style = MaterialTheme.typography.headlineMedium,
         textAlign = TextAlign.Center,
-        text = stringResource(R.string.welcome_title)
+        text = welcomeTitle
     )
 }
 
 @Composable
 fun WelcomeMessage(modifier: Modifier = Modifier) {
     Spacer(Modifier.height(8.dp))
+    val welcomeMessage = stringResource(R.string.welcome_message)
     Text(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .semantics { contentDescription = welcomeMessage},
         style = MaterialTheme.typography.bodyMedium,
         textAlign = TextAlign.Center,
-        text = stringResource(R.string.welcome_message)
+        text = welcomeMessage
     )
 }
 
@@ -188,16 +196,18 @@ fun GetStartedButton(
     onGetStartedButtonClicked: () -> Unit
 ) {
     Spacer(Modifier.height(8.dp))
+    val getStarted = stringResource(R.string.get_started)
     Button(
         onClick = {
             onGetStartedButtonClicked()
         },
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .semantics { contentDescription = getStarted},
         contentPadding = ButtonDefaults.ContentPadding,
     ) {
-        Text(stringResource(R.string.get_started))
+        Text(getStarted)
     }
 }
 

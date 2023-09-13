@@ -42,6 +42,7 @@ internal open class LoginScreenRobot(
     private val loginTitleString by composeTestRule.stringResource(R.string.login_title)
     private val accountString by composeTestRule.stringResource(R.string.account)
     private val passwordString by composeTestRule.stringResource(R.string.password)
+    private val forgotPasswordString by composeTestRule.stringResource(R.string.forgot_password)
     private val loginString by composeTestRule.stringResource(R.string.login)
 
     private val loginTitle by lazy {
@@ -60,6 +61,12 @@ internal open class LoginScreenRobot(
     private val passwordTextField by lazy {
         composeTestRule.onNodeWithContentDescription(
             passwordString,
+            useUnmergedTree = true
+        )
+    }
+    private val forgotPassword by lazy {
+        composeTestRule.onNodeWithContentDescription(
+            forgotPasswordString,
             useUnmergedTree = true
         )
     }
@@ -90,6 +97,26 @@ internal open class LoginScreenRobot(
         }
     }
 
+    fun verifyLoginTitleDisplayed() {
+        loginTitle.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyAccountTextFieldDisplayed() {
+        accountTextField.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyPasswordTextFieldDisplayed() {
+        passwordTextField.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyForgotPasswordDisplayed() {
+        forgotPassword.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyLoginButtonDisplayed() {
+        loginButton.assertExists().assertIsDisplayed()
+    }
+
     fun inputAccountValue(value: String) {
         accountTextField.performTextInput(value)
     }
@@ -105,13 +132,6 @@ internal open class LoginScreenRobot(
     fun verifyPasswordValueObfuscated(value: String) {
         val obfuscatedValue = "•".repeat(value.length)
         passwordTextField.assert(hasText(obfuscatedValue))
-    }
-
-    fun verifyLoginElementsDisplayed() {
-        loginTitle.assertIsDisplayed()
-        accountTextField.assertIsDisplayed()
-        passwordTextField.assertIsDisplayed()
-        loginButton.assertIsDisplayed()
     }
 
     infix fun login(func: LoginResultRobot.() -> Unit): LoginResultRobot {

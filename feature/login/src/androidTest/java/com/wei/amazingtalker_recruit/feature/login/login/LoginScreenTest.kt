@@ -26,7 +26,11 @@ class LoginScreenTest {
         loginScreenRobot(composeTestRule) {
             setLoginScreenContent()
 
-            verifyLoginElementsDisplayed()
+            verifyLoginTitleDisplayed()
+            verifyAccountTextFieldDisplayed()
+            verifyPasswordTextFieldDisplayed()
+            verifyForgotPasswordDisplayed()
+            verifyLoginButtonDisplayed()
         }
     }
 

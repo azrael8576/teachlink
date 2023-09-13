@@ -24,7 +24,9 @@ class WelcomeScreenTest {
         welcomeScreenRobot(composeTestRule) {
             setWelcomeScreenContent()
 
-            verifyWelcomeElementsDisplayed()
+            verifyWelcomeGraphicsDisplayed()
+            verifyWelcomeTitleDisplayed()
+            verifyWelcomeMessageDisplayed()
         }
     }
 

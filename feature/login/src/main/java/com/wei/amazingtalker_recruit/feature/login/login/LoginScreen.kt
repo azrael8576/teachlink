@@ -1,10 +1,15 @@
 package com.wei.amazingtalker_recruit.feature.login.login
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -88,6 +94,8 @@ internal fun LoginScreen(
     account: String = if (BuildConfig.DEBUG) TEST_ACCOUNT else "",
     password: String = if (BuildConfig.DEBUG) TEST_PASSWORD else "",
     login: (String, String) -> Unit,
+    withTopSpacer: Boolean = true,
+    withBottomSpacer: Boolean = true,
 ) {
     val accountState = rememberSaveable {
         mutableStateOf(account)
@@ -107,22 +115,28 @@ internal fun LoginScreen(
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            LazyColumn(
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                item {
-                    Title()
-                    Spacer(modifier = Modifier.height(32.dp))
-                    AccountTextField(accountState)
-                    PasswordTextField(passwordState)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    ForgotPasswordText()
-                    Spacer(modifier = Modifier.height(32.dp))
-                    LoginButton(
-                        accountState,
-                        passwordState,
-                        login
-                    )
+                if (withTopSpacer) {
+                    Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+                }
+                Spacer(modifier = Modifier.weight(1.5f))
+                Title()
+                Spacer(modifier = Modifier.weight(3f))
+                AccountTextField(accountState)
+                PasswordTextField(passwordState)
+                Spacer(modifier = Modifier.weight(0.5f))
+                ForgotPasswordText()
+                Spacer(modifier = Modifier.weight(1f))
+                LoginButton(
+                    accountState,
+                    passwordState,
+                    login
+                )
+                Spacer(modifier = Modifier.weight(2f))
+                if (withBottomSpacer) {
+                    Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
                 }
             }
         }
@@ -135,9 +149,9 @@ private fun Title(modifier: Modifier = Modifier) {
     val text = stringResource(R.string.login_title)
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineMedium,
-        modifier = modifier.semantics { contentDescription = text }
-    )
+        style = MaterialTheme.typography.displayLarge,
+        modifier = modifier
+            .semantics { contentDescription = text })
 }
 
 
@@ -183,9 +197,13 @@ internal fun PasswordTextField(
 
 @Composable
 internal fun ForgotPasswordText() {
+    val text = stringResource(R.string.forgot_password)
+
     Text(
-        text = stringResource(R.string.forgot_password),
+        text = text,
         style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier
+            .semantics { contentDescription = text }
     )
 }
 

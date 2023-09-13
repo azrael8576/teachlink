@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker_recruit.feature.login.R
@@ -31,24 +32,50 @@ internal open class WelcomeScreenRobot(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val welcomeString by composeTestRule.stringResource(R.string.welcome)
+    private val welcomeTitleString by composeTestRule.stringResource(R.string.welcome_title)
+    private val welcomeMessageString by composeTestRule.stringResource(R.string.welcome_message)
+    private val testTagScheduleListString by composeTestRule.stringResource(R.string.tag_welcome_graphics)
 
-    private val welcomeTitle by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            welcomeString,
+    private val welcomeGraphics by lazy {
+        composeTestRule.onNodeWithTag(
+            testTagScheduleListString,
             useUnmergedTree = true
         )
     }
+    private val welcomeTitle by lazy {
+        composeTestRule.onNodeWithContentDescription(
+            welcomeTitleString,
+            useUnmergedTree = true
+        )
+    }
+    private val welcomeMessage by lazy {
+        composeTestRule.onNodeWithContentDescription(
+            welcomeMessageString,
+            useUnmergedTree = true
+        )
+    }
+
     fun setWelcomeScreenContent() {
         composeTestRule.setContent {
             AtTheme {
-                WelcomeScreen()
+                WelcomeScreen(
+                    onGetStartedButtonClicked = { }
+                )
             }
         }
     }
 
-    fun verifyWelcomeElementsDisplayed() {
+    fun verifyWelcomeGraphicsDisplayed() {
+        welcomeGraphics.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyWelcomeTitleDisplayed() {
         welcomeTitle.assertExists().assertIsDisplayed()
     }
+
+    fun verifyWelcomeMessageDisplayed() {
+        welcomeMessage.assertExists().assertIsDisplayed()
+    }
+
 
 }
