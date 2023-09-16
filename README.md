@@ -113,7 +113,11 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## Modularization
 
-本專案已全面實現模組化。您可以在 [Amazingtalker-Recruit 模組化策略](https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/ModularizationStrategy.md) 找到關於本專案模組化策略與詳細描述。
+本專案已全面實現模組化。
+
+> [!NOTE]
+> 查看 [Amazingtalker-Recruit 模組化策略](https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/ModularizationStrategy.md) 找到關於本專案模組化策略與詳細描述。
+
 
 ## Testing
 
