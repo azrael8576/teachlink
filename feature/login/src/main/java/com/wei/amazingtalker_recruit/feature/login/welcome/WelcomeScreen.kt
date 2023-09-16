@@ -168,6 +168,7 @@ fun WelcomeContent(modifier: Modifier = Modifier) {
 fun WelcomeTitle(modifier: Modifier = Modifier) {
     Spacer(Modifier.height(8.dp))
     val welcomeTitle = stringResource(R.string.welcome_title)
+
     Text(
         modifier = modifier.semantics { contentDescription = welcomeTitle},
         style = MaterialTheme.typography.headlineMedium,
@@ -180,6 +181,7 @@ fun WelcomeTitle(modifier: Modifier = Modifier) {
 fun WelcomeMessage(modifier: Modifier = Modifier) {
     Spacer(Modifier.height(8.dp))
     val welcomeMessage = stringResource(R.string.welcome_message)
+
     Text(
         modifier = modifier
             .padding(horizontal = 16.dp)
@@ -197,6 +199,8 @@ fun GetStartedButton(
 ) {
     Spacer(Modifier.height(8.dp))
     val getStarted = stringResource(R.string.get_started)
+    val getStartedDescription = stringResource(R.string.content_description_get_started)
+
     Button(
         onClick = {
             onGetStartedButtonClicked()
@@ -204,7 +208,7 @@ fun GetStartedButton(
         modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .semantics { contentDescription = getStarted},
+            .semantics { contentDescription = getStartedDescription},
         contentPadding = ButtonDefaults.ContentPadding,
     ) {
         Text(getStarted)

@@ -39,40 +39,40 @@ internal open class LoginScreenRobot(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val loginTitleString by composeTestRule.stringResource(R.string.login_title)
-    private val accountString by composeTestRule.stringResource(R.string.account)
-    private val passwordString by composeTestRule.stringResource(R.string.password)
-    private val forgotPasswordString by composeTestRule.stringResource(R.string.forgot_password)
-    private val loginString by composeTestRule.stringResource(R.string.login)
+    private val loginTitleDescription by composeTestRule.stringResource(R.string.content_description_login_title)
+    private val accountDescription by composeTestRule.stringResource(R.string.content_description_account)
+    private val passwordDescription by composeTestRule.stringResource(R.string.content_description_password)
+    private val forgotPasswordDescription by composeTestRule.stringResource(R.string.content_description_forgot_password)
+    private val loginDescription by composeTestRule.stringResource(R.string.content_description_login)
 
     private val loginTitle by lazy {
         composeTestRule.onNodeWithContentDescription(
-            loginTitleString,
+            loginTitleDescription,
             useUnmergedTree = true
         )
     }
 
     private val accountTextField by lazy {
         composeTestRule.onNodeWithContentDescription(
-            accountString,
+            accountDescription,
             useUnmergedTree = true
         )
     }
     private val passwordTextField by lazy {
         composeTestRule.onNodeWithContentDescription(
-            passwordString,
+            passwordDescription,
             useUnmergedTree = true
         )
     }
     private val forgotPassword by lazy {
         composeTestRule.onNodeWithContentDescription(
-            forgotPasswordString,
+            forgotPasswordDescription,
             useUnmergedTree = true
         )
     }
     private val loginButton by lazy {
         composeTestRule.onNodeWithContentDescription(
-            loginString,
+            loginDescription,
             useUnmergedTree = true
         )
     }

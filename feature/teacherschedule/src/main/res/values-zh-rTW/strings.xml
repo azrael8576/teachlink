@@ -10,21 +10,30 @@
     <string name="morning">上午</string>
     <string name="afternoon">下午</string>
     <string name="evening">晚上</string>
-    <string name="previous_week">上一週</string>
-    <string name="next_week">下一週</string>
-
-    <!-- 教師行事曆明細頁 -->
-    <string name="teacher_name">教師名稱</string>
-    <string name="start_time">開始時間</string>
-    <string name="end_time">結束時間</string>
-    <string name="state">狀態</string>
-    <string name="during_day_type">時間</string>
-    <string name="back">上一頁</string>
     <string name="loading">Loading…</string>
     <string name="load_failed">🛠️ Load failed</string>
 
+    <!-- 教師行事曆頁面 ContentDescription -->
+    <string name="content_description_week_date">日期範圍 %1$s 到 %2$s</string>
+    <string name="content_description_previous_week">上一週 按鈕</string>
+    <string name="content_description_next_week">下一週 按鈕</string>
+    <string name="content_description_available_time_slot">可預訂時段 %s</string>
+    <string name="content_description_unavailable_time_slot">不可預定時段 %s</string>
+
+    <!-- 教師行事曆明細頁 ContentDescription -->
+    <string name="content_description_teacher_name">教師名稱 %s</string>
+    <string name="content_description_start_time">開始時間： %s</string>
+    <string name="content_description_end_time">結束時間： %s</string>
+    <string name="content_description_state">狀態 %s</string>
+    <string name="content_description_during_day_type">時間區間 %s</string>
+    <string name="content_description_back">上一頁 按鈕</string>
+
     <!-- Test tag -->
     <string name="tag_schedule_list">tag_schedule_list</string>
-    <string name="available_time_slot">空閒時間區段 %s</string>
-    <string name="unavailable_time_slot">忙碌時間區段 %s</string>
+
+    <string name="tag_teacher_name">tag_teacher_name</string>
+    <string name="tag_start_time">tag_start_time</string>
+    <string name="tag_end_time">tag_end_time</string>
+    <string name="tag_state">tag_state</string>
+    <string name="tag_during_day_type">tag_during_day_type</string>
 </resources>

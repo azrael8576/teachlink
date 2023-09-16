@@ -7,14 +7,24 @@
     <string name="welcome_message">連接全球的線上家教進行1對1課程。
         \n隨時隨地學習，
         \n並根據您的需求定制課程！</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- 歡迎頁面 ContentDescription -->
+    <string name="content_description_get_started">Get Started 按鈕</string>
 
     <!-- 登入頁面 -->
-    <string name="login_title">Login Title</string>
+    <string name="login_title">Login</string>
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="forgot_password">忘記密碼？</string>
-    <string name="get_started">Get Started</string>
+
+    <!-- 登入頁面 ContentDescription -->
+    <string name="content_description_login_title">登入頁 標題</string>
+    <string name="content_description_account">帳號 輸入框</string>
+    <string name="content_description_password">密碼 輸入框</string>
+    <string name="content_description_login">登入 按鈕</string>
+    <string name="content_description_forgot_password">忘記密碼？ 按鈕</string>
 
     <!-- Test tag -->
     <string name="tag_welcome_graphics">tag_welcome_graphics</string>

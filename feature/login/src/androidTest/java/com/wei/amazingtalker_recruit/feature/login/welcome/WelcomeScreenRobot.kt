@@ -32,13 +32,16 @@ internal open class WelcomeScreenRobot(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
+    private val scheduleListTag by composeTestRule.stringResource(R.string.tag_welcome_graphics)
+
     private val welcomeTitleString by composeTestRule.stringResource(R.string.welcome_title)
     private val welcomeMessageString by composeTestRule.stringResource(R.string.welcome_message)
-    private val testTagScheduleListString by composeTestRule.stringResource(R.string.tag_welcome_graphics)
+
+    private val getStartedDescription by composeTestRule.stringResource(R.string.content_description_get_started)
 
     private val welcomeGraphics by lazy {
         composeTestRule.onNodeWithTag(
-            testTagScheduleListString,
+            scheduleListTag,
             useUnmergedTree = true
         )
     }
@@ -51,6 +54,12 @@ internal open class WelcomeScreenRobot(
     private val welcomeMessage by lazy {
         composeTestRule.onNodeWithContentDescription(
             welcomeMessageString,
+            useUnmergedTree = true
+        )
+    }
+    private val getStarted by lazy {
+        composeTestRule.onNodeWithContentDescription(
+            getStartedDescription,
             useUnmergedTree = true
         )
     }
@@ -75,6 +84,10 @@ internal open class WelcomeScreenRobot(
 
     fun verifyWelcomeMessageDisplayed() {
         welcomeMessage.assertExists().assertIsDisplayed()
+    }
+
+    fun verifyGetStartedDisplayed() {
+        getStarted.assertExists().assertIsDisplayed()
     }
 
 

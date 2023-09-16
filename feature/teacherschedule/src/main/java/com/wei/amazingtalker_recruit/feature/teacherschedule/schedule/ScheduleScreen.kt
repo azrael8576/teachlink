@@ -138,7 +138,12 @@ internal fun ScheduleRoute(
             )
         },
         onListScroll = { viewModel.dispatch(ScheduleViewAction.ListScrolled) },
-        onTimeSlotClick = { item -> navController.navigateToScheduleDetail(timeSlot = item) },
+        onTimeSlotClick = { item ->
+            navController.navigateToScheduleDetail(
+                teacherName = uiStates._currentTeacherName,
+                timeSlot = item
+            )
+        },
     )
 }
 
@@ -392,14 +397,14 @@ fun WeekActionBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val previousWeek = stringResource(R.string.previous_week)
+            val previousWeekDescription = stringResource(R.string.content_description_previous_week)
             IconButton(
                 onClick = {
                     if (uiStates.isAvailablePreviousWeek) {
                         onPreviousWeekClick()
                     }
                 },
-                modifier = Modifier.semantics { contentDescription = previousWeek },
+                modifier = Modifier.semantics { contentDescription = previousWeekDescription },
             ) {
                 Icon(
                     imageVector = AtIcons.ArrowBackIosNew,
@@ -411,28 +416,33 @@ fun WeekActionBar(
             }
 
             val weekDate = uiStates.weekDateText
+            val weekDataDescription = stringResource(R.string.content_description_week_date).format(
+                weekDate.first,
+                weekDate.second
+            )
+            val weekDateText = "${weekDate.first} - ${weekDate.second}";
             TextButton(
                 modifier = Modifier
                     .weight(1f)
-                    .semantics { contentDescription = weekDate },
+                    .semantics { contentDescription = weekDataDescription },
                 onClick = {
-                    onWeekDateClick(R.string.clickWeekDate, weekDate)
+                    onWeekDateClick(R.string.clickWeekDate, weekDateText)
                 },
             ) {
                 Text(
-                    text = weekDate,
+                    text = weekDateText,
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
-            val nextWeek = stringResource(R.string.next_week)
+            val nextWeekDescription = stringResource(R.string.content_description_next_week)
             IconButton(
                 onClick = {
                     onNextWeekClick()
                 },
-                modifier = Modifier.semantics { contentDescription = nextWeek },
+                modifier = Modifier.semantics { contentDescription = nextWeekDescription },
             ) {
                 Icon(
                     imageVector = AtIcons.ArrowForwardIos,
@@ -454,7 +464,7 @@ private fun WeekActionBarBottom(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp,),
+            .padding(horizontal = 16.dp),
     ) {
         Column {
             Spacer(modifier = Modifier.height(16.dp))

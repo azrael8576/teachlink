@@ -5,12 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -146,12 +143,14 @@ internal fun LoginScreen(
 
 @Composable
 private fun Title(modifier: Modifier = Modifier) {
-    val text = stringResource(R.string.login_title)
+    val title = stringResource(R.string.login_title)
+    val titleDescription = stringResource(R.string.content_description_login_title)
+
     Text(
-        text = text,
+        text = title,
         style = MaterialTheme.typography.displayLarge,
         modifier = modifier
-            .semantics { contentDescription = text })
+            .semantics { contentDescription = titleDescription })
 }
 
 
@@ -159,16 +158,18 @@ private fun Title(modifier: Modifier = Modifier) {
 internal fun AccountTextField(
     accountState: MutableState<String>,
 ) {
-    val text = stringResource(R.string.account)
+    val account = stringResource(R.string.account)
+    val accountDescription = stringResource(R.string.content_description_account)
+
     TextField(
         value = accountState.value,
         modifier = Modifier
-            .semantics { contentDescription = text },
+            .semantics { contentDescription = accountDescription },
         onValueChange = {
             accountState.value = it
         },
         label = {
-            Text(text)
+            Text(account)
         },
         singleLine = true,
     )
@@ -179,16 +180,18 @@ internal fun AccountTextField(
 internal fun PasswordTextField(
     passwordState: MutableState<String>,
 ) {
-    val text = stringResource(R.string.password)
+    val password = stringResource(R.string.password)
+    val passwordDescription = stringResource(R.string.content_description_password)
+
     TextField(
         value = passwordState.value,
         modifier = Modifier
-            .semantics { contentDescription = text },
+            .semantics { contentDescription = passwordDescription },
         onValueChange = {
             passwordState.value = it
         },
         label = {
-            Text(text)
+            Text(password)
         },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
@@ -197,13 +200,14 @@ internal fun PasswordTextField(
 
 @Composable
 internal fun ForgotPasswordText() {
-    val text = stringResource(R.string.forgot_password)
+    val forgotPassword = stringResource(R.string.forgot_password)
+    val forgotPasswordDescription = stringResource(R.string.content_description_forgot_password)
 
     Text(
-        text = text,
+        text = forgotPassword,
         style = MaterialTheme.typography.bodySmall,
         modifier = Modifier
-            .semantics { contentDescription = text }
+            .semantics { contentDescription = forgotPasswordDescription }
     )
 }
 
@@ -213,16 +217,18 @@ internal fun LoginButton(
     passwordState: MutableState<String>,
     login: (String, String) -> Unit
 ) {
-    val text = stringResource(R.string.login)
+    val loginText = stringResource(R.string.login)
+    val loginTextDescription = stringResource(R.string.content_description_login)
+
     Button(
         onClick = {
             login(accountState.value, passwordState.value)
         },
         modifier = Modifier
             .padding(top = 8.dp)
-            .semantics { contentDescription = text }
+            .semantics { contentDescription = loginTextDescription }
     ) {
-        Text(text)
+        Text(loginText)
     }
 }
 

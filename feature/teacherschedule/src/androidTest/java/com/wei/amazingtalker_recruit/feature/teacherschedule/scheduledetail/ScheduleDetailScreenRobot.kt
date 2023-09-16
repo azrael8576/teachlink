@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
@@ -38,46 +39,49 @@ internal open class ScheduleDetailScreenRobot(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val teacherNameString by composeTestRule.stringResource(R.string.teacher_name)
-    private val startTimeString by composeTestRule.stringResource(R.string.start_time)
-    private val endTimeString by composeTestRule.stringResource(R.string.end_time)
-    private val stateString by composeTestRule.stringResource(R.string.state)
-    private val duringDayTypeString by composeTestRule.stringResource(R.string.during_day_type)
-    private val backString by composeTestRule.stringResource(R.string.back)
+    private val startTimeDescription by composeTestRule.stringResource(R.string.content_description_start_time)
+    private val endTimeDescription by composeTestRule.stringResource(R.string.content_description_end_time)
+    private val backDescription by composeTestRule.stringResource(R.string.content_description_back)
+
+    private val teacherNameTag by composeTestRule.stringResource(R.string.tag_teacher_name)
+    private val startTimeTag by composeTestRule.stringResource(R.string.tag_start_time)
+    private val endTimeTag by composeTestRule.stringResource(R.string.tag_end_time)
+    private val stateTag by composeTestRule.stringResource(R.string.tag_state)
+    private val duringDayTypeTag by composeTestRule.stringResource(R.string.tag_during_day_type)
 
     private val teacherName by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            teacherNameString,
+        composeTestRule.onNodeWithTag(
+            teacherNameTag,
             useUnmergedTree = true
         )
     }
     private val startTime by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            startTimeString,
+        composeTestRule.onNodeWithTag(
+            startTimeTag,
             useUnmergedTree = true
         )
     }
     private val endTime by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            endTimeString,
+        composeTestRule.onNodeWithTag(
+            endTimeTag,
             useUnmergedTree = true
         )
     }
     private val state by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            stateString,
+        composeTestRule.onNodeWithTag(
+            stateTag,
             useUnmergedTree = true
         )
     }
     private val duringDayType by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            duringDayTypeString,
+        composeTestRule.onNodeWithTag(
+            duringDayTypeTag,
             useUnmergedTree = true
         )
     }
     private val back by lazy {
         composeTestRule.onNodeWithContentDescription(
-            backString,
+            backDescription,
             useUnmergedTree = true
         )
     }
@@ -100,11 +104,15 @@ internal open class ScheduleDetailScreenRobot(
     }
 
     fun verifyStartTimeValue(value: String) {
-        startTime.assertIsDisplayed().assertTextEquals(value)
+        startTime.assertIsDisplayed().assertTextEquals(
+            startTimeDescription.format(value)
+        )
     }
 
     fun verifyEndTimeValue(value: String) {
-        endTime.assertIsDisplayed().assertTextEquals(value)
+        endTime.assertIsDisplayed().assertTextEquals(
+            endTimeDescription.format(value)
+        )
     }
 
     fun verifyStateValue(value: String) {

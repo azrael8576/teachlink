@@ -35,10 +35,10 @@ class WeekDataHelper @Inject constructor() {
         return localTime.plusDays(betweenWeekSunday.toLong())
     }
 
-    fun getWeekDateText(weekStart: OffsetDateTime, weekEnd: OffsetDateTime): String {
+    fun getWeekDateText(weekStart: OffsetDateTime, weekEnd: OffsetDateTime): Pair<String, String> {
         val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
-        return "${weekStartFormatter.format(weekStart)} - ${weekEndFormatter.format(weekEnd)}"
+        return Pair(weekStartFormatter.format(weekStart), weekEndFormatter.format(weekEnd))
     }
 
     fun setDateTabs(localTime: OffsetDateTime): MutableList<OffsetDateTime> {

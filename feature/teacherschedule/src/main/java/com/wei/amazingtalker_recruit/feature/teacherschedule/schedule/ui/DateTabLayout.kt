@@ -17,6 +17,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -77,6 +79,8 @@ private fun DateTab(
     onTabClick: (Int, OffsetDateTime) -> Unit,
     tabWidth: () -> Dp
 ) {
+    val date = dateFormatter.format(tab)
+
     Tab(
         selected = selected,
         onClick = {
@@ -85,12 +89,13 @@ private fun DateTab(
         modifier = Modifier
             .height(70.dp)
             .width(tabWidth())
+            .semantics { contentDescription = date }
     ) {
         val textColor =
             if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
 
         Text(
-            text = dateFormatter.format(tab),
+            text = date,
             style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Center,
             color = textColor

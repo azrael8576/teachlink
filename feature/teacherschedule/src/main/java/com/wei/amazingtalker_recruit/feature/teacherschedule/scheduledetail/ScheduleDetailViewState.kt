@@ -9,13 +9,16 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA
 import java.time.OffsetDateTime
 
 sealed class ScheduleDetailViewAction : Action {
-    data class InitNavData(val intervalScheduleTimeSlot: IntervalScheduleTimeSlot) :
+    data class InitNavData(
+        val teacherName: String,
+        val intervalScheduleTimeSlot: IntervalScheduleTimeSlot
+    ) :
         ScheduleDetailViewAction()
 
 }
 
 data class ScheduleDetailViewState(
-    val teacherName: String? = TEST_DATA_TEACHER_NAME,
+    val teacherName: String? = "",
     val start: OffsetDateTime? = null,
     val end: OffsetDateTime? = null,
     val state: ScheduleState? = null,

@@ -56,17 +56,20 @@ internal open class ScheduleScreenRobot(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val previousWeekString by composeTestRule.stringResource(R.string.previous_week)
-    private val nextWeekString by composeTestRule.stringResource(R.string.next_week)
-    private val yourLocalTimeZoneString by composeTestRule.stringResource(R.string.your_local_time_zone)
     private val morningString by composeTestRule.stringResource(R.string.morning)
     private val afternoonString by composeTestRule.stringResource(R.string.afternoon)
     private val eveningString by composeTestRule.stringResource(R.string.evening)
-    private val availableTimeSlotString by composeTestRule.stringResource(R.string.available_time_slot)
-    private val unavailableTimeSlotString by composeTestRule.stringResource(R.string.unavailable_time_slot)
     private val loadingString by composeTestRule.stringResource(R.string.loading)
     private val loadFailedString by composeTestRule.stringResource(R.string.load_failed)
-    private val testTagScheduleListString by composeTestRule.stringResource(R.string.tag_schedule_list)
+    private val yourLocalTimeZoneString by composeTestRule.stringResource(R.string.your_local_time_zone)
+
+    private val previousWeekDescription by composeTestRule.stringResource(R.string.content_description_previous_week)
+    private val nextWeekDescription by composeTestRule.stringResource(R.string.content_description_next_week)
+    private val weekDateDescription by composeTestRule.stringResource(R.string.content_description_week_date)
+    private val availableTimeSlotDescription by composeTestRule.stringResource(R.string.content_description_available_time_slot)
+    private val unavailableTimeSlotDescription by composeTestRule.stringResource(R.string.content_description_unavailable_time_slot)
+
+    private val scheduleListTag by composeTestRule.stringResource(R.string.tag_schedule_list)
 
     private val fixedClock: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
     private val fixedClockUtc: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
@@ -95,19 +98,19 @@ internal open class ScheduleScreenRobot(
 
     private val previousWeek by lazy {
         composeTestRule.onNodeWithContentDescription(
-            previousWeekString,
+            previousWeekDescription,
             useUnmergedTree = true
         )
     }
     private val nextWeek by lazy {
         composeTestRule.onNodeWithContentDescription(
-            nextWeekString,
+            nextWeekDescription,
             useUnmergedTree = true
         )
     }
     private val weekDateText by lazy {
         composeTestRule.onNodeWithContentDescription(
-            scheduleViewState.weekDateText,
+            weekDateDescription.format(scheduleViewState.weekDateText.first, scheduleViewState.weekDateText.second),
             useUnmergedTree = true
         )
     }
@@ -125,7 +128,7 @@ internal open class ScheduleScreenRobot(
     }
     private val scheduleList by lazy {
         composeTestRule.onNodeWithTag(
-            testTagScheduleListString,
+            scheduleListTag,
             useUnmergedTree = true
         )
     }
@@ -161,7 +164,7 @@ internal open class ScheduleScreenRobot(
     private val availableTimeSlot by lazy {
         composeTestRule.onNodeWithContentDescription(
             String.format(
-                availableTimeSlotString,
+                availableTimeSlotDescription,
                 timeSlotFormatter.format(testAvailableTimeSlot.start)
             ),
             useUnmergedTree = true
@@ -170,7 +173,7 @@ internal open class ScheduleScreenRobot(
     private val unavailableTimeSlot by lazy {
         composeTestRule.onNodeWithContentDescription(
             String.format(
-                unavailableTimeSlotString,
+                unavailableTimeSlotDescription,
                 timeSlotFormatter.format(testUnavailableTimeSlot.start)
             ),
             useUnmergedTree = true

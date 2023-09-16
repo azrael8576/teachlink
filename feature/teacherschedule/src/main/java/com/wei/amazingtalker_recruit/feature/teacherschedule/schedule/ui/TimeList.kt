@@ -93,7 +93,7 @@ private fun AvailableTimeSlot(
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val availableDescription =
-        String.format(stringResource(R.string.available_time_slot), startTimeText)
+        String.format(stringResource(R.string.content_description_available_time_slot), startTimeText)
 
     Button(
         onClick = { onTimeSlotClick() },
@@ -118,7 +118,7 @@ private fun UnavailableTimeSlot(
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val unavailableDescription =
-        String.format(stringResource(R.string.unavailable_time_slot), startTimeText)
+        String.format(stringResource(R.string.content_description_unavailable_time_slot), startTimeText)
 
     OutlinedButton(
         onClick = {},

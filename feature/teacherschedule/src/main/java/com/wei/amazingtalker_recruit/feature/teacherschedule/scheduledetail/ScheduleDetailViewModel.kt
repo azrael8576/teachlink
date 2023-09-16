@@ -11,9 +11,13 @@ class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
         ScheduleDetailViewState
         >(ScheduleDetailViewState()) {
 
-    private fun initNavData(intervalScheduleTimeSlot: IntervalScheduleTimeSlot) {
+    private fun initNavData(
+        teacherName: String,
+        intervalScheduleTimeSlot: IntervalScheduleTimeSlot
+    ) {
         updateState {
             copy(
+                teacherName = teacherName,
                 start = intervalScheduleTimeSlot.start,
                 end = intervalScheduleTimeSlot.end,
                 state = intervalScheduleTimeSlot.state,
@@ -24,7 +28,10 @@ class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
 
     override fun dispatch(action: ScheduleDetailViewAction) {
         when (action) {
-            is ScheduleDetailViewAction.InitNavData -> initNavData(action.intervalScheduleTimeSlot)
+            is ScheduleDetailViewAction.InitNavData -> initNavData(
+                teacherName = action.teacherName,
+                intervalScheduleTimeSlot = action.intervalScheduleTimeSlot
+            )
         }
     }
 }

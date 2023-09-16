@@ -46,7 +46,7 @@ data class ScheduleViewState(
         get() = weekDataHelper.getWeekEnd(localTime = weekStart)
     val isAvailablePreviousWeek
         get() = weekStart > OffsetDateTime.now(currentClock)
-    val weekDateText: String
+    val weekDateText: Pair<String, String>
         get() = weekDataHelper.getWeekDateText(weekStart, weekEnd)
 }
 

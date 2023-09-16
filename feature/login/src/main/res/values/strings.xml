@@ -6,14 +6,24 @@
     <string name="welcome_message">Access global online tutors for 1-on-1 sessions
         \nLearn anytime, anywhere
         \nCourses tailored just for you!</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- 歡迎頁面 ContentDescription -->
+    <string name="content_description_get_started">Get Started Button</string>
 
     <!-- 登入頁面 -->
-    <string name="login_title">Login Title</string>
+    <string name="login_title">Login</string>
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="get_started">Get Started</string>
+
+    <!-- 登入頁面 ContentDescription -->
+    <string name="content_description_login_title">Login Screen Title</string>
+    <string name="content_description_account">Account Input Box</string>
+    <string name="content_description_password">Password Input Box</string>
+    <string name="content_description_login">Login Button</string>
+    <string name="content_description_forgot_password">Forgot Password? Button</string>
 
     <!-- Test tag -->
     <string name="tag_welcome_graphics">tag_welcome_graphics</string>
