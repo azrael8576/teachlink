@@ -1,20 +1,20 @@
 package com.wei.amazingtalker_recruit.feature.login.welcome
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,6 +23,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -30,7 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,7 +41,10 @@ import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.wei.amazingtalker_recruit.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker_recruit.core.designsystem.ui.DeviceLandscapePreviews
+import com.wei.amazingtalker_recruit.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.amazingtalker_recruit.feature.login.R
 import com.wei.amazingtalker_recruit.feature.login.login.navigation.navigateToLogin
 
@@ -75,6 +80,7 @@ import com.wei.amazingtalker_recruit.feature.login.login.navigation.navigateToLo
 @Composable
 internal fun WelcomeRoute(
     modifier: Modifier = Modifier,
+    shouldShowBottomBar: Boolean,
     navController: NavController,
     viewModel: WelcomeViewModel = hiltViewModel(),
 ) {
@@ -87,12 +93,14 @@ internal fun WelcomeRoute(
     }
 
     WelcomeScreen(
+        shouldShowBottomBar = shouldShowBottomBar,
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) }
     )
 }
 
 @Composable
 internal fun WelcomeScreen(
+    shouldShowBottomBar: Boolean = true,
     isPreview: Boolean = false,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
@@ -101,18 +109,26 @@ internal fun WelcomeScreen(
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.Top
+                .fillMaxSize(),
         ) {
             if (withTopSpacer) {
-                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+                Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
-            WelcomeGraphics(modifier = Modifier.weight(2f), isPreview = isPreview)
-            WelcomeContent(modifier = Modifier.weight(1f))
-            GetStartedButton(
+
+            WelcomeScreenToolbar(
+                isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked
             )
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = if (shouldShowBottomBar) Alignment.BottomCenter else Alignment.CenterStart
+            ) {
+                WelcomeGraphics(
+                    isPreview = isPreview
+                )
+                WelcomeContent(shouldShowBottomBar = shouldShowBottomBar)
+            }
+
             if (withBottomSpacer) {
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
@@ -120,75 +136,51 @@ internal fun WelcomeScreen(
     }
 }
 
-
 @Composable
-fun WelcomeGraphics(
-    modifier: Modifier = Modifier, isPreview: Boolean
-) {
-    val resId = R.drawable.welcome_background
-
+fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
     val imageLoader = ImageLoader.Builder(LocalContext.current)
         .components {
             add(SvgDecoder.Factory())
         }
         .build()
-
     val request = ImageRequest.Builder(LocalContext.current)
         .data(resId)
         .build()
-
-    val painter = rememberAsyncImagePainter(request, imageLoader)
-
-    Box(modifier = modifier.fillMaxWidth()) {
-        Image(
-            painter = if (isPreview) painterResource(id = resId) else painter,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .align(Alignment.TopCenter)
-                .testTag(stringResource(R.string.tag_welcome_graphics))
-        )
+    return if (isPreview) {
+        painterResource(id = resId)
+    } else {
+        rememberAsyncImagePainter(request, imageLoader)
     }
 }
 
 @Composable
-fun WelcomeContent(modifier: Modifier = Modifier) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+private fun WelcomeScreenToolbar(
+    modifier: Modifier = Modifier.padding(horizontal = 16.dp),
+    isPreview: Boolean,
+    onGetStartedButtonClicked: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.fillMaxWidth(),
     ) {
-        item {
-            WelcomeTitle()
-            WelcomeMessage()
-        }
+        AtLogoImg(isPreview = isPreview)
+        Spacer(modifier = Modifier.weight(1f))
+        GetStartedButton(onGetStartedButtonClicked = onGetStartedButtonClicked)
     }
 }
 
 @Composable
-fun WelcomeTitle(modifier: Modifier = Modifier) {
-    Spacer(Modifier.height(8.dp))
-    val welcomeTitle = stringResource(R.string.welcome_title)
+fun AtLogoImg(
+    modifier: Modifier = Modifier,
+    isPreview: Boolean
+) {
+    val resId = R.drawable.ic_logo
+    val painter = loadImageUsingCoil(resId, isPreview)
 
-    Text(
-        modifier = modifier.semantics { contentDescription = welcomeTitle},
-        style = MaterialTheme.typography.headlineMedium,
-        textAlign = TextAlign.Center,
-        text = welcomeTitle
-    )
-}
-
-@Composable
-fun WelcomeMessage(modifier: Modifier = Modifier) {
-    Spacer(Modifier.height(8.dp))
-    val welcomeMessage = stringResource(R.string.welcome_message)
-
-    Text(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .semantics { contentDescription = welcomeMessage},
-        style = MaterialTheme.typography.bodyMedium,
-        textAlign = TextAlign.Center,
-        text = welcomeMessage
+    Image(
+        painter = painter,
+        contentDescription = null,
+        modifier = Modifier.size(48.dp)
     )
 }
 
@@ -197,29 +189,98 @@ fun GetStartedButton(
     modifier: Modifier = Modifier,
     onGetStartedButtonClicked: () -> Unit
 ) {
-    Spacer(Modifier.height(8.dp))
-    val getStarted = stringResource(R.string.get_started)
     val getStartedDescription = stringResource(R.string.content_description_get_started)
-
-    Button(
-        onClick = {
-            onGetStartedButtonClicked()
-        },
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .semantics { contentDescription = getStartedDescription},
-        contentPadding = ButtonDefaults.ContentPadding,
+    IconButton(
+        onClick = { onGetStartedButtonClicked() },
     ) {
-        Text(getStarted)
+        Icon(
+            imageVector = AtIcons.ArrowForward,
+            contentDescription = getStartedDescription,
+        )
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun WelcomeScreenPreview() {
+fun WelcomeGraphics(
+    modifier: Modifier = Modifier,
+    isPreview: Boolean
+) {
+    //TODO: Use images of different sizes for different resolutions.
+    val resId = R.drawable.welcome_background
+    val painter = loadImageUsingCoil(resId, isPreview)
+
+    Box(modifier = modifier.fillMaxWidth()) {
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = modifier
+                .fillMaxSize()
+                .testTag(stringResource(R.string.tag_welcome_graphics)),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+fun WelcomeContent(
+    modifier: Modifier = Modifier,
+    shouldShowBottomBar: Boolean
+) {
+    if (shouldShowBottomBar) {
+        WelcomeTitlePortrait()
+    } else {
+        WelcomeTitleLandscape()
+    }
+}
+
+@Composable
+fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
+    val welcomeTitle = stringResource(R.string.welcome_title)
+
+    Text(
+        modifier = modifier
+            .padding(bottom = 32.dp)
+            .semantics { contentDescription = welcomeTitle },
+        style = MaterialTheme.typography.headlineMedium,
+        text = welcomeTitle,
+        textAlign = TextAlign.Center,
+        color = Color.White
+    )
+}
+
+@Composable
+fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
+    val welcomeTitle = stringResource(R.string.welcome_title)
+
+    Text(
+        modifier = modifier
+            .padding(start = 32.dp)
+            .semantics { contentDescription = welcomeTitle },
+        style = MaterialTheme.typography.headlineMedium,
+        text = welcomeTitle,
+        textAlign = TextAlign.Start,
+        color = Color.Black
+    )
+}
+
+@DevicePortraitPreviews
+@Composable
+fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
+            shouldShowBottomBar = true,
+            isPreview = true,
+            onGetStartedButtonClicked = { }
+        )
+    }
+}
+
+@DeviceLandscapePreviews
+@Composable
+fun WelcomeScreenLandscapePreview() {
+    AtTheme {
+        WelcomeScreen(
+            shouldShowBottomBar = false,
             isPreview = true,
             onGetStartedButtonClicked = { }
         )

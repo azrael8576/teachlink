@@ -12,8 +12,14 @@ fun NavController.navigateToLogin() {
     this.navigate(loginRoute)
 }
 
-fun NavGraphBuilder.loginScreen(onLoginNav: () -> Unit) {
+fun NavGraphBuilder.loginScreen(
+    shouldShowBottomBar: Boolean,
+    onLoginNav: () -> Unit
+) {
     composable(route = loginRoute) {
-        LoginRoute(onLoginNav)
+        LoginRoute(
+            shouldShowBottomBar = shouldShowBottomBar,
+            onLoginNav = onLoginNav
+        )
     }
 }

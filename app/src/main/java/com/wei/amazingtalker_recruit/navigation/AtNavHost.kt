@@ -39,9 +39,12 @@ fun AtNavHost(
             }
         )
         welcomeGraph(
+            shouldShowBottomBar = appState.shouldShowBottomBar,
             navController = navController,
             nestedGraphs = {
-                loginScreen(onLoginNav = { appState.tokenValidNavigate() })
+                loginScreen(
+                    shouldShowBottomBar = appState.shouldShowBottomBar,
+                    onLoginNav = { appState.tokenValidNavigate() })
             }
         )
 

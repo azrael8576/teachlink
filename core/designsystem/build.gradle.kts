@@ -84,7 +84,7 @@ dependencies {
 
     // Android Studio Preview support
     api(libs.androidx.compose.ui.tooling.preview)
-    debugApi(libs.androidx.compose.ui.ui.tooling)
+    api(libs.androidx.compose.ui.ui.tooling)
 
     // Optional - Integration with activities
     api(libs.androidx.activity.compose)

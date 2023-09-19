@@ -26,7 +26,6 @@ class WelcomeScreenTest {
 
             verifyWelcomeGraphicsDisplayed()
             verifyWelcomeTitleDisplayed()
-            verifyWelcomeMessageDisplayed()
             verifyGetStartedDisplayed()
         }
     }
