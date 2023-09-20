@@ -30,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.google.accompanist.adaptive.calculateDisplayFeatures
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
@@ -109,6 +110,7 @@ class MainActivity : ComponentActivity() {
                     AtApp(
                         networkMonitor = networkMonitor,
                         windowSizeClass = calculateWindowSizeClass(this@MainActivity),
+                        displayFeatures = calculateDisplayFeatures(this@MainActivity),
                         snackbarManager = snackbarManager,
                         isTokenValid = isTokenValid,
                     )

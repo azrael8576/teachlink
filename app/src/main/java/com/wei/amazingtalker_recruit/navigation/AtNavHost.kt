@@ -3,6 +3,7 @@ package com.wei.amazingtalker_recruit.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker_recruit.feature.login.login.navigation.loginScreen
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeGraph
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeRoute
@@ -26,6 +27,8 @@ fun AtNavHost(
     startDestination: String = if (isTokenValid) scheduleRoute else welcomeRoute,
 ) {
     val navController = appState.navController
+    val isCompact = appState.navigationType == AtNavigationType.BOTTOM_NAVIGATION
+
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -39,12 +42,12 @@ fun AtNavHost(
             }
         )
         welcomeGraph(
-            shouldShowBottomBar = appState.shouldShowBottomBar,
+            isCompact = isCompact,
             navController = navController,
             nestedGraphs = {
                 loginScreen(
-                    shouldShowBottomBar = appState.shouldShowBottomBar,
-                    onLoginNav = { appState.tokenValidNavigate() })
+                    isCompact = isCompact,
+                    onLoginNav = { appState.loginNavigate() })
             }
         )
 

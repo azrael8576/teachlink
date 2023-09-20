@@ -13,12 +13,12 @@ fun NavController.navigateToLogin() {
 }
 
 fun NavGraphBuilder.loginScreen(
-    shouldShowBottomBar: Boolean,
+    isCompact: Boolean,
     onLoginNav: () -> Unit
 ) {
     composable(route = loginRoute) {
         LoginRoute(
-            shouldShowBottomBar = shouldShowBottomBar,
+            isCompact = isCompact,
             onLoginNav = onLoginNav
         )
     }

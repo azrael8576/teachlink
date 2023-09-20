@@ -24,7 +24,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -32,6 +34,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -43,6 +46,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -75,6 +79,7 @@ import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.DuringD
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.YourLocalTimeZoneText
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.TimeSlot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
+import com.wei.amazingtalker_recruit.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import java.time.Clock
@@ -212,47 +217,70 @@ internal fun ScheduleScreen(
         }
     }
 
-    /**
-     * Add the nested scroll connection to your top level @Composable element
-     * using the nestedScroll modifier.
-     */
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-    ) {
-        ScheduleList(
+    Column {
+        ScheduleTopAppBar(title = uiStates._currentTeacherName)
+
+        /**
+         * Add the nested scroll connection to your top level @Composable element
+         * using the nestedScroll modifier.
+         */
+        Box(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
-                .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onPress = { scope.coroutineContext.cancelChildren() }
-                    )
-                }
-                .testTag(stringResource(R.string.tag_schedule_list)),
-            timeListUiState = uiStates.timeListUiState,
-            listState = listState,
-            contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
-            isScrollInProgress = uiStates.isScrollInProgress,
-            onListScroll = onListScroll,
-            onTimeSlotClick = onTimeSlotClick,
-        )
-        ScheduleToolbar(
-            progress = toolbarState.progress,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(with(LocalDensity.current) { toolbarState.height.toDp() })
-                .graphicsLayer { translationY = toolbarState.offset },
-            uiStates = uiStates,
-            onPreviousWeekClick = onPreviousWeekClick,
-            onNextWeekClick = onNextWeekClick,
-            onWeekDateClick = onWeekDateClick,
-            onTabClick = onTabClick,
-        )
-        AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
+                .nestedScroll(nestedScrollConnection)
+        ) {
+            ScheduleList(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize()
+                    .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = { scope.coroutineContext.cancelChildren() }
+                        )
+                    }
+                    .testTag(stringResource(R.string.tag_schedule_list)),
+                timeListUiState = uiStates.timeListUiState,
+                listState = listState,
+                contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
+                isScrollInProgress = uiStates.isScrollInProgress,
+                onListScroll = onListScroll,
+                onTimeSlotClick = onTimeSlotClick,
+            )
+            ScheduleToolbar(
+                progress = toolbarState.progress,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(with(LocalDensity.current) { toolbarState.height.toDp() })
+                    .graphicsLayer { translationY = toolbarState.offset },
+                uiStates = uiStates,
+                onPreviousWeekClick = onPreviousWeekClick,
+                onNextWeekClick = onNextWeekClick,
+                onWeekDateClick = onWeekDateClick,
+                onTabClick = onTabClick,
+            )
+            AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ScheduleTopAppBar(title: String) {
+    CenterAlignedTopAppBar(
+        title = {
+            Text(
+                text = title,
+                modifier = Modifier
+                    .testTag(stringResource(id = R.string.tag_schedule_top_app_bar))
+                    .semantics { contentDescription = title })
+        },
+        navigationIcon = { },
+        actions = { },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color.Transparent,
+        )
+    )
 }
 
 @Composable
@@ -352,7 +380,7 @@ private fun ScheduleToolbar(
     onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier.testTag(stringResource(id = R.string.tag_schedule_toolbar)),
     ) {
         Column {
             WeekActionBar(
@@ -531,6 +559,14 @@ private suspend fun animateTo(topAppBarState: TopAppBarState, targetValue: Float
         animationSpec = tween(durationMillis = 300, easing = LinearEasing)
     ) { value, _ ->
         topAppBarState.scrollOffset = value
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ToolbarPreview() {
+    AtTheme {
+        ScheduleTopAppBar(title = TEST_DATA_TEACHER_NAME)
     }
 }
 

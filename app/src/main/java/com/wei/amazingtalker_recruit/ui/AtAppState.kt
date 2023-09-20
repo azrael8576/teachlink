@@ -14,7 +14,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import androidx.tracing.trace
+import androidx.window.layout.DisplayFeature
+import androidx.window.layout.FoldingFeature
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
+import com.wei.amazingtalker_recruit.core.designsystem.ui.AtContentType
+import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
+import com.wei.amazingtalker_recruit.core.designsystem.ui.DevicePosture
+import com.wei.amazingtalker_recruit.core.designsystem.ui.isBookPosture
+import com.wei.amazingtalker_recruit.core.designsystem.ui.isSeparating
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.navigateToWelcome
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.navigateToSchedule
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.scheduleRoute
@@ -29,6 +36,7 @@ import timber.log.Timber
 fun rememberAtAppState(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
+    displayFeatures: List<DisplayFeature>,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController(),
 ): AtAppState {
@@ -37,12 +45,14 @@ fun rememberAtAppState(
         coroutineScope,
         windowSizeClass,
         networkMonitor,
+        displayFeatures,
     ) {
         AtAppState(
             navController,
             coroutineScope,
             windowSizeClass,
             networkMonitor,
+            displayFeatures,
         )
     }
 }
@@ -53,7 +63,69 @@ class AtAppState(
     val coroutineScope: CoroutineScope,
     val windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
+    displayFeatures: List<DisplayFeature>,
 ) {
+    /**
+     * We are using display's folding features to map the device postures a fold is in.
+     * In the state of folding device If it's half fold in BookPosture we want to avoid content
+     * at the crease/hinge
+     */
+    val foldingFeature = displayFeatures.filterIsInstance<FoldingFeature>().firstOrNull()
+
+    val foldingDevicePosture = when {
+        isBookPosture(foldingFeature) ->
+            DevicePosture.BookPosture(foldingFeature.bounds)
+
+        isSeparating(foldingFeature) ->
+            DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
+
+        else -> DevicePosture.NormalPosture
+    }
+
+    /**
+     * This will help us select type of navigation and content type depending on window size and
+     * fold state of the device.
+     */
+    val navigationType: AtNavigationType
+        @Composable get() = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> {
+                AtNavigationType.BOTTOM_NAVIGATION
+            }
+            WindowWidthSizeClass.Medium -> {
+                AtNavigationType.NAVIGATION_RAIL
+            }
+            WindowWidthSizeClass.Expanded -> {
+                if (foldingDevicePosture is DevicePosture.BookPosture) {
+                    AtNavigationType.NAVIGATION_RAIL
+                } else {
+                    AtNavigationType.PERMANENT_NAVIGATION_DRAWER
+                }
+            }
+            else -> {
+                AtNavigationType.BOTTOM_NAVIGATION
+            }
+        }
+
+    val contentType: AtContentType
+        @Composable get() = when (windowSizeClass.widthSizeClass) {
+            WindowWidthSizeClass.Compact -> {
+                AtContentType.SINGLE_PANE
+            }
+            WindowWidthSizeClass.Medium -> {
+                if (foldingDevicePosture != DevicePosture.NormalPosture) {
+                    AtContentType.DUAL_PANE
+                } else {
+                    AtContentType.SINGLE_PANE
+                }
+            }
+            WindowWidthSizeClass.Expanded -> {
+                AtContentType.DUAL_PANE
+            }
+            else -> {
+                AtContentType.SINGLE_PANE
+            }
+        }
+
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
@@ -63,12 +135,6 @@ class AtAppState(
             scheduleRoute -> TopLevelDestination.SCHEDULE
             else -> null
         }
-
-    val shouldShowBottomBar: Boolean
-        get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
-
-    val shouldShowNavRail: Boolean
-        get() = !shouldShowBottomBar
 
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
@@ -115,14 +181,11 @@ class AtAppState(
         }
     }
 
-    // Navigate 登入成功至 Home 頁
-    fun tokenValidNavigate() {
-        Timber.d("tokenValidNavigate()")
+    fun loginNavigate() {
         navController.popBackStack()
         navController.navigateToSchedule()
     }
 
-    // Navigate Token 失效
     fun tokenInvalidNavigate() {
         Timber.d("tokenInvalidNavigate()")
         val navOptions = NavOptions.Builder()

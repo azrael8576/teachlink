@@ -1,7 +1,6 @@
 package com.wei.amazingtalker_recruit.ui
 
 import android.content.Context
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -13,14 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.window.layout.DisplayFeature
 import com.wei.amazingtalker_recruit.R
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtAppSnackbar
@@ -54,15 +51,19 @@ import com.wei.amazingtalker_recruit.navigation.AtNavHost
 fun AtApp(
     networkMonitor: NetworkMonitor,
     windowSizeClass: WindowSizeClass,
+    displayFeatures: List<DisplayFeature>,
     isTokenValid: Boolean,
     appState: AtAppState = rememberAtAppState(
         networkMonitor = networkMonitor,
         windowSizeClass = windowSizeClass,
+        displayFeatures = displayFeatures
     ),
     snackbarManager: SnackbarManager,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+
+    val navigationType = appState.navigationType
 
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
@@ -98,6 +99,9 @@ fun AtApp(
                     }
                 )
             },
+            bottomBar = {
+                // TODO bottomBar
+            },
         ) { padding ->
             Row(
                 Modifier
@@ -110,28 +114,10 @@ fun AtApp(
                         ),
                     ),
             ) {
-
-                Column(Modifier.fillMaxSize()) {
-                    // Show the top app bar on top level destinations.
-                    val destination = appState.currentTopLevelDestination
-                    if (destination != null) {
-                        // TODO: AtTopAppBar
-                        CenterAlignedTopAppBar(
-                            title = { Text(text = "jamie-coleman") },
-                            navigationIcon = {
-
-                            },
-                            actions = {
-
-                            },
-                            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                                containerColor = Color.Transparent,
-                            ),
-                        )
-                    }
-
-                    AtNavHost(appState = appState, isTokenValid = isTokenValid)
-                }
+                AtNavHost(
+                    appState = appState,
+                    isTokenValid = isTokenValid
+                )
             }
         }
     }

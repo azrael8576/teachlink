@@ -68,6 +68,7 @@ internal open class WelcomeScreenRobot(
         composeTestRule.setContent {
             AtTheme {
                 WelcomeScreen(
+                    isCompact = true,
                     onGetStartedButtonClicked = { }
                 )
             }

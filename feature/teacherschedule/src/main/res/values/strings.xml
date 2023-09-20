@@ -29,6 +29,8 @@
     <string name="content_description_back">Back Button</string>
 
     <!-- Test tag -->
+    <string name="tag_schedule_top_app_bar">tag_schedule_top_app_bar</string>
+    <string name="tag_schedule_toolbar">tag_schedule_toolbar</string>
     <string name="tag_schedule_list">tag_schedule_list</string>
 
     <string name="tag_teacher_name">tag_teacher_name</string>

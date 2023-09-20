@@ -17,6 +17,7 @@ import androidx.compose.ui.test.swipeDown
 import androidx.compose.ui.test.swipeUp
 import androidx.compose.ui.unit.DpRect
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.height
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
 import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
@@ -69,6 +70,8 @@ internal open class ScheduleScreenRobot(
     private val availableTimeSlotDescription by composeTestRule.stringResource(R.string.content_description_available_time_slot)
     private val unavailableTimeSlotDescription by composeTestRule.stringResource(R.string.content_description_unavailable_time_slot)
 
+    private val scheduleTopAppBarTag by composeTestRule.stringResource(R.string.tag_schedule_top_app_bar)
+    private val scheduleToolbarTag by composeTestRule.stringResource(R.string.tag_schedule_toolbar)
     private val scheduleListTag by composeTestRule.stringResource(R.string.tag_schedule_list)
 
     private val fixedClock: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
@@ -123,6 +126,18 @@ internal open class ScheduleScreenRobot(
     private val dateTab4 by lazy {
         composeTestRule.onNodeWithText(
             dateFormatter.format(scheduleViewState.dateTabs[3]),
+            useUnmergedTree = true
+        )
+    }
+    private val scheduleTopAppBar by lazy {
+        composeTestRule.onNodeWithTag(
+            scheduleTopAppBarTag,
+            useUnmergedTree = true
+        )
+    }
+    private val scheduleToolbar by lazy {
+        composeTestRule.onNodeWithTag(
+            scheduleToolbarTag,
             useUnmergedTree = true
         )
     }
@@ -216,6 +231,13 @@ internal open class ScheduleScreenRobot(
         }
     }
 
+    fun verifyScheduleTopAppBarDisplayed() {
+        scheduleTopAppBar.assertExists().assertIsDisplayed()
+    }
+    fun verifyScheduleToolbarDisplayed() {
+        scheduleToolbar.assertExists().assertIsDisplayed()
+    }
+
     fun verifyPreviousWeekDisplayed() {
         previousWeek.assertExists().assertIsDisplayed()
     }
@@ -244,8 +266,12 @@ internal open class ScheduleScreenRobot(
         scheduleList.assertTopPositionInRootIsEqualTo(getScheduleListNodeBounds().top)
     }
 
+    private fun getScheduleToolbarNodeBounds(): DpRect {
+        return scheduleToolbar.assertExists().getUnclippedBoundsInRoot()
+    }
+
     fun verifyScheduleListIsReachesTop() {
-        scheduleList.assertTopPositionInRootIsEqualTo(0.dp)
+        assertThat(getScheduleToolbarNodeBounds().height).isEqualTo(0.dp)
     }
 
     fun swipeUpScheduleList() {

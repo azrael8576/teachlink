@@ -89,8 +89,14 @@ dependencies {
     // Optional - Integration with activities
     api(libs.androidx.activity.compose)
 
+    // Optional - Integration with window
+    api(libs.androidx.window)
+
     // Optional - Integration with LiveData
     api(libs.androidx.compose.runtime.livedata)
+
+    // Optional - accompanist adaptive
+    api(libs.accompanist.adaptive)
 
     // UI Tests
     api(libs.androidx.compose.ui.ui.test.junit4)

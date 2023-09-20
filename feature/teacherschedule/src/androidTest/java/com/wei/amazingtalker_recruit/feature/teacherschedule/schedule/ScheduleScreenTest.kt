@@ -29,6 +29,8 @@ class ScheduleScreenTest {
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent()
 
+            verifyScheduleTopAppBarDisplayed()
+            verifyScheduleToolbarDisplayed()
             verifyPreviousWeekDisplayed()
             verifyNextWeekDisplayed()
             verifyWeekDateTextDisplayed()

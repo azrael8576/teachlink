@@ -80,7 +80,7 @@ import com.wei.amazingtalker_recruit.feature.login.login.navigation.navigateToLo
 @Composable
 internal fun WelcomeRoute(
     modifier: Modifier = Modifier,
-    shouldShowBottomBar: Boolean,
+    isCompact: Boolean,
     navController: NavController,
     viewModel: WelcomeViewModel = hiltViewModel(),
 ) {
@@ -93,7 +93,7 @@ internal fun WelcomeRoute(
     }
 
     WelcomeScreen(
-        shouldShowBottomBar = shouldShowBottomBar,
+        isCompact = isCompact,
         isPreview = false,
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) }
     )
@@ -101,7 +101,7 @@ internal fun WelcomeRoute(
 
 @Composable
 internal fun WelcomeScreen(
-    shouldShowBottomBar: Boolean = true,
+    isCompact: Boolean,
     isPreview: Boolean = true,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
@@ -117,18 +117,18 @@ internal fun WelcomeScreen(
             }
 
             WelcomeScreenToolbar(
-                modifier = if (shouldShowBottomBar) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
+                modifier = if (isCompact) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
                 isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked
             )
             Box(
                 modifier = Modifier.weight(1f),
-                contentAlignment = if (shouldShowBottomBar) Alignment.BottomCenter else Alignment.CenterStart
+                contentAlignment = if (isCompact) Alignment.BottomCenter else Alignment.CenterStart
             ) {
                 WelcomeGraphics(
                     isPreview = isPreview
                 )
-                WelcomeContent(shouldShowBottomBar = shouldShowBottomBar)
+                WelcomeContent(isCompact = isCompact)
             }
 
             if (withBottomSpacer) {
@@ -225,9 +225,9 @@ fun WelcomeGraphics(
 @Composable
 fun WelcomeContent(
     modifier: Modifier = Modifier,
-    shouldShowBottomBar: Boolean
+    isCompact: Boolean
 ) {
-    if (shouldShowBottomBar) {
+    if (isCompact) {
         WelcomeTitlePortrait()
     } else {
         WelcomeTitleLandscape()
@@ -269,7 +269,7 @@ fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
 fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
-            shouldShowBottomBar = true,
+            isCompact = true,
             onGetStartedButtonClicked = { }
         )
     }
@@ -280,7 +280,7 @@ fun WelcomeScreenPortraitPreview() {
 fun WelcomeScreenLandscapePreview() {
     AtTheme {
         WelcomeScreen(
-            shouldShowBottomBar = false,
+            isCompact = false,
             onGetStartedButtonClicked = { }
         )
     }

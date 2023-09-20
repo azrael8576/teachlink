@@ -67,7 +67,7 @@ import com.wei.amazingtalker_recruit.feature.login.utilities.TEST_PASSWORD
  */
 @Composable
 internal fun LoginRoute(
-    shouldShowBottomBar: Boolean,
+    isCompact: Boolean,
     onLoginNav: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
@@ -153,7 +153,6 @@ private fun Title(modifier: Modifier = Modifier) {
         modifier = modifier
             .semantics { contentDescription = titleDescription })
 }
-
 
 @Composable
 internal fun AccountTextField(

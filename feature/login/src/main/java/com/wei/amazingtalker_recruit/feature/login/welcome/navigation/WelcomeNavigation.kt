@@ -16,13 +16,13 @@ fun NavController.navigateToWelcome(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.welcomeGraph(
-    shouldShowBottomBar: Boolean,
+    isCompact: Boolean,
     navController: NavHostController,
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
     composable(route = welcomeRoute) {
         WelcomeRoute(
-            shouldShowBottomBar = shouldShowBottomBar,
+            isCompact = isCompact,
             navController = navController
         )
     }
