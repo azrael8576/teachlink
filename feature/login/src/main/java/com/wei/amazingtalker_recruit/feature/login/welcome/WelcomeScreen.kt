@@ -94,6 +94,7 @@ internal fun WelcomeRoute(
 
     WelcomeScreen(
         shouldShowBottomBar = shouldShowBottomBar,
+        isPreview = false,
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) }
     )
 }
@@ -101,7 +102,7 @@ internal fun WelcomeRoute(
 @Composable
 internal fun WelcomeScreen(
     shouldShowBottomBar: Boolean = true,
-    isPreview: Boolean = false,
+    isPreview: Boolean = true,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
     onGetStartedButtonClicked: () -> Unit
@@ -116,6 +117,7 @@ internal fun WelcomeScreen(
             }
 
             WelcomeScreenToolbar(
+                modifier = if (shouldShowBottomBar) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
                 isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked
             )
@@ -155,7 +157,7 @@ fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
 
 @Composable
 private fun WelcomeScreenToolbar(
-    modifier: Modifier = Modifier.padding(horizontal = 16.dp),
+    modifier: Modifier,
     isPreview: Boolean,
     onGetStartedButtonClicked: () -> Unit,
 ) {
@@ -205,7 +207,6 @@ fun WelcomeGraphics(
     modifier: Modifier = Modifier,
     isPreview: Boolean
 ) {
-    //TODO: Use images of different sizes for different resolutions.
     val resId = R.drawable.welcome_background
     val painter = loadImageUsingCoil(resId, isPreview)
 
@@ -269,7 +270,6 @@ fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
             shouldShowBottomBar = true,
-            isPreview = true,
             onGetStartedButtonClicked = { }
         )
     }
@@ -281,7 +281,6 @@ fun WelcomeScreenLandscapePreview() {
     AtTheme {
         WelcomeScreen(
             shouldShowBottomBar = false,
-            isPreview = true,
             onGetStartedButtonClicked = { }
         )
     }
