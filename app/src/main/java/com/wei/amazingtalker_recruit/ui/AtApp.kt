@@ -2,16 +2,19 @@ package com.wei.amazingtalker_recruit.ui
 
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,10 +28,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -42,6 +47,8 @@ import com.wei.amazingtalker_recruit.core.designsystem.component.AtAppSnackbar
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtBackground
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationBar
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationBarItem
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationRail
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationRailItem
 import com.wei.amazingtalker_recruit.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker_recruit.core.manager.ErrorTextPrefix
@@ -108,7 +115,7 @@ fun AtApp(
                 SnackbarHost(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
-                        AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination) {
+                        if(!appState.isFullScreenCurrentDestination) {
                             val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
                             AtAppSnackbar(snackbarData, isError)
                         }
@@ -123,6 +130,7 @@ fun AtApp(
                         destinations = appState.topLevelDestinations,
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination,
+                        modifier = Modifier.testTag("AtBottomBar"),
                     )
                 }
             },
@@ -138,6 +146,19 @@ fun AtApp(
                         ),
                     ),
             ) {
+                if (!appState.isFullScreenCurrentDestination
+                    && appState.navigationType != AtNavigationType.BOTTOM_NAVIGATION
+                ) {
+                    AtNavRail(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigateToTopLevelDestination,
+                        currentDestination = appState.currentDestination,
+                        modifier = Modifier
+                            .testTag("AtNavRail")
+                            .safeDrawingPadding(),
+                    )
+                }
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -153,6 +174,43 @@ fun AtApp(
     }
 }
 
+
+@Composable
+private fun AtNavRail(
+    destinations: List<TopLevelDestination>,
+    onNavigateToDestination: (TopLevelDestination) -> Unit,
+    currentDestination: NavDestination?,
+    modifier: Modifier = Modifier,
+) {
+    AtNavigationRail(modifier = modifier) {
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            destinations.forEach { destination ->
+                val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+                AtNavigationRailItem(
+                    selected = selected,
+                    onClick = { onNavigateToDestination(destination) },
+                    icon = {
+                        Icon(
+                            imageVector = destination.unselectedIcon,
+                            contentDescription = stringResource(destination.iconTextId),
+                        )
+                    },
+                    selectedIcon = {
+                        Icon(
+                            imageVector = destination.selectedIcon,
+                            contentDescription = stringResource(destination.iconTextId),
+                        )
+                    },
+                    modifier = Modifier,
+                )
+            }
+        }
+    }
+}
 
 @Composable
 private fun AtBottomBar(
