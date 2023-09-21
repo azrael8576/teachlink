@@ -28,7 +28,7 @@ enum class TopLevelDestination(
         iconTextId = R.string.home,
         titleTextId = R.string.home,
     ),
-    ContactMe(
+    CONTACT_ME(
         selectedIcon = AtIcons.Person,
         unselectedIcon = AtIcons.PersonBorder,
         iconTextId = R.string.contact_me,

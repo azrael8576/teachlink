@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
+import com.wei.amazingtalker_recruit.feature.contactme.contactme.navigation.contactMeScreen
 import com.wei.amazingtalker_recruit.feature.login.login.navigation.loginScreen
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeGraph
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeRoute
@@ -49,6 +50,10 @@ fun AtNavHost(
                     isCompact = isCompact,
                     onLoginNav = { appState.loginNavigate() })
             }
+        )
+        contactMeScreen(
+            navController = navController,
+            nestedGraphs = { }
         )
 
     }

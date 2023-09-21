@@ -24,6 +24,8 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker_recruit.core.designsystem.ui.DevicePosture
 import com.wei.amazingtalker_recruit.core.designsystem.ui.isBookPosture
 import com.wei.amazingtalker_recruit.core.designsystem.ui.isSeparating
+import com.wei.amazingtalker_recruit.feature.contactme.contactme.navigation.contactMeRoute
+import com.wei.amazingtalker_recruit.feature.contactme.contactme.navigation.navigateToContactMe
 import com.wei.amazingtalker_recruit.feature.login.login.navigation.loginRoute
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.navigateToWelcome
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeRoute
@@ -151,6 +153,7 @@ class AtAppState(
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
             scheduleRoute -> TopLevelDestination.SCHEDULE
+            contactMeRoute -> TopLevelDestination.CONTACT_ME
             else -> null
         }
 
@@ -197,7 +200,9 @@ class AtAppState(
                 TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
                     topLevelNavOptions
                 )
-
+                TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
+                    topLevelNavOptions
+                )
                 else -> showFunctionalityNotAvailablePopup.value = true
             }
         }
