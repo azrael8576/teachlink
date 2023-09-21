@@ -156,7 +156,7 @@ fun AtNavigationRail(
 
 /**
  * AmazingTalker Recruit navigation drawer item with icon and label content slots. Wraps Material 3
- * [NavigationBarItem].
+ * [NavigationDrawerItem].
  *
  * @param selected Whether this item is selected.
  * @param onClick The callback to be invoked when this item is selected.
