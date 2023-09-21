@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -37,6 +38,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -47,6 +49,8 @@ import com.wei.amazingtalker_recruit.core.designsystem.component.AtAppSnackbar
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtBackground
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationBar
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationBarItem
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationDrawer
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationDrawerItem
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationRail
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationRailItem
 import com.wei.amazingtalker_recruit.core.designsystem.component.FunctionalityNotAvailablePopup
@@ -115,7 +119,7 @@ fun AtApp(
                 SnackbarHost(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
-                        if(!appState.isFullScreenCurrentDestination) {
+                        if (!appState.isFullScreenCurrentDestination) {
                             val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
                             AtAppSnackbar(snackbarData, isError)
                         }
@@ -147,7 +151,21 @@ fun AtApp(
                     ),
             ) {
                 if (!appState.isFullScreenCurrentDestination
-                    && appState.navigationType != AtNavigationType.BOTTOM_NAVIGATION
+                    && appState.navigationType == AtNavigationType.PERMANENT_NAVIGATION_DRAWER
+                ) {
+                    AtNavDrawer(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigateToTopLevelDestination,
+                        currentDestination = appState.currentDestination,
+                        modifier = Modifier
+                            .testTag("AtNavDrawer")
+                            .padding(16.dp)
+                            .safeDrawingPadding(),
+                    )
+                }
+
+                if (!appState.isFullScreenCurrentDestination
+                    && appState.navigationType == AtNavigationType.NAVIGATION_RAIL
                 ) {
                     AtNavRail(
                         destinations = appState.topLevelDestinations,
@@ -174,6 +192,48 @@ fun AtApp(
     }
 }
 
+@Composable
+private fun AtNavDrawer(
+    destinations: List<TopLevelDestination>,
+    onNavigateToDestination: (TopLevelDestination) -> Unit,
+    currentDestination: NavDestination?,
+    modifier: Modifier = Modifier,
+) {
+    AtNavigationDrawer(modifier = modifier) {
+        Column(
+            modifier = Modifier.fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            destinations.forEach { destination ->
+                val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+                AtNavigationDrawerItem(
+                    selected = selected,
+                    onClick = { onNavigateToDestination(destination) },
+                    icon = {
+                        Icon(
+                            imageVector = destination.unselectedIcon,
+                            contentDescription = stringResource(destination.iconTextId),
+                        )
+                    },
+                    selectedIcon = {
+                        Icon(
+                            imageVector = destination.selectedIcon,
+                            contentDescription = stringResource(destination.iconTextId),
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(id = destination.iconTextId),
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    },
+                    modifier = Modifier,
+                )
+            }
+        }
+    }
+}
 
 @Composable
 private fun AtNavRail(

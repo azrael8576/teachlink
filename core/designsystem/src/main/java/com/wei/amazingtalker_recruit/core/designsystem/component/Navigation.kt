@@ -2,14 +2,19 @@ package com.wei.amazingtalker_recruit.core.designsystem.component
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.NavigationRailItemDefaults
+import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -145,6 +150,62 @@ fun AtNavigationRail(
         containerColor = Color.Transparent,
         contentColor = AtNavigationDefaults.navigationContentColor(),
         header = header,
+        content = content,
+    )
+}
+
+/**
+ * AmazingTalker Recruit navigation drawer item with icon and label content slots. Wraps Material 3
+ * [NavigationBarItem].
+ *
+ * @param selected Whether this item is selected.
+ * @param onClick The callback to be invoked when this item is selected.
+ * @param icon The item icon content.
+ * @param modifier Modifier to be applied to this item.
+ * @param selectedIcon The item icon content when selected.
+ * @param label The item text label content.
+ */
+@Composable
+fun AtNavigationDrawerItem(
+    selected: Boolean,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    selectedIcon: @Composable () -> Unit = icon,
+    label: @Composable () -> Unit,
+) {
+    NavigationDrawerItem(
+        selected = selected,
+        onClick = onClick,
+        icon = if (selected) selectedIcon else icon,
+        modifier = modifier,
+        label = label,
+        colors = NavigationDrawerItemDefaults.colors(
+            selectedIconColor = AtNavigationDefaults.navigationSelectedItemColor(),
+            unselectedIconColor = AtNavigationDefaults.navigationContentColor(),
+            selectedTextColor = AtNavigationDefaults.navigationSelectedItemColor(),
+            unselectedTextColor = AtNavigationDefaults.navigationContentColor(),
+        ),
+    )
+}
+
+/**
+ * AmazingTalker Recruit navigation drawer with content slot. Wraps Material 3 [PermanentDrawerSheet].
+ *
+ * @param modifier Modifier to be applied to the navigation drawer.
+ * @param content Destinations inside the navigation drawer. This should contain multiple
+ * [NavigationDrawerItem]s.
+ */
+@Composable
+fun AtNavigationDrawer(
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit,
+){
+    // TODO remove custom nav drawer content positioning when NavDrawer component supports it. ticket : b/232495216
+    PermanentDrawerSheet(
+        modifier = modifier.sizeIn(minWidth = 200.dp, maxWidth = 300.dp),
+        drawerContainerColor = Color.Transparent,
+        drawerContentColor = AtNavigationDefaults.navigationContentColor(),
         content = content,
     )
 }
