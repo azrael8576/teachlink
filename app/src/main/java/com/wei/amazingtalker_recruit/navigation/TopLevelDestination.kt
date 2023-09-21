@@ -1,5 +1,9 @@
 package com.wei.amazingtalker_recruit.navigation
 
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.wei.amazingtalker_recruit.R
+import com.wei.amazingtalker_recruit.core.designsystem.icon.AtIcons
+import com.wei.amazingtalker_recruit.feature.teacherschedule.R as teacherscheduleR
 
 /**
  * Type for the top level destinations in the application. Each of these destinations
@@ -7,7 +11,27 @@ package com.wei.amazingtalker_recruit.navigation
  * next within a single destination will be handled directly in composables.
  */
 enum class TopLevelDestination(
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val iconTextId: Int,
+    val titleTextId: Int,
 ) {
-    SCHEDULE (
+    SCHEDULE(
+        selectedIcon = AtIcons.Book,
+        unselectedIcon = AtIcons.BookBorder,
+        iconTextId = teacherscheduleR.string.book,
+        titleTextId = teacherscheduleR.string.book,
+    ),
+    HOME(
+        selectedIcon = AtIcons.Home,
+        unselectedIcon = AtIcons.HomeBorder,
+        iconTextId = R.string.home,
+        titleTextId = R.string.home,
+    ),
+    ContactMe(
+        selectedIcon = AtIcons.Person,
+        unselectedIcon = AtIcons.PersonBorder,
+        iconTextId = R.string.contact_me,
+        titleTextId = R.string.contact_me,
     ),
 }

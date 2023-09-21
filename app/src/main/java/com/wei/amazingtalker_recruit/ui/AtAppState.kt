@@ -3,7 +3,9 @@ package com.wei.amazingtalker_recruit.ui
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
@@ -22,7 +24,9 @@ import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker_recruit.core.designsystem.ui.DevicePosture
 import com.wei.amazingtalker_recruit.core.designsystem.ui.isBookPosture
 import com.wei.amazingtalker_recruit.core.designsystem.ui.isSeparating
+import com.wei.amazingtalker_recruit.feature.login.login.navigation.loginRoute
 import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.navigateToWelcome
+import com.wei.amazingtalker_recruit.feature.login.welcome.navigation.welcomeRoute
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.navigateToSchedule
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.navigation.scheduleRoute
 import com.wei.amazingtalker_recruit.navigation.TopLevelDestination
@@ -91,9 +95,11 @@ class AtAppState(
             WindowWidthSizeClass.Compact -> {
                 AtNavigationType.BOTTOM_NAVIGATION
             }
+
             WindowWidthSizeClass.Medium -> {
                 AtNavigationType.NAVIGATION_RAIL
             }
+
             WindowWidthSizeClass.Expanded -> {
                 if (foldingDevicePosture is DevicePosture.BookPosture) {
                     AtNavigationType.NAVIGATION_RAIL
@@ -101,6 +107,7 @@ class AtAppState(
                     AtNavigationType.PERMANENT_NAVIGATION_DRAWER
                 }
             }
+
             else -> {
                 AtNavigationType.BOTTOM_NAVIGATION
             }
@@ -111,6 +118,7 @@ class AtAppState(
             WindowWidthSizeClass.Compact -> {
                 AtContentType.SINGLE_PANE
             }
+
             WindowWidthSizeClass.Medium -> {
                 if (foldingDevicePosture != DevicePosture.NormalPosture) {
                     AtContentType.DUAL_PANE
@@ -118,9 +126,11 @@ class AtAppState(
                     AtContentType.SINGLE_PANE
                 }
             }
+
             WindowWidthSizeClass.Expanded -> {
                 AtContentType.DUAL_PANE
             }
+
             else -> {
                 AtContentType.SINGLE_PANE
             }
@@ -129,6 +139,14 @@ class AtAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
+
+    val isFullScreenCurrentDestination: Boolean
+        @Composable get() = when (currentDestination?.route) {
+            null -> true
+            welcomeRoute -> true
+            loginRoute -> true
+            else -> false
+        }
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
@@ -143,6 +161,8 @@ class AtAppState(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false,
         )
+
+    val showFunctionalityNotAvailablePopup: MutableState<Boolean> = mutableStateOf(false)
 
     /**
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
@@ -177,6 +197,8 @@ class AtAppState(
                 TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
                     topLevelNavOptions
                 )
+
+                else -> showFunctionalityNotAvailablePopup.value = true
             }
         }
     }

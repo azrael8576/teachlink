@@ -1,6 +1,8 @@
 package com.wei.amazingtalker_recruit.ui
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -10,13 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,17 +33,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.window.layout.DisplayFeature
 import com.wei.amazingtalker_recruit.R
 import com.wei.amazingtalker_recruit.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtAppSnackbar
 import com.wei.amazingtalker_recruit.core.designsystem.component.AtBackground
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationBar
+import com.wei.amazingtalker_recruit.core.designsystem.component.AtNavigationBarItem
+import com.wei.amazingtalker_recruit.core.designsystem.component.FunctionalityNotAvailablePopup
+import com.wei.amazingtalker_recruit.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker_recruit.core.manager.ErrorTextPrefix
 import com.wei.amazingtalker_recruit.core.manager.Message
 import com.wei.amazingtalker_recruit.core.manager.SnackbarManager
 import com.wei.amazingtalker_recruit.core.manager.SnackbarState
 import com.wei.amazingtalker_recruit.core.utils.UiText
 import com.wei.amazingtalker_recruit.navigation.AtNavHost
+import com.wei.amazingtalker_recruit.navigation.TopLevelDestination
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -62,8 +72,13 @@ fun AtApp(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-
     val navigationType = appState.navigationType
+
+    if (appState.showFunctionalityNotAvailablePopup.value) {
+        FunctionalityNotAvailablePopup(onDismiss = {
+            appState.showFunctionalityNotAvailablePopup.value = false
+        })
+    }
 
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
@@ -92,15 +107,24 @@ fun AtApp(
             snackbarHost = {
                 SnackbarHost(
                     hostState = snackbarHostState,
-                    modifier = Modifier.systemBarsPadding(),
                     snackbar = { snackbarData ->
-                        val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
-                        AtAppSnackbar(snackbarData, isError)
+                        AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination) {
+                            val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                            AtAppSnackbar(snackbarData, isError)
+                        }
                     }
                 )
             },
             bottomBar = {
-                // TODO bottomBar
+                if (!appState.isFullScreenCurrentDestination
+                    && appState.navigationType == AtNavigationType.BOTTOM_NAVIGATION
+                ) {
+                    AtBottomBar(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigateToTopLevelDestination,
+                        currentDestination = appState.currentDestination,
+                    )
+                }
             },
         ) { padding ->
             Row(
@@ -114,14 +138,60 @@ fun AtApp(
                         ),
                     ),
             ) {
-                AtNavHost(
-                    appState = appState,
-                    isTokenValid = isTokenValid
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    AtNavHost(
+                        modifier = Modifier.fillMaxSize(),
+                        appState = appState,
+                        isTokenValid = isTokenValid,
+                    )
+                }
             }
         }
     }
 }
+
+
+@Composable
+private fun AtBottomBar(
+    destinations: List<TopLevelDestination>,
+    onNavigateToDestination: (TopLevelDestination) -> Unit,
+    currentDestination: NavDestination?,
+    modifier: Modifier = Modifier,
+) {
+    AtNavigationBar(
+        modifier = modifier,
+    ) {
+        destinations.forEach { destination ->
+            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+            AtNavigationBarItem(
+                selected = selected,
+                onClick = { onNavigateToDestination(destination) },
+                icon = {
+                    Icon(
+                        imageVector = destination.unselectedIcon,
+                        contentDescription = stringResource(id = destination.iconTextId),
+                    )
+                },
+                selectedIcon = {
+                    Icon(
+                        imageVector = destination.selectedIcon,
+                        contentDescription = stringResource(id = destination.iconTextId),
+                    )
+                },
+                label = { Text(stringResource(destination.iconTextId)) },
+                modifier = Modifier,
+            )
+        }
+    }
+}
+
+private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
+    this?.hierarchy?.any {
+        it.route?.contains(destination.name, true) ?: false
+    } ?: false
 
 suspend fun collectAndShowSnackbar(
     snackbarManager: SnackbarManager,
