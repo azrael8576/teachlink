@@ -14,6 +14,7 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -37,4 +38,5 @@ object AtIcons {
     val BookBorder = Icons.Outlined.Book
     val Person = Icons.Rounded.Person
     val PersonBorder = Icons.Outlined.Person
+    val Phone = Icons.Rounded.Phone
 }

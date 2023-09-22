@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android_developer">Android Developer</string>
+    <string name="email">Email</string>
+    <string name="timezone">Timezone</string>
+    <string name="linkedin">LinkedIn</string>
+</resources>

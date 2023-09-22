@@ -118,7 +118,7 @@ fun AtApp(
                 SnackbarHost(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
-                        if (!appState.isFullScreenCurrentDestination) {
+                        if(!appState.isFullScreenCurrentDestination) {
                             val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
                             AtAppSnackbar(snackbarData, isError)
                         }
@@ -126,7 +126,7 @@ fun AtApp(
                 )
             },
             bottomBar = {
-                if (!appState.isFullScreenCurrentDestination
+                AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination
                     && appState.navigationType == AtNavigationType.BOTTOM_NAVIGATION
                 ) {
                     AtBottomBar(
@@ -149,7 +149,7 @@ fun AtApp(
                         ),
                     ),
             ) {
-                if (!appState.isFullScreenCurrentDestination
+                AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination
                     && appState.navigationType == AtNavigationType.PERMANENT_NAVIGATION_DRAWER
                 ) {
                     AtNavDrawer(
@@ -163,7 +163,7 @@ fun AtApp(
                     )
                 }
 
-                if (!appState.isFullScreenCurrentDestination
+                AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination
                     && appState.navigationType == AtNavigationType.NAVIGATION_RAIL
                 ) {
                     AtNavRail(
@@ -183,6 +183,7 @@ fun AtApp(
                     AtNavHost(
                         modifier = Modifier.fillMaxSize(),
                         appState = appState,
+                        displayFeatures = displayFeatures,
                         isTokenValid = isTokenValid,
                     )
                 }

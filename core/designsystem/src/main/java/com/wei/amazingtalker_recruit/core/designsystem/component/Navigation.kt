@@ -201,7 +201,7 @@ fun AtNavigationDrawer(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ){
-    // TODO remove custom nav drawer content positioning when NavDrawer component supports it. ticket : b/232495216
+    // TODO check on custom width of PermanentNavigationDrawer: b/232495216
     PermanentDrawerSheet(
         modifier = modifier.sizeIn(minWidth = 200.dp, maxWidth = 300.dp),
         drawerContainerColor = Color.Transparent,
