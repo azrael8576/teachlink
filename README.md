@@ -13,7 +13,6 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 ## Screenshots
 
 ### Phone
-### Phone
 <img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/screenshots_phone.png" alt="Phone">  
 
 ### Table (Dark Mode)
