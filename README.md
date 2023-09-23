@@ -10,16 +10,14 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## Screenshots
 
-## Screenshots
-
 ### Phone
 <img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/screenshots_phone.png" alt="Phone">  
 
-### Table (Dark Mode)
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/screenshots_table_dark.png" alt="Table-Dark">  
+### Tablet (Dark Mode)
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/screenshots_tablet_dark.png" alt="Tablet-Dark">
 
-### Fold Table
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/display_fold_table.png" alt="Fold Table">  
+### Fold
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/display_fold_table.png" alt="Fold">
 
 ## Tech stack
 #### Architecture
