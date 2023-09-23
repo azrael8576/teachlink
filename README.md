@@ -10,16 +10,17 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## Screenshots
 
-<div style="display: flex; justify-content: space-between;">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/light_theme.gif" alt="Light Theme" width="45%">
-<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/split_screen.gif" alt="Split Screen" width="45%">
-</div>
+## Screenshots
 
-> **Note:** 這些截圖展示了 App 在不同情境下的適應性：
-> - 若 Token 失效時，跳轉至 Login 頁面。
-> - 螢幕方向與深色主題的動態組態設定，且不影響原有狀態。
-> - 分屏模式下的螢幕空間適應性。
-> - 於網路狀態異常時，透過 Snackbar 顯示錯誤訊息。
+### Phone
+### Phone
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/screenshots_phone.png" alt="Phone">  
+
+### Table (Dark Mode)
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/screenshots_table_dark.png" alt="Table-Dark">  
+
+### Fold Table
+<img src="https://github.com/azrael8576/amazingtalker-recruit/blob/main/docs/demo/display_fold_table.png" alt="Fold Table">  
 
 ## Tech stack
 #### Architecture

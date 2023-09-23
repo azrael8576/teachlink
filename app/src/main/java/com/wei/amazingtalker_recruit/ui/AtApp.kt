@@ -1,7 +1,6 @@
 package com.wei.amazingtalker_recruit.ui
 
 import android.content.Context
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -126,7 +125,7 @@ fun AtApp(
                 )
             },
             bottomBar = {
-                AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination
+                if(!appState.isFullScreenCurrentDestination
                     && appState.navigationType == AtNavigationType.BOTTOM_NAVIGATION
                 ) {
                     AtBottomBar(
@@ -149,7 +148,7 @@ fun AtApp(
                         ),
                     ),
             ) {
-                AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination
+                if (!appState.isFullScreenCurrentDestination
                     && appState.navigationType == AtNavigationType.PERMANENT_NAVIGATION_DRAWER
                 ) {
                     AtNavDrawer(
@@ -163,7 +162,7 @@ fun AtApp(
                     )
                 }
 
-                AnimatedVisibility(visible = !appState.isFullScreenCurrentDestination
+                if(!appState.isFullScreenCurrentDestination
                     && appState.navigationType == AtNavigationType.NAVIGATION_RAIL
                 ) {
                     AtNavRail(
