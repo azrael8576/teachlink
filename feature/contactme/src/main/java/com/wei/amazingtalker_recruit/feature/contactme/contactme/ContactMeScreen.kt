@@ -185,7 +185,7 @@ internal fun ContactMeTwoPaneSecondContent(
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = if (navigationType == AtNavigationType.PERMANENT_NAVIGATION_DRAWER) Alignment.TopCenter else Alignment.Center
+        contentAlignment = Alignment.Center
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
