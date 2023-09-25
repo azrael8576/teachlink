@@ -144,14 +144,13 @@ internal fun LoginScreen(
 
 @Composable
 private fun Title(modifier: Modifier = Modifier) {
-    val title = stringResource(R.string.login_title)
-    val titleDescription = stringResource(R.string.content_description_login_title)
+    val title = stringResource(R.string.login)
 
     Text(
         text = title,
         style = MaterialTheme.typography.displayLarge,
         modifier = modifier
-            .semantics { contentDescription = titleDescription })
+            .semantics { contentDescription = "" })
 }
 
 @Composable
@@ -201,13 +200,12 @@ internal fun PasswordTextField(
 @Composable
 internal fun ForgotPasswordText() {
     val forgotPassword = stringResource(R.string.forgot_password)
-    val forgotPasswordDescription = stringResource(R.string.content_description_forgot_password)
 
     Text(
         text = forgotPassword,
         style = MaterialTheme.typography.bodySmall,
         modifier = Modifier
-            .semantics { contentDescription = forgotPasswordDescription }
+            .semantics { contentDescription = forgotPassword }
     )
 }
 

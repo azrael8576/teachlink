@@ -2,8 +2,13 @@ package com.wei.amazingtalker_recruit.feature.login.login
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -38,16 +43,20 @@ internal open class LoginScreenRobot(
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
+    private fun withRole(role: Role) = SemanticsMatcher("${SemanticsProperties.Role.name} contains '$role'") {
+        val roleProperty = it.config.getOrNull(SemanticsProperties.Role) ?: false
+        roleProperty == role
+    }
+
     // The strings used for matching in these tests
-    private val loginTitleDescription by composeTestRule.stringResource(R.string.content_description_login_title)
     private val accountDescription by composeTestRule.stringResource(R.string.content_description_account)
     private val passwordDescription by composeTestRule.stringResource(R.string.content_description_password)
-    private val forgotPasswordDescription by composeTestRule.stringResource(R.string.content_description_forgot_password)
+    private val forgotPasswordDescription by composeTestRule.stringResource(R.string.forgot_password)
     private val loginDescription by composeTestRule.stringResource(R.string.content_description_login)
 
     private val loginTitle by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            loginTitleDescription,
+        composeTestRule.onNode(
+            matcher = hasText(loginDescription) and hasContentDescription(""),
             useUnmergedTree = true
         )
     }
@@ -71,9 +80,9 @@ internal open class LoginScreenRobot(
         )
     }
     private val loginButton by lazy {
-        composeTestRule.onNodeWithContentDescription(
-            loginDescription,
-            useUnmergedTree = true
+        composeTestRule.onNode(
+            withRole(Role.Button)
+                .and(hasContentDescription(loginDescription))
         )
     }
 

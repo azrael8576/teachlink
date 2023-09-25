@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -33,7 +35,11 @@ internal fun DecorativeBackgroundText(
             .scale(scale)
     ) {
         repeat(repetitions) {
-            Text(text = text, style = textStyle)
+            Text(
+                text = text,
+                style = textStyle,
+                modifier = Modifier.semantics { contentDescription = "" }
+            )
         }
     }
 }

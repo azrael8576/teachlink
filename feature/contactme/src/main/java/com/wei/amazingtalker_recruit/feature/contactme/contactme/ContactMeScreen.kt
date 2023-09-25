@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,7 +37,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.window.layout.DisplayFeature
 import coil.ImageLoader
@@ -58,8 +63,10 @@ import com.wei.amazingtalker_recruit.feature.contactme.contactme.ui.DecorativeBa
 import com.wei.amazingtalker_recruit.feature.contactme.contactme.ui.ProfileProperty
 import com.wei.amazingtalker_recruit.feature.contactme.contactme.ui.decorativeTextStyle
 import com.wei.amazingtalker_recruit.feature.contactme.utilities.EMAIL
-import com.wei.amazingtalker_recruit.feature.contactme.utilities.LINKEDIN
+import com.wei.amazingtalker_recruit.feature.contactme.utilities.LINKEDIN_URL
 import com.wei.amazingtalker_recruit.feature.contactme.utilities.NAME_ENG
+import com.wei.amazingtalker_recruit.feature.contactme.utilities.PHONE
+import com.wei.amazingtalker_recruit.feature.contactme.utilities.POSITION
 import com.wei.amazingtalker_recruit.feature.contactme.utilities.TIME_ZONE
 
 /**
@@ -97,20 +104,27 @@ internal fun ContactMeRoute(
     contentType: AtContentType,
     displayFeatures: List<DisplayFeature>,
     navigationType: AtNavigationType,
+    viewModel: ContactMeViewModel = hiltViewModel()
 ) {
+    val uiStates: ContactMeViewState by viewModel.states.collectAsStateWithLifecycle()
+
     ContactMeScreen(
+        uiStates = uiStates,
         contentType = contentType,
         displayFeatures = displayFeatures,
         navigationType = navigationType,
+        onPhoneClick = { viewModel.dispatch(ContactMeViewAction.Call) }
     )
 }
 
 @Composable
 internal fun ContactMeScreen(
+    uiStates: ContactMeViewState,
     contentType: AtContentType,
     displayFeatures: List<DisplayFeature>,
     navigationType: AtNavigationType = AtNavigationType.PERMANENT_NAVIGATION_DRAWER,
-    isPreview: Boolean = true
+    isPreview: Boolean = true,
+    onPhoneClick: () -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -122,7 +136,7 @@ internal fun ContactMeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 DecorativeBackgroundText(
-                    text = NAME_ENG,
+                    text = uiStates.nameEng,
                     repetitions = 3,
                     rotationZ = -25f,
                     scale = 2.5f,
@@ -130,10 +144,17 @@ internal fun ContactMeScreen(
                 )
                 TwoPane(
                     first = {
-                        ContactMeTwoPaneFirstContent(isPreview = isPreview)
+                        ContactMeTwoPaneFirstContent(
+                            uiStates = uiStates,
+                            isPreview = isPreview
+                        )
                     },
                     second = {
-                        ContactMeTwoPaneSecondContent(navigationType = navigationType)
+                        ContactMeTwoPaneSecondContent(
+                            uiStates = uiStates,
+                            navigationType = navigationType,
+                            onPhoneClick = onPhoneClick
+                        )
                     },
                     strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = 16.dp),
                     displayFeatures = displayFeatures
@@ -147,20 +168,27 @@ internal fun ContactMeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 DecorativeBackgroundText(
-                    text = NAME_ENG,
+                    text = uiStates.nameEng,
                     repetitions = 3,
                     rotationZ = -25f,
                     scale = 2.5f,
                     textStyle = decorativeTextStyle(MaterialTheme.colorScheme.primary)
                 )
-                ContactMeSinglePaneContent(isPreview = isPreview)
+                ContactMeSinglePaneContent(
+                    uiStates = uiStates,
+                    onPhoneClick = onPhoneClick,
+                    isPreview = isPreview
+                )
             }
         }
     }
 }
 
 @Composable
-internal fun ContactMeTwoPaneFirstContent(isPreview: Boolean) {
+internal fun ContactMeTwoPaneFirstContent(
+    uiStates: ContactMeViewState,
+    isPreview: Boolean
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -172,6 +200,7 @@ internal fun ContactMeTwoPaneFirstContent(isPreview: Boolean) {
 
         DisplayHeadShot(
             modifier = modifier,
+            name = uiStates.nameEng,
             isPreview = isPreview
         )
     }
@@ -179,7 +208,9 @@ internal fun ContactMeTwoPaneFirstContent(isPreview: Boolean) {
 
 @Composable
 internal fun ContactMeTwoPaneSecondContent(
+    uiStates: ContactMeViewState,
     navigationType: AtNavigationType,
+    onPhoneClick: () -> Unit,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true
 ) {
@@ -197,7 +228,10 @@ internal fun ContactMeTwoPaneSecondContent(
             }
             item {
                 Spacer(modifier = Modifier.height(8.dp))
-                ContactMeCard()
+                ContactMeCard(
+                    uiStates = uiStates,
+                    onPhoneClick = onPhoneClick
+                )
                 Spacer(modifier = Modifier.height(8.dp))
             }
             if (withBottomSpacer) {
@@ -211,6 +245,8 @@ internal fun ContactMeTwoPaneSecondContent(
 
 @Composable
 internal fun ContactMeSinglePaneContent(
+    uiStates: ContactMeViewState,
+    onPhoneClick: () -> Unit,
     isPreview: Boolean,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true
@@ -233,12 +269,16 @@ internal fun ContactMeSinglePaneContent(
 
             DisplayHeadShot(
                 modifier = modifier,
+                name = uiStates.nameEng,
                 isPreview = isPreview
             )
         }
         item {
             Spacer(modifier = Modifier.height(8.dp))
-            ContactMeCard()
+            ContactMeCard(
+                uiStates = uiStates,
+                onPhoneClick = onPhoneClick
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
         if (withBottomSpacer) {
@@ -252,14 +292,16 @@ internal fun ContactMeSinglePaneContent(
 @Composable
 internal fun DisplayHeadShot(
     modifier: Modifier = Modifier,
+    name: String,
     isPreview: Boolean
 ) {
     val resId = R.drawable.he_wei
     val painter = loadImageUsingCoil(resId, isPreview)
 
+    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
     Image(
         painter = painter,
-        contentDescription = null,
+        contentDescription = profilePictureDescription,
         modifier = modifier
             .clip(CircleShape)
             .size(300.dp)
@@ -286,7 +328,9 @@ fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
 
 @Composable
 fun ContactMeCard(
+    uiStates: ContactMeViewState,
     modifier: Modifier = Modifier,
+    onPhoneClick: () -> Unit,
 ) {
     Card(
         modifier = modifier
@@ -305,40 +349,69 @@ fun ContactMeCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                NameAndPosition(modifier = Modifier.weight(1f))
-                PhoneButton()
+                NameAndPosition(
+                    uiStates = uiStates,
+                    modifier = Modifier.weight(1f)
+                )
+                PhoneButton(
+                    uiStates.nameEng,
+                    onPhoneClick = onPhoneClick
+                )
             }
-            ProfileProperty(label = stringResource(id = R.string.linkedin), value = LINKEDIN, isLink = true)
-            ProfileProperty(label = stringResource(id = R.string.email), value = EMAIL, isLink = true)
-            ProfileProperty(label = stringResource(id = R.string.timezone), value = TIME_ZONE, isLink = false)
+            ProfileProperty(
+                label = stringResource(id = R.string.linkedin),
+                value = uiStates.linkedinUrl,
+                isLink = true
+            )
+            ProfileProperty(
+                label = stringResource(id = R.string.email),
+                value = uiStates.email,
+                isLink = true
+            )
+            ProfileProperty(
+                label = stringResource(id = R.string.timezone),
+                value = uiStates.timeZone,
+                isLink = false
+            )
         }
     }
 }
 
 @Composable
-private fun NameAndPosition(modifier: Modifier) {
+private fun NameAndPosition(
+    uiStates: ContactMeViewState,
+    modifier: Modifier
+) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center
     ) {
+        val name = uiStates.nameEng
         Text(
-            text = NAME_ENG,
+            text = name,
             style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.baselineHeight(32.dp)
+            modifier = Modifier
+                .baselineHeight(32.dp)
+                .semantics { contentDescription = name }
         )
+        val position = uiStates.position
         Text(
-            text = stringResource(R.string.android_developer),
+            text = position,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier
                 .padding(bottom = 20.dp)
                 .baselineHeight(24.dp)
+                .semantics { contentDescription = position }
         )
     }
 }
 
 @Composable
-private fun PhoneButton() {
+private fun PhoneButton(
+    name: String,
+    onPhoneClick: () -> Unit,
+) {
     val showPopup = remember { mutableStateOf(false) }
 
     if (showPopup.value) {
@@ -347,17 +420,20 @@ private fun PhoneButton() {
         })
     }
 
+    val phoneDescription = stringResource(id = R.string.call).format(name)
     IconButton(
         onClick = {
             showPopup.value = true
+            onPhoneClick()
         },
         modifier = Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surface)
+            .semantics { contentDescription = phoneDescription }
     ) {
         Icon(
             imageVector = AtIcons.Phone,
-            contentDescription = "Phone",
+            contentDescription = null,
             tint = MaterialTheme.colorScheme.outline
         )
     }
@@ -368,8 +444,10 @@ private fun PhoneButton() {
 fun ContactMeScreenDualPanePreview() {
     AtTheme {
         ContactMeScreen(
+            uiStates = previewUIState,
             contentType = AtContentType.DUAL_PANE,
-            displayFeatures = emptyList<DisplayFeature>()
+            displayFeatures = emptyList<DisplayFeature>(),
+            onPhoneClick = { }
         )
     }
 }
@@ -379,8 +457,19 @@ fun ContactMeScreenDualPanePreview() {
 fun ContactMeScreenSinglePanePreview() {
     AtTheme {
         ContactMeScreen(
+            uiStates = previewUIState,
             contentType = AtContentType.SINGLE_PANE,
-            displayFeatures = emptyList<DisplayFeature>()
+            displayFeatures = emptyList<DisplayFeature>(),
+            onPhoneClick = { }
         )
     }
 }
+
+internal val previewUIState = ContactMeViewState(
+    nameEng = NAME_ENG,
+    position = POSITION,
+    phone = PHONE,
+    linkedinUrl = LINKEDIN_URL,
+    email = EMAIL,
+    timeZone = TIME_ZONE
+)

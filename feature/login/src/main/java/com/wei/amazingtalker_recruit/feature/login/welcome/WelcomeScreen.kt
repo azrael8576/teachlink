@@ -191,13 +191,13 @@ fun GetStartedButton(
     modifier: Modifier = Modifier,
     onGetStartedButtonClicked: () -> Unit
 ) {
-    val getStartedDescription = stringResource(R.string.content_description_get_started)
+    val getStarted = stringResource(R.string.get_started)
     IconButton(
         onClick = { onGetStartedButtonClicked() },
     ) {
         Icon(
             imageVector = AtIcons.ArrowForward,
-            contentDescription = getStartedDescription,
+            contentDescription = getStarted,
         )
     }
 }

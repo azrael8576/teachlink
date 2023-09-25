@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker_recruit.core.designsystem.component.baselineHeight
 
@@ -16,7 +18,9 @@ fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
         Divider()
         Text(
             text = label,
-            modifier = Modifier.baselineHeight(24.dp),
+            modifier = Modifier
+                .baselineHeight(24.dp)
+                .semantics { contentDescription= label },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -27,7 +31,9 @@ fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
         }
         Text(
             text = value,
-            modifier = Modifier.baselineHeight(24.dp),
+            modifier = Modifier
+                .baselineHeight(24.dp)
+                .semantics { contentDescription = value },
             style = style
         )
     }

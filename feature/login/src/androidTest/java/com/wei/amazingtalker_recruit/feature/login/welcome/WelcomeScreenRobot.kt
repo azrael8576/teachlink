@@ -36,8 +36,7 @@ internal open class WelcomeScreenRobot(
 
     private val welcomeTitleString by composeTestRule.stringResource(R.string.welcome_title)
     private val welcomeMessageString by composeTestRule.stringResource(R.string.welcome_message)
-
-    private val getStartedDescription by composeTestRule.stringResource(R.string.content_description_get_started)
+    private val getStartedString by composeTestRule.stringResource(R.string.get_started)
 
     private val welcomeGraphics by lazy {
         composeTestRule.onNodeWithTag(
@@ -59,7 +58,7 @@ internal open class WelcomeScreenRobot(
     }
     private val getStarted by lazy {
         composeTestRule.onNodeWithContentDescription(
-            getStartedDescription,
+            getStartedString,
             useUnmergedTree = true
         )
     }

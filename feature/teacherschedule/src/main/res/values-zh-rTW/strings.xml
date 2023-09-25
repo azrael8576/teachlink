@@ -16,18 +16,18 @@
 
     <!-- 教師行事曆頁面 ContentDescription -->
     <string name="content_description_week_date">日期範圍 %1$s 到 %2$s</string>
-    <string name="content_description_previous_week">上一週 按鈕</string>
-    <string name="content_description_next_week">下一週 按鈕</string>
+    <string name="content_description_previous_week">上一週</string>
+    <string name="content_description_next_week">下一週</string>
     <string name="content_description_available_time_slot">可預訂時段 %s</string>
     <string name="content_description_unavailable_time_slot">不可預定時段 %s</string>
 
     <!-- 教師行事曆明細頁 ContentDescription -->
-    <string name="content_description_teacher_name">教師名稱 %s</string>
+    <string name="content_description_teacher_name">%s</string>
     <string name="content_description_start_time">開始時間： %s</string>
     <string name="content_description_end_time">結束時間： %s</string>
     <string name="content_description_state">狀態 %s</string>
     <string name="content_description_during_day_type">時間區間 %s</string>
-    <string name="content_description_back">上一頁 按鈕</string>
+    <string name="content_description_back">上一頁</string>
 
     <!-- Test tag -->
     <string name="tag_schedule_top_app_bar">tag_schedule_top_app_bar</string>
