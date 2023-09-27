@@ -84,10 +84,10 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## DesignSystem
 
-本專案採用 [_Material 3 Design_](https://m3.material.io/) 。
+本專案採用 [_Material 3 Design_](https://m3.material.io/) ，使用自適應佈局來 [_Support different screen sizes_](https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes)。
 
 並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果，並為其進行封裝。 遵循 Google 官方 [_API Guidelines for Jetpack Compose_](https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md) 。
-> **Note:** Material 3 尚未 release collapsing toolbar 相關 UI 元件 API，截止 2023/08/27
+> **Note:** Material 3 尚未 release collapsing toolbar 相關 UI 元件 API，截止 2023/09/27
 
 ## Architecture
 

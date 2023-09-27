@@ -22,7 +22,7 @@ Amazingtalker-Recruit 主要包含以下幾種模組:
 
 | Name | Responsibilities | Key classes and good examples |
 |:----:|:----:|:-----------------:|
-| `app` | 將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. NavHost、AppState...等 | `AtApplication,`<br>`AtNavHost`<br>`TopLevelDestination`<br>`AtApp`<br>`AtAppState` |
+| `app` | 將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. UI scaffolding、navigation...等 | `AtApplication,`<br>`AtNavHost`<br>`TopLevelDestination`<br>`AtApp`<br>`AtAppState` |
 | `feature:1`,<br>`feature:2`<br>... | 負責實現某個特定功能或用戶的互動流程的部分。這通常包含 UI 組件、UseCase 和 ViewModel，並從其他模組讀取資料。例如：<br>• [`feature:teacherschedule`](https://github.com/azrael8576/amazingtalker-recruit/tree/main/feature/teacherschedule) 專注於展示教師預約時段的行事曆資訊。<br>• [`feature:login`](https://github.com/azrael8576/amazingtalker-recruit/tree/main/feature/login) 提供歡迎畫面和登入畫面。當 Token 失效時，會跨模組導航，導向此模組。 | `ScheduleScreen,`<br>`ScheduleListPreviewParameterProvider,`<br>`domain/GetTeacherScheduleUseCase`<br>... |
 | `core:data` | 負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|
 | `core:common` | 包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 | `network/AtDispatchers,`<br>`result/DataSourceResult,`<br>`authentication/TokenManager,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`navigation/DeepLinks`<br>`utils/UiText`<br>... |
@@ -31,3 +31,4 @@ Amazingtalker-Recruit 主要包含以下幾種模組:
 | `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitAtNetworkApi` |
 | `core:designsystem` | UI 依賴項。<br>eg. app theme、Core UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |
 | `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`AtTestRunner,`<br>... |
+| `core:datastore` | 儲存持久性數據 | `AtPreferencesDataSource,`<br>`UserPreferencesSerializer,`<br>... |

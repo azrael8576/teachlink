@@ -1,4 +1,4 @@
-package com.wei.amazingtalker_recruit.ui
+package com.wei.amazingtalker_recruit.ui.robot
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.assertIsDisplayed

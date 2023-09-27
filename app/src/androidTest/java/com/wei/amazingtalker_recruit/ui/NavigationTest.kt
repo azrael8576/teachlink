@@ -9,6 +9,7 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.NoActivityResumedException
 import com.wei.amazingtalker_recruit.MainActivity
 import com.wei.amazingtalker_recruit.R
+import com.wei.amazingtalker_recruit.ui.robot.welcomeRobot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R as FeatureTeacherScheduleR
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
