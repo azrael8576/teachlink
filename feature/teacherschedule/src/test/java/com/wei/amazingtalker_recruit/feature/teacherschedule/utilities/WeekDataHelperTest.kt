@@ -103,7 +103,7 @@ class WeekDataHelperTest {
         val result = weekDataHelper.getWeekDateText(weekStart, weekEnd)
 
         // Assert
-        assertThat(result).isEqualTo("2023-08-01 - 08-06")
+        assertThat(result).isEqualTo(Pair<String, String>("2023-08-01", "08-06"))
     }
 
     @Test

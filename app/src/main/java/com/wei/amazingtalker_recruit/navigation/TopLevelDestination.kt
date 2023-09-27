@@ -3,7 +3,6 @@ package com.wei.amazingtalker_recruit.navigation
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.wei.amazingtalker_recruit.R
 import com.wei.amazingtalker_recruit.core.designsystem.icon.AtIcons
-import com.wei.amazingtalker_recruit.feature.teacherschedule.R as teacherscheduleR
 
 /**
  * Type for the top level destinations in the application. Each of these destinations
@@ -19,8 +18,8 @@ enum class TopLevelDestination(
     SCHEDULE(
         selectedIcon = AtIcons.Book,
         unselectedIcon = AtIcons.BookBorder,
-        iconTextId = teacherscheduleR.string.book,
-        titleTextId = teacherscheduleR.string.book,
+        iconTextId = R.string.book,
+        titleTextId = R.string.book,
     ),
     HOME(
         selectedIcon = AtIcons.Home,

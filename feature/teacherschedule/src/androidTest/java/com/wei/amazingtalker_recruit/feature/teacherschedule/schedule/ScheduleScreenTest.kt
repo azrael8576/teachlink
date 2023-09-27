@@ -2,6 +2,7 @@ package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import com.wei.amazingtalker_recruit.core.testing.data.testCurrentTime
 import org.junit.Rule
 import org.junit.Test
 import java.time.Clock

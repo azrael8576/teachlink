@@ -67,7 +67,6 @@ android {
 
 dependencies {
     implementation(project(":core:designsystem"))
-    androidTestImplementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
@@ -75,8 +74,11 @@ dependencies {
     implementation(project(":feature:login"))
     implementation(project(":feature:teacherschedule"))
     implementation(project(":feature:contactme"))
-    testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:designsystem"))
+    androidTestImplementation(project(":core:datastore-test"))
     androidTestImplementation(project(":core:testing"))
+    testImplementation(project(":core:datastore-test"))
+    testImplementation(project(":core:testing"))
 
     // PublicLibs
     implementation(libs.androidx.core.ktx)

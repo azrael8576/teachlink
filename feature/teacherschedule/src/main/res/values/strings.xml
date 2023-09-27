@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">amazingtalker-recruit</string>
-    <string name="book">Book</string>
 
     <!-- 教師行事曆頁面 -->
     <string name="your_local_time_zone">Your local time zone: %1$s GMT %2$s</string>
@@ -27,7 +26,7 @@
     <string name="content_description_end_time">End Time: %s</string>
     <string name="content_description_state">State %s</string>
     <string name="content_description_during_day_type">During Day %s</string>
-    <string name="content_description_back">Back</string>
+    <string name="content_description_back">Navigate up</string>
 
     <!-- Test tag -->
     <string name="tag_schedule_top_app_bar">tag_schedule_top_app_bar</string>

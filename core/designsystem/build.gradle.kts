@@ -100,4 +100,9 @@ dependencies {
 
     // UI Tests
     api(libs.androidx.compose.ui.ui.test.junit4)
+
+    // Coil
+    api(libs.coil.kt)
+    api(libs.coil.kt.compose)
+    api(libs.coil.kt.svg)
 }

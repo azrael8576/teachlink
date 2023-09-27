@@ -2,12 +2,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.navigation.safeargs.kotlin)
+    alias(libs.plugins.protobuf)
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.feature.contactme"
+    namespace = "com.wei.amazingtalker_recruit.core.datastore.test"
     compileSdk = 34
 
     defaultConfig {
@@ -36,49 +36,31 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
-    }
-
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
 }
 
 dependencies {
+    api(project(":core:datastore"))
+    implementation(project(":core:testing"))
     implementation(project(":core:common"))
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:data"))
     implementation(project(":core:model"))
-    androidTestImplementation(project(":core:designsystem"))
-    testImplementation(project(":core:testing"))
-    androidTestImplementation(project(":core:testing"))
 
     // PublicLibs
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
-    // LifeCycle
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtimeCompose)
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
-    // Navigation
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.navigation.compose)
+    // DataStore
+    implementation(libs.androidx.datastore)
+
+    // Protobuf
+    implementation(libs.protobuf.kotlin.lite)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    // Timber
-    implementation(libs.timber)
 }

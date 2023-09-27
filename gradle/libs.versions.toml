@@ -23,6 +23,7 @@ androidGradlePlugin = "8.1.0-rc01"
 kotlin = "1.8.21"
 navigationSafeArgsKotlin = "2.5.3"
 androidxComposeCompiler = "1.4.7"
+androidxEspresso = "3.5.0"
 androidxTestCore = "1.5.0"
 androidxArchCore = "2.2.0"
 googleTruth = "1.1.5"
@@ -109,6 +110,9 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 #  Android Studio Preview support
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+
+# androidxEspresso
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
 
 #  UI Tests
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }

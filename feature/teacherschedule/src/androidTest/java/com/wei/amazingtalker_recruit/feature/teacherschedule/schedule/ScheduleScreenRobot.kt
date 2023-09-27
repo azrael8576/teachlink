@@ -21,9 +21,12 @@ import androidx.compose.ui.unit.height
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
 import com.wei.amazingtalker_recruit.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker_recruit.core.model.data.DuringDayType
-import com.wei.amazingtalker_recruit.core.model.data.IntervalScheduleTimeSlot
-import com.wei.amazingtalker_recruit.core.model.data.ScheduleState
+import com.wei.amazingtalker_recruit.core.testing.data.fixedClock
+import com.wei.amazingtalker_recruit.core.testing.data.fixedClockUtc
+import com.wei.amazingtalker_recruit.core.testing.data.groupedTimeSlots
+import com.wei.amazingtalker_recruit.core.testing.data.testAvailableTimeSlot
+import com.wei.amazingtalker_recruit.core.testing.data.testCurrentTime
+import com.wei.amazingtalker_recruit.core.testing.data.testUnavailableTimeSlot
 import com.wei.amazingtalker_recruit.feature.teacherschedule.R
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.dateFormatter
 import com.wei.amazingtalker_recruit.feature.teacherschedule.schedule.ui.timeSlotFormatter
@@ -32,7 +35,6 @@ import java.time.Clock
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import kotlin.properties.ReadOnlyProperty
 
 
@@ -74,8 +76,6 @@ internal open class ScheduleScreenRobot(
     private val scheduleToolbarTag by composeTestRule.stringResource(R.string.tag_schedule_toolbar)
     private val scheduleListTag by composeTestRule.stringResource(R.string.tag_schedule_list)
 
-    private val fixedClock: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
-    private val fixedClockUtc: Clock = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
     private val scheduleViewState = ScheduleViewState(
         currentClock = fixedClock,
         queryClockUtc = fixedClockUtc,
@@ -393,64 +393,5 @@ internal open class ScheduleScreenRobot(
     }
 
 }
-
-// mock currentTime
-const val testCurrentTime = "2023-09-06T00:00:00Z" // 使用Z表示UTC時區
-val testAvailableTimeSlot = IntervalScheduleTimeSlot(
-    OffsetDateTime.parse("2023-09-06T00:00+08:00"),
-    OffsetDateTime.parse("2023-09-06T00:30+08:00"),
-    ScheduleState.AVAILABLE,
-    DuringDayType.Morning
-)
-val testUnavailableTimeSlot = IntervalScheduleTimeSlot(
-    OffsetDateTime.parse("2023-09-06T12:30+08:00"),
-    OffsetDateTime.parse("2023-09-06T13:00+08:00"),
-    ScheduleState.BOOKED,
-    DuringDayType.Afternoon
-)
-
-val morningTimeSlots = listOf(
-    testAvailableTimeSlot,
-    // ... add the other morning time slots similarly ...
-    IntervalScheduleTimeSlot(
-        OffsetDateTime.parse("2023-09-06T04:00+08:00"),
-        OffsetDateTime.parse("2023-09-06T04:30+08:00"),
-        ScheduleState.AVAILABLE,
-        DuringDayType.Morning
-    )
-)
-
-val afternoonTimeSlots = listOf(
-    testUnavailableTimeSlot,
-    // ... add the other afternoon time slots similarly ...
-    IntervalScheduleTimeSlot(
-        OffsetDateTime.parse("2023-09-06T17:30+08:00"),
-        OffsetDateTime.parse("2023-09-06T18:00+08:00"),
-        ScheduleState.AVAILABLE,
-        DuringDayType.Afternoon
-    )
-)
-
-val eveningTimeSlots = listOf(
-    IntervalScheduleTimeSlot(
-        OffsetDateTime.parse("2023-09-06T18:00+08:00"),
-        OffsetDateTime.parse("2023-09-06T18:30+08:00"),
-        ScheduleState.AVAILABLE,
-        DuringDayType.Evening
-    ),
-    // ... add the other evening time slots similarly ...
-    IntervalScheduleTimeSlot(
-        OffsetDateTime.parse("2023-09-06T23:30+08:00"),
-        OffsetDateTime.parse("2023-09-07T00:00+08:00"),
-        ScheduleState.AVAILABLE,
-        DuringDayType.Evening
-    )
-)
-
-val groupedTimeSlots = mapOf(
-    DuringDayType.Morning to morningTimeSlots,
-    DuringDayType.Afternoon to afternoonTimeSlots,
-    DuringDayType.Evening to eveningTimeSlots
-)
 
 var timeListSuccess = TimeListUiState.Success(groupedTimeSlots)

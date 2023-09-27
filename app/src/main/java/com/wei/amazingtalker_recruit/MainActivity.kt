@@ -32,6 +32,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 
+private const val TAG = "MainActivity"
+
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -49,17 +51,8 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        setSplashScreenKeepCondition(splashScreen)
         observeUiState()
-    }
-
-    private fun setSplashScreenKeepCondition(splashScreen: SplashScreen) {
-        splashScreen.setKeepOnScreenCondition {
-            when (uiState) {
-                Loading -> true
-                is Success -> false
-            }
-        }
+        setSplashScreenKeepCondition(splashScreen)
     }
 
     private fun observeUiState() {
@@ -71,6 +64,15 @@ class MainActivity : ComponentActivity() {
                         handleSuccessState(updatedState as Success)
                         uiState = updatedState
                     }
+            }
+        }
+    }
+
+    private fun setSplashScreenKeepCondition(splashScreen: SplashScreen) {
+        splashScreen.setKeepOnScreenCondition {
+            when (uiState) {
+                Loading -> true
+                is Success -> false
             }
         }
     }

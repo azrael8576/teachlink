@@ -49,6 +49,7 @@ dependencies {
     api(libs.androidx.arch.core.test)
     api(libs.androidx.compose.ui.test)
     api(libs.androidx.compose.ui.ui.test.junit4)
+    api(libs.androidx.test.espresso.core)
     api(libs.androidx.test.core)
     api(libs.androidx.test.ext)
     api(libs.androidx.test.runner)
