@@ -12,4 +12,5 @@ plugins {
     alias(libs.plugins.navigation.safeargs.kotlin) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
 }

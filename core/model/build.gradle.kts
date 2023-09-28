@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -52,7 +52,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // For androidx.compose.runtime.Stable
     val composeBom = platform(libs.androidx.compose.bom)

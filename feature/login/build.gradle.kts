@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.navigation.safeargs.kotlin)
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -77,7 +77,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // Timber
     implementation(libs.timber)
