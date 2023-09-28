@@ -52,11 +52,12 @@ internal open class LoginScreenRobot(
     private val accountDescription by composeTestRule.stringResource(R.string.content_description_account)
     private val passwordDescription by composeTestRule.stringResource(R.string.content_description_password)
     private val forgotPasswordDescription by composeTestRule.stringResource(R.string.forgot_password)
+    private val loginString by composeTestRule.stringResource(R.string.login)
     private val loginDescription by composeTestRule.stringResource(R.string.content_description_login)
 
     private val loginTitle by lazy {
         composeTestRule.onNode(
-            matcher = hasText(loginDescription) and hasContentDescription(""),
+            matcher = hasText(loginString) and hasContentDescription(""),
             useUnmergedTree = true
         )
     }
