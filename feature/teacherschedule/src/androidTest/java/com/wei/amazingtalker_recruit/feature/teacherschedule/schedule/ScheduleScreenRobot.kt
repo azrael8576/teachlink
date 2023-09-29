@@ -276,6 +276,7 @@ internal open class ScheduleScreenRobot(
 
     fun swipeUpScheduleList() {
         scheduleList.performTouchInput {
+            println("TODO Wei Swiping from ${getScheduleListNodeBounds().bottom} to ${getScheduleListNodeBounds().top}")
             swipeUp(
                 startY = getScheduleListNodeBounds().bottom.value,
                 endY = getScheduleListNodeBounds().top.value,
@@ -284,6 +285,8 @@ internal open class ScheduleScreenRobot(
         }
         // 等待任何動畫完成
         composeTestRule.waitForIdle()
+
+        println("TODO Wei After swipe, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 
     fun swipeDownScheduleList() {
