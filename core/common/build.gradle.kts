@@ -12,7 +12,7 @@ android {
     defaultConfig {
         minSdk = 23
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"
     }
 
     buildTypes {

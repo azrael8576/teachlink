@@ -28,7 +28,7 @@ interface RetrofitAtNetworkApi {
     ): NetworkTeacherSchedule
 }
 
-private const val AtBaseUrl = BuildConfig.ServerUrl
+private const val AtBaseUrl = BuildConfig.BACKEND_URL
 
 /**
  * [Retrofit] backed [AtNetworkDataSource]

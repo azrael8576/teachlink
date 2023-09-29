@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -13,22 +14,11 @@ android {
     defaultConfig {
         minSdk = 23
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        val AmazingTalkerServerUrl: String by project
-        getByName("debug") {
-            buildConfigField("String", "ServerUrl", AmazingTalkerServerUrl)
-        }
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-            )
-            buildConfigField("String", "ServerUrl", AmazingTalkerServerUrl)
-        }
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
@@ -41,6 +31,16 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+}
+
+secrets {
+    defaultPropertiesFileName = "secrets.defaults.properties"
 }
 
 dependencies {
