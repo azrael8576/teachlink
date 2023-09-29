@@ -35,6 +35,7 @@ androidxCoreSplashscreen = "1.0.1"
 coil = "2.4.0"
 accompanist = "0.30.1"
 kspPlugin = "1.9.10-1.0.13"
+secrets = "2.0.1"
 
 [libraries]
 
@@ -162,3 +163,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
+secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
