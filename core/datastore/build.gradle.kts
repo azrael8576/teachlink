@@ -14,6 +14,7 @@ android {
         minSdk = 23
 
 //        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-proguard-rules.pro")
     }
 
     buildTypes {
@@ -36,6 +37,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 // Setup protobuf configuration, generating lite Java and Kotlin classes
@@ -56,6 +63,13 @@ protobuf {
         }
     }
 }
+//
+//androidComponents.beforeVariants {
+//    android.sourceSets.register(it.name) {
+//        java.srcDir(buildDir.resolve("generated/source/proto/${it.name}/java"))
+//        kotlin.srcDir(buildDir.resolve("generated/source/proto/${it.name}/kotlin"))
+//    }
+//}
 
 dependencies {
     implementation(project(":core:common"))

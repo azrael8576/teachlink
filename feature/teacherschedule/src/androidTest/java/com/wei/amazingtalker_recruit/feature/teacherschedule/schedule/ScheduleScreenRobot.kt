@@ -279,7 +279,7 @@ internal open class ScheduleScreenRobot(
             swipeUp(
                 startY = getScheduleListNodeBounds().bottom.value,
                 endY = getScheduleListNodeBounds().top.value,
-                durationMillis = 500L
+                durationMillis = 1000L
             )
         }
         // 等待任何動畫完成
@@ -291,7 +291,7 @@ internal open class ScheduleScreenRobot(
             swipeDown(
                 startY = getScheduleListNodeBounds().top.value,
                 endY = getScheduleListNodeBounds().bottom.value,
-                durationMillis = 500L
+                durationMillis = 1000L
             )
         }
         // 等待任何動畫完成
