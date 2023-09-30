@@ -1,5 +1,6 @@
 plugins {
     id("at.android.library")
+    id("at.android.library.compose")
     id("at.android.hilt")
 }
 
