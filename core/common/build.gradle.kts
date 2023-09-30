@@ -40,11 +40,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    kspAndroidTest(libs.hilt.android.compiler)
-
     // Timber
     implementation(libs.timber)
 }

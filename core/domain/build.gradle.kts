@@ -20,10 +20,6 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
     // Timber
     implementation(libs.timber)
 }

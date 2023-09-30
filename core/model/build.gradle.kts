@@ -15,10 +15,6 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
     // For androidx.compose.runtime.Stable
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)

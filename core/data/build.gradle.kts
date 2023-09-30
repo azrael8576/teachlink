@@ -25,10 +25,6 @@ dependencies {
     implementation(libs.androidx.tracing.ktx)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
     // Retrofit2
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)

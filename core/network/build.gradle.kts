@@ -41,10 +41,6 @@ dependencies {
     // RetrofitKotlinxSerializationJson
     implementation(libs.retrofit.kotlin.serialization)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
