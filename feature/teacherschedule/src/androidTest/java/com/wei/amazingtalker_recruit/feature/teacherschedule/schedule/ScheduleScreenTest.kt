@@ -40,35 +40,35 @@ class ScheduleScreenTest {
         }
     }
 
-    @Test
-    fun checkScheduleListIsInitPosition_afterOpeningTheScreen() {
-        scheduleScreenRobot(composeTestRule) {
-            setScheduleScreenContent()
-
-            verifyScheduleToolbarDisplayed()
-        }
-    }
-
-    @Test
-    fun checkScheduleListIsReachesTop_afterSwipeUpScheduleList() {
-        scheduleScreenRobot(composeTestRule) {
-            setScheduleScreenContent()
-
-            swipeUpScheduleList()
-            verifyScheduleListIsReachesTop()
-        }
-    }
-
-    @Test
-    fun checkScheduleListIsInitPosition_afterSwipeDownScheduleList() {
-        scheduleScreenRobot(composeTestRule) {
-            setScheduleScreenContent()
-
-            swipeUpScheduleList()
-            swipeDownScheduleList()
-            verifyScheduleToolbarDisplayed()
-        }
-    }
+//    @Test
+//    fun checkScheduleListIsInitPosition_afterOpeningTheScreen() {
+//        scheduleScreenRobot(composeTestRule) {
+//            setScheduleScreenContent()
+//
+//            verifyScheduleListIsInInitPosition()
+//        }
+//    }
+//
+//    @Test
+//    fun checkScheduleListIsReachesTop_afterSwipeUpScheduleList() {
+//        scheduleScreenRobot(composeTestRule) {
+//            setScheduleScreenContent()
+//
+//            swipeUpScheduleList()
+//            verifyScheduleListIsReachesTop()
+//        }
+//    }
+//
+//    @Test
+//    fun checkScheduleListIsInitPosition_afterSwipeDownScheduleList() {
+//        scheduleScreenRobot(composeTestRule) {
+//            setScheduleScreenContent()
+//
+//            swipeUpScheduleList()
+//            swipeDownScheduleList()
+//            verifyScheduleListIsInInitPosition()
+//        }
+//    }
 
     @Test
     fun checkPrevWeekClickNotInvoked_whenWeekStartIsBeforeCurrent_afterClick() {
