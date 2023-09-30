@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.assertIsDisplayed
@@ -259,46 +260,52 @@ internal open class ScheduleScreenRobot(
     }
 
     private fun getScheduleListNodeBounds(): DpRect {
-        return scheduleList.assertExists().getUnclippedBoundsInRoot()
+        val bounds = scheduleList.assertExists().getUnclippedBoundsInRoot()
+        return bounds
     }
 
     fun verifyScheduleListIsInInitPosition() {
-        scheduleList.assertTopPositionInRootIsEqualTo(getScheduleListNodeBounds().top)
+        val topPosition = getScheduleListNodeBounds().top
+        scheduleList.assertTopPositionInRootIsEqualTo(topPosition)
     }
 
     private fun getScheduleToolbarNodeBounds(): DpRect {
-        return scheduleToolbar.assertExists().getUnclippedBoundsInRoot()
+        val bounds = scheduleToolbar.assertExists().getUnclippedBoundsInRoot()
+        return bounds
     }
 
     fun verifyScheduleListIsReachesTop() {
-        assertThat(getScheduleToolbarNodeBounds().height).isEqualTo(0.dp)
+        val toolbarHeight = getScheduleToolbarNodeBounds().height
+        assertThat(toolbarHeight).isEqualTo(0.dp)
     }
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/242221780
     fun swipeUpScheduleList() {
+        val start = getScheduleListNodeBounds().bottom
+        val end = getScheduleListNodeBounds().top
         scheduleList.performTouchInput {
             swipeUp(
-                startY = getScheduleListNodeBounds().bottom.value,
-                endY = getScheduleListNodeBounds().top.value,
-                durationMillis = 500L
+                startY = start.value,
+                endY = end.value,
+                durationMillis = 2000L
             )
         }
-        // 等待任何動畫完成
         composeTestRule.waitForIdle()
     }
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/242221780
     fun swipeDownScheduleList() {
+        val start = getScheduleListNodeBounds().top
+        val end = getScheduleListNodeBounds().bottom
         scheduleList.performTouchInput {
             swipeDown(
-                startY = getScheduleListNodeBounds().top.value,
-                endY = getScheduleListNodeBounds().bottom.value,
-                durationMillis = 500L
+                startY = start.value,
+                endY = end.value,
+                durationMillis = 2000L
             )
         }
-        // 等待任何動畫完成
         composeTestRule.waitForIdle()
     }
 

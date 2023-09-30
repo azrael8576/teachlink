@@ -1,18 +1,17 @@
+import com.wei.amazingtalker_recruit.AtBuildType
+
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
+    id("at.android.application")
+    id("at.android.application.compose")
+    id("at.android.application.flavors")
+    id("at.android.hilt")
 }
 
 android {
     namespace = "com.wei.amazingtalker_recruit"
-    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.wei.amazingtalker_recruit"
-        minSdk = 23
-        targetSdk = 33
         /**
          * Version Code: AABCXYZ
          *
@@ -30,6 +29,7 @@ android {
          */
         versionName = "0.5.0"
 
+        // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"
 
         vectorDrawables {
@@ -39,11 +39,11 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix = ".debug"
+            applicationIdSuffix = AtBuildType.DEBUG.applicationIdSuffix
         }
         release {
             isMinifyEnabled = true
-            applicationIdSuffix = null
+            applicationIdSuffix = AtBuildType.RELEASE.applicationIdSuffix
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
             // To publish on the Play store a private signing key is required, but to allow anyone
@@ -53,26 +53,11 @@ android {
         }
     }
 
-    compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+    packaging {
+        resources {
+            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        }
     }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
-    }
-
-    buildFeatures {
-        viewBinding = true
-        compose = true
-    }
-
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -81,14 +66,16 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:login"))
+    implementation(project(":feature:teacherschedule"))
+    implementation(project(":feature:contactme"))
+
     implementation(project(":core:designsystem"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
     implementation(project(":core:datastore"))
-    implementation(project(":feature:login"))
-    implementation(project(":feature:teacherschedule"))
-    implementation(project(":feature:contactme"))
+
     androidTestImplementation(project(":core:designsystem"))
     androidTestImplementation(project(":core:datastore-test"))
     androidTestImplementation(project(":core:testing"))
@@ -115,11 +102,6 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    kspAndroidTest(libs.hilt.android.compiler)
 
     // Timber
     implementation(libs.timber)

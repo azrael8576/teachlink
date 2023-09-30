@@ -76,7 +76,7 @@ jobs:
       # Run local tests after screenshot tests to avoid wrong UP-TO-DATE. TODO: Ignore screenshots.
       - name: Run local tests
         if: always()
-        run: ./gradlew test
+        run: ./gradlew testDemoDebug testProdDebug
 
       - name: Upload test results (XML)
         if: always()
@@ -110,18 +110,17 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build AndroidTest apps
-        run: ./gradlew packageDebug packageDebugAndroidTest --daemon
+        run: ./gradlew packageDemoDebug packageDemoDebugAndroidTest --daemon
 
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
-        continue-on-error: true
         with:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
           disable-animations: true
           disk-size: 6000M
           heap-size: 600M
-          script: ./gradlew connectedDebugAndroidTest --daemon
+          script: ./gradlew connectedDemoDebugAndroidTest --daemon --profile
 
       - name: Upload test reports
         if: always()

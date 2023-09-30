@@ -1,41 +1,12 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlin.android)
+    id("at.android.library")
+    id("at.android.library.compose")
+    id("at.android.hilt")
     id("kotlin-parcelize")
-    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.wei.amazingtalker_recruit.core.testing"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 23
-
-//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
 }
 
 dependencies {
@@ -72,12 +43,6 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    ksp(libs.hilt.android.compiler)
-    kspAndroidTest(libs.hilt.android.compiler)
 
     // Timber
     implementation(libs.timber)
