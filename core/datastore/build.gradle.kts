@@ -1,41 +1,14 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlin.android)
+    id("at.android.library")
+    id("at.android.hilt")
     alias(libs.plugins.protobuf)
-    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.wei.amazingtalker_recruit.core.datastore"
-    compileSdk = 34
 
     defaultConfig {
-        minSdk = 23
-
-//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-proguard-rules.pro")
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     testOptions {
@@ -63,13 +36,13 @@ protobuf {
         }
     }
 }
-//
-//androidComponents.beforeVariants {
-//    android.sourceSets.register(it.name) {
-//        java.srcDir(buildDir.resolve("generated/source/proto/${it.name}/java"))
-//        kotlin.srcDir(buildDir.resolve("generated/source/proto/${it.name}/kotlin"))
-//    }
-//}
+
+androidComponents.beforeVariants {
+    android.sourceSets.register(it.name) {
+        java.srcDir(buildDir.resolve("generated/source/proto/${it.name}/java"))
+        kotlin.srcDir(buildDir.resolve("generated/source/proto/${it.name}/kotlin"))
+    }
+}
 
 dependencies {
     implementation(project(":core:common"))

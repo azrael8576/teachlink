@@ -1,48 +1,13 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
+    id("at.android.library")
+    id("at.android.hilt")
 }
 
 android {
     namespace = "com.wei.amazingtalker_recruit.core.common"
-    compileSdk = 34
 
     defaultConfig {
-        minSdk = 23
-
         testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
-    }
-
-    buildFeatures {
-        viewBinding = true
-        compose = true
     }
 }
 

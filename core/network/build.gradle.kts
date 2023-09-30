@@ -1,35 +1,15 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
+    id("at.android.library")
+    id("at.android.hilt")
+    id("kotlinx-serialization")
     alias(libs.plugins.secrets)
 }
 
 android {
     namespace = "com.wei.amazingtalker_recruit.core.network"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 23
-
-//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 
     buildFeatures {
         buildConfig = true
-    }
-
-    compileOptions {
-        // Flag to enable support for the new language APIs
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     testOptions {

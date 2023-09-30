@@ -261,32 +261,27 @@ internal open class ScheduleScreenRobot(
 
     private fun getScheduleListNodeBounds(): DpRect {
         val bounds = scheduleList.assertExists().getUnclippedBoundsInRoot()
-        Log.d("TEST_LOG", "Schedule list node bounds: $bounds")
         return bounds
     }
 
     fun verifyScheduleListIsInInitPosition() {
         val topPosition = getScheduleListNodeBounds().top
-        Log.d("TEST_LOG", "Verifying schedule list is in initial position: $topPosition")
         scheduleList.assertTopPositionInRootIsEqualTo(topPosition)
     }
 
     private fun getScheduleToolbarNodeBounds(): DpRect {
         val bounds = scheduleToolbar.assertExists().getUnclippedBoundsInRoot()
-        Log.d("TEST_LOG", "Schedule toolbar node bounds: $bounds")
         return bounds
     }
 
     fun verifyScheduleListIsReachesTop() {
         val toolbarHeight = getScheduleToolbarNodeBounds().height
-        Log.d("TEST_LOG", "Verifying schedule list reaches top, toolbar height: $toolbarHeight")
         assertThat(toolbarHeight).isEqualTo(0.dp)
     }
 
     fun swipeUpScheduleList() {
         val start = getScheduleListNodeBounds().bottom
         val end = getScheduleListNodeBounds().top
-        Log.d("TEST_LOG", "Swiping up from $start to $end")
         scheduleList.performTouchInput {
             swipeUp(
                 startY = start.value,
@@ -295,14 +290,11 @@ internal open class ScheduleScreenRobot(
             )
         }
         composeTestRule.waitForIdle()
-        Thread.sleep(2000L)
-        Log.d("TEST_LOG", "After swipe, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 
     fun swipeDownScheduleList() {
         val start = getScheduleListNodeBounds().top
         val end = getScheduleListNodeBounds().bottom
-        Log.d("TEST_LOG", "Swiping down from $start to $end")
         scheduleList.performTouchInput {
             swipeDown(
                 startY = start.value,
@@ -311,8 +303,6 @@ internal open class ScheduleScreenRobot(
             )
         }
         composeTestRule.waitForIdle()
-        Thread.sleep(2000L)
-        Log.d("TEST_LOG", "After swipe down, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 
     fun clickPreviousWeek() {
