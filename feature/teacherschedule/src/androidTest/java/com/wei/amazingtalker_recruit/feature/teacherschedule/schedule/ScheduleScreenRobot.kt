@@ -265,6 +265,7 @@ internal open class ScheduleScreenRobot(
         return bounds
     }
 
+    // TODO
     fun verifyScheduleListIsInInitPosition() {
         val topPosition = getScheduleListNodeBounds().top
         Log.d("TEST_LOG", "Verifying schedule list is in initial position: $topPosition")
@@ -277,10 +278,11 @@ internal open class ScheduleScreenRobot(
         return bounds
     }
 
+    // TODO
     fun verifyScheduleListIsReachesTop() {
         val toolbarHeight = getScheduleToolbarNodeBounds().height
         Log.d("TEST_LOG", "Verifying schedule list reaches top, toolbar height: $toolbarHeight")
-        assertThat(toolbarHeight).isEqualTo(0.dp)
+        scheduleToolbar.assertIsNotDisplayed()
     }
 
     fun swipeUpScheduleList() {

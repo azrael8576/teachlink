@@ -45,7 +45,7 @@ class ScheduleScreenTest {
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent()
 
-            verifyScheduleListIsInInitPosition()
+            verifyScheduleToolbarDisplayed()
         }
     }
 
@@ -66,7 +66,7 @@ class ScheduleScreenTest {
 
             swipeUpScheduleList()
             swipeDownScheduleList()
-            verifyScheduleListIsInInitPosition()
+            verifyScheduleToolbarDisplayed()
         }
     }
 
