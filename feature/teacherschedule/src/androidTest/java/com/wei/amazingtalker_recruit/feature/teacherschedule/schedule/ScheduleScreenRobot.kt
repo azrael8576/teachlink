@@ -291,9 +291,11 @@ internal open class ScheduleScreenRobot(
             swipeUp(
                 startY = start.value,
                 endY = end.value,
-                durationMillis = 1000L
+                durationMillis = 2000L
             )
         }
+        composeTestRule.waitForIdle()
+        composeTestRule.waitForIdle()
         composeTestRule.waitForIdle()
         Log.d("TEST_LOG", "After swipe, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
@@ -306,9 +308,11 @@ internal open class ScheduleScreenRobot(
             swipeDown(
                 startY = start.value,
                 endY = end.value,
-                durationMillis = 1000L
+                durationMillis = 2000L
             )
         }
+        composeTestRule.waitForIdle()
+        composeTestRule.waitForIdle()
         composeTestRule.waitForIdle()
         Log.d("TEST_LOG", "After swipe down, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }

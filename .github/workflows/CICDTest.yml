@@ -78,12 +78,20 @@ jobs:
         with:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
-          disable-animations: true
+          disable-animations: false
           disk-size: 6000M
           heap-size: 600M
           script: |
             ./gradlew feature:teacherschedule:connectedDebugAndroidTest --daemon || echo "UI Test failed"
+            adb logcat -d | grep "MotionEvent" | grep -E "ACTION_(DOWN|MOVE|UP)" > touch_events_log.txt
             adb logcat -d > logcat_output.txt
+
+      - name: Upload touch events log
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: touch-events-log
+          path: touch_events_log.txt
 
       - name: Upload logcat output
         if: always()
