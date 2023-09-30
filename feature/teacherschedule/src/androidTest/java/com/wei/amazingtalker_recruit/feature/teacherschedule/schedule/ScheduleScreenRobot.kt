@@ -284,10 +284,10 @@ internal open class ScheduleScreenRobot(
     }
 
     fun swipeUpScheduleList() {
+        val start = getScheduleListNodeBounds().bottom
+        val end = getScheduleListNodeBounds().top
+        Log.d("TEST_LOG", "Swiping up from $start to $end")
         scheduleList.performTouchInput {
-            val start = getScheduleListNodeBounds().bottom
-            val end = getScheduleListNodeBounds().top
-            Log.d("TEST_LOG", "Swiping up from $start to $end")
             swipeUp(
                 startY = start.value,
                 endY = end.value,
@@ -295,16 +295,15 @@ internal open class ScheduleScreenRobot(
             )
         }
         composeTestRule.waitForIdle()
-        composeTestRule.waitForIdle()
-        composeTestRule.waitForIdle()
+        Thread.sleep(2000L)
         Log.d("TEST_LOG", "After swipe, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 
     fun swipeDownScheduleList() {
+        val start = getScheduleListNodeBounds().top
+        val end = getScheduleListNodeBounds().bottom
+        Log.d("TEST_LOG", "Swiping down from $start to $end")
         scheduleList.performTouchInput {
-            val start = getScheduleListNodeBounds().top
-            val end = getScheduleListNodeBounds().bottom
-            Log.d("TEST_LOG", "Swiping down from $start to $end")
             swipeDown(
                 startY = start.value,
                 endY = end.value,
@@ -312,8 +311,7 @@ internal open class ScheduleScreenRobot(
             )
         }
         composeTestRule.waitForIdle()
-        composeTestRule.waitForIdle()
-        composeTestRule.waitForIdle()
+        Thread.sleep(2000L)
         Log.d("TEST_LOG", "After swipe down, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 

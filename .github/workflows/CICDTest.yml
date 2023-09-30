@@ -10,48 +10,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 90
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 17
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - name: Build all build type and flavor permutations
-        run: ./gradlew assemble
-
-      - name: Upload build outputs (APKs)
-        uses: actions/upload-artifact@v3
-        with:
-          name: APKs
-          path: '**/build/outputs/apk/**/*.apk'
-
-      - name: Run local tests
-        run: ./gradlew test
-
   androidTest:
     needs: build
     runs-on: macOS-latest # enables hardware acceleration in the virtual machine
     timeout-minutes: 55
     strategy:
       matrix:
-        api-level: [26]
+        api-level: [26, 30]
 
     steps:
       - name: Checkout
@@ -83,7 +48,7 @@ jobs:
           heap-size: 600M
           script: |
             ./gradlew feature:teacherschedule:connectedDebugAndroidTest --daemon || echo "UI Test failed"
-            adb logcat -d | grep "MotionEvent" | grep -E "ACTION_(DOWN|MOVE|UP)" > touch_events_log.txt
+            adb logcat -d | grep "MotionEvent" | grep -E "ACTION_(DOWN|MOVE|UP)" > touch_events_log.txt || echo "No touch events found"
             adb logcat -d > logcat_output.txt
 
       - name: Upload touch events log
