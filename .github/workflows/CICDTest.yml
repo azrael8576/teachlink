@@ -120,7 +120,7 @@ jobs:
           disable-animations: true
           disk-size: 6000M
           heap-size: 600M
-          script: ./gradlew connectedDemoDebugAndroidTest --daemon
+          script: ./gradlew connectedDemoDebugAndroidTest --daemon --profile
 
       - name: Upload Profiling Report
         if: always()
