@@ -1,5 +1,6 @@
 package com.wei.amazingtalker_recruit.feature.teacherschedule.schedule
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.assertIsDisplayed
@@ -259,46 +260,57 @@ internal open class ScheduleScreenRobot(
     }
 
     private fun getScheduleListNodeBounds(): DpRect {
-        return scheduleList.assertExists().getUnclippedBoundsInRoot()
+        val bounds = scheduleList.assertExists().getUnclippedBoundsInRoot()
+        Log.d("TEST_LOG", "Schedule list node bounds: $bounds")
+        return bounds
     }
 
     fun verifyScheduleListIsInInitPosition() {
-        scheduleList.assertTopPositionInRootIsEqualTo(getScheduleListNodeBounds().top)
+        val topPosition = getScheduleListNodeBounds().top
+        Log.d("TEST_LOG", "Verifying schedule list is in initial position: $topPosition")
+        scheduleList.assertTopPositionInRootIsEqualTo(topPosition)
     }
 
     private fun getScheduleToolbarNodeBounds(): DpRect {
-        return scheduleToolbar.assertExists().getUnclippedBoundsInRoot()
+        val bounds = scheduleToolbar.assertExists().getUnclippedBoundsInRoot()
+        Log.d("TEST_LOG", "Schedule toolbar node bounds: $bounds")
+        return bounds
     }
 
     fun verifyScheduleListIsReachesTop() {
-        assertThat(getScheduleToolbarNodeBounds().height).isEqualTo(0.dp)
+        val toolbarHeight = getScheduleToolbarNodeBounds().height
+        Log.d("TEST_LOG", "Verifying schedule list reaches top, toolbar height: $toolbarHeight")
+        assertThat(toolbarHeight).isEqualTo(0.dp)
     }
 
     fun swipeUpScheduleList() {
         scheduleList.performTouchInput {
-            println("TODO Wei Swiping from ${getScheduleListNodeBounds().bottom} to ${getScheduleListNodeBounds().top}")
+            val start = getScheduleListNodeBounds().bottom
+            val end = getScheduleListNodeBounds().top
+            Log.d("TEST_LOG", "Swiping up from $start to $end")
             swipeUp(
-                startY = getScheduleListNodeBounds().bottom.value,
-                endY = getScheduleListNodeBounds().top.value,
+                startY = start.value,
+                endY = end.value,
                 durationMillis = 1000L
             )
         }
-        // 等待任何動畫完成
         composeTestRule.waitForIdle()
-
-        println("TODO Wei After swipe, toolbar height: ${getScheduleToolbarNodeBounds().height}")
+        Log.d("TEST_LOG", "After swipe, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 
     fun swipeDownScheduleList() {
         scheduleList.performTouchInput {
+            val start = getScheduleListNodeBounds().top
+            val end = getScheduleListNodeBounds().bottom
+            Log.d("TEST_LOG", "Swiping down from $start to $end")
             swipeDown(
-                startY = getScheduleListNodeBounds().top.value,
-                endY = getScheduleListNodeBounds().bottom.value,
+                startY = start.value,
+                endY = end.value,
                 durationMillis = 1000L
             )
         }
-        // 等待任何動畫完成
         composeTestRule.waitForIdle()
+        Log.d("TEST_LOG", "After swipe down, toolbar height: ${getScheduleToolbarNodeBounds().height}")
     }
 
     fun clickPreviousWeek() {
