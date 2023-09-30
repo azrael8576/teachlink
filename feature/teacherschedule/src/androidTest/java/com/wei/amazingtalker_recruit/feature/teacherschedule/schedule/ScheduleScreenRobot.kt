@@ -274,6 +274,8 @@ internal open class ScheduleScreenRobot(
         assertThat(getScheduleToolbarNodeBounds().height).isEqualTo(0.dp)
     }
 
+    // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
+    // See more details at: https://issuetracker.google.com/issues/242221780
     fun swipeUpScheduleList() {
         scheduleList.performTouchInput {
             swipeUp(
@@ -286,6 +288,8 @@ internal open class ScheduleScreenRobot(
         composeTestRule.waitForIdle()
     }
 
+    // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
+    // See more details at: https://issuetracker.google.com/issues/242221780
     fun swipeDownScheduleList() {
         scheduleList.performTouchInput {
             swipeDown(
