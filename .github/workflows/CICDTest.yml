@@ -81,8 +81,9 @@ jobs:
           disable-animations: true
           disk-size: 6000M
           heap-size: 600M
-          script: ./gradlew connectedDebugAndroidTest --daemon
-                  adb logcat -d > logcat_output.txt
+          script: |
+            ./gradlew connectedDebugAndroidTest --daemon
+            adb logcat -d > logcat_output.txt
 
       - name: Upload logcat output
         if: always()
