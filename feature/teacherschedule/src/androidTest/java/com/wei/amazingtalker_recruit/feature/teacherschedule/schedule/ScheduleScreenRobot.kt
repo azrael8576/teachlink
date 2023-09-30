@@ -279,6 +279,8 @@ internal open class ScheduleScreenRobot(
         assertThat(toolbarHeight).isEqualTo(0.dp)
     }
 
+    // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
+    // See more details at: https://issuetracker.google.com/issues/242221780
     fun swipeUpScheduleList() {
         val start = getScheduleListNodeBounds().bottom
         val end = getScheduleListNodeBounds().top
@@ -292,6 +294,8 @@ internal open class ScheduleScreenRobot(
         composeTestRule.waitForIdle()
     }
 
+    // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
+    // See more details at: https://issuetracker.google.com/issues/242221780
     fun swipeDownScheduleList() {
         val start = getScheduleListNodeBounds().top
         val end = getScheduleListNodeBounds().bottom
