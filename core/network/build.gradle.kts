@@ -24,29 +24,14 @@ secrets {
 }
 
 dependencies {
-    testImplementation(project(":core:testing"))
-
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
     // Okhttp Interceptor
     implementation(libs.okhttp.logging)
 
     // Retrofit2
     implementation(libs.retrofit.core)
-    implementation(libs.retrofit.converter.gson)
 
     // RetrofitKotlinxSerializationJson
     implementation(libs.retrofit.kotlin.serialization)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
-    // KotlinxDatetime
-    implementation(libs.kotlinx.datetime)
 
     // KotlinxSerializationJson
     implementation(libs.kotlinx.serialization.json)

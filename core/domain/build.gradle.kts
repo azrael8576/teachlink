@@ -1,7 +1,6 @@
 plugins {
     id("at.android.library")
     id("at.android.hilt")
-    id("kotlin-parcelize")
 }
 
 android {
@@ -13,13 +12,4 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
     implementation(project(":core:network"))
-    testImplementation(project(":core:testing"))
-
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
-    // Timber
-    implementation(libs.timber)
 }

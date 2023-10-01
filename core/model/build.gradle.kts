@@ -1,5 +1,6 @@
 plugins {
     id("at.android.library")
+    id("at.android.library.compose")
     id("at.android.hilt")
     id("kotlin-parcelize")
 }
@@ -9,14 +10,6 @@ android {
 }
 
 dependencies {
-
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
     // For androidx.compose.runtime.Stable
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
     implementation(libs.androidx.compose.ui.core)
 }
