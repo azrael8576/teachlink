@@ -45,12 +45,13 @@ androidx-tracing-ktx = { group = "androidx.tracing", name = "tracing-ktx", versi
 android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
-androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidxTestCore" }
-androidx-arch-core-test = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidxArchCore" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
+
+#androidx-arch-core-test = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidxArchCore" }
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 
 # Instrumentation tests
-hilt-android-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltTest" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hiltTest" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltTest" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestCore" }
 
@@ -70,7 +71,6 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 
 # Okhttp Interceptor
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
-okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 
 # Retrofit2
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
@@ -104,6 +104,7 @@ androidx-compose-material3-windowSizeClass = { group = "androidx.compose.materia
 androidx-compose-ui-core = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 
 #  Integration with Navigation and Hilt
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
@@ -117,7 +118,6 @@ androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espres
 
 #  UI Tests
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-compose-ui-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
 # Optional - Integration with activities
@@ -130,7 +130,7 @@ androidx-window = { module = "androidx.window:window", version.ref = "androidx-w
 androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 
 # Turbine. A small testing library for kotlinx.coroutines Flow
-app-cash-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 # DataStore
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDatastore" }

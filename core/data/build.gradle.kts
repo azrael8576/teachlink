@@ -1,7 +1,6 @@
 plugins {
     id("at.android.library")
     id("at.android.hilt")
-    id("kotlin-parcelize")
 }
 
 android {
