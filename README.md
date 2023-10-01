@@ -1,4 +1,5 @@
 # Amazingtalker-Recruit
+[![Android CI](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE)
 ![Logo](docs/images/logo.png)
 
