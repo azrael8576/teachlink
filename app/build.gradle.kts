@@ -90,13 +90,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     // LifeCycle
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.runtimeCompose)
 
     // Navigation
-    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
 
     // Coroutines
