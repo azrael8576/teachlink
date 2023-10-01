@@ -13,6 +13,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("at.android.library")
                 apply("at.android.hilt")
+                apply("androidx.navigation.safeargs.kotlin")
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {

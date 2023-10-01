@@ -5,6 +5,7 @@ import com.wei.amazingtalker_recruit.configureGradleManagedDevices
 import com.wei.amazingtalker_recruit.configureKotlinAndroid
 import com.wei.amazingtalker_recruit.configurePrintApksTask
 import com.wei.amazingtalker_recruit.disableUnnecessaryAndroidTests
+import com.wei.amazingtalker_recruit.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -34,6 +35,9 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("testImplementation", project(":core:testing"))
                 add("androidTestImplementation", kotlin("test"))
                 add("androidTestImplementation", project(":core:testing"))
+
+                // Timber
+                add("implementation", libs.findLibrary("timber").get())
             }
         }
     }

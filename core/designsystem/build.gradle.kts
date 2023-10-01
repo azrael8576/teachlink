@@ -17,15 +17,11 @@ dependencies {
 
     // PublicLibs
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
+    api(libs.androidx.tracing.ktx)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-
-    // Timber
-    implementation(libs.timber)
 
     // Compose
     api(platform(libs.androidx.compose.bom))
@@ -40,9 +36,6 @@ dependencies {
     api(libs.androidx.compose.ui.core)
     api(libs.androidx.compose.ui.util)
     api(libs.androidx.compose.foundation)
-
-    // Integration with Navigation and Hilt
-    api(libs.androidx.hilt.navigation.compose)
 
     // Android Studio Preview support
     api(libs.androidx.compose.ui.tooling.preview)
@@ -62,9 +55,4 @@ dependencies {
 
     // UI Tests
     api(libs.androidx.compose.ui.ui.test.junit4)
-
-    // Coil
-    api(libs.coil.kt)
-    api(libs.coil.kt.compose)
-    api(libs.coil.kt.svg)
 }
