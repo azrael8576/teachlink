@@ -48,19 +48,9 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
 
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
     // DataStore
     implementation(libs.androidx.datastore)
 
     // Protobuf
     implementation(libs.protobuf.kotlin.lite)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
 }

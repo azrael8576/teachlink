@@ -54,5 +54,5 @@ dependencies {
     api(libs.accompanist.adaptive)
 
     // UI Tests
-    api(libs.androidx.compose.ui.ui.test.junit4)
+    api(libs.androidx.compose.ui.test)
 }

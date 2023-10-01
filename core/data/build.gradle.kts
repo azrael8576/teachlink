@@ -1,7 +1,6 @@
 plugins {
     id("at.android.library")
     id("at.android.hilt")
-    id("kotlin-parcelize")
 }
 
 android {
@@ -19,13 +18,4 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:model"))
     implementation(project(":core:datastore"))
-
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
-    // Retrofit2
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.converter.gson)
 }
