@@ -14,27 +14,10 @@ android {
 
 dependencies {
     implementation(project(":core:model"))
-    implementation(project(":core:designsystem"))
-    androidTestImplementation(project(":core:designsystem"))
-    testImplementation(project(":core:testing"))
-    androidTestImplementation(project(":core:testing"))
-
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
-    // Okhttp Interceptor
-    implementation(libs.okhttp.logging)
 
     // LifeCycle
-    implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtimeCompose)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
-    // Timber
-    implementation(libs.timber)
 }
