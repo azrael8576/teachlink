@@ -1,6 +1,6 @@
 # Amazingtalker-Recruit
-[![Android CI](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml)  
-[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/amazingtalker-recruit)](https://github.com/azrael8576/amazingtalker-recruit/releases)  
+[![Android CI](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/amazingtalker-recruit)](https://github.com/azrael8576/amazingtalker-recruit/releases)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE)
 
 ![Logo](docs/images/logo.png)
