@@ -77,5 +77,4 @@ class LoginScreenTest {
             isFailed()
         }
     }
-
 }

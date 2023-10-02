@@ -198,10 +198,10 @@ class AtAppState(
 
             when (topLevelDestination) {
                 TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
-                    topLevelNavOptions
+                    topLevelNavOptions,
                 )
                 TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
-                    topLevelNavOptions
+                    topLevelNavOptions,
                 )
                 else -> showFunctionalityNotAvailablePopup.value = true
             }

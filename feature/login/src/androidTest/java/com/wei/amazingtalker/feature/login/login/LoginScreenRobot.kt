@@ -33,11 +33,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun loginScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: LoginScreenRobot.() -> Unit
+    func: LoginScreenRobot.() -> Unit,
 ) = LoginScreenRobot(composeTestRule).apply(func)
 
 internal open class LoginScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
 
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
@@ -58,32 +58,32 @@ internal open class LoginScreenRobot(
     private val loginTitle by lazy {
         composeTestRule.onNode(
             matcher = hasText(loginString) and hasContentDescription(""),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 
     private val accountTextField by lazy {
         composeTestRule.onNodeWithContentDescription(
             accountDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val passwordTextField by lazy {
         composeTestRule.onNodeWithContentDescription(
             passwordDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val forgotPassword by lazy {
         composeTestRule.onNodeWithContentDescription(
             forgotPasswordDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val loginButton by lazy {
         composeTestRule.onNode(
             withRole(Role.Button)
-                .and(hasContentDescription(loginDescription))
+                .and(hasContentDescription(loginDescription)),
         )
     }
 
@@ -101,7 +101,7 @@ internal open class LoginScreenRobot(
                         } else {
                             LoginResultRobot.LoginResult.Failed
                         }
-                    }
+                    },
                 )
             }
         }
@@ -151,16 +151,15 @@ internal open class LoginScreenRobot(
             func()
         }
     }
-
 }
 
 internal fun loginResultRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: LoginResultRobot.() -> Unit
+    func: LoginResultRobot.() -> Unit,
 ) = LoginResultRobot(composeTestRule).apply(func)
 
 internal open class LoginResultRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
 
     enum class LoginResult {
@@ -180,5 +179,4 @@ internal open class LoginResultRobot(
     fun isFailed() {
         assertThat(result).isEqualTo(LoginResult.Failed)
     }
-
 }

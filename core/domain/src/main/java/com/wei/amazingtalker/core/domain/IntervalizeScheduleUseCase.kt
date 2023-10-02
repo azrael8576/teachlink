@@ -29,9 +29,8 @@ class IntervalizeScheduleUseCase @Inject constructor() {
     operator fun invoke(
         teacherScheduleList: List<NetworkTimeSlots>,
         timeInterval: TimeInterval,
-        scheduleState: ScheduleState
+        scheduleState: ScheduleState,
     ): List<IntervalScheduleTimeSlot> {
-
         return teacherScheduleList.flatMap { teacherSchedule ->
             val startDateTime = utcToLocalTime(teacherSchedule.startUtc)
             val endDateTime = utcToLocalTime(teacherSchedule.endUtc)
@@ -55,18 +54,18 @@ class IntervalizeScheduleUseCase @Inject constructor() {
         startDateTime: OffsetDateTime,
         timeInterval: Long,
         scheduleState: ScheduleState,
-        endDateTime: OffsetDateTime
+        endDateTime: OffsetDateTime,
     ): IntervalScheduleTimeSlot {
         val nextDateTime = startDateTime.plusMinutes(timeInterval)
         if (nextDateTime.isAfter(endDateTime) && !nextDateTime.isEqual(endDateTime)) {
-            throw IllegalStateException("剩餘時間不足切分: ${startDateTime}, 欲切分至: ${nextDateTime}")
+            throw IllegalStateException("剩餘時間不足切分: $startDateTime, 欲切分至: $nextDateTime")
         }
 
         return IntervalScheduleTimeSlot(
             startDateTime,
             nextDateTime,
             scheduleState,
-            startDateTime.getDuringDayType()
+            startDateTime.getDuringDayType(),
         )
     }
 

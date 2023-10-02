@@ -22,7 +22,7 @@ class WeekDataHelperTest {
     }
 
     @Test
-    fun `getQueryDateUtc should reset to start of day when resetToStartOfDay is true`(){
+    fun `getQueryDateUtc should reset to start of day when resetToStartOfDay is true`() {
         // Arrange
         val queryDateLocal = OffsetDateTime.of(2023, 8, 1, 10, 30, 0, 0, ZoneOffset.UTC)
 
@@ -132,7 +132,4 @@ class WeekDataHelperTest {
         assertThat(result).hasSize(1)
         assertThat(result[0]).isEqualTo(localTime)
     }
-
 }
-
-

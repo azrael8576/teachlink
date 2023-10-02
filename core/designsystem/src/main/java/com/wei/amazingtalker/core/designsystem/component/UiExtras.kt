@@ -20,7 +20,7 @@ fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
             Text(
                 text = functionalityNotAvailable,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.semantics { contentDescription = functionalityNotAvailable }
+                modifier = Modifier.semantics { contentDescription = functionalityNotAvailable },
             )
         },
         confirmButton = {
@@ -28,9 +28,9 @@ fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
             TextButton(onClick = onDismiss) {
                 Text(
                     text = close,
-                    modifier = Modifier.semantics { contentDescription = close }
+                    modifier = Modifier.semantics { contentDescription = close },
                 )
             }
-        }
+        },
     )
 }

@@ -75,7 +75,7 @@ fun AtApp(
     appState: AtAppState = rememberAtAppState(
         networkMonitor = networkMonitor,
         windowSizeClass = windowSizeClass,
-        displayFeatures = displayFeatures
+        displayFeatures = displayFeatures,
     ),
     snackbarManager: SnackbarManager,
 ) {
@@ -97,7 +97,7 @@ fun AtApp(
         if (isOffline) {
             snackbarManager.showMessage(
                 state = SnackbarState.Error,
-                uiText = UiText.DynamicString(notConnectedMessage)
+                uiText = UiText.DynamicString(notConnectedMessage),
             )
         }
     }
@@ -117,16 +117,16 @@ fun AtApp(
                 SnackbarHost(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
-                        if(!appState.isFullScreenCurrentDestination) {
+                        if (!appState.isFullScreenCurrentDestination) {
                             val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
                             AtAppSnackbar(snackbarData, isError)
                         }
-                    }
+                    },
                 )
             },
             bottomBar = {
-                if(!appState.isFullScreenCurrentDestination
-                    && appState.navigationType == AtNavigationType.BOTTOM_NAVIGATION
+                if (!appState.isFullScreenCurrentDestination &&
+                    appState.navigationType == AtNavigationType.BOTTOM_NAVIGATION
                 ) {
                     AtBottomBar(
                         destinations = appState.topLevelDestinations,
@@ -148,8 +148,8 @@ fun AtApp(
                         ),
                     ),
             ) {
-                if (!appState.isFullScreenCurrentDestination
-                    && appState.navigationType == AtNavigationType.PERMANENT_NAVIGATION_DRAWER
+                if (!appState.isFullScreenCurrentDestination &&
+                    appState.navigationType == AtNavigationType.PERMANENT_NAVIGATION_DRAWER
                 ) {
                     AtNavDrawer(
                         destinations = appState.topLevelDestinations,
@@ -162,8 +162,8 @@ fun AtApp(
                     )
                 }
 
-                if(!appState.isFullScreenCurrentDestination
-                    && appState.navigationType == AtNavigationType.NAVIGATION_RAIL
+                if (!appState.isFullScreenCurrentDestination &&
+                    appState.navigationType == AtNavigationType.NAVIGATION_RAIL
                 ) {
                     AtNavRail(
                         destinations = appState.topLevelDestinations,
@@ -177,7 +177,7 @@ fun AtApp(
 
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxSize(),
                 ) {
                     AtNavHost(
                         modifier = Modifier.fillMaxSize(),
@@ -202,7 +202,7 @@ private fun AtNavDrawer(
         Column(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             destinations.forEach { destination ->
                 val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
@@ -224,7 +224,7 @@ private fun AtNavDrawer(
                     label = {
                         Text(
                             text = stringResource(id = destination.iconTextId),
-                            modifier = Modifier.padding(horizontal = 16.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp),
                         )
                     },
                     modifier = Modifier,
@@ -245,7 +245,7 @@ private fun AtNavRail(
         Column(
             modifier = Modifier.fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             destinations.forEach { destination ->
                 val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
@@ -338,7 +338,7 @@ fun getMessageText(message: Message, context: Context): String {
         is UiText.StringResource -> context.getString(
             (message.uiText as UiText.StringResource).resId,
             *(message.uiText as UiText.StringResource).args.map { it.toString(context) }
-                .toTypedArray()
+                .toTypedArray(),
         )
     }
 }

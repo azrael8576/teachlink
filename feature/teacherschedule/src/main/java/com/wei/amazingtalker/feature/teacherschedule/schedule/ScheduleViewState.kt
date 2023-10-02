@@ -1,11 +1,11 @@
 package com.wei.amazingtalker.feature.teacherschedule.schedule
 
 import androidx.annotation.StringRes
-import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.base.Action
 import com.wei.amazingtalker.core.base.State
 import com.wei.amazingtalker.core.extensions.getLocalOffsetDateTime
 import com.wei.amazingtalker.core.model.data.DuringDayType
+import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import com.wei.amazingtalker.feature.teacherschedule.utilities.WeekDataHelper
 import java.time.Clock

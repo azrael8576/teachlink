@@ -1,9 +1,9 @@
 package com.wei.amazingtalker.core.model.data
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
 import kotlinx.parcelize.Parcelize
 import java.time.OffsetDateTime
-import androidx.compose.runtime.Stable
 
 /**
  * 表示切分後的時間段的資料類別。

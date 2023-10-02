@@ -95,7 +95,7 @@ internal fun WelcomeRoute(
     WelcomeScreen(
         isCompact = isCompact,
         isPreview = false,
-        onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) }
+        onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) },
     )
 }
 
@@ -105,7 +105,7 @@ internal fun WelcomeScreen(
     isPreview: Boolean = true,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
-    onGetStartedButtonClicked: () -> Unit
+    onGetStartedButtonClicked: () -> Unit,
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -119,14 +119,14 @@ internal fun WelcomeScreen(
             WelcomeScreenToolbar(
                 modifier = if (isCompact) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
                 isPreview = isPreview,
-                onGetStartedButtonClicked = onGetStartedButtonClicked
+                onGetStartedButtonClicked = onGetStartedButtonClicked,
             )
             Box(
                 modifier = Modifier.weight(1f),
-                contentAlignment = if (isCompact) Alignment.BottomCenter else Alignment.CenterStart
+                contentAlignment = if (isCompact) Alignment.BottomCenter else Alignment.CenterStart,
             ) {
                 WelcomeGraphics(
-                    isPreview = isPreview
+                    isPreview = isPreview,
                 )
                 WelcomeContent(isCompact = isCompact)
             }
@@ -174,7 +174,7 @@ private fun WelcomeScreenToolbar(
 @Composable
 fun AtLogoImg(
     modifier: Modifier = Modifier,
-    isPreview: Boolean
+    isPreview: Boolean,
 ) {
     val resId = R.drawable.ic_logo
     val painter = loadImageUsingCoil(resId, isPreview)
@@ -182,14 +182,14 @@ fun AtLogoImg(
     Image(
         painter = painter,
         contentDescription = null,
-        modifier = Modifier.size(48.dp)
+        modifier = Modifier.size(48.dp),
     )
 }
 
 @Composable
 fun GetStartedButton(
     modifier: Modifier = Modifier,
-    onGetStartedButtonClicked: () -> Unit
+    onGetStartedButtonClicked: () -> Unit,
 ) {
     val getStarted = stringResource(R.string.get_started)
     IconButton(
@@ -205,7 +205,7 @@ fun GetStartedButton(
 @Composable
 fun WelcomeGraphics(
     modifier: Modifier = Modifier,
-    isPreview: Boolean
+    isPreview: Boolean,
 ) {
     val resId = R.drawable.welcome_background
     val painter = loadImageUsingCoil(resId, isPreview)
@@ -217,7 +217,7 @@ fun WelcomeGraphics(
             modifier = modifier
                 .fillMaxSize()
                 .testTag(stringResource(R.string.tag_welcome_graphics)),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
     }
 }
@@ -225,7 +225,7 @@ fun WelcomeGraphics(
 @Composable
 fun WelcomeContent(
     modifier: Modifier = Modifier,
-    isCompact: Boolean
+    isCompact: Boolean,
 ) {
     if (isCompact) {
         WelcomeTitlePortrait()
@@ -245,7 +245,7 @@ fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
         style = MaterialTheme.typography.headlineMedium,
         text = welcomeTitle,
         textAlign = TextAlign.Center,
-        color = Color.White
+        color = Color.White,
     )
 }
 
@@ -260,7 +260,7 @@ fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
         style = MaterialTheme.typography.headlineMedium,
         text = welcomeTitle,
         textAlign = TextAlign.Start,
-        color = Color.Black
+        color = Color.Black,
     )
 }
 
@@ -270,7 +270,7 @@ fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
             isCompact = true,
-            onGetStartedButtonClicked = { }
+            onGetStartedButtonClicked = { },
         )
     }
 }
@@ -281,7 +281,7 @@ fun WelcomeScreenLandscapePreview() {
     AtTheme {
         WelcomeScreen(
             isCompact = false,
-            onGetStartedButtonClicked = { }
+            onGetStartedButtonClicked = { },
         )
     }
 }

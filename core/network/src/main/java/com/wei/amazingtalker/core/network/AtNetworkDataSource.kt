@@ -8,5 +8,4 @@ import com.wei.amazingtalker.core.network.model.NetworkTeacherSchedule
 interface AtNetworkDataSource {
 
     suspend fun getTeacherAvailability(teacherName: String, startedAt: String? = null): NetworkTeacherSchedule
-
 }

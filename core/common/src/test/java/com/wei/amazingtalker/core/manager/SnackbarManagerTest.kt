@@ -51,6 +51,4 @@ class SnackbarManagerTest {
         val messagesAfterRemoval = snackbarManager.messages.first()
         assertThat(messagesAfterRemoval).isEmpty()
     }
-
-
 }

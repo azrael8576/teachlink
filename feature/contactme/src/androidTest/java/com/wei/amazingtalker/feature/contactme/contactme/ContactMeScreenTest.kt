@@ -26,7 +26,7 @@ class ContactMeScreenTest {
         contactMeScreenRobot(composeTestRule) {
             setContactMeScreenContent(
                 contentType = AtContentType.SINGLE_PANE,
-                displayFeature = emptyList<DisplayFeature>()
+                displayFeature = emptyList<DisplayFeature>(),
             )
 
             verifyProfilePictureDisplayed()
@@ -42,17 +42,15 @@ class ContactMeScreenTest {
         }
     }
 
-
     @Test
     fun checkCallButtonAction_afterPress() {
         contactMeScreenRobot(composeTestRule) {
             setContactMeScreenContent(
                 contentType = AtContentType.SINGLE_PANE,
-                displayFeature = emptyList<DisplayFeature>()
+                displayFeature = emptyList<DisplayFeature>(),
             )
         } call {
             isCall()
         }
     }
-
 }

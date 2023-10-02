@@ -3,7 +3,6 @@ package com.wei.amazingtalker.core.designsystem.component
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -200,7 +199,7 @@ fun AtNavigationDrawerItem(
 fun AtNavigationDrawer(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
-){
+) {
     // TODO check on custom width of PermanentNavigationDrawer: b/232495216
     PermanentDrawerSheet(
         modifier = modifier.sizeIn(minWidth = 200.dp, maxWidth = 300.dp),

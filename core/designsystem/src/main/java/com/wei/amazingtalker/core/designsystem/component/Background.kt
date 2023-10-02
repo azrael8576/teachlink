@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.core.designsystem.theme.LocalBackgroundTheme
 
-
 /**
  * The main background for the app.
  * Uses [LocalBackgroundTheme] to set the color and tonal elevation of a [Surface].
@@ -39,7 +38,6 @@ fun AtBackground(
         }
     }
 }
-
 
 /**
  * Multipreview annotation that represents light and dark themes. Add this annotation to a

@@ -81,7 +81,7 @@ class UiTextTest {
         val argName = "Alice"
         val uiText = UiText.StringResource(
             R.string.greeting_with_name,
-            listOf(UiText.StringResource.Args.DynamicString(argName))
+            listOf(UiText.StringResource.Args.DynamicString(argName)),
         )
 
         composeTestRule.setContent {
@@ -90,8 +90,8 @@ class UiTextTest {
 
         assertThat(uiText.asString(composeTestRule.activity)).isEqualTo(
             formattedStringSingle.format(
-                argName
-            )
+                argName,
+            ),
         )
     }
 
@@ -106,8 +106,8 @@ class UiTextTest {
             R.string.greeting_with_name_and_weather,
             listOf(
                 UiText.StringResource.Args.DynamicString(argName),
-                UiText.StringResource.Args.DynamicString(argWeather)
-            )
+                UiText.StringResource.Args.DynamicString(argWeather),
+            ),
         )
 
         composeTestRule.setContent {
@@ -117,8 +117,8 @@ class UiTextTest {
         assertThat(uiText.asString(composeTestRule.activity)).isEqualTo(
             formattedStringMultiple.format(
                 argName,
-                argWeather
-            )
+                argWeather,
+            ),
         )
     }
 
@@ -133,8 +133,8 @@ class UiTextTest {
             R.string.greeting_with_name_and_weather,
             listOf(
                 UiText.StringResource.Args.UiTextArg(argName),
-                UiText.StringResource.Args.DynamicString(argWeather)
-            )
+                UiText.StringResource.Args.DynamicString(argWeather),
+            ),
         )
 
         composeTestRule.setContent {
@@ -144,8 +144,8 @@ class UiTextTest {
         assertThat(uiText.asString(composeTestRule.activity)).isEqualTo(
             formattedStringMultiple.format(
                 argName.value,
-                argWeather
-            )
+                argWeather,
+            ),
         )
     }
 }

@@ -33,5 +33,4 @@ object NetworkModule {
                 },
         )
         .build()
-
 }

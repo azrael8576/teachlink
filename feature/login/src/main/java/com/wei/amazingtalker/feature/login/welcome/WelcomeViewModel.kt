@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WelcomeViewModel @Inject constructor() : BaseViewModel<
-        WelcomeViewAction,
-        WelcomeViewState
-        >(WelcomeViewState()) {
+    WelcomeViewAction,
+    WelcomeViewState,
+    >(WelcomeViewState()) {
 
     private fun navigateToLogin() {
         viewModelScope.launch {

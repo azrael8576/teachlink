@@ -22,11 +22,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun welcomeScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: WelcomeScreenRobot.() -> Unit
+    func: WelcomeScreenRobot.() -> Unit,
 ) = WelcomeScreenRobot(composeTestRule).apply(func)
 
 internal open class WelcomeScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
@@ -41,25 +41,25 @@ internal open class WelcomeScreenRobot(
     private val welcomeGraphics by lazy {
         composeTestRule.onNodeWithTag(
             scheduleListTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val welcomeTitle by lazy {
         composeTestRule.onNodeWithContentDescription(
             welcomeTitleString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val welcomeMessage by lazy {
         composeTestRule.onNodeWithContentDescription(
             welcomeMessageString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val getStarted by lazy {
         composeTestRule.onNodeWithContentDescription(
             getStartedString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 
@@ -68,7 +68,7 @@ internal open class WelcomeScreenRobot(
             AtTheme {
                 WelcomeScreen(
                     isCompact = true,
-                    onGetStartedButtonClicked = { }
+                    onGetStartedButtonClicked = { },
                 )
             }
         }
@@ -89,6 +89,4 @@ internal open class WelcomeScreenRobot(
     fun verifyGetStartedDisplayed() {
         getStarted.assertExists().assertIsDisplayed()
     }
-
-
 }

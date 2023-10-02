@@ -1,8 +1,8 @@
 package com.wei.amazingtalker.core.data.repository
 
 import com.wei.amazingtalker.core.datastore.AtPreferencesDataSource
-import kotlinx.coroutines.flow.Flow
 import com.wei.amazingtalker.core.model.data.UserData
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DefaultUserDataRepository @Inject constructor(

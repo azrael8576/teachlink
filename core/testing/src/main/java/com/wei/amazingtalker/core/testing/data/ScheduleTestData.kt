@@ -19,13 +19,13 @@ val testAvailableTimeSlot = IntervalScheduleTimeSlot(
     OffsetDateTime.parse("2023-09-06T00:00+08:00"),
     OffsetDateTime.parse("2023-09-06T00:30+08:00"),
     ScheduleState.AVAILABLE,
-    DuringDayType.Morning
+    DuringDayType.Morning,
 )
 val testUnavailableTimeSlot = IntervalScheduleTimeSlot(
     OffsetDateTime.parse("2023-09-06T12:30+08:00"),
     OffsetDateTime.parse("2023-09-06T13:00+08:00"),
     ScheduleState.BOOKED,
-    DuringDayType.Afternoon
+    DuringDayType.Afternoon,
 )
 
 val morningTimeSlots = listOf(
@@ -35,8 +35,8 @@ val morningTimeSlots = listOf(
         OffsetDateTime.parse("2023-09-06T04:00+08:00"),
         OffsetDateTime.parse("2023-09-06T04:30+08:00"),
         ScheduleState.AVAILABLE,
-        DuringDayType.Morning
-    )
+        DuringDayType.Morning,
+    ),
 )
 
 val afternoonTimeSlots = listOf(
@@ -46,8 +46,8 @@ val afternoonTimeSlots = listOf(
         OffsetDateTime.parse("2023-09-06T17:30+08:00"),
         OffsetDateTime.parse("2023-09-06T18:00+08:00"),
         ScheduleState.AVAILABLE,
-        DuringDayType.Afternoon
-    )
+        DuringDayType.Afternoon,
+    ),
 )
 
 val eveningTimeSlots = listOf(
@@ -55,19 +55,19 @@ val eveningTimeSlots = listOf(
         OffsetDateTime.parse("2023-09-06T18:00+08:00"),
         OffsetDateTime.parse("2023-09-06T18:30+08:00"),
         ScheduleState.AVAILABLE,
-        DuringDayType.Evening
+        DuringDayType.Evening,
     ),
     // ... add the other evening time slots similarly ...
     IntervalScheduleTimeSlot(
         OffsetDateTime.parse("2023-09-06T23:30+08:00"),
         OffsetDateTime.parse("2023-09-07T00:00+08:00"),
         ScheduleState.AVAILABLE,
-        DuringDayType.Evening
-    )
+        DuringDayType.Evening,
+    ),
 )
 
 val groupedTimeSlots = mapOf(
     DuringDayType.Morning to morningTimeSlots,
     DuringDayType.Afternoon to afternoonTimeSlots,
-    DuringDayType.Evening to eveningTimeSlots
+    DuringDayType.Evening to eveningTimeSlots,
 )

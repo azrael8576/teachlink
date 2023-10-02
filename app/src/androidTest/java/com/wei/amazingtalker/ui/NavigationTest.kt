@@ -10,7 +10,6 @@ import androidx.test.espresso.NoActivityResumedException
 import com.wei.amazingtalker.MainActivity
 import com.wei.amazingtalker.R
 import com.wei.amazingtalker.ui.robot.welcomeRobot
-import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherScheduleR
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -19,6 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import kotlin.properties.ReadOnlyProperty
+import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherScheduleR
 
 /**
  * Tests all the navigation flows that are handled by the navigation library.
@@ -58,26 +58,26 @@ class NavigationTest {
     private val back by lazy {
         composeTestRule.onNodeWithContentDescription(
             backDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 
     private val navBook by lazy {
         composeTestRule.onNodeWithContentDescription(
             book,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val navHome by lazy {
         composeTestRule.onNodeWithContentDescription(
             home,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val navContactMe by lazy {
         composeTestRule.onNodeWithContentDescription(
             contactMe,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 

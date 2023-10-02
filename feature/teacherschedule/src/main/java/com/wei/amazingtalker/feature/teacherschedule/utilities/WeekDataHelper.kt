@@ -52,5 +52,4 @@ class WeekDataHelper @Inject constructor() {
         }
         return options
     }
-
 }

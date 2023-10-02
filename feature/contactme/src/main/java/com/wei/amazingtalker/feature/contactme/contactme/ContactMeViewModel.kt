@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactMeViewModel @Inject constructor() : BaseViewModel<
-        ContactMeViewAction,
-        ContactMeViewState
-        >(ContactMeViewState()) {
+    ContactMeViewAction,
+    ContactMeViewState,
+    >(ContactMeViewState()) {
 
     init {
         getProfile()
@@ -30,7 +30,7 @@ class ContactMeViewModel @Inject constructor() : BaseViewModel<
                 phone = PHONE,
                 linkedinUrl = LINKEDIN_URL,
                 email = EMAIL,
-                timeZone = TIME_ZONE
+                timeZone = TIME_ZONE,
             )
         }
     }

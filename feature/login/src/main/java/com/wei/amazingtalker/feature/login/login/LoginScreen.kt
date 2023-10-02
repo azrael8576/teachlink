@@ -82,13 +82,13 @@ internal fun LoginRoute(
     LoginScreen(
         login = { account: String, password: String ->
             viewModel.dispatch(LoginViewAction.Login(account, password))
-        }
+        },
     )
 }
 
 @Composable
 internal fun LoginScreen(
-    //TODO: These are test account credentials for demo purposes. Please ensure to clear them (set to "") before any release or production usage.
+    // TODO: These are test account credentials for demo purposes. Please ensure to clear them (set to "") before any release or production usage.
     account: String = if (BuildConfig.DEBUG) TEST_ACCOUNT else "",
     password: String = if (BuildConfig.DEBUG) TEST_PASSWORD else "",
     login: (String, String) -> Unit,
@@ -105,16 +105,16 @@ internal fun LoginScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 if (withTopSpacer) {
                     Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
@@ -130,7 +130,7 @@ internal fun LoginScreen(
                 LoginButton(
                     accountState,
                     passwordState,
-                    login
+                    login,
                 )
                 Spacer(modifier = Modifier.weight(2f))
                 if (withBottomSpacer) {
@@ -139,7 +139,6 @@ internal fun LoginScreen(
             }
         }
     }
-
 }
 
 @Composable
@@ -150,7 +149,8 @@ private fun Title(modifier: Modifier = Modifier) {
         text = title,
         style = MaterialTheme.typography.displayLarge,
         modifier = modifier
-            .semantics { contentDescription = "" })
+            .semantics { contentDescription = "" },
+    )
 }
 
 @Composable
@@ -173,7 +173,6 @@ internal fun AccountTextField(
         singleLine = true,
     )
 }
-
 
 @Composable
 internal fun PasswordTextField(
@@ -205,7 +204,7 @@ internal fun ForgotPasswordText() {
         text = forgotPassword,
         style = MaterialTheme.typography.bodySmall,
         modifier = Modifier
-            .semantics { contentDescription = forgotPassword }
+            .semantics { contentDescription = forgotPassword },
     )
 }
 
@@ -213,7 +212,7 @@ internal fun ForgotPasswordText() {
 internal fun LoginButton(
     accountState: MutableState<String>,
     passwordState: MutableState<String>,
-    login: (String, String) -> Unit
+    login: (String, String) -> Unit,
 ) {
     val loginText = stringResource(R.string.login)
     val loginTextDescription = stringResource(R.string.content_description_login)
@@ -224,7 +223,7 @@ internal fun LoginButton(
         },
         modifier = Modifier
             .padding(top = 8.dp)
-            .semantics { contentDescription = loginTextDescription }
+            .semantics { contentDescription = loginTextDescription },
     ) {
         Text(loginText)
     }
@@ -235,7 +234,7 @@ internal fun LoginButton(
 fun LoginScreenPreview() {
     AtTheme {
         LoginScreen(
-            login = { _, _ -> }
+            login = { _, _ -> },
         )
     }
 }

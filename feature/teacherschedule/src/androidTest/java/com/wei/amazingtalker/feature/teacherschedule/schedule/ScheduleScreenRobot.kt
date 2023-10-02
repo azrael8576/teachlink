@@ -1,6 +1,5 @@
 package com.wei.amazingtalker.feature.teacherschedule.schedule
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.StringRes
 import androidx.compose.ui.test.assertIsDisplayed
@@ -38,7 +37,6 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import kotlin.properties.ReadOnlyProperty
 
-
 /**
  * Screen Robot for [ScheduleScreenTest].
  *
@@ -50,11 +48,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun scheduleScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: ScheduleScreenRobot.() -> Unit
+    func: ScheduleScreenRobot.() -> Unit,
 ) = ScheduleScreenRobot(composeTestRule).apply(func)
 
 internal open class ScheduleScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
@@ -103,49 +101,49 @@ internal open class ScheduleScreenRobot(
     private val previousWeek by lazy {
         composeTestRule.onNodeWithContentDescription(
             previousWeekDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val nextWeek by lazy {
         composeTestRule.onNodeWithContentDescription(
             nextWeekDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val weekDateText by lazy {
         composeTestRule.onNodeWithContentDescription(
             weekDateDescription.format(scheduleViewState.weekDateText.first, scheduleViewState.weekDateText.second),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val dateTab2 by lazy {
         composeTestRule.onNodeWithText(
             dateFormatter.format(scheduleViewState.dateTabs[1]),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val dateTab4 by lazy {
         composeTestRule.onNodeWithText(
             dateFormatter.format(scheduleViewState.dateTabs[3]),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val scheduleTopAppBar by lazy {
         composeTestRule.onNodeWithTag(
             scheduleTopAppBarTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val scheduleToolbar by lazy {
         composeTestRule.onNodeWithTag(
             scheduleToolbarTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val scheduleList by lazy {
         composeTestRule.onNodeWithTag(
             scheduleListTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val yourLocalTimeZone by lazy {
@@ -154,62 +152,62 @@ internal open class ScheduleScreenRobot(
             String.format(
                 yourLocalTimeZoneString,
                 fixedClock.zone,
-                yourLocalTimeZoneFormatter.format(OffsetDateTime.now(fixedClock).offset)
+                yourLocalTimeZoneFormatter.format(OffsetDateTime.now(fixedClock).offset),
             ),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val morning by lazy {
         composeTestRule.onNodeWithContentDescription(
             morningString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val afternoon by lazy {
         composeTestRule.onNodeWithContentDescription(
             afternoonString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val evening by lazy {
         composeTestRule.onNodeWithContentDescription(
             eveningString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val availableTimeSlot by lazy {
         composeTestRule.onNodeWithContentDescription(
             String.format(
                 availableTimeSlotDescription,
-                timeSlotFormatter.format(testAvailableTimeSlot.start)
+                timeSlotFormatter.format(testAvailableTimeSlot.start),
             ),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val unavailableTimeSlot by lazy {
         composeTestRule.onNodeWithContentDescription(
             String.format(
                 unavailableTimeSlotDescription,
-                timeSlotFormatter.format(testUnavailableTimeSlot.start)
+                timeSlotFormatter.format(testUnavailableTimeSlot.start),
             ),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val loading by lazy {
         composeTestRule.onNodeWithContentDescription(
             loadingString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val loadFailed by lazy {
         composeTestRule.onNodeWithContentDescription(
             loadFailedString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 
     fun setScheduleScreenContent(
-        uiStates: ScheduleViewState = scheduleViewState
+        uiStates: ScheduleViewState = scheduleViewState,
     ) {
         composeTestRule.setContent {
             resetInteractionFlags()
@@ -288,7 +286,7 @@ internal open class ScheduleScreenRobot(
             swipeUp(
                 startY = start.value,
                 endY = end.value,
-                durationMillis = 2000L
+                durationMillis = 2000L,
             )
         }
         composeTestRule.waitForIdle()
@@ -303,7 +301,7 @@ internal open class ScheduleScreenRobot(
             swipeDown(
                 startY = start.value,
                 endY = end.value,
-                durationMillis = 2000L
+                durationMillis = 2000L,
             )
         }
         composeTestRule.waitForIdle()
@@ -402,7 +400,6 @@ internal open class ScheduleScreenRobot(
     fun verifyLoadFailedDisplayed() {
         loadFailed.assertExists().assertIsDisplayed()
     }
-
 }
 
 var timeListSuccess = TimeListUiState.Success(groupedTimeSlots)

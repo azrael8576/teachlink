@@ -17,7 +17,6 @@ import com.wei.amazingtalker.feature.teacherschedule.R
 import java.time.OffsetDateTime
 import kotlin.properties.ReadOnlyProperty
 
-
 /**
  * Screen Robot for [ScheduleDetailScreenTest].
  *
@@ -29,11 +28,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun scheduleDetailScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: ScheduleDetailScreenRobot.() -> Unit
+    func: ScheduleDetailScreenRobot.() -> Unit,
 ) = ScheduleDetailScreenRobot(composeTestRule).apply(func)
 
 internal open class ScheduleDetailScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
@@ -52,37 +51,37 @@ internal open class ScheduleDetailScreenRobot(
     private val teacherName by lazy {
         composeTestRule.onNodeWithTag(
             teacherNameTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val startTime by lazy {
         composeTestRule.onNodeWithTag(
             startTimeTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val endTime by lazy {
         composeTestRule.onNodeWithTag(
             endTimeTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val state by lazy {
         composeTestRule.onNodeWithTag(
             stateTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val duringDayType by lazy {
         composeTestRule.onNodeWithTag(
             duringDayTypeTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val back by lazy {
         composeTestRule.onNodeWithContentDescription(
             backDescription,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 
@@ -93,7 +92,7 @@ internal open class ScheduleDetailScreenRobot(
             AtTheme {
                 ScheduleDetailScreen(
                     uiStates = uiStates,
-                    onBackClick = { backClicked = true } // Handle back click
+                    onBackClick = { backClicked = true }, // Handle back click
                 )
             }
         }
@@ -105,13 +104,13 @@ internal open class ScheduleDetailScreenRobot(
 
     fun verifyStartTimeValue(value: String) {
         startTime.assertIsDisplayed().assertTextEquals(
-            startTimeDescription.format(value)
+            startTimeDescription.format(value),
         )
     }
 
     fun verifyEndTimeValue(value: String) {
         endTime.assertIsDisplayed().assertTextEquals(
-            endTimeDescription.format(value)
+            endTimeDescription.format(value),
         )
     }
 
@@ -134,17 +133,15 @@ internal open class ScheduleDetailScreenRobot(
             func()
         }
     }
-
 }
-
 
 internal fun scheduleDetailBackRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: ScheduleDetailBackRobot.() -> Unit
+    func: ScheduleDetailBackRobot.() -> Unit,
 ) = ScheduleDetailBackRobot(composeTestRule).apply(func)
 
 internal open class ScheduleDetailBackRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
 
     private var isBackClicked: Boolean = false
@@ -156,7 +153,6 @@ internal open class ScheduleDetailBackRobot(
     fun isBack() {
         assertThat(isBackClicked).isTrue()
     }
-
 }
 
 val now: OffsetDateTime = OffsetDateTime.now()

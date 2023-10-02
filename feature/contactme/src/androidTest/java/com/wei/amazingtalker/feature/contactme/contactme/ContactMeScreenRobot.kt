@@ -32,11 +32,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun contactMeScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: ContactMeScreenRobot.() -> Unit
+    func: ContactMeScreenRobot.() -> Unit,
 ) = ContactMeScreenRobot(composeTestRule).apply(func)
 
 internal open class ContactMeScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
@@ -50,61 +50,61 @@ internal open class ContactMeScreenRobot(
     private val profilePicture by lazy {
         composeTestRule.onNodeWithContentDescription(
             profilePictureDescription.format(testUiState.nameEng),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val name by lazy {
         composeTestRule.onNodeWithContentDescription(
             testUiState.nameEng,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val position by lazy {
         composeTestRule.onNodeWithContentDescription(
             testUiState.position,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val linkedin by lazy {
         composeTestRule.onNodeWithContentDescription(
             linkedinString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val linkedinValue by lazy {
         composeTestRule.onNodeWithContentDescription(
             testUiState.linkedinUrl,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val email by lazy {
         composeTestRule.onNodeWithContentDescription(
             emailString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val emailValue by lazy {
         composeTestRule.onNodeWithContentDescription(
             testUiState.email,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val timeZone by lazy {
         composeTestRule.onNodeWithContentDescription(
             timezoneString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val timeZoneValue by lazy {
         composeTestRule.onNodeWithContentDescription(
             testUiState.timeZone,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val call by lazy {
         composeTestRule.onNodeWithContentDescription(
             callDescription.format(testUiState.nameEng),
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 
@@ -112,7 +112,7 @@ internal open class ContactMeScreenRobot(
 
     fun setContactMeScreenContent(
         contentType: AtContentType,
-        displayFeature: List<DisplayFeature>
+        displayFeature: List<DisplayFeature>,
     ) {
         composeTestRule.setContent {
             AtTheme {
@@ -173,16 +173,15 @@ internal open class ContactMeScreenRobot(
             func()
         }
     }
-
 }
 
 internal fun contactMeScreenCallRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    func: ContactMeScreenCallRobot.() -> Unit
+    func: ContactMeScreenCallRobot.() -> Unit,
 ) = ContactMeScreenCallRobot(composeTestRule).apply(func)
 
 internal open class ContactMeScreenCallRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
 
     private var isCallClicked: Boolean = false
@@ -194,7 +193,6 @@ internal open class ContactMeScreenCallRobot(
     fun isCall() {
         Truth.assertThat(isCallClicked).isTrue()
     }
-
 }
 
 val testUiState = ContactMeViewState(
@@ -204,5 +202,5 @@ val testUiState = ContactMeViewState(
     phone = PHONE,
     linkedinUrl = LINKEDIN_URL,
     email = EMAIL,
-    timeZone = TIME_ZONE
+    timeZone = TIME_ZONE,
 )

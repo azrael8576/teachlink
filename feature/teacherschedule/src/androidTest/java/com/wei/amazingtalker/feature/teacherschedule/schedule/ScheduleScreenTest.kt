@@ -51,7 +51,6 @@ class ScheduleScreenTest {
 //        }
 //    }
 
-
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/302744473
 //    @Test
@@ -63,8 +62,6 @@ class ScheduleScreenTest {
 //            verifyScheduleListIsReachesTop()
 //        }
 //    }
-
-
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/302744473
@@ -100,7 +97,7 @@ class ScheduleScreenTest {
                 ScheduleViewState(
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
-                )
+                ),
             )
 
             clickPreviousWeek()
@@ -160,8 +157,8 @@ class ScheduleScreenTest {
                 ScheduleViewState(
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
-                    timeListUiState = timeListSuccess
-                )
+                    timeListUiState = timeListSuccess,
+                ),
             )
             verifyYourLocalTimeZoneDisplayed()
             verifyMorningExists()
@@ -182,8 +179,8 @@ class ScheduleScreenTest {
                 ScheduleViewState(
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
-                    timeListUiState = timeListSuccess
-                )
+                    timeListUiState = timeListSuccess,
+                ),
             )
 
             clickAvailableTimeSlot()
@@ -201,8 +198,8 @@ class ScheduleScreenTest {
                 ScheduleViewState(
                     currentClock = fixedClock,
                     queryClockUtc = fixedClockUtc,
-                    timeListUiState = timeListSuccess
-                )
+                    timeListUiState = timeListSuccess,
+                ),
             )
 
             clickUnavailableTimeSlot()
@@ -213,7 +210,7 @@ class ScheduleScreenTest {
     @Test
     fun checkLoadingElementsVisibility_whenLoading() {
         val loadingUiState = ScheduleViewState(
-            timeListUiState = TimeListUiState.Loading
+            timeListUiState = TimeListUiState.Loading,
         )
 
         scheduleScreenRobot(composeTestRule) {
@@ -226,7 +223,7 @@ class ScheduleScreenTest {
     @Test
     fun checkLoadFailedElementsVisibility_whenLoadFailed() {
         val loadFailedUiState = ScheduleViewState(
-            timeListUiState = TimeListUiState.LoadFailed
+            timeListUiState = TimeListUiState.LoadFailed,
         )
 
         scheduleScreenRobot(composeTestRule) {

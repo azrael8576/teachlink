@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-class TestTeacherScheduleRepository: TeacherScheduleRepository {
+class TestTeacherScheduleRepository : TeacherScheduleRepository {
 
     private var errorException: Exception? = null
 
@@ -20,7 +20,7 @@ class TestTeacherScheduleRepository: TeacherScheduleRepository {
 
     override suspend fun getTeacherAvailability(
         teacherName: String,
-        startedAt: String
+        startedAt: String,
     ): Flow<NetworkTeacherSchedule> {
         // If there's an exception, throw it in a flow
         errorException?.let { exception ->

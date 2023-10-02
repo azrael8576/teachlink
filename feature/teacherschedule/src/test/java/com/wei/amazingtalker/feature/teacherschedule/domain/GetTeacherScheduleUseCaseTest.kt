@@ -52,6 +52,7 @@ class GetTeacherScheduleUseCaseTest {
     fun `getTeacherScheduleUseCase should return sorted interval schedule`() = runTest {
         // Arrange
         val scheduleStateTimeInterval = SCHEDULE_STATE_TIME_INTERVAL
+
         /**
          * 使用 testSchedules.copy() 確保了每次設置前置條件時都是對原始數據的深度複製，
          * 這確保了每個測試的獨立性，避免了因數據共享而產生的潛在問題。
@@ -89,39 +90,38 @@ class GetTeacherScheduleUseCaseTest {
                 intervalizeScheduleUseCase(
                     expectedTeacherSchedule.available,
                     scheduleStateTimeInterval,
-                    ScheduleState.AVAILABLE
-                )
+                    ScheduleState.AVAILABLE,
+                ),
             )
             addAll(
                 intervalizeScheduleUseCase(
                     expectedTeacherSchedule.booked,
                     scheduleStateTimeInterval,
-                    ScheduleState.BOOKED
-                )
+                    ScheduleState.BOOKED,
+                ),
             )
         }.sortedBy { it.start }.toMutableList()
 }
-
 
 private val testNetworkTeacherSchedule = NetworkTeacherSchedule(
     available = listOf(
         NetworkTimeSlots(
             startUtc = "2023-07-31T04:30:00Z",
-            endUtc = "2023-07-31T09:30:00Z"
+            endUtc = "2023-07-31T09:30:00Z",
         ),
         NetworkTimeSlots(
             startUtc = "2023-07-31T13:30:00Z",
-            endUtc = "2023-07-31T18:30:00Z"
-        )
+            endUtc = "2023-07-31T18:30:00Z",
+        ),
     ),
     booked = listOf(
         NetworkTimeSlots(
             startUtc = "2023-07-31T09:30:00Z",
-            endUtc = "2023-07-31T10:00:00Z"
+            endUtc = "2023-07-31T10:00:00Z",
         ),
         NetworkTimeSlots(
             startUtc = "2023-07-31T11:30:00Z",
-            endUtc = "2023-07-31T13:30:00Z"
-        )
-    )
+            endUtc = "2023-07-31T13:30:00Z",
+        ),
+    ),
 )

@@ -17,6 +17,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.accompanist.adaptive.calculateDisplayFeatures
 import com.wei.amazingtalker.MainActivityUiState.Loading
 import com.wei.amazingtalker.MainActivityUiState.Success
 import com.wei.amazingtalker.core.authentication.TokenManager
@@ -30,7 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.google.accompanist.adaptive.calculateDisplayFeatures
 
 private const val TAG = "MainActivity"
 

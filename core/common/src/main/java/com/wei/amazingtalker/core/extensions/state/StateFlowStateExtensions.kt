@@ -25,7 +25,7 @@ import kotlin.reflect.KProperty1
 fun <T, A> StateFlow<T>.observeState(
     lifecycleOwner: LifecycleOwner,
     propl: KProperty1<T, A>,
-    action: (A) -> Unit
+    action: (A) -> Unit,
 ) {
     // 使用 LifecycleOwner 的生命週期範疇啟動一個協程
     lifecycleOwner.lifecycleScope.launch {
@@ -53,7 +53,7 @@ fun <T, A, B> StateFlow<T>.observeState(
     lifecycleOwner: LifecycleOwner,
     prop1: KProperty1<T, A>,
     prop2: KProperty1<T, B>,
-    action: (A, B) -> Unit
+    action: (A, B) -> Unit,
 ) {
     lifecycleOwner.lifecycleScope.launch {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -77,7 +77,7 @@ fun <T, A, B, C> StateFlow<T>.observeState(
     prop1: KProperty1<T, A>,
     prop2: KProperty1<T, B>,
     prop3: KProperty1<T, C>,
-    action: (A, B, C) -> Unit
+    action: (A, B, C) -> Unit,
 ) {
     lifecycleOwner.lifecycleScope.launch {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

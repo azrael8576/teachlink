@@ -34,7 +34,7 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
     val yourLocalTimeZone = String.format(
         stringResource(R.string.your_local_time_zone),
         clock.zone,
-        yourLocalTimeZoneFormatter.format(OffsetDateTime.now(clock).offset)
+        yourLocalTimeZoneFormatter.format(OffsetDateTime.now(clock).offset),
     )
 
     Text(
@@ -44,7 +44,7 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
         modifier = Modifier
             .padding(top = 16.dp)
             .padding(horizontal = 16.dp)
-            .semantics { contentDescription = yourLocalTimeZone }
+            .semantics { contentDescription = yourLocalTimeZone },
     )
 }
 
@@ -64,14 +64,14 @@ internal fun DuringDay(duringDayType: DuringDayType) {
         modifier = Modifier
             .padding(top = 16.dp)
             .padding(horizontal = 16.dp)
-            .semantics { contentDescription = duringDay }
+            .semantics { contentDescription = duringDay },
     )
 }
 
 @Composable
 internal fun TimeSlot(
     timeSlot: IntervalScheduleTimeSlot,
-    onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit
+    onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
 ) {
     if (timeSlot.state == ScheduleState.AVAILABLE) {
         AvailableTimeSlot(
@@ -80,7 +80,7 @@ internal fun TimeSlot(
         )
     } else {
         UnavailableTimeSlot(
-            timeSlot = timeSlot
+            timeSlot = timeSlot,
         )
     }
 }
@@ -89,7 +89,7 @@ internal fun TimeSlot(
 private fun AvailableTimeSlot(
     modifier: Modifier = Modifier,
     timeSlot: IntervalScheduleTimeSlot,
-    onTimeSlotClick: () -> Unit
+    onTimeSlotClick: () -> Unit,
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val availableDescription =
@@ -106,7 +106,7 @@ private fun AvailableTimeSlot(
     ) {
         Text(
             text = startTimeText,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
         )
     }
 }
@@ -114,7 +114,7 @@ private fun AvailableTimeSlot(
 @Composable
 private fun UnavailableTimeSlot(
     modifier: Modifier = Modifier,
-    timeSlot: IntervalScheduleTimeSlot
+    timeSlot: IntervalScheduleTimeSlot,
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val unavailableDescription =
@@ -133,12 +133,12 @@ private fun UnavailableTimeSlot(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground,
         ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
     ) {
         Text(
             text = startTimeText,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
         )
     }
 }
@@ -169,7 +169,7 @@ fun AvailableTimeSlotPreview() {
                     start = OffsetDateTime.now(),
                     end = OffsetDateTime.now(),
                     state = ScheduleState.AVAILABLE,
-                    duringDayType = DuringDayType.Morning
+                    duringDayType = DuringDayType.Morning,
                 ),
                 onTimeSlotClick = { },
             )
@@ -187,7 +187,7 @@ fun UnavailableTimeSlotPreview() {
                     start = OffsetDateTime.now(),
                     end = OffsetDateTime.now(),
                     state = ScheduleState.BOOKED,
-                    duringDayType = DuringDayType.Morning
+                    duringDayType = DuringDayType.Morning,
                 ),
             )
         }
