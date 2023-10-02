@@ -1,6 +1,6 @@
 import com.android.build.gradle.TestExtension
-import com.wei.amazingtalker_recruit.configureGradleManagedDevices
-import com.wei.amazingtalker_recruit.configureKotlinAndroid
+import com.wei.amazingtalker.configureGradleManagedDevices
+import com.wei.amazingtalker.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

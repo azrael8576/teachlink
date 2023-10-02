@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.data"
+    namespace = "com.wei.amazingtalker.core.data"
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

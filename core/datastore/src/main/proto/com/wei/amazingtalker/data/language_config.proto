@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.wei.amazingtalker.core.datastore";
+option java_multiple_files = true;
+
+enum LanguageConfigProto {
+  LANGUAGE_CONFIG_UNSPECIFIED = 0;   // Default value, indicating no specific language chosen
+  LANGUAGE_CONFIG_FOLLOW_SYSTEM = 1; // The app's language preference follows the system settings
+  LANGUAGE_CONFIG_ENGLISH = 2;       // English language preference for the app's interface
+  LANGUAGE_CONFIG_CHINESE = 3;       // Chinese language preference for the app's interface
+}

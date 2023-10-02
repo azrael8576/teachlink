@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.testing"
+    namespace = "com.wei.amazingtalker.core.testing"
 }
 
 dependencies {

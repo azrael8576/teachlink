@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.datastore"
+    namespace = "com.wei.amazingtalker.core.datastore"
 
     defaultConfig {
         consumerProguardFiles("consumer-proguard-rules.pro")

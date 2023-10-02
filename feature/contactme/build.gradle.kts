@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.feature.contactme"
+    namespace = "com.wei.amazingtalker.feature.contactme"
 }
 
 dependencies {

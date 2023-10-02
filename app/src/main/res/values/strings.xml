@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">amazingtalker-recruit</string>
+    <string name="app_name">AmazingTalker</string>
     <string name="not_connected">⚠️ You aren’t connected to the internet</string>
     <string name="book">Book</string>
     <string name="home">Home</string>

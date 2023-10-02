@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.network"
+    namespace = "com.wei.amazingtalker.core.network"
 
     buildFeatures {
         buildConfig = true

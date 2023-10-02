@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">amazingtalker-recruit</string>
+    <string name="app_name">AmazingTalker</string>
 
     <!-- 教師行事曆頁面 -->
     <string name="your_local_time_zone">Your local time zone: %1$s GMT %2$s</string>
