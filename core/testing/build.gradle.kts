@@ -23,7 +23,7 @@ dependencies {
     // Coroutines test
     api(libs.kotlinx.coroutines.test)
     api(libs.hilt.android.testing)
-    // Google test
+    // Google truth
     api(libs.google.truth)
     // For flow test
     api(libs.turbine)

@@ -41,7 +41,7 @@ class ScheduleScreenTest {
     }
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
-    // See more details at: https://issuetracker.google.com/issues/242221780
+    // See more details at: https://issuetracker.google.com/issues/302744473
 //    @Test
 //    fun checkScheduleListIsInitPosition_afterOpeningTheScreen() {
 //        scheduleScreenRobot(composeTestRule) {
@@ -53,7 +53,7 @@ class ScheduleScreenTest {
 
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
-    // See more details at: https://issuetracker.google.com/issues/242221780
+    // See more details at: https://issuetracker.google.com/issues/302744473
 //    @Test
 //    fun checkScheduleListIsReachesTop_afterSwipeUpScheduleList() {
 //        scheduleScreenRobot(composeTestRule) {
@@ -67,7 +67,7 @@ class ScheduleScreenTest {
 
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
-    // See more details at: https://issuetracker.google.com/issues/242221780
+    // See more details at: https://issuetracker.google.com/issues/302744473
 //    @Test
 //    fun checkScheduleListIsInitPosition_afterSwipeDownScheduleList() {
 //        scheduleScreenRobot(composeTestRule) {
