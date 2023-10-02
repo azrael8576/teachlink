@@ -1,4 +1,4 @@
-import com.wei.amazingtalker_recruit.configureKotlinJvm
+import com.wei.amazingtalker.configureKotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

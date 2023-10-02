@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.model"
+    namespace = "com.wei.amazingtalker.core.model"
 }
 
 dependencies {

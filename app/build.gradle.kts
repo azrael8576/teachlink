@@ -1,4 +1,4 @@
-import com.wei.amazingtalker_recruit.AtBuildType
+import com.wei.amazingtalker.AtBuildType
 
 plugins {
     id("at.android.application")
@@ -8,10 +8,10 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit"
+    namespace = "com.wei.amazingtalker"
 
     defaultConfig {
-        applicationId = "com.wei.amazingtalker_recruit"
+        applicationId = "com.wei.amazingtalker"
         /**
          * Version Code: AABCXYZ
          *
@@ -30,7 +30,7 @@ android {
         versionName = "0.6.0"
 
         // Custom test runner to set up Hilt dependency graph
-        testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"
+        testInstrumentationRunner = "com.wei.amazingtalker.core.testing.AtTestRunner"
 
         vectorDrawables {
             useSupportLibrary = true

@@ -1,8 +1,8 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.wei.amazingtalker_recruit.configureGradleManagedDevices
+import com.wei.amazingtalker.configureGradleManagedDevices
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
-import com.wei.amazingtalker_recruit.configureKotlinAndroid
-import com.wei.amazingtalker_recruit.configurePrintApksTask
+import com.wei.amazingtalker.configureKotlinAndroid
+import com.wei.amazingtalker.configurePrintApksTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

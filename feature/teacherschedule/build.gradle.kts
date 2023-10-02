@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.feature.teacherschedule"
+    namespace = "com.wei.amazingtalker.feature.teacherschedule"
 }
 
 dependencies {

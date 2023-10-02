@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-    namespace = "com.wei.amazingtalker_recruit.core.common"
+    namespace = "com.wei.amazingtalker.core.common"
 
     defaultConfig {
-        testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"
+        testInstrumentationRunner = "com.wei.amazingtalker.core.testing.AtTestRunner"
     }
 }
 

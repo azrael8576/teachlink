@@ -14,7 +14,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "amazingtalker-recruit"
+rootProject.name = "amazingtalker"
 include(":app")
 
 include(":core:network")
