@@ -60,8 +60,6 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## Require
 
-本專案已升級 Gradle plugin 8.1.0-rc01 (查看分支：`chore/update_agp_8.1.0-rc01` )
-
 建構此 App 你可能需要以下工具：
 
 - Android Studio Giraffe | 2022.3.1
