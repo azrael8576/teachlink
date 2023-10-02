@@ -15,44 +15,36 @@ android {
 dependencies {
     androidTestImplementation(project(":core:testing"))
 
-    // PublicLibs
-    implementation(libs.androidx.core.ktx)
+    // Write trace events to the system trace buffer.
     api(libs.androidx.tracing.ktx)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
-    // Compose
-    api(platform(libs.androidx.compose.bom))
-
     // Material Design 3
-    api(libs.androidx.compose.material3.core)
+    api(libs.androidx.compose.material3)
     api(libs.androidx.compose.material3.windowSizeClass)
     api(libs.androidx.compose.material.iconsExtended)
-
     // main APIs for the underlying toolkit systems,
     // such as input and measurement/layout
-    api(libs.androidx.compose.ui.core)
     api(libs.androidx.compose.ui.util)
     api(libs.androidx.compose.foundation)
-
+    api(libs.androidx.compose.foundation.layout)
+    api(libs.androidx.compose.runtime)
     // Android Studio Preview support
     api(libs.androidx.compose.ui.tooling.preview)
-    api(libs.androidx.compose.ui.ui.tooling)
-
-    // Optional - Integration with activities
-    api(libs.androidx.activity.compose)
-
+    api(libs.androidx.compose.ui.tooling)
     // Optional - Integration with window
     api(libs.androidx.window)
-
     // Optional - Integration with LiveData
     api(libs.androidx.compose.runtime.livedata)
-
     // Optional - accompanist adaptive
     api(libs.accompanist.adaptive)
 
-    // UI Tests
-    api(libs.androidx.compose.ui.test)
+    implementation(libs.androidx.core.ktx)
+    // Optional - Integration with activities
+    implementation(libs.androidx.activity.compose)
+    // Optional - Integration with browser
+    implementation(libs.androidx.browser)
+    // Coil
+    implementation(libs.coil.kt)
+    implementation(libs.coil.kt.compose)
+    // kotlin datetime
+    implementation(libs.kotlinx.datetime)
 }

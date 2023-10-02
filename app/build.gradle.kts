@@ -82,11 +82,7 @@ dependencies {
     testImplementation(project(":core:datastore-test"))
     testImplementation(project(":core:testing"))
 
-    // PublicLibs
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.tracing.ktx)
-    coreLibraryDesugaring(libs.android.desugarJdkLibs)
-
     implementation(libs.androidx.activity.compose)
 
     // LifeCycle
@@ -99,11 +95,10 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
-    // Timber
-    implementation(libs.timber)
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)
+
+    // Timber
+    implementation(libs.timber)
 }

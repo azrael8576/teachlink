@@ -1,6 +1,8 @@
 # Amazingtalker-Recruit
-[![Android CI](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml)
+[![Android CI](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml)  
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/amazingtalker-recruit)](https://github.com/azrael8576/amazingtalker-recruit/releases)  
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE)
+
 ![Logo](docs/images/logo.png)
 
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
