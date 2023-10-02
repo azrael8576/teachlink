@@ -1,4 +1,4 @@
-package com.wei.amazingtalker.core.network.retrofit;
+package com.wei.amazingtalker.core.network.retrofit
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.wei.amazingtalker.core.network.AtNetworkDataSource
@@ -50,9 +50,8 @@ class RetrofitAtNetwork @Inject constructor(
 
     override suspend fun getTeacherAvailability(
         teacherName: String,
-        startedAt: String?
+        startedAt: String?,
     ): NetworkTeacherSchedule {
         return networkApi.getTeacherAvailability(teacherName, startedAt)
     }
-
 }

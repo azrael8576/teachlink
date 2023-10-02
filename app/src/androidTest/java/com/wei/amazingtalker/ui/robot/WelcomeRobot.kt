@@ -7,8 +7,8 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker.MainActivity
-import com.wei.amazingtalker.feature.login.R as FeatureLoginR
 import kotlin.properties.ReadOnlyProperty
+import com.wei.amazingtalker.feature.login.R as FeatureLoginR
 
 /**
  * 遵循此模型，找到測試使用者介面元素、檢查其屬性、和透過測試規則執行動作：
@@ -19,11 +19,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun welcomeRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: WelcomeRobot.() -> Unit
+    func: WelcomeRobot.() -> Unit,
 ) = WelcomeRobot(composeTestRule).apply(func)
 
 internal open class WelcomeRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
@@ -35,13 +35,13 @@ internal open class WelcomeRobot(
     private val welcomeTitle by lazy {
         composeTestRule.onNodeWithContentDescription(
             welcomeTitleString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
     private val getStarted by lazy {
         composeTestRule.onNodeWithContentDescription(
             getStartedString,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 

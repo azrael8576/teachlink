@@ -74,10 +74,10 @@ import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.feature.teacherschedule.R
 import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.DateTabLayout
-import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.ScheduleListPreviewParameterProvider
 import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.DuringDay
-import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.YourLocalTimeZoneText
+import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.ScheduleListPreviewParameterProvider
 import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.TimeSlot
+import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.YourLocalTimeZoneText
 import com.wei.amazingtalker.feature.teacherschedule.scheduledetail.navigation.navigateToScheduleDetail
 import com.wei.amazingtalker.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import kotlinx.coroutines.cancelChildren
@@ -133,20 +133,20 @@ internal fun ScheduleRoute(
             viewModel.dispatch(
                 ScheduleViewAction.ShowSnackBar(
                     resId = resId,
-                    message = listOf(message)
-                )
+                    message = listOf(message),
+                ),
             )
         },
         onTabClick = { index, date ->
             viewModel.dispatch(
-                ScheduleViewAction.SelectedTab(date = Pair(index, date))
+                ScheduleViewAction.SelectedTab(date = Pair(index, date)),
             )
         },
         onListScroll = { viewModel.dispatch(ScheduleViewAction.ListScrolled) },
         onTimeSlotClick = { item ->
             navController.navigateToScheduleDetail(
                 teacherName = uiStates._currentTeacherName,
-                timeSlot = item
+                timeSlot = item,
             )
         },
     )
@@ -172,7 +172,6 @@ internal fun ScheduleScreen(
     onListScroll: () -> Unit,
     onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
 ) {
-
     val toolbarHeightRange = with(LocalDensity.current) {
         MinToolbarHeight.roundToPx()..MaxToolbarHeight.roundToPx()
     }
@@ -184,7 +183,7 @@ internal fun ScheduleScreen(
         object : NestedScrollConnection {
             override fun onPreScroll(
                 available: Offset,
-                source: NestedScrollSource
+                source: NestedScrollSource,
             ): Offset {
                 toolbarState.scrollTopLimitReached =
                     listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
@@ -194,14 +193,14 @@ internal fun ScheduleScreen(
 
             override suspend fun onPostFling(
                 consumed: Velocity,
-                available: Velocity
+                available: Velocity,
             ): Velocity {
                 if (available.y > 0) {
                     scope.launch {
                         animateDecay(
                             initialValue = toolbarState.height + toolbarState.offset,
                             initialVelocity = available.y,
-                            animationSpec = FloatExponentialDecaySpec()
+                            animationSpec = FloatExponentialDecaySpec(),
                         ) { value, _ ->
                             toolbarState.scrollTopLimitReached =
                                 listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
@@ -227,7 +226,7 @@ internal fun ScheduleScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(nestedScrollConnection)
+                .nestedScroll(nestedScrollConnection),
         ) {
             ScheduleList(
                 modifier = Modifier
@@ -236,7 +235,7 @@ internal fun ScheduleScreen(
                     .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
                     .pointerInput(Unit) {
                         detectTapGestures(
-                            onPress = { scope.coroutineContext.cancelChildren() }
+                            onPress = { scope.coroutineContext.cancelChildren() },
                         )
                     }
                     .testTag(stringResource(R.string.tag_schedule_list)),
@@ -273,13 +272,14 @@ private fun ScheduleTopAppBar(title: String) {
                 text = title,
                 modifier = Modifier
                     .testTag(stringResource(id = R.string.tag_schedule_top_app_bar))
-                    .semantics { contentDescription = title })
+                    .semantics { contentDescription = title },
+            )
         },
         navigationIcon = { },
         actions = { },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
-        )
+        ),
     )
 }
 
@@ -293,7 +293,7 @@ internal fun ScheduleList(
     isScrollInProgress: Boolean = false,
     onListScroll: () -> Unit,
     onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
-    withBottomSpacer: Boolean = true
+    withBottomSpacer: Boolean = true,
 ) {
     /**
      * 使用 rememberUpdatedState 用於確保在 Compose 函數中的 callback（例如：事件處理器）可以獲取到最新的狀態值。
@@ -343,7 +343,7 @@ internal fun ScheduleList(
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .padding(16.dp)
-                        .semantics { contentDescription = loading }
+                        .semantics { contentDescription = loading },
                 )
             }
 
@@ -355,10 +355,9 @@ internal fun ScheduleList(
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier
                         .padding(16.dp)
-                        .semantics { contentDescription = loadFailed }
+                        .semantics { contentDescription = loadFailed },
                 )
             }
-
         }
 
         if (withBottomSpacer) {
@@ -392,7 +391,7 @@ private fun ScheduleToolbar(
             WeekActionBarBottom(
                 selectedIndex = uiStates.selectedIndex,
                 tabs = uiStates.dateTabs,
-                onTabClick = onTabClick
+                onTabClick = onTabClick,
             )
         }
     }
@@ -417,7 +416,7 @@ fun WeekActionBar(
         modifier = Modifier
             .height(actionBarSizeDp.dp)
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .background(MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Row(
             modifier = Modifier
@@ -437,18 +436,20 @@ fun WeekActionBar(
                 Icon(
                     imageVector = AtIcons.ArrowBackIosNew,
                     contentDescription = null,
-                    tint = if (uiStates.isAvailablePreviousWeek)
+                    tint = if (uiStates.isAvailablePreviousWeek) {
                         MaterialTheme.colorScheme.primary
-                    else LocalContentColor.current
+                    } else {
+                        LocalContentColor.current
+                    },
                 )
             }
 
             val weekDate = uiStates.weekDateText
             val weekDataDescription = stringResource(R.string.content_description_week_date).format(
                 weekDate.first,
-                weekDate.second
+                weekDate.second,
             )
-            val weekDateText = "${weekDate.first} - ${weekDate.second}";
+            val weekDateText = "${weekDate.first} - ${weekDate.second}"
             TextButton(
                 modifier = Modifier
                     .weight(1f)
@@ -475,7 +476,7 @@ fun WeekActionBar(
                 Icon(
                     imageVector = AtIcons.ArrowForwardIos,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         }
@@ -499,7 +500,7 @@ private fun WeekActionBarBottom(
             Divider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp,
-                color = MaterialTheme.colorScheme.surfaceVariant
+                color = MaterialTheme.colorScheme.surfaceVariant,
             )
             DateTabLayout(
                 modifier = Modifier.fillMaxSize(),
@@ -556,7 +557,7 @@ private suspend fun animateTo(topAppBarState: TopAppBarState, targetValue: Float
     animate(
         initialValue = topAppBarState.scrollOffset,
         targetValue = targetValue,
-        animationSpec = tween(durationMillis = 300, easing = LinearEasing)
+        animationSpec = tween(durationMillis = 300, easing = LinearEasing),
     ) { value, _ ->
         topAppBarState.scrollOffset = value
     }
@@ -606,4 +607,3 @@ fun ScheduleListPreview(
         )
     }
 }
-

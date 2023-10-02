@@ -1,12 +1,12 @@
 package com.wei.amazingtalker.feature.contactme.contactme.ui
 
-import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -26,19 +26,19 @@ internal fun DecorativeBackgroundText(
         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
         textAlign = TextAlign.Center,
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     ),
 ) {
     Column(
         modifier = Modifier
             .graphicsLayer(rotationZ = rotationZ)
-            .scale(scale)
+            .scale(scale),
     ) {
         repeat(repetitions) {
             Text(
                 text = text,
                 style = textStyle,
-                modifier = Modifier.semantics { contentDescription = "" }
+                modifier = Modifier.semantics { contentDescription = "" },
             )
         }
     }
@@ -50,5 +50,5 @@ fun decorativeTextStyle(color: Color) = TextStyle(
     color = color.copy(alpha = 0.8f),
     textAlign = TextAlign.Center,
     fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Bold
+    fontWeight = FontWeight.Bold,
 )

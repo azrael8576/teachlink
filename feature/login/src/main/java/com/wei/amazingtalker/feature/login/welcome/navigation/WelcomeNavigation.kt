@@ -23,7 +23,7 @@ fun NavGraphBuilder.welcomeGraph(
     composable(route = welcomeRoute) {
         WelcomeRoute(
             isCompact = isCompact,
-            navController = navController
+            navController = navController,
         )
     }
     nestedGraphs()

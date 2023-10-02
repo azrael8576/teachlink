@@ -6,8 +6,8 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker.MainActivity
-import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherScheduleR
 import kotlin.properties.ReadOnlyProperty
+import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherScheduleR
 
 /**
  * 遵循此模型，找到測試使用者介面元素、檢查其屬性、和透過測試規則執行動作：
@@ -18,11 +18,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun scheduleScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: ScheduleScreenRobot.() -> Unit
+    func: ScheduleScreenRobot.() -> Unit,
 ) = ScheduleScreenRobot(composeTestRule).apply(func)
 
 internal open class ScheduleScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
@@ -30,11 +30,10 @@ internal open class ScheduleScreenRobot(
     // The strings used for matching in these tests
     private val scheduleTopAppBarTag by composeTestRule.stringResource(FeatureTeacherScheduleR.string.tag_schedule_top_app_bar)
 
-
     private val scheduleTopAppBar by lazy {
         composeTestRule.onNodeWithTag(
             scheduleTopAppBarTag,
-            useUnmergedTree = true
+            useUnmergedTree = true,
         )
     }
 

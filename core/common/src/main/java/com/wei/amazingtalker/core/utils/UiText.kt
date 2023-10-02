@@ -21,7 +21,7 @@ sealed class UiText {
      */
     data class StringResource(
         @StringRes val resId: Int,
-        val args: List<Args> = emptyList()
+        val args: List<Args> = emptyList(),
     ) : UiText() {
 
         /**
@@ -39,7 +39,7 @@ sealed class UiText {
              * UiTextArg 是 Args 的一種形式，表示其他的 UiText 類型。
              * @param uiText 被封裝的 UiText 物件。
              */
-            data class UiTextArg(val uiText: UiText): Args()
+            data class UiTextArg(val uiText: UiText) : Args()
 
             /**
              * toString 方法將 Args 物件轉換為字串。
@@ -62,7 +62,8 @@ sealed class UiText {
             is DynamicString -> value
             is StringResource ->
                 context.getString(
-                    resId, *(args.map { it.toString(context) }.toTypedArray())
+                    resId,
+                    *(args.map { it.toString(context) }.toTypedArray()),
                 )
         }
 }

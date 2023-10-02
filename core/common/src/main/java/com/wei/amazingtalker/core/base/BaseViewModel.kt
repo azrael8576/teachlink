@@ -6,7 +6,6 @@ import com.wei.amazingtalker.core.extensions.state.setState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-
 /**
  *
  * UI 事件決策樹
@@ -51,7 +50,6 @@ abstract class BaseViewModel<Action, State>(initialState: State) : ViewModel() {
     // MutableStateFlow 用於傳遞 UI 狀態
     private val _states = MutableStateFlow(initialState)
     val states = _states.asStateFlow()
-
 
     /**
      * 更新 UI 狀態。你應該通過調用這個方法來更新狀態，而不是直接修改 _states 的值。

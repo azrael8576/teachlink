@@ -1,10 +1,9 @@
 package com.wei.amazingtalker.core.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.unit.dp
@@ -40,7 +39,6 @@ private val LightColors = lightColorScheme(
     outlineVariant = md_theme_light_outlineVariant,
     scrim = md_theme_light_scrim,
 )
-
 
 private val DarkColors = darkColorScheme(
     primary = md_theme_dark_primary,
@@ -88,7 +86,7 @@ val DarkAndroidBackgroundTheme = BackgroundTheme(color = DarkColors.background)
 fun AtTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     androidTheme: Boolean = true,
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit,
 ) {
     // Color scheme
     val colorScheme = when {

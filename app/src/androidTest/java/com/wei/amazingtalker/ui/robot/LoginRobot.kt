@@ -10,8 +10,8 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker.MainActivity
-import com.wei.amazingtalker.feature.login.R as FeatureLoginR
 import kotlin.properties.ReadOnlyProperty
+import com.wei.amazingtalker.feature.login.R as FeatureLoginR
 
 /**
  * 遵循此模型，找到測試使用者介面元素、檢查其屬性、和透過測試規則執行動作：
@@ -22,11 +22,11 @@ import kotlin.properties.ReadOnlyProperty
  */
 internal fun loginScreenRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: com.wei.amazingtalker.ui.robot.LoginScreenRobot.() -> Unit
+    func: com.wei.amazingtalker.ui.robot.LoginScreenRobot.() -> Unit,
 ) = com.wei.amazingtalker.ui.robot.LoginScreenRobot(composeTestRule).apply(func)
 
 internal open class LoginScreenRobot(
-    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
+    private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
 
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
@@ -43,7 +43,7 @@ internal open class LoginScreenRobot(
     private val loginButton by lazy {
         composeTestRule.onNode(
             withRole(Role.Button)
-                .and(hasContentDescription(loginDescription))
+                .and(hasContentDescription(loginDescription)),
         )
     }
 

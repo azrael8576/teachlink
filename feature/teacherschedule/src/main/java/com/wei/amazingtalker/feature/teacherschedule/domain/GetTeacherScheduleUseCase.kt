@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal val SCHEDULE_STATE_TIME_INTERVAL : TimeInterval = TimeInterval.INTERVAL_30
+internal val SCHEDULE_STATE_TIME_INTERVAL: TimeInterval = TimeInterval.INTERVAL_30
 
 /**
  * 用於獲取教師課程表的 use case。它從 [TeacherScheduleRepository] 獲取課程表信息，
@@ -19,16 +19,16 @@ internal val SCHEDULE_STATE_TIME_INTERVAL : TimeInterval = TimeInterval.INTERVAL
  */
 class GetTeacherScheduleUseCase @Inject constructor(
     private val teacherScheduleRepository: TeacherScheduleRepository,
-    private val intervalizeScheduleUseCase: IntervalizeScheduleUseCase
+    private val intervalizeScheduleUseCase: IntervalizeScheduleUseCase,
 ) {
 
     suspend operator fun invoke(
         teacherName: String,
-        startedAtUtc: String
+        startedAtUtc: String,
     ): Flow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>> {
         return teacherScheduleRepository.getTeacherAvailability(
             teacherName = teacherName,
-            startedAt = startedAtUtc
+            startedAt = startedAtUtc,
         )
             .asDataSourceResult()
             .map { result ->
@@ -39,15 +39,15 @@ class GetTeacherScheduleUseCase @Inject constructor(
                             intervalizeScheduleUseCase(
                                 result.data.available,
                                 SCHEDULE_STATE_TIME_INTERVAL,
-                                ScheduleState.AVAILABLE
-                            )
+                                ScheduleState.AVAILABLE,
+                            ),
                         )
                         scheduleTimeList.addAll(
                             intervalizeScheduleUseCase(
                                 result.data.booked,
                                 SCHEDULE_STATE_TIME_INTERVAL,
-                                ScheduleState.BOOKED
-                            )
+                                ScheduleState.BOOKED,
+                            ),
                         )
                         val sortedList =
                             scheduleTimeList.sortedBy { scheduleTime -> scheduleTime.start }

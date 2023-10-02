@@ -75,8 +75,8 @@ internal fun ScheduleDetailRoute(
     viewModel.dispatch(
         ScheduleDetailViewAction.InitNavData(
             teacherName = teacherName,
-            intervalScheduleTimeSlot = timeSlot
-        )
+            intervalScheduleTimeSlot = timeSlot,
+        ),
     )
 
     ScheduleDetailScreen(
@@ -89,11 +89,10 @@ internal fun ScheduleDetailRoute(
 internal fun ScheduleDetailScreen(
     uiStates: ScheduleDetailViewState,
     onBackClick: () -> Unit,
-    withTopSpacer: Boolean = true
+    withTopSpacer: Boolean = true,
 ) {
-
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column {
             if (withTopSpacer) {
@@ -177,7 +176,7 @@ private fun ScheduleDetailToolbar(
         val back = stringResource(R.string.content_description_back)
         IconButton(
             onClick = { onBackClick() },
-            modifier = Modifier.semantics { contentDescription = back }
+            modifier = Modifier.semantics { contentDescription = back },
         ) {
             Icon(
                 imageVector = AtIcons.ArrowBack,

@@ -1,7 +1,7 @@
 package com.wei.amazingtalker.core.data.repository
 
-import kotlinx.coroutines.flow.Flow
 import com.wei.amazingtalker.core.model.data.UserData
+import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {
 

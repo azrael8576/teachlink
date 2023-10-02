@@ -9,8 +9,8 @@ import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeScr
 import com.wei.amazingtalker.feature.login.login.navigation.loginScreen
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeGraph
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeRoute
-import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.scheduleRoute
 import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.scheduleGraph
+import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.scheduleRoute
 import com.wei.amazingtalker.feature.teacherschedule.scheduledetail.navigation.scheduleDetailScreen
 import com.wei.amazingtalker.ui.AtAppState
 
@@ -44,7 +44,7 @@ fun AtNavHost(
             tokenInvalidNavigate = { appState.tokenInvalidNavigate() },
             nestedGraphs = {
                 scheduleDetailScreen(navController = navController)
-            }
+            },
         )
         welcomeGraph(
             isCompact = isCompact,
@@ -52,16 +52,16 @@ fun AtNavHost(
             nestedGraphs = {
                 loginScreen(
                     isCompact = isCompact,
-                    onLoginNav = { appState.loginNavigate() })
-            }
+                    onLoginNav = { appState.loginNavigate() },
+                )
+            },
         )
         contactMeScreen(
             navController = navController,
             contentType = contentType,
             displayFeatures = displayFeatures,
             navigationType = navigationType,
-            nestedGraphs = { }
+            nestedGraphs = { },
         )
-
     }
 }

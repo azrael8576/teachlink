@@ -4,10 +4,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.wei.amazingtalker.core.model.data.DuringDayType
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
-import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.PreviewParameterData.timeSlotList
 import com.wei.amazingtalker.feature.teacherschedule.schedule.TimeListUiState
+import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.PreviewParameterData.timeSlotList
 import java.time.OffsetDateTime
-
 
 class ScheduleListPreviewParameterProvider : PreviewParameterProvider<TimeListUiState> {
 
@@ -17,7 +16,6 @@ class ScheduleListPreviewParameterProvider : PreviewParameterProvider<TimeListUi
         ),
     )
 }
-
 
 object PreviewParameterData {
 

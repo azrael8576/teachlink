@@ -13,10 +13,10 @@ const val ErrorTextPrefix = "Error:"
 
 enum class SnackbarState {
     Default,
-    Error
+    Error,
 }
 
-data class Message(val id: Long,val state: SnackbarState, val uiText: UiText)
+data class Message(val id: Long, val state: SnackbarState, val uiText: UiText)
 
 /**
  * Class responsible for managing Snackbar messages to show on the screen
@@ -32,7 +32,7 @@ class SnackbarManager @Inject constructor() {
             currentMessages + Message(
                 id = UUID.randomUUID().mostSignificantBits,
                 state = state,
-                uiText = uiText
+                uiText = uiText,
             )
         }
     }

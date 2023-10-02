@@ -7,13 +7,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
-        ScheduleDetailViewAction,
-        ScheduleDetailViewState
-        >(ScheduleDetailViewState()) {
+    ScheduleDetailViewAction,
+    ScheduleDetailViewState,
+    >(ScheduleDetailViewState()) {
 
     private fun initNavData(
         teacherName: String,
-        intervalScheduleTimeSlot: IntervalScheduleTimeSlot
+        intervalScheduleTimeSlot: IntervalScheduleTimeSlot,
     ) {
         updateState {
             copy(
@@ -21,7 +21,7 @@ class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
                 start = intervalScheduleTimeSlot.start,
                 end = intervalScheduleTimeSlot.end,
                 state = intervalScheduleTimeSlot.state,
-                duringDayType = intervalScheduleTimeSlot.duringDayType
+                duringDayType = intervalScheduleTimeSlot.duringDayType,
             )
         }
     }
@@ -30,7 +30,7 @@ class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
         when (action) {
             is ScheduleDetailViewAction.InitNavData -> initNavData(
                 teacherName = action.teacherName,
-                intervalScheduleTimeSlot = action.intervalScheduleTimeSlot
+                intervalScheduleTimeSlot = action.intervalScheduleTimeSlot,
             )
         }
     }

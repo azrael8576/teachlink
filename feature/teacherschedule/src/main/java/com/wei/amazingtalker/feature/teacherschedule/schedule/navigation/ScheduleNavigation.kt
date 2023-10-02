@@ -20,7 +20,7 @@ fun NavGraphBuilder.scheduleGraph(
     composable(route = scheduleRoute) {
         ScheduleRoute(
             navController = navController,
-            tokenInvalidNavigate = tokenInvalidNavigate
+            tokenInvalidNavigate = tokenInvalidNavigate,
         )
     }
     nestedGraphs()

@@ -15,36 +15,35 @@ const val timeSlotArg = "timeSlot"
 fun NavController.navigateToScheduleDetail(
     navOptions: NavOptions? = null,
     teacherName: String,
-    timeSlot: IntervalScheduleTimeSlot
+    timeSlot: IntervalScheduleTimeSlot,
 ) {
     this.currentBackStackEntry?.savedStateHandle?.set(
         key = teacherNameArg,
-        value = teacherName
+        value = teacherName,
     )
     this.currentBackStackEntry?.savedStateHandle?.set(
         key = timeSlotArg,
-        value = timeSlot
+        value = timeSlot,
     )
     this.navigate(scheduleDetailRoute, navOptions)
 }
 
 fun NavGraphBuilder.scheduleDetailScreen(navController: NavHostController) {
-
     composable(route = scheduleDetailRoute) {
         val teacherName =
             navController.previousBackStackEntry?.savedStateHandle?.get<String>(
-                teacherNameArg
+                teacherNameArg,
             ) ?: ""
         val timeSlot =
             navController.previousBackStackEntry?.savedStateHandle?.get<IntervalScheduleTimeSlot>(
-                timeSlotArg
+                timeSlotArg,
             )
 
-        if(teacherName.isNotBlank() && timeSlot != null) {
+        if (teacherName.isNotBlank() && timeSlot != null) {
             ScheduleDetailRoute(
                 teacherName = teacherName,
                 timeSlot = timeSlot,
-                navController = navController
+                navController = navController,
             )
         }
     }

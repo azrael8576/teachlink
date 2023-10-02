@@ -21,7 +21,7 @@ import java.time.OffsetDateTime
  */
 @RunWith(Parameterized::class)
 class IntervalizeScheduleUseCaseTest(
-    private val timeInterval: TimeInterval
+    private val timeInterval: TimeInterval,
 ) {
 
     companion object {
@@ -63,7 +63,7 @@ class IntervalizeScheduleUseCaseTest(
 
     private fun assertIntervalSchedule(
         intervalSchedule: List<IntervalScheduleTimeSlot>,
-        timeInterval: TimeInterval
+        timeInterval: TimeInterval,
     ) {
         assertThat(intervalSchedule).isNotEmpty()
         intervalSchedule.forEach { slot ->
@@ -80,41 +80,40 @@ class IntervalizeScheduleUseCaseTest(
             startDateTime,
             timeInterval.value,
             ScheduleState.AVAILABLE,
-            endDateTime
+            endDateTime,
         )
     }
-
 }
 
 private val testSchedules = NetworkTeacherSchedule(
     available = listOf(
         NetworkTimeSlots(
             startUtc = "2023-07-31T04:30:00Z",
-            endUtc = "2023-07-31T09:30:00Z"
+            endUtc = "2023-07-31T09:30:00Z",
         ),
         NetworkTimeSlots(
             startUtc = "2023-07-31T12:30:00Z",
-            endUtc = "2023-07-31T18:30:00Z"
+            endUtc = "2023-07-31T18:30:00Z",
         ),
         NetworkTimeSlots(
             startUtc = "2023-07-31T19:30:00Z",
-            endUtc = "2023-07-31T20:30:00Z"
-        )
+            endUtc = "2023-07-31T20:30:00Z",
+        ),
         // More Data...
     ),
     booked = listOf(
         NetworkTimeSlots(
             startUtc = "2023-07-31T09:30:00Z",
-            endUtc = "2023-07-31T10:30:00Z"
+            endUtc = "2023-07-31T10:30:00Z",
         ),
         NetworkTimeSlots(
             startUtc = "2023-07-31T11:30:00Z",
-            endUtc = "2023-07-31T12:30:00Z"
+            endUtc = "2023-07-31T12:30:00Z",
         ),
         NetworkTimeSlots(
             startUtc = "2023-07-31T18:30:00Z",
-            endUtc = "2023-07-31T19:30:00Z"
-        )
+            endUtc = "2023-07-31T19:30:00Z",
+        ),
         // More Data...
-    )
+    ),
 )

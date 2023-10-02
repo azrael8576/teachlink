@@ -54,10 +54,10 @@ internal fun DateTabLayout(
             TabRowDefaults.Indicator(
                 Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
                 color = MaterialTheme.colorScheme.primary,
-                height = 2.dp
+                height = 2.dp,
             )
         },
-        divider = {}
+        divider = {},
     ) {
         tabs.forEachIndexed { index, tab ->
             DateTab(
@@ -65,7 +65,7 @@ internal fun DateTabLayout(
                 tab = tab,
                 index = index,
                 onTabClick = onTabClick,
-                tabWidth = { tabWidth.value }
+                tabWidth = { tabWidth.value },
             )
         }
     }
@@ -77,7 +77,7 @@ private fun DateTab(
     tab: OffsetDateTime,
     index: Int,
     onTabClick: (Int, OffsetDateTime) -> Unit,
-    tabWidth: () -> Dp
+    tabWidth: () -> Dp,
 ) {
     val date = dateFormatter.format(tab)
 
@@ -89,7 +89,7 @@ private fun DateTab(
         modifier = Modifier
             .height(70.dp)
             .width(tabWidth())
-            .semantics { contentDescription = date }
+            .semantics { contentDescription = date },
     ) {
         val textColor =
             if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
@@ -98,7 +98,7 @@ private fun DateTab(
             text = date,
             style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Center,
-            color = textColor
+            color = textColor,
         )
     }
 }
@@ -121,7 +121,7 @@ fun DateTabLayoutPreview() {
                     OffsetDateTime.parse("2023-07-01T00:00+08:00"),
                     OffsetDateTime.parse("2023-07-02T00:00+08:00"),
                 ),
-                onTabClick = { _, _ -> }
+                onTabClick = { _, _ -> },
             )
         }
     }

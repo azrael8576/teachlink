@@ -20,9 +20,9 @@ fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
             text = label,
             modifier = Modifier
                 .baselineHeight(24.dp)
-                .semantics { contentDescription= label },
+                .semantics { contentDescription = label },
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         val style = if (isLink) {
             MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.primary)
@@ -34,7 +34,7 @@ fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
             modifier = Modifier
                 .baselineHeight(24.dp)
                 .semantics { contentDescription = value },
-            style = style
+            style = style,
         )
     }
 }

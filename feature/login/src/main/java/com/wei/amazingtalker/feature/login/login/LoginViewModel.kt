@@ -13,11 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val userDataRepository: UserDataRepository
+    private val userDataRepository: UserDataRepository,
 ) : BaseViewModel<
-        LoginViewAction,
-        LoginViewState
-        >(LoginViewState()) {
+    LoginViewAction,
+    LoginViewState,
+    >(LoginViewState()) {
 
     private fun login(account: String, password: String) {
         // TODO 替換至 login API
@@ -40,5 +40,4 @@ class LoginViewModel @Inject constructor(
             is LoginViewAction.Login -> login(action.account, action.password)
         }
     }
-
 }

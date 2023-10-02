@@ -12,7 +12,6 @@ import com.wei.amazingtalker.core.result.DataSourceResult
 import com.wei.amazingtalker.core.utils.AtClocks
 import com.wei.amazingtalker.core.utils.Clocks
 import com.wei.amazingtalker.core.utils.UiText
-import com.wei.amazingtalker.feature.teacherschedule.R
 import com.wei.amazingtalker.feature.teacherschedule.domain.GetTeacherScheduleUseCase
 import com.wei.amazingtalker.feature.teacherschedule.utilities.WeekDataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,13 +33,13 @@ class ScheduleViewModel @Inject constructor(
     private val weekDataHelper: WeekDataHelper,
     private val snackbarManager: SnackbarManager,
 ) : BaseViewModel<
-        ScheduleViewAction,
-        ScheduleViewState
-        >(
+    ScheduleViewAction,
+    ScheduleViewState,
+    >(
     ScheduleViewState(
         currentClock = clock,
-        queryClockUtc = clockUtc
-    )
+        queryClockUtc = clockUtc,
+    ),
 ) {
 
     private val _scheduleTimeList =
@@ -53,7 +52,7 @@ class ScheduleViewModel @Inject constructor(
 
     private fun refreshWeekData(
         queryDateLocal: OffsetDateTime,
-        resetToStartOfDay: Boolean = false
+        resetToStartOfDay: Boolean = false,
     ) {
         updateWeekData(queryDateLocal, resetToStartOfDay)
         fetchTeacherSchedule()
@@ -65,7 +64,7 @@ class ScheduleViewModel @Inject constructor(
                 selectedIndex = 0,
                 _queryDateUtc = weekDataHelper.getQueryDateUtc(
                     queryDateLocal = queryDateLocal,
-                    resetToStartOfDay = resetToStartOfDay
+                    resetToStartOfDay = resetToStartOfDay,
                 ),
             )
         }
@@ -81,12 +80,12 @@ class ScheduleViewModel @Inject constructor(
             ).stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = DataSourceResult.Loading
+                initialValue = DataSourceResult.Loading,
             ).collect { result ->
                 _scheduleTimeList.value = result
                 filterTimeListByDate(
                     _scheduleTimeList.value,
-                    states.value.dateTabs[states.value.selectedIndex]
+                    states.value.dateTabs[states.value.selectedIndex],
                 )
             }
         }
@@ -99,14 +98,14 @@ class ScheduleViewModel @Inject constructor(
         }
         filterTimeListByDate(
             _scheduleTimeList.value,
-            states.value.dateTabs[states.value.selectedIndex]
+            states.value.dateTabs[states.value.selectedIndex],
         )
     }
 
     @VisibleForTesting
     fun filterTimeListByDate(
         result: DataSourceResult<MutableList<IntervalScheduleTimeSlot>>,
-        date: OffsetDateTime
+        date: OffsetDateTime,
     ) {
         when (result) {
             is DataSourceResult.Success -> {
@@ -127,7 +126,7 @@ class ScheduleViewModel @Inject constructor(
 
             is DataSourceResult.Error -> {
                 updateState {
-                    Timber.e("filterTimeListByDate Error: ${result.exception.toString()}")
+                    Timber.e("filterTimeListByDate Error: ${result.exception}")
                     copy(
                         timeListUiState = TimeListUiState.LoadFailed,
                         isScrollInProgress = true,
@@ -135,7 +134,7 @@ class ScheduleViewModel @Inject constructor(
                 }
                 showSnackBar(
                     snackbarState = SnackbarState.Error,
-                    message = listOf(result.exception.toString())
+                    message = listOf(result.exception.toString()),
                 )
             }
 
@@ -160,7 +159,7 @@ class ScheduleViewModel @Inject constructor(
                 if (previousWeekMondayLocalDate >= currentDate) {
                     refreshWeekData(
                         queryDateLocal = previousWeekMondayLocalDate,
-                        resetToStartOfDay = true
+                        resetToStartOfDay = true,
                     )
                 } else {
                     refreshWeekData(queryDateLocal = currentDate)
@@ -170,7 +169,7 @@ class ScheduleViewModel @Inject constructor(
             WeekAction.NEXT_WEEK -> {
                 refreshWeekData(
                     queryDateLocal = states.value.weekStart.plusWeeks(1),
-                    resetToStartOfDay = true
+                    resetToStartOfDay = true,
                 )
             }
         }
@@ -184,7 +183,7 @@ class ScheduleViewModel @Inject constructor(
         if (resId == null) {
             snackbarManager.showMessage(
                 state = snackbarState,
-                uiText = UiText.DynamicString(message.first())
+                uiText = UiText.DynamicString(message.first()),
             )
         } else {
             snackbarManager.showMessage(
@@ -193,8 +192,8 @@ class ScheduleViewModel @Inject constructor(
                     resId,
                     message.map {
                         UiText.StringResource.Args.DynamicString(it)
-                    }.toList()
-                )
+                    }.toList(),
+                ),
             )
         }
     }
@@ -202,7 +201,6 @@ class ScheduleViewModel @Inject constructor(
     override fun dispatch(action: ScheduleViewAction) {
         Timber.d("dispatch $action")
         when (action) {
-
             is ScheduleViewAction.ShowSnackBar -> {
                 showSnackBar(
                     resId = action.resId,
@@ -221,11 +219,10 @@ class ScheduleViewModel @Inject constructor(
             ScheduleViewAction.ListScrolled -> {
                 updateState {
                     copy(
-                        isScrollInProgress = false
+                        isScrollInProgress = false,
                     )
                 }
             }
         }
     }
-
 }

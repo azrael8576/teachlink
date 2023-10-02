@@ -18,7 +18,6 @@ import com.wei.amazingtalker.feature.teacherschedule.domain.GetTeacherScheduleUs
 import com.wei.amazingtalker.feature.teacherschedule.utilities.TEST_DATA_TEACHER_NAME
 import com.wei.amazingtalker.feature.teacherschedule.utilities.WeekDataHelper
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -73,7 +72,7 @@ class ScheduleViewModelTest {
             clockUtc = fixedClockUtc,
             getTeacherScheduleUseCase = getTeacherScheduleUseCase,
             weekDataHelper = weekDataHelper,
-            snackbarManager = snackbarManager
+            snackbarManager = snackbarManager,
         )
 
         expectedState = MutableStateFlow(viewModel.states.value)
@@ -106,13 +105,13 @@ class ScheduleViewModelTest {
                 resId,
                 message.map {
                     UiText.StringResource.Args.DynamicString(it)
-                }.toList()
+                }.toList(),
             )
 
             // Act
             val action = ScheduleViewAction.ShowSnackBar(
                 resId,
-                message = message
+                message = message,
             )
             viewModel.dispatch(action)
 
@@ -132,13 +131,13 @@ class ScheduleViewModelTest {
                 resId,
                 message.map {
                     UiText.StringResource.Args.DynamicString(it)
-                }.toList()
+                }.toList(),
             )
 
             // Act
             val action = ScheduleViewAction.ShowSnackBar(
                 resId,
-                message = message
+                message = message,
             )
             viewModel.dispatch(action)
 
@@ -163,7 +162,7 @@ class ScheduleViewModelTest {
                     selectedIndex = 0,
                     _queryDateUtc = weekDataHelper.getQueryDateUtc(
                         queryDateLocal = previousWeekMondayLocalDate,
-                        resetToStartOfDay = true
+                        resetToStartOfDay = true,
                     ),
                 )
             }
@@ -185,7 +184,7 @@ class ScheduleViewModelTest {
                     selectedIndex = 0,
                     _queryDateUtc = weekDataHelper.getQueryDateUtc(
                         queryDateLocal = OffsetDateTime.now(fixedClock).getLocalOffsetDateTime(),
-                        resetToStartOfDay = false
+                        resetToStartOfDay = false,
                     ),
                 )
             }
@@ -198,7 +197,6 @@ class ScheduleViewModelTest {
             Truth.assertThat(viewModel.states.value.selectedIndex).isEqualTo(expectedState.value.selectedIndex)
         }
 
-
     @Test
     fun `dispatch updateWeek action update correct _queryDateUtc when weekAction is NEXT_WEEK`() =
         runTest {
@@ -208,7 +206,7 @@ class ScheduleViewModelTest {
                     selectedIndex = 0,
                     _queryDateUtc = weekDataHelper.getQueryDateUtc(
                         queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
-                        resetToStartOfDay = true
+                        resetToStartOfDay = true,
                     ),
                 )
             }
@@ -230,7 +228,7 @@ class ScheduleViewModelTest {
                     selectedIndex = 0,
                     _queryDateUtc = weekDataHelper.getQueryDateUtc(
                         queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
-                        resetToStartOfDay = true
+                        resetToStartOfDay = true,
                     ),
                 )
             }
@@ -256,15 +254,15 @@ class ScheduleViewModelTest {
                             start = OffsetDateTime.parse("2023-08-25T01:00+08:00"),
                             end = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
                             state = ScheduleState.AVAILABLE,
-                            duringDayType = DuringDayType.Morning
+                            duringDayType = DuringDayType.Morning,
                         ),
                         IntervalScheduleTimeSlot(
                             start = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
                             end = OffsetDateTime.parse("2023-08-25T02:00+08:00"),
                             state = ScheduleState.AVAILABLE,
-                            duringDayType = DuringDayType.Morning
-                        )
-                    )
+                            duringDayType = DuringDayType.Morning,
+                        ),
+                    ),
                 )
 
             // Act
@@ -301,7 +299,6 @@ class ScheduleViewModelTest {
             // Assert
             Truth.assertThat(viewModel.states.value.timeListUiState).isEqualTo(TimeListUiState.Loading)
         }
-
 }
 
 const val testTeacherName = TEST_DATA_TEACHER_NAME
@@ -312,30 +309,30 @@ private val testTimeSlotList = mutableListOf(
         start = OffsetDateTime.parse("2023-08-19T16:00+08:00"),
         end = OffsetDateTime.parse("2023-08-19T16:30+08:00"),
         state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon
+        duringDayType = DuringDayType.Afternoon,
     ),
     IntervalScheduleTimeSlot(
         start = OffsetDateTime.parse("2023-08-20T13:30+08:00"),
         end = OffsetDateTime.parse("2023-08-20T14:00+08:00"),
         state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon
+        duringDayType = DuringDayType.Afternoon,
     ),
     IntervalScheduleTimeSlot(
         start = OffsetDateTime.parse("2023-08-20T14:00+08:00"),
         end = OffsetDateTime.parse("2023-08-20T14:30+08:00"),
         state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon
+        duringDayType = DuringDayType.Afternoon,
     ),
     IntervalScheduleTimeSlot(
         start = OffsetDateTime.parse("2023-08-25T01:00+08:00"),
         end = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
         state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Morning
+        duringDayType = DuringDayType.Morning,
     ),
     IntervalScheduleTimeSlot(
         start = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
         end = OffsetDateTime.parse("2023-08-25T02:00+08:00"),
         state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Morning
-    )
+        duringDayType = DuringDayType.Morning,
+    ),
 )

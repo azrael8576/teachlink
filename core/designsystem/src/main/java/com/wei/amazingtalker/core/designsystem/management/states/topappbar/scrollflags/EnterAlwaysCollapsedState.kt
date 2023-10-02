@@ -1,26 +1,28 @@
 package com.wei.amazingtalker.core.designsystem.management.states.topappbar.scrollflags
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.structuralEqualityPolicy
 import com.wei.amazingtalker.core.designsystem.management.states.topappbar.ScrollFlagState
 
 class EnterAlwaysCollapsedState(
     heightRange: IntRange,
-    scrollOffset: Float = 0f
+    scrollOffset: Float = 0f,
 ) : ScrollFlagState(heightRange) {
 
     override var _scrollOffset by mutableStateOf(
         value = scrollOffset.coerceIn(0f, maxHeight.toFloat()),
-        policy = structuralEqualityPolicy()
+        policy = structuralEqualityPolicy(),
     )
 
     override val offset: Float
         get() = if (scrollOffset > rangeDifference) {
             -(scrollOffset - rangeDifference).coerceIn(0f, minHeight.toFloat())
-        } else 0f
+        } else {
+            0f
+        }
 
     override var scrollOffset: Float
         get() = _scrollOffset
@@ -46,7 +48,7 @@ class EnterAlwaysCollapsedState(
                     mapOf(
                         minHeightKey to it.minHeight,
                         maxHeightKey to it.maxHeight,
-                        scrollOffsetKey to it.scrollOffset
+                        scrollOffsetKey to it.scrollOffset,
                     )
                 },
                 restore = {
@@ -54,7 +56,7 @@ class EnterAlwaysCollapsedState(
                         heightRange = (it[minHeightKey] as Int)..(it[maxHeightKey] as Int),
                         scrollOffset = it[scrollOffsetKey] as Float,
                     )
-                }
+                },
             )
         }
     }

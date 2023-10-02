@@ -6,7 +6,6 @@ import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import kotlin.reflect.KProperty1
 
-
 /**
  * State 是一種特殊的 LiveData，用於封裝可重複使用的狀態。
  * 當配置變化（如旋轉屏幕）時，它可以持續地提供相同的狀態值。
@@ -21,11 +20,11 @@ import kotlin.reflect.KProperty1
 fun <T, A> LiveData<T>.observeState(
     lifecycleOwner: LifecycleOwner,
     propl: KProperty1<T, A>,
-    action: (A) -> Unit
+    action: (A) -> Unit,
 ) {
-    this.map{
+    this.map {
         StateTuple1(propl.get(it))
-    }.distinctUntilChanged().observe(lifecycleOwner) {(a) ->
+    }.distinctUntilChanged().observe(lifecycleOwner) { (a) ->
         action.invoke(a)
     }
 }
