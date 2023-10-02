@@ -23,11 +23,11 @@ android {
          *
          * XYZ: App version (050 for 0.5.0)
          */
-        versionCode = 3313050
+        versionCode = 3414060
         /**
          * SemVer major.minor.patch
          */
-        versionName = "0.5.0"
+        versionName = "0.6.0"
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.wei.amazingtalker_recruit.core.testing.AtTestRunner"

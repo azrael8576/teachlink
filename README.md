@@ -80,11 +80,11 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 > **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/amazingtalker-recruit/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker_recruit/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
 
 ## Build
-該應用程序包含常用 `debug` 和 `release` build variants。
+該應用程序包含常用 `demodebug` 和 `demoRelease` build variants。(`prod` variants 保留未來供生產環境所使用).
 
-目前兩個版本連線**均為測試環境**。
+目前所有版本連線**均為測試環境**。
 
-對於正常開發，請使用該 `debug` variant。對於 UI 性能測試，請使用該 `release` variant。
+對於正常開發，請使用該 `demodebug` variant。對於 UI 性能測試，請使用該 `demoRelease` variant。
 
 > **Note:** 詳見 Google 官方網誌文章 [_Why should you always test Compose performance in release?_](https://medium.com/androiddevelopers/why-should-you-always-test-compose-performance-in-release-4168dd0f2c71)
 
