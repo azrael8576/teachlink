@@ -1,4 +1,8 @@
 # Amazingtalker-Recruit
+[![Android CI](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazingtalker-recruit/actions/workflows/Build.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE)
+![Logo](docs/images/logo.png)
+
 "Amazingtalker-Recruit" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
 UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
@@ -147,4 +151,6 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 [_amazingtalker.notion.site/Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293)
 
 ## License
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE)
+
 **Amazingtalker-Recruit** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/amazingtalker-recruit/blob/main/LICENSE) for more information.
