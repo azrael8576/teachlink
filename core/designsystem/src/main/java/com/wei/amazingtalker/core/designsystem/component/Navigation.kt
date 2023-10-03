@@ -23,7 +23,7 @@ import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 
 /**
- * AmazingTalker Recruit navigation bar item with icon and label content slots. Wraps Material 3
+ * Amazing Talker navigation bar item with icon and label content slots. Wraps Material 3
  * [NavigationBarItem].
  *
  * @param selected Whether this item is selected.
@@ -67,7 +67,7 @@ fun RowScope.AtNavigationBarItem(
 }
 
 /**
- * AmazingTalker Recruit navigation bar with content slot. Wraps Material 3 [NavigationBar].
+ * Amazing Talker navigation bar with content slot. Wraps Material 3 [NavigationBar].
  *
  * @param modifier Modifier to be applied to the navigation bar.
  * @param content Destinations inside the navigation bar. This should contain multiple
@@ -87,7 +87,7 @@ fun AtNavigationBar(
 }
 
 /**
- * AmazingTalker Recruit navigation rail item with icon and label content slots. Wraps Material 3
+ * Amazing Talker navigation rail item with icon and label content slots. Wraps Material 3
  * [NavigationRailItem].
  *
  * @param selected Whether this item is selected.
@@ -131,7 +131,7 @@ fun AtNavigationRailItem(
 }
 
 /**
- * AmazingTalker Recruit navigation rail with header and content slots. Wraps Material 3 [NavigationRail].
+ * Amazing Talker navigation rail with header and content slots. Wraps Material 3 [NavigationRail].
  *
  * @param modifier Modifier to be applied to the navigation rail.
  * @param header Optional header that may hold a floating action button or a logo.
@@ -154,7 +154,7 @@ fun AtNavigationRail(
 }
 
 /**
- * AmazingTalker Recruit navigation drawer item with icon and label content slots. Wraps Material 3
+ * Amazing Talker navigation drawer item with icon and label content slots. Wraps Material 3
  * [NavigationDrawerItem].
  *
  * @param selected Whether this item is selected.
@@ -189,7 +189,7 @@ fun AtNavigationDrawerItem(
 }
 
 /**
- * AmazingTalker Recruit navigation drawer with content slot. Wraps Material 3 [PermanentDrawerSheet].
+ * Amazing Talker navigation drawer with content slot. Wraps Material 3 [PermanentDrawerSheet].
  *
  * @param modifier Modifier to be applied to the navigation drawer.
  * @param content Destinations inside the navigation drawer. This should contain multiple
@@ -250,7 +250,7 @@ fun AtNavigationPreview() {
 }
 
 /**
- * AmazingTalker Recruit navigation default values.
+ * Amazing Talker navigation default values.
  */
 object AtNavigationDefaults {
     @Composable

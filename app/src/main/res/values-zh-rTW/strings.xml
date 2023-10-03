@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AmazingTalker</string>
+    <string name="app_name">Amazing Talker</string>
     <string name="not_connected">⚠️ 您沒有網路連線</string>
     <string name="book">Book</string>
     <string name="home">Home</string>

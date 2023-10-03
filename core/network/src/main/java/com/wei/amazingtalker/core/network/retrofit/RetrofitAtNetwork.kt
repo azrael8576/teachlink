@@ -15,7 +15,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Retrofit API declaration for AmazingTalker Network API
+ * Retrofit API declaration for Amazing Talker  Network API
  */
 interface RetrofitAtNetworkApi {
     /**

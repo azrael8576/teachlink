@@ -1,29 +1,29 @@
-# AmazingTalker
-[![Android CI](https://github.com/azrael8576/AmazingTalker/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/AmazingTalker/actions/workflows/Build.yml)
-[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/AmazingTalker)](https://github.com/azrael8576/AmazingTalker/releases)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/AmazingTalker/blob/main/LICENSE)
+# Amazing Talker
+[![Android CI](https://github.com/azrael8576/amazing-talker/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazing-talker/actions/workflows/Build.yml)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/amazing-talker)](https://github.com/azrael8576/amazing-talker/releases)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE)
 
 ![Logo](docs/images/logo.png)
 
-"AmazingTalker" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
+"Amazing Talker" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
 UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
 
 這款 APP 的目標是展示如何遵循 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development) 最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
 
 > [!NOTE]
-> 查看 [AmazingTalker：MAD 遷移之旅](https://github.com/azrael8576/AmazingTalker/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
+> 查看 [Amazing Talker：MAD 遷移之旅](https://github.com/azrael8576/amazing-talker/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
 
 ## Screenshots
 
 ### Phone
-<img src="https://github.com/azrael8576/AmazingTalker/blob/main/docs/demo/screenshots_phone.png" alt="Phone">
+<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_phone.png" alt="Phone">
 
 ### Tablet (Dark Mode)
-<img src="https://github.com/azrael8576/AmazingTalker/blob/main/docs/demo/screenshots_tablet_dark.png" alt="Tablet-Dark">
+<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_tablet_dark.png" alt="Tablet-Dark">
 
 ### Fold
-<img src="https://github.com/azrael8576/AmazingTalker/blob/main/docs/demo/display_fold_table.png" alt="Fold">
+<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/display_fold_table.png" alt="Fold">
 
 ## Tech stack
 #### Architecture
@@ -75,14 +75,14 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 - `StateFlowStateExtensions.kt`：封裝 UI StateFlow 流，提供更方便的操作方式。
 - `DataSourceResult.kt`：封裝數據源結果的密封類別，封裝可能是成功 (`Success`)、錯誤 (`Error`) 或正在加載 (`Loading`) 的狀態。
 - `designsystem/ui/management/states/topappbar/*`：封裝以 Jetpack Compose 實現 Collapsing Toolbar 相關類，並提供`EnterAlwaysCollapsedState`、`EnterAlwaysState`、`ExitUntilCollapsedState` 或 `ScrollState` 的滾動行為 flags。
-> **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/AmazingTalker/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
+> **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/amazing-talker/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
 
 ## Build
-該應用程序包含常用 `demodebug` 和 `demoRelease` build variants。(`prod` variants 保留未來供生產環境所使用).
+該應用程序包含常用 `demoDebug` 和 `demoRelease` build variants。(`prod` variants 保留未來供生產環境所使用).
 
 目前所有版本連線**均為測試環境**。
 
-對於正常開發，請使用該 `demodebug` variant。對於 UI 性能測試，請使用該 `demoRelease` variant。
+對於正常開發，請使用該 `demoDebug` variant。對於 UI 性能測試，請使用該 `demoRelease` variant。
 
 > **Note:** 詳見 Google 官方網誌文章 [_Why should you always test Compose performance in release?_](https://medium.com/androiddevelopers/why-should-you-always-test-compose-performance-in-release-4168dd0f2c71)
 
@@ -118,7 +118,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 本專案已全面實現模組化。
 
 > [!NOTE]
-> 查看 [AmazingTalker 模組化策略](https://github.com/azrael8576/AmazingTalker/blob/main/docs/ModularizationStrategy.md) 找到關於本專案模組化策略與詳細描述。
+> 查看 [Amazing Talker 模組化策略](https://github.com/azrael8576/amazing-talker/blob/main/docs/ModularizationStrategy.md) 找到關於本專案模組化策略與詳細描述。
 
 
 ## Testing
@@ -127,10 +127,10 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ### 1. Test double
 
-在 **AmazingTalker** 專案中，我們使用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來進行依賴注入。而在資料層，我們將元件定義成接口形式，並依照具體需求進行實現綁定。
+在 **Amazing Talker** 專案中，我們使用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來進行依賴注入。而在資料層，我們將元件定義成接口形式，並依照具體需求進行實現綁定。
 
 #### 策略亮點：
-- **AmazingTalker** 並**未使用**任何 mocking libraries，而選擇使用 Hilt 的測試 API，方便我們將正式版本輕鬆替換成測試版本。
+- **Amazing Talker** 並**未使用**任何 mocking libraries，而選擇使用 Hilt 的測試 API，方便我們將正式版本輕鬆替換成測試版本。
 - 測試版本與正式版本保持相同的接口，但是測試版本的實現更為簡單且真實，且有特定的測試掛鉤。
 - 這種設計策略不僅降低了測試的脆弱性，還有效提高了代碼覆蓋率。
 
@@ -139,7 +139,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ### 2. Robot Testing Pattern
 
-對於 UI Testing，**AmazingTalker** 採用了 [_Robot Testing Pattern_](https://jakewharton.com/testing-robots/?source=post_page-----fc820ce250f7--------------------------------)，其核心目的是建立一個抽象層，以聲明性的方式進行 UI 交互。
+對於 UI Testing，**Amazing Talker** 採用了 [_Robot Testing Pattern_](https://jakewharton.com/testing-robots/?source=post_page-----fc820ce250f7--------------------------------)，其核心目的是建立一個抽象層，以聲明性的方式進行 UI 交互。
 
 #### 策略特點：
 1. **易於理解**：測試內容直觀，使用者可以快速理解而不必深入了解其背後的實現。
@@ -151,6 +151,6 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 [_amazingtalker.notion.site/Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293)
 
 ## License
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/AmazingTalker/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE)
 
-**AmazingTalker** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/AmazingTalker/blob/main/LICENSE) for more information.
+**Amazing Talker** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE) for more information.
