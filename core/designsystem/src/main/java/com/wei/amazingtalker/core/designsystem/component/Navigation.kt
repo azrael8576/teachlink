@@ -212,16 +212,16 @@ fun AtNavigationDrawer(
 @ThemePreviews
 @Composable
 fun AtNavigationPreview() {
-    val items = listOf("Book", "Home", "Contact Me")
+    val items = listOf("Schedule", "Home", "Contact Me")
     val icons = listOf(
-        AtIcons.BookBorder,
+        AtIcons.ScheduleBorder,
         AtIcons.HomeBorder,
-        AtIcons.PersonBorder,
+        AtIcons.ContactMeBorder,
     )
     val selectedIcons = listOf(
-        AtIcons.Book,
+        AtIcons.Schedule,
         AtIcons.Home,
-        AtIcons.Person,
+        AtIcons.ContactMe,
     )
 
     AtTheme {

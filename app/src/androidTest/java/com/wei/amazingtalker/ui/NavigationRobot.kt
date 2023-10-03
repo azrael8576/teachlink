@@ -4,7 +4,6 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker.MainActivity
-import com.wei.amazingtalker.feature.login.R
 import kotlin.properties.ReadOnlyProperty
 
 /**
@@ -28,7 +27,7 @@ internal open class NavigationRobot(
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val book by composeTestRule.stringResource(com.wei.amazingtalker.R.string.book)
+    private val schedule by composeTestRule.stringResource(com.wei.amazingtalker.R.string.schedule)
     private val home by composeTestRule.stringResource(com.wei.amazingtalker.R.string.home)
     private val contactMe by composeTestRule.stringResource(com.wei.amazingtalker.R.string.contact_me)
     private val backDescription by composeTestRule.stringResource(com.wei.amazingtalker.feature.teacherschedule.R.string.content_description_back)
@@ -40,9 +39,9 @@ internal open class NavigationRobot(
         )
     }
 
-    private val navBook by lazy {
+    private val navSchedule by lazy {
         composeTestRule.onNodeWithContentDescription(
-            book,
+            schedule,
             useUnmergedTree = true,
         )
     }
@@ -63,8 +62,8 @@ internal open class NavigationRobot(
         back.assertDoesNotExist()
     }
 
-    internal fun clickNavBook() {
-        navBook.performClick()
+    internal fun clickNavSchedule() {
+        navSchedule.performClick()
         // 等待任何動畫完成
         composeTestRule.waitForIdle()
     }

@@ -80,15 +80,15 @@ class NavigationTest {
     * There should always be at most one instance of a top-level destination at the same time.
     */
     @Test(expected = NoActivityResumedException::class)
-    fun bookDestination_back_quitsApp() {
+    fun topDestination_back_quitsApp() {
         welcomeRobot(composeTestRule) {
         } getStartedClick {
         } login {
             navigationRobot(composeTestRule) {
                 // GIVEN the user navigates to the Contact Me destination
                 clickNavContactMe()
-                // and then navigates to the Book destination
-                clickNavBook()
+                // and then navigates to the Schedule destination
+                clickNavSchedule()
                 // WHEN the user uses the system button/gesture to go back
                 Espresso.pressBack()
                 // THEN the app quits
@@ -120,11 +120,11 @@ class NavigationTest {
     }
 
     /*
-    * When pressing back from any top level destination except "Book", the app navigates back
-    * to the "Book" destination, no matter which destinations you visited in between.
+    * When pressing back from any top level destination except "Schedule", the app navigates back
+    * to the "Schedule" destination, no matter which destinations you visited in between.
     */
     @Test
-    fun navigationBar_backFromAnyDestination_returnsToForYou() {
+    fun navigationBar_backFromAnyDestination_returnsToSchedule() {
         welcomeRobot(composeTestRule) {
         } getStartedClick {
         } login {
