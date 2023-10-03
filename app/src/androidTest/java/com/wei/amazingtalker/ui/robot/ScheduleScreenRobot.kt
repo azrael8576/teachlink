@@ -10,6 +10,8 @@ import kotlin.properties.ReadOnlyProperty
 import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherScheduleR
 
 /**
+ * Screen Robot for End To End Test.
+ *
  * 遵循此模型，找到測試使用者介面元素、檢查其屬性、和透過測試規則執行動作：
  * composeTestRule{.finder}{.assertion}{.action}
  *
