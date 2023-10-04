@@ -71,7 +71,7 @@ fun AtApp(
     networkMonitor: NetworkMonitor,
     windowSizeClass: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
-    isTokenValid: Boolean,
+    isTokenValid: Boolean = true,
     appState: AtAppState = rememberAtAppState(
         networkMonitor = networkMonitor,
         windowSizeClass = windowSizeClass,
@@ -81,12 +81,17 @@ fun AtApp(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-    val navigationType = appState.navigationType
+
+    val atBottomBar = stringResource(R.string.tag_at_bottom_bar)
+    val atNavRail = stringResource(R.string.tag_at_nav_rail)
+    val atNavDrawer = stringResource(R.string.tag_at_nav_drawer)
 
     if (appState.showFunctionalityNotAvailablePopup.value) {
-        FunctionalityNotAvailablePopup(onDismiss = {
-            appState.showFunctionalityNotAvailablePopup.value = false
-        })
+        FunctionalityNotAvailablePopup(
+            onDismiss = {
+                appState.showFunctionalityNotAvailablePopup.value = false
+            },
+        )
     }
 
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
@@ -132,7 +137,7 @@ fun AtApp(
                         destinations = appState.topLevelDestinations,
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination,
-                        modifier = Modifier.testTag("AtBottomBar"),
+                        modifier = Modifier.testTag(atBottomBar),
                     )
                 }
             },
@@ -156,7 +161,7 @@ fun AtApp(
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination,
                         modifier = Modifier
-                            .testTag("AtNavDrawer")
+                            .testTag(atNavDrawer)
                             .padding(16.dp)
                             .safeDrawingPadding(),
                     )
@@ -170,7 +175,7 @@ fun AtApp(
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination,
                         modifier = Modifier
-                            .testTag("AtNavRail")
+                            .testTag(atNavRail)
                             .safeDrawingPadding(),
                     )
                 }

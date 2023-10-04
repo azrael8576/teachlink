@@ -7,7 +7,7 @@ import com.wei.amazingtalker.MainActivity
 import kotlin.properties.ReadOnlyProperty
 
 /**
- * Screen Robot for [NavigationTest].
+ * Robot for [NavigationTest].
  *
  * 遵循此模型，找到測試使用者介面元素、檢查其屬性、和透過測試規則執行動作：
  * composeTestRule{.finder}{.assertion}{.action}

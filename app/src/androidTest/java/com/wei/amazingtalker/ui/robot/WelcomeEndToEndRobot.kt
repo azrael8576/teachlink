@@ -19,12 +19,12 @@ import com.wei.amazingtalker.feature.login.R as FeatureLoginR
  * Testing cheatsheet：
  * https://developer.android.com/jetpack/compose/testing-cheatsheet
  */
-internal fun welcomeRobot(
+internal fun welcomeEndToEndRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: WelcomeRobot.() -> Unit,
-) = WelcomeRobot(composeTestRule).apply(func)
+    func: WelcomeEndToEndRobot.() -> Unit,
+) = WelcomeEndToEndRobot(composeTestRule).apply(func)
 
-internal open class WelcomeRobot(
+internal open class WelcomeEndToEndRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
@@ -51,11 +51,20 @@ internal open class WelcomeRobot(
         welcomeTitle.assertExists().assertIsDisplayed()
     }
 
-    infix fun getStartedClick(func: com.wei.amazingtalker.ui.robot.LoginScreenRobot.() -> Unit): com.wei.amazingtalker.ui.robot.LoginScreenRobot {
+    fun isWelcomeTitleDisplayed(): Boolean {
+        return try {
+            verifyWelcomeTitleDisplayed()
+            true
+        } catch (e: AssertionError) {
+            false
+        }
+    }
+
+    infix fun getStartedClick(func: LoginEndToEndRobotRobot.() -> Unit): LoginEndToEndRobotRobot {
         getStarted.performClick()
-        return com.wei.amazingtalker.ui.robot.loginScreenRobot(composeTestRule) {
+        return loginEndToEndRobot(composeTestRule) {
             // 等待任何動畫完成
-            composeTestRule.waitForIdle()
+            composeTestRule.waitUntil(3_000) { isLoginButtonDisplayed() }
             func()
         }
     }

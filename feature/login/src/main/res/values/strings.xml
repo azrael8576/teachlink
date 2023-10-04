@@ -20,5 +20,5 @@
     <string name="content_description_login">Login</string>
 
     <!-- Test tag -->
-    <string name="tag_welcome_graphics">tag_welcome_graphics</string>
+    <string name="tag_welcome_graphics" translatable="false">tag_welcome_graphics</string>
 </resources>

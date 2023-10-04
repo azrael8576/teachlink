@@ -28,14 +28,4 @@
     <string name="content_description_during_day_type">時間區間 %s</string>
     <string name="content_description_back">上一頁</string>
 
-    <!-- Test tag -->
-    <string name="tag_schedule_top_app_bar">tag_schedule_top_app_bar</string>
-    <string name="tag_schedule_toolbar">tag_schedule_toolbar</string>
-    <string name="tag_schedule_list">tag_schedule_list</string>
-
-    <string name="tag_teacher_name">tag_teacher_name</string>
-    <string name="tag_start_time">tag_start_time</string>
-    <string name="tag_end_time">tag_end_time</string>
-    <string name="tag_state">tag_state</string>
-    <string name="tag_during_day_type">tag_during_day_type</string>
 </resources>

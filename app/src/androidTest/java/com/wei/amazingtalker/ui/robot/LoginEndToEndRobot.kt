@@ -5,6 +5,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.performClick
@@ -22,12 +23,12 @@ import com.wei.amazingtalker.feature.login.R as FeatureLoginR
  * Testing cheatsheet：
  * https://developer.android.com/jetpack/compose/testing-cheatsheet
  */
-internal fun loginScreenRobot(
+internal fun loginEndToEndRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: com.wei.amazingtalker.ui.robot.LoginScreenRobot.() -> Unit,
-) = com.wei.amazingtalker.ui.robot.LoginScreenRobot(composeTestRule).apply(func)
+    func: LoginEndToEndRobotRobot.() -> Unit,
+) = LoginEndToEndRobotRobot(composeTestRule).apply(func)
 
-internal open class LoginScreenRobot(
+internal open class LoginEndToEndRobotRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
 
@@ -49,9 +50,22 @@ internal open class LoginScreenRobot(
         )
     }
 
-    infix fun login(func: com.wei.amazingtalker.ui.robot.ScheduleScreenRobot.() -> Unit): com.wei.amazingtalker.ui.robot.ScheduleScreenRobot {
+    private fun verifyLoginButtonDisplayed() {
+        loginButton.assertExists().assertIsDisplayed()
+    }
+
+    fun isLoginButtonDisplayed(): Boolean {
+        return try {
+            verifyLoginButtonDisplayed()
+            true
+        } catch (e: AssertionError) {
+            false
+        }
+    }
+
+    infix fun login(func: ScheduleEndToEndRobot.() -> Unit): ScheduleEndToEndRobot {
         loginButton.performClick()
-        return com.wei.amazingtalker.ui.robot.scheduleScreenRobot(composeTestRule) {
+        return scheduleEndToEndRobot(composeTestRule) {
             // 等待任何動畫完成
             composeTestRule.waitUntil(3_000) { isScheduleTopAppBarDisplayed() }
             func()

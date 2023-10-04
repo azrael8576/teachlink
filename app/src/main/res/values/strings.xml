@@ -5,4 +5,9 @@
     <string name="home">Home</string>
     <string name="contact_me">Contact Me</string>
 
+    <!-- Test tag -->
+    <string name="tag_at_bottom_bar" translatable="false">AtBottomBar</string>
+    <string name="tag_at_nav_rail" translatable="false">AtNavRail</string>
+    <string name="tag_at_nav_drawer" translatable="false">AtNavDrawer</string>
+
 </resources>

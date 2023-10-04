@@ -18,12 +18,12 @@ import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherSchedule
  * Testing cheatsheet：
  * https://developer.android.com/jetpack/compose/testing-cheatsheet
  */
-internal fun scheduleScreenRobot(
+internal fun scheduleEndToEndRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: ScheduleScreenRobot.() -> Unit,
-) = ScheduleScreenRobot(composeTestRule).apply(func)
+    func: ScheduleEndToEndRobot.() -> Unit,
+) = ScheduleEndToEndRobot(composeTestRule).apply(func)
 
-internal open class ScheduleScreenRobot(
+internal open class ScheduleEndToEndRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =

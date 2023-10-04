@@ -4,7 +4,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.NoActivityResumedException
 import com.wei.amazingtalker.MainActivity
-import com.wei.amazingtalker.ui.robot.welcomeRobot
+import com.wei.amazingtalker.ui.robot.welcomeEndToEndRobot
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -45,14 +45,14 @@ class NavigationTest {
 
     @Test
     fun firstScreen_isWelcome() {
-        welcomeRobot(composeTestRule) {
+        welcomeEndToEndRobot(composeTestRule) {
             verifyWelcomeTitleDisplayed()
         }
     }
 
     @Test
     fun isScheduleScreen_afterLogin() {
-        welcomeRobot(composeTestRule) {
+        welcomeEndToEndRobot(composeTestRule) {
         } getStartedClick {
         } login {
             verifyScheduleTopAppBarDisplayed()
@@ -64,7 +64,7 @@ class NavigationTest {
      */
     @Test
     fun topLevelDestinations_doNotShowUpArrow() {
-        welcomeRobot(composeTestRule) {
+        welcomeEndToEndRobot(composeTestRule) {
         } getStartedClick {
         } login {
             navigationRobot(composeTestRule) {
@@ -77,11 +77,30 @@ class NavigationTest {
     }
 
     /*
+    * When pressing back from any top level destination except "Schedule", the app navigates back
+    * to the "Schedule" destination, no matter which destinations you visited in between.
+    */
+    @Test
+    fun navigationBar_backFromAnyDestination_returnsToSchedule() {
+        welcomeEndToEndRobot(composeTestRule) {
+        } getStartedClick {
+        } login {
+            navigationRobot(composeTestRule) {
+                // GIVEN the user is on any of the top level destinations, THEN the Up arrow is not shown.
+                clickNavContactMe()
+                // WHEN the user uses the system button/gesture to go back
+                Espresso.pressBack()
+            }
+            verifyScheduleTopAppBarDisplayed()
+        }
+    }
+
+    /*
     * There should always be at most one instance of a top-level destination at the same time.
     */
     @Test(expected = NoActivityResumedException::class)
     fun topDestination_back_quitsApp() {
-        welcomeRobot(composeTestRule) {
+        welcomeEndToEndRobot(composeTestRule) {
         } getStartedClick {
         } login {
             navigationRobot(composeTestRule) {
@@ -98,7 +117,8 @@ class NavigationTest {
 
     @Test(expected = NoActivityResumedException::class)
     fun welcomeScreen_back_quitsApp() {
-        welcomeRobot(composeTestRule) {
+        welcomeEndToEndRobot(composeTestRule) {
+            composeTestRule.waitUntil(3_000) { isWelcomeTitleDisplayed() }
             navigationRobot(composeTestRule) {
                 // WHEN the user uses the system button/gesture to go back
                 Espresso.pressBack()
@@ -109,32 +129,13 @@ class NavigationTest {
 
     @Test(expected = NoActivityResumedException::class)
     fun loginScreen_back_quitsApp() {
-        welcomeRobot(composeTestRule) {
+        welcomeEndToEndRobot(composeTestRule) {
         } getStartedClick {
             navigationRobot(composeTestRule) {
                 // WHEN the user uses the system button/gesture to go back
                 Espresso.pressBack()
                 // THEN the app quits
             }
-        }
-    }
-
-    /*
-    * When pressing back from any top level destination except "Schedule", the app navigates back
-    * to the "Schedule" destination, no matter which destinations you visited in between.
-    */
-    @Test
-    fun navigationBar_backFromAnyDestination_returnsToSchedule() {
-        welcomeRobot(composeTestRule) {
-        } getStartedClick {
-        } login {
-            navigationRobot(composeTestRule) {
-                // GIVEN the user is on any of the top level destinations, THEN the Up arrow is not shown.
-                clickNavContactMe()
-                // WHEN the user uses the system button/gesture to go back
-                Espresso.pressBack()
-            }
-            verifyScheduleTopAppBarDisplayed()
         }
     }
 }
