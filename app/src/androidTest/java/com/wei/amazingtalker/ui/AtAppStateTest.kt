@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.composable
@@ -17,6 +16,12 @@ import androidx.navigation.testing.TestNavHostController
 import com.google.common.truth.Truth.assertThat
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker.core.testing.util.TestNetworkMonitor
+import com.wei.amazingtalker.utilities.COMPACT_HEIGHT
+import com.wei.amazingtalker.utilities.COMPACT_WIDTH
+import com.wei.amazingtalker.utilities.EXPANDED_HEIGHT
+import com.wei.amazingtalker.utilities.EXPANDED_WIDTH
+import com.wei.amazingtalker.utilities.MEDIUM_HEIGHT
+import com.wei.amazingtalker.utilities.MEDIUM_WIDTH
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -106,7 +111,7 @@ class AtAppStateTest {
             state = AtAppState(
                 navController = NavHostController(LocalContext.current),
                 coroutineScope = backgroundScope,
-                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(800.dp, 800.dp)),
+                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(MEDIUM_WIDTH, MEDIUM_HEIGHT)),
                 networkMonitor = networkMonitor,
                 displayFeatures = emptyList(),
             )
@@ -120,7 +125,7 @@ class AtAppStateTest {
             state = AtAppState(
                 navController = NavHostController(LocalContext.current),
                 coroutineScope = backgroundScope,
-                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(900.dp, 1200.dp)),
+                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(EXPANDED_WIDTH, EXPANDED_HEIGHT)),
                 networkMonitor = networkMonitor,
                 displayFeatures = emptyList(),
             )
@@ -136,7 +141,7 @@ class AtAppStateTest {
             state = AtAppState(
                 navController = NavHostController(LocalContext.current),
                 coroutineScope = backgroundScope,
-                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(900.dp, 1200.dp)),
+                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(EXPANDED_WIDTH, EXPANDED_HEIGHT)),
                 networkMonitor = networkMonitor,
                 displayFeatures = emptyList(),
             )
@@ -152,7 +157,7 @@ class AtAppStateTest {
         assertTrue(results.contains(true))
     }
 
-    private fun getCompactWindowClass() = WindowSizeClass.calculateFromSize(DpSize(500.dp, 300.dp))
+    private fun getCompactWindowClass() = WindowSizeClass.calculateFromSize(DpSize(COMPACT_WIDTH, COMPACT_HEIGHT))
 }
 
 @Composable

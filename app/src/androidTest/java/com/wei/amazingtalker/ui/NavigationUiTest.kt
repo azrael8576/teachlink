@@ -2,10 +2,15 @@ package com.wei.amazingtalker.ui
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker.core.manager.SnackbarManager
 import com.wei.amazingtalker.uitesthiltmanifest.HiltComponentActivity
+import com.wei.amazingtalker.utilities.COMPACT_HEIGHT
+import com.wei.amazingtalker.utilities.COMPACT_WIDTH
+import com.wei.amazingtalker.utilities.EXPANDED_HEIGHT
+import com.wei.amazingtalker.utilities.EXPANDED_WIDTH
+import com.wei.amazingtalker.utilities.MEDIUM_HEIGHT
+import com.wei.amazingtalker.utilities.MEDIUM_WIDTH
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -21,15 +26,6 @@ import javax.inject.Inject
  */
 @HiltAndroidTest
 class NavigationUiTest {
-    companion object {
-        val COMPACT_WIDTH = 400.dp
-        val MEDIUM_WIDTH = 610.dp
-        val EXPANDED_WIDTH = 900.dp
-
-        val COMPACT_HEIGHT = 400.dp
-        val MEDIUM_HEIGHT = 500.dp
-        val EXPANDED_HEIGHT = 1000.dp
-    }
 
     /**
      * Manages the components' state and is used to perform injection on your test
