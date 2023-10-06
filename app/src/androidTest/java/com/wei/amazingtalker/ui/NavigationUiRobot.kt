@@ -1,4 +1,4 @@
-import android.graphics.Rect
+
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -15,6 +15,7 @@ import com.wei.amazingtalker.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker.core.manager.SnackbarManager
 import com.wei.amazingtalker.ui.AtApp
 import com.wei.amazingtalker.uitesthiltmanifest.HiltComponentActivity
+import com.wei.amazingtalker.utilities.FoldingDeviceUtil
 import kotlin.properties.ReadOnlyProperty
 
 /**
@@ -67,16 +68,22 @@ internal open class NavigationUiRobot(
         dpSize: DpSize,
         networkMonitor: NetworkMonitor,
         snackbarManager: SnackbarManager,
+        foldingState: FoldingFeature.State? = null,
     ) {
         composeTestRule.setContent {
             TestHarness(dpSize) {
                 BoxWithConstraints {
+                    val displayFeatures = if (foldingState != null) {
+                        val foldBounds = FoldingDeviceUtil.getFoldBounds(dpSize)
+                        listOf(FoldingDeviceUtil.getFoldingFeature(foldBounds, foldingState))
+                    } else {
+                        emptyList()
+                    }
+
                     AtApp(
-                        windowSizeClass = WindowSizeClass.calculateFromSize(
-                            dpSize,
-                        ),
+                        windowSizeClass = WindowSizeClass.calculateFromSize(dpSize),
                         networkMonitor = networkMonitor,
-                        displayFeatures = emptyList(),
+                        displayFeatures = displayFeatures,
                         snackbarManager = snackbarManager,
                     )
                 }
@@ -89,43 +96,7 @@ internal open class NavigationUiRobot(
         networkMonitor: NetworkMonitor,
         snackbarManager: SnackbarManager,
     ) {
-        composeTestRule.setContent {
-            TestHarness(dpSize) {
-                BoxWithConstraints {
-                    val bookFoldBounds = getBookFoldBounds(dpSize)
-                    val bookFoldingFeature = getBookFoldingFeature(bookFoldBounds)
-
-                    AtApp(
-                        windowSizeClass = WindowSizeClass.calculateFromSize(
-                            dpSize,
-                        ),
-                        networkMonitor = networkMonitor,
-                        displayFeatures = listOf(bookFoldingFeature),
-                        snackbarManager = snackbarManager,
-                    )
-                }
-            }
-        }
-    }
-
-    private fun getBookFoldBounds(dpSize: DpSize): Rect {
-        val middleHeight = (dpSize.height / 2f).value.toInt()
-        return Rect(
-            0,
-            middleHeight,
-            dpSize.width.value.toInt(),
-            middleHeight,
-        )
-    }
-
-    private fun getBookFoldingFeature(foldBounds: Rect): FoldingFeature {
-        return object : FoldingFeature {
-            override val bounds: Rect = foldBounds
-            override val isSeparating: Boolean = true
-            override val occlusionType: FoldingFeature.OcclusionType = FoldingFeature.OcclusionType.NONE
-            override val orientation: FoldingFeature.Orientation = FoldingFeature.Orientation.VERTICAL
-            override val state: FoldingFeature.State = FoldingFeature.State.HALF_OPENED
-        }
+        setAtAppContent(dpSize, networkMonitor, snackbarManager, FoldingFeature.State.HALF_OPENED)
     }
 
     fun verifyAtBottomBarDisplayed() {

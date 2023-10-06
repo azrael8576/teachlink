@@ -13,13 +13,16 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import androidx.navigation.testing.TestNavHostController
+import androidx.window.layout.FoldingFeature
 import com.google.common.truth.Truth.assertThat
+import com.wei.amazingtalker.core.designsystem.ui.AtContentType
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker.core.testing.util.TestNetworkMonitor
 import com.wei.amazingtalker.utilities.COMPACT_HEIGHT
 import com.wei.amazingtalker.utilities.COMPACT_WIDTH
 import com.wei.amazingtalker.utilities.EXPANDED_HEIGHT
 import com.wei.amazingtalker.utilities.EXPANDED_WIDTH
+import com.wei.amazingtalker.utilities.FoldingDeviceUtil
 import com.wei.amazingtalker.utilities.MEDIUM_HEIGHT
 import com.wei.amazingtalker.utilities.MEDIUM_WIDTH
 import junit.framework.TestCase.assertTrue
@@ -111,7 +114,12 @@ class AtAppStateTest {
             state = AtAppState(
                 navController = NavHostController(LocalContext.current),
                 coroutineScope = backgroundScope,
-                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(MEDIUM_WIDTH, MEDIUM_HEIGHT)),
+                windowSizeClass = WindowSizeClass.calculateFromSize(
+                    DpSize(
+                        MEDIUM_WIDTH,
+                        MEDIUM_HEIGHT,
+                    ),
+                ),
                 networkMonitor = networkMonitor,
                 displayFeatures = emptyList(),
             )
@@ -125,7 +133,12 @@ class AtAppStateTest {
             state = AtAppState(
                 navController = NavHostController(LocalContext.current),
                 coroutineScope = backgroundScope,
-                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(EXPANDED_WIDTH, EXPANDED_HEIGHT)),
+                windowSizeClass = WindowSizeClass.calculateFromSize(
+                    DpSize(
+                        EXPANDED_WIDTH,
+                        EXPANDED_HEIGHT,
+                    ),
+                ),
                 networkMonitor = networkMonitor,
                 displayFeatures = emptyList(),
             )
@@ -134,30 +147,127 @@ class AtAppStateTest {
     }
 
     @Test
-    fun verifyStateIsOffline_whenNetworkMonitorReportsDisconnection() = runTest(UnconfinedTestDispatcher()) {
-        val results = mutableListOf<Boolean>()
-
+    fun verifyContentTypeIsSINGLE_PANE_whenWindowSizeIsCompact() = runTest {
         composeTestRule.setContent {
             state = AtAppState(
                 navController = NavHostController(LocalContext.current),
                 coroutineScope = backgroundScope,
-                windowSizeClass = WindowSizeClass.calculateFromSize(DpSize(EXPANDED_WIDTH, EXPANDED_HEIGHT)),
+                windowSizeClass = getCompactWindowClass(),
                 networkMonitor = networkMonitor,
                 displayFeatures = emptyList(),
             )
+            assertThat(state.contentType).isEqualTo(AtContentType.SINGLE_PANE)
         }
-
-        backgroundScope.launch {
-            state.isOffline.collect { value ->
-                results.add(value)
-            }
-        }
-
-        networkMonitor.setConnected(false)
-        assertTrue(results.contains(true))
     }
 
-    private fun getCompactWindowClass() = WindowSizeClass.calculateFromSize(DpSize(COMPACT_WIDTH, COMPACT_HEIGHT))
+    @Test
+    fun verifyContentTypeIsSINGLE_PANE_whenWindowSizeIsMedium_withNormalPosture() = runTest {
+        composeTestRule.setContent {
+            state = AtAppState(
+                navController = NavHostController(LocalContext.current),
+                coroutineScope = backgroundScope,
+                windowSizeClass = WindowSizeClass.calculateFromSize(
+                    DpSize(
+                        MEDIUM_WIDTH,
+                        MEDIUM_HEIGHT,
+                    ),
+                ),
+                networkMonitor = networkMonitor,
+                displayFeatures = emptyList(),
+            )
+            assertThat(state.contentType).isEqualTo(AtContentType.SINGLE_PANE)
+        }
+    }
+
+    @Test
+    fun verifyContentTypeIsDUAL_PANE_whenWindowSizeIsMedium_withBookPosture() = runTest {
+        composeTestRule.setContent {
+            val dpSize = DpSize(MEDIUM_WIDTH, MEDIUM_HEIGHT)
+            val foldBounds = FoldingDeviceUtil.getFoldBounds(dpSize)
+            state = AtAppState(
+                navController = NavHostController(LocalContext.current),
+                coroutineScope = backgroundScope,
+                windowSizeClass = WindowSizeClass.calculateFromSize(dpSize),
+                networkMonitor = networkMonitor,
+                displayFeatures = listOf(
+                    FoldingDeviceUtil.getFoldingFeature(
+                        foldBounds,
+                        FoldingFeature.State.HALF_OPENED,
+                    ),
+                ),
+            )
+            assertThat(state.contentType).isEqualTo(AtContentType.DUAL_PANE)
+        }
+    }
+
+    @Test
+    fun verifyContentTypeIsDUAL_PANE_whenWindowSizeIsMedium_withSeparating() = runTest {
+        composeTestRule.setContent {
+            val dpSize = DpSize(MEDIUM_WIDTH, MEDIUM_HEIGHT)
+            val foldBounds = FoldingDeviceUtil.getFoldBounds(dpSize)
+            state = AtAppState(
+                navController = NavHostController(LocalContext.current),
+                coroutineScope = backgroundScope,
+                windowSizeClass = WindowSizeClass.calculateFromSize(dpSize),
+                networkMonitor = networkMonitor,
+                displayFeatures = listOf(
+                    FoldingDeviceUtil.getFoldingFeature(
+                        foldBounds,
+                        FoldingFeature.State.FLAT,
+                    ),
+                ),
+            )
+            assertThat(state.contentType).isEqualTo(AtContentType.DUAL_PANE)
+        }
+    }
+
+    @Test
+    fun verifyContentTypeIsDUAL_PANE_whenWindowSizeIsExpanded() = runTest {
+        composeTestRule.setContent {
+            val dpSize = DpSize(EXPANDED_WIDTH, EXPANDED_HEIGHT)
+            state = AtAppState(
+                navController = NavHostController(LocalContext.current),
+                coroutineScope = backgroundScope,
+                windowSizeClass = WindowSizeClass.calculateFromSize(dpSize),
+                networkMonitor = networkMonitor,
+                displayFeatures = emptyList(),
+            )
+            assertThat(state.contentType).isEqualTo(AtContentType.DUAL_PANE)
+        }
+    }
+
+    @Test
+    fun verifyStateIsOffline_whenNetworkMonitorReportsDisconnection() =
+        runTest(UnconfinedTestDispatcher()) {
+            val results = mutableListOf<Boolean>()
+
+            composeTestRule.setContent {
+                state = AtAppState(
+                    navController = NavHostController(LocalContext.current),
+                    coroutineScope = backgroundScope,
+                    windowSizeClass = WindowSizeClass.calculateFromSize(
+                        DpSize(
+                            EXPANDED_WIDTH,
+                            EXPANDED_HEIGHT,
+                        ),
+                    ),
+                    networkMonitor = networkMonitor,
+                    displayFeatures = emptyList(),
+                )
+            }
+
+            backgroundScope.launch {
+                state.isOffline.collect { value ->
+                    results.add(value)
+                }
+            }
+
+            networkMonitor.setConnected(false)
+            assertTrue(results.contains(true))
+        }
+
+    private fun getCompactWindowClass() =
+        WindowSizeClass.calculateFromSize(DpSize(COMPACT_WIDTH, COMPACT_HEIGHT))
 }
 
 @Composable
