@@ -42,39 +42,39 @@ class ScheduleScreenTest {
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/302744473
-//    @Test
-//    fun checkScheduleListIsInitPosition_afterOpeningTheScreen() {
-//        scheduleScreenRobot(composeTestRule) {
-//            setScheduleScreenContent()
-//
-//            verifyScheduleListIsInInitPosition()
-//        }
-//    }
+    @Test
+    fun checkScheduleListIsInitPosition_afterOpeningTheScreen() {
+        scheduleScreenRobot(composeTestRule) {
+            setScheduleScreenContent()
+
+            verifyScheduleListIsInInitPosition()
+        }
+    }
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/302744473
-//    @Test
-//    fun checkScheduleListIsReachesTop_afterSwipeUpScheduleList() {
-//        scheduleScreenRobot(composeTestRule) {
-//            setScheduleScreenContent()
-//
-//            swipeUpScheduleList()
-//            verifyScheduleListIsReachesTop()
-//        }
-//    }
+    @Test
+    fun checkScheduleListIsReachesTop_afterSwipeUpScheduleList() {
+        scheduleScreenRobot(composeTestRule) {
+            setScheduleScreenContent()
+
+            swipeUpScheduleList()
+            verifyScheduleListIsReachesTop()
+        }
+    }
 
     // TODO: Temporarily commented out. The Compose UI Testing library breaks performTouchInput handling.
     // See more details at: https://issuetracker.google.com/issues/302744473
-//    @Test
-//    fun checkScheduleListIsInitPosition_afterSwipeDownScheduleList() {
-//        scheduleScreenRobot(composeTestRule) {
-//            setScheduleScreenContent()
-//
-//            swipeUpScheduleList()
-//            swipeDownScheduleList()
-//            verifyScheduleListIsInInitPosition()
-//        }
-//    }
+    @Test
+    fun checkScheduleListIsInitPosition_afterSwipeDownScheduleList() {
+        scheduleScreenRobot(composeTestRule) {
+            setScheduleScreenContent()
+
+            swipeUpScheduleList()
+            swipeDownScheduleList()
+            verifyScheduleListIsInInitPosition()
+        }
+    }
 
     @Test
     fun checkPrevWeekClickNotInvoked_whenWeekStartIsBeforeCurrent_afterClick() {
