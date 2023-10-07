@@ -1,10 +1,10 @@
 import com.wei.amazingtalker.AtBuildType
 
 plugins {
-    id("at.android.application")
-    id("at.android.application.compose")
-    id("at.android.application.flavors")
-    id("at.android.hilt")
+    alias(libs.plugins.at.android.application)
+    alias(libs.plugins.at.android.application.compose)
+    alias(libs.plugins.at.android.application.flavors)
+    alias(libs.plugins.at.android.hilt)
 }
 
 android {

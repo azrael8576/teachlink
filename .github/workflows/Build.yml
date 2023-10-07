@@ -90,6 +90,16 @@ jobs:
           name: test-results
           path: '**/build/test-results/test*UnitTest/**.xml'
 
+      - name: Check lint
+        run: ./gradlew :app:lintProdRelease
+
+      - name: Upload lint reports (HTML)
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lint-reports
+          path: '**/build/reports/lint-results-*.html'
+
   androidTest:
     needs: build
     runs-on: macOS-latest # enables hardware acceleration in the virtual machine

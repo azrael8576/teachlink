@@ -1,8 +1,8 @@
 plugins {
-    id("at.android.library")
-    id("at.android.hilt")
-    id("kotlinx-serialization")
+    alias(libs.plugins.at.android.library)
+    alias(libs.plugins.at.android.hilt)
     alias(libs.plugins.secrets)
+    id("kotlinx-serialization")
 }
 
 android {
