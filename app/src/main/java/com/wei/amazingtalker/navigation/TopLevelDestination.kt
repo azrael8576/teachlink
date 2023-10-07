@@ -16,10 +16,10 @@ enum class TopLevelDestination(
     val titleTextId: Int,
 ) {
     SCHEDULE(
-        selectedIcon = AtIcons.Book,
-        unselectedIcon = AtIcons.BookBorder,
-        iconTextId = R.string.book,
-        titleTextId = R.string.book,
+        selectedIcon = AtIcons.Schedule,
+        unselectedIcon = AtIcons.ScheduleBorder,
+        iconTextId = R.string.schedule,
+        titleTextId = R.string.schedule,
     ),
     HOME(
         selectedIcon = AtIcons.Home,
@@ -28,8 +28,8 @@ enum class TopLevelDestination(
         titleTextId = R.string.home,
     ),
     CONTACT_ME(
-        selectedIcon = AtIcons.Person,
-        unselectedIcon = AtIcons.PersonBorder,
+        selectedIcon = AtIcons.ContactMe,
+        unselectedIcon = AtIcons.ContactMeBorder,
         iconTextId = R.string.contact_me,
         titleTextId = R.string.contact_me,
     ),
