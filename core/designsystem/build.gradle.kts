@@ -1,7 +1,7 @@
 plugins {
-    id("at.android.library")
-    id("at.android.library.compose")
-    id("at.android.hilt")
+    alias(libs.plugins.at.android.library)
+    alias(libs.plugins.at.android.library.compose)
+    alias(libs.plugins.at.android.hilt)
 }
 
 android {

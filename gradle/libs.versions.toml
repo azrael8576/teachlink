@@ -36,6 +36,7 @@ coil = "2.4.0"
 accompanist = "0.30.1"
 ksp = "1.9.10-1.0.13"
 secrets = "2.0.1"
+lint = "31.0.2"
 
 [libraries]
 
@@ -157,6 +158,9 @@ accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive",
 # Accompanist testharness
 accompanist-testharness = { group = "com.google.accompanist", name = "accompanist-testharness", version.ref = "accompanist" }
 
+# lint
+lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
+
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -174,3 +178,15 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+
+
+# Plugins defined by this project
+at-android-application = { id = "at.android.application", version = "unspecified" }
+at-android-application-compose = { id = "at.android.application.compose", version = "unspecified" }
+at-android-application-flavors = { id = "at.android.application.flavors", version = "unspecified" }
+at-android-feature = { id = "at.android.feature", version = "unspecified" }
+at-android-hilt = { id = "at.android.hilt", version = "unspecified" }
+at-android-library = { id = "at.android.library", version = "unspecified" }
+at-android-library-compose = { id = "at.android.library.compose", version = "unspecified" }
+at-android-test = { id = "at.android.test", version = "unspecified" }
+at-jvm-library = { id = "at.jvm.library", version = "unspecified" }
