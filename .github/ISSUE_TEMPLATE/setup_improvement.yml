@@ -1,0 +1,46 @@
+name: Project Setup Improvement
+description: Submit an improvement or suggestion related to project setup
+title: "[Setup Improvement]: "
+labels: ["setup improvement", "triage me"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to propose an improvement to our project setup!
+
+  - type: checkboxes
+    attributes:
+      label: Preliminary Checks
+      description: Please make sure you've conducted the following checks before submitting an improvement.
+      options:
+        - label: I have searched the existing issues to ensure this is not a duplicate request.
+          required: true
+        - label: This setup improvement does not introduce breaking changes to the existing project structure.
+          required: true
+        - label: I have consulted the project's documentation and guidelines before suggesting this improvement.
+          required: false
+
+  - type: textarea
+    id: describe-problem
+    attributes:
+      label: Describe the Problem or Limitation
+      description: Is your improvement related to a problem or limitation in the current setup? Please describe.
+      placeholder: Every time I try to..., I am hindered by...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Please describe the solution or change you'd like to see implemented. Be as detailed as possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context or References
+      description: Provide any further context, references, or screenshots that might help in understanding the proposed improvement.
+    validations:
+      required: false

@@ -11,8 +11,8 @@ Before submitting your PR, please make sure you:
 - [ ] Ensure the tests and linter pass (`./gradlew --init-script gradle/init.gradle.kts spotlessApply` to automatically apply formatting)
 - [ ] Update any relevant documentation
 
-Is this your first Pull Request?
-- [ ] Run `./tools/setup.sh`
-- [ ] Import the code formatting style as explained in [the setup script](/tools/setup.sh#L40).
+Are you a first-time contributor?
+- [ ] Ensure you've read and understood the contributing guidelines
+- [ ] Familiarize yourself with the project structure and the codebase
 
 Fixes #<issue_number_goes_here> 🦕
