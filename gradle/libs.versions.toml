@@ -37,6 +37,8 @@ accompanist = "0.30.1"
 ksp = "1.9.10-1.0.13"
 secrets = "2.0.1"
 lint = "31.0.2"
+robolectric = "4.10.3"
+roborazzi = "1.5.0-alpha-2"
 
 [libraries]
 
@@ -161,6 +163,13 @@ accompanist-testharness = { group = "com.google.accompanist", name = "accompanis
 # lint
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
 
+# robolectric - Android Unit Testing Framework
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+robolectric-shadows = { group = "org.robolectric", name = "shadows-framework", version.ref = "robolectric" }
+
+# roborazzi - A Screenshot tests lib in jvm.
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -178,6 +187,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
 
 # Plugins defined by this project
