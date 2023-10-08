@@ -57,6 +57,8 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 #### Testing
 - [_Turbine_](https://github.com/cashapp/turbine): A small testing library for kotlinx.coroutines Flow.
 - [_Google Truth_](https://github.com/google/truth): Fluent assertions for Java and Android.
+- [_Roborazzi_](https://github.com/takahirom/roborazzi): A screenshot testing library for JVM.
+- [_Robolectric_](https://github.com/robolectric/robolectric): Robolectric is the industry-standard unit testing framework for Android.
 
 ## Require
 
@@ -123,7 +125,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## Testing
 
-本專案主要採用 **Test double** 與 **Robot Testing Pattern** 作為測試策略，使測試更加健全且易於維護。
+本專案主要採用 **Test double**、**Robot Testing Pattern** 以及 **Screenshot tests** 作為測試策略，使測試更加健全且易於維護。
 
 ### 1. Test double
 
@@ -145,6 +147,12 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 1. **易於理解**：測試內容直觀，使用者可以快速理解而不必深入了解其背後的實現。
 2. **代碼重用**：通過將測試進行模組化，能夠重複使用測試步驟，從而提高測試效率。
 3. **隔離實現細節**：透過策略分層，確保了代碼遵循單一責任原則，這不僅提高了代碼的維護性，還使得測試和優化過程更為簡便。
+
+### 3. Screenshot tests
+**Amazing Talker** 使用 [_Roborazzi_](https://github.com/takahirom/roborazzi) 進行特定畫面和組件的截圖測試。要運行這些測試，請執行 `verifyRoborazziDemoDebug` 或 `recordRoborazziDemoDebug` 任務。
+
+> [!IMPORTANT]
+> 截圖是在 CI 上使用 Linux 記錄的，其他平台可能產生略有不同的圖像，使得測試失敗。
 
 ## 原需求文件
 
