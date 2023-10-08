@@ -1,14 +1,12 @@
 package com.wei.amazingtalker.ui
 
 import android.content.Context
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -27,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -204,35 +201,27 @@ private fun AtNavDrawer(
     modifier: Modifier = Modifier,
 ) {
     AtNavigationDrawer(modifier = modifier) {
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            destinations.forEach { destination ->
-                val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-                AtNavigationDrawerItem(
-                    selected = selected,
-                    onClick = { onNavigateToDestination(destination) },
-                    icon = {
-                        Icon(
-                            imageVector = destination.unselectedIcon,
-                            contentDescription = stringResource(destination.iconTextId),
-                        )
-                    },
-                    selectedIcon = {
-                        Icon(
-                            imageVector = destination.selectedIcon,
-                            contentDescription = stringResource(destination.iconTextId),
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = stringResource(id = destination.iconTextId),
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                        )
-                    },
-                    modifier = Modifier,
+        destinations.forEach { destination ->
+            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+            AtNavigationDrawerItem(
+                modifier = Modifier,
+                selected = selected,
+                onClick = { onNavigateToDestination(destination) },
+                icon = {
+                    Icon(
+                        imageVector = destination.unselectedIcon,
+                        contentDescription = stringResource(destination.iconTextId),
+                    )
+                },
+                selectedIcon = {
+                    Icon(
+                        imageVector = destination.selectedIcon,
+                        contentDescription = stringResource(destination.iconTextId),
+                    )
+                },
+            ) {
+                Text(
+                    text = stringResource(id = destination.iconTextId),
                 )
             }
         }
@@ -247,31 +236,25 @@ private fun AtNavRail(
     modifier: Modifier = Modifier,
 ) {
     AtNavigationRail(modifier = modifier) {
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            destinations.forEach { destination ->
-                val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-                AtNavigationRailItem(
-                    selected = selected,
-                    onClick = { onNavigateToDestination(destination) },
-                    icon = {
-                        Icon(
-                            imageVector = destination.unselectedIcon,
-                            contentDescription = stringResource(destination.iconTextId),
-                        )
-                    },
-                    selectedIcon = {
-                        Icon(
-                            imageVector = destination.selectedIcon,
-                            contentDescription = stringResource(destination.iconTextId),
-                        )
-                    },
-                    modifier = Modifier,
-                )
-            }
+        destinations.forEach { destination ->
+            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+            AtNavigationRailItem(
+                selected = selected,
+                onClick = { onNavigateToDestination(destination) },
+                icon = {
+                    Icon(
+                        imageVector = destination.unselectedIcon,
+                        contentDescription = stringResource(destination.iconTextId),
+                    )
+                },
+                modifier = Modifier,
+                selectedIcon = {
+                    Icon(
+                        imageVector = destination.selectedIcon,
+                        contentDescription = stringResource(destination.iconTextId),
+                    )
+                },
+            )
         }
     }
 }
@@ -289,6 +272,7 @@ private fun AtBottomBar(
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             AtNavigationBarItem(
+                modifier = Modifier,
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 icon = {
@@ -304,7 +288,6 @@ private fun AtBottomBar(
                     )
                 },
                 label = { Text(stringResource(destination.iconTextId)) },
-                modifier = Modifier,
             )
         }
     }

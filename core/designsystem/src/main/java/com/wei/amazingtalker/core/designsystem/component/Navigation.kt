@@ -1,7 +1,12 @@
 package com.wei.amazingtalker.core.designsystem.component
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +21,7 @@ import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -26,10 +32,10 @@ import com.wei.amazingtalker.core.designsystem.theme.AtTheme
  * Amazing Talker navigation bar item with icon and label content slots. Wraps Material 3
  * [NavigationBarItem].
  *
+ * @param modifier Modifier to be applied to this item.
  * @param selected Whether this item is selected.
  * @param onClick The callback to be invoked when this item is selected.
  * @param icon The item icon content.
- * @param modifier Modifier to be applied to this item.
  * @param selectedIcon The item icon content when selected.
  * @param enabled controls the enabled state of this item. When `false`, this item will not be
  * clickable and will appear disabled to accessibility services.
@@ -39,20 +45,20 @@ import com.wei.amazingtalker.core.designsystem.theme.AtTheme
  */
 @Composable
 fun RowScope.AtNavigationBarItem(
+    modifier: Modifier = Modifier,
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
     selectedIcon: @Composable () -> Unit = icon,
     enabled: Boolean = true,
     label: @Composable (() -> Unit)? = null,
     alwaysShowLabel: Boolean = true,
 ) {
     NavigationBarItem(
+        modifier = modifier,
         selected = selected,
         onClick = onClick,
         icon = if (selected) selectedIcon else icon,
-        modifier = modifier,
         enabled = enabled,
         label = label,
         alwaysShowLabel = alwaysShowLabel,
@@ -90,35 +96,33 @@ fun AtNavigationBar(
  * Amazing Talker navigation rail item with icon and label content slots. Wraps Material 3
  * [NavigationRailItem].
  *
+ * @param modifier Modifier to be applied to this item.
  * @param selected Whether this item is selected.
  * @param onClick The callback to be invoked when this item is selected.
  * @param icon The item icon content.
- * @param modifier Modifier to be applied to this item.
  * @param selectedIcon The item icon content when selected.
  * @param enabled controls the enabled state of this item. When `false`, this item will not be
  * clickable and will appear disabled to accessibility services.
- * @param label The item text label content.
  * @param alwaysShowLabel Whether to always show the label for this item. If false, the label will
  * only be shown when this item is selected.
  */
 @Composable
 fun AtNavigationRailItem(
+    modifier: Modifier = Modifier,
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
     selectedIcon: @Composable () -> Unit = icon,
     enabled: Boolean = true,
-    label: @Composable (() -> Unit)? = null,
     alwaysShowLabel: Boolean = true,
 ) {
     NavigationRailItem(
+        modifier = modifier,
         selected = selected,
         onClick = onClick,
         icon = if (selected) selectedIcon else icon,
-        modifier = modifier,
         enabled = enabled,
-        label = label,
+        label = null,
         alwaysShowLabel = alwaysShowLabel,
         colors = NavigationRailItemDefaults.colors(
             selectedIconColor = AtNavigationDefaults.navigationSelectedItemColor(),
@@ -149,7 +153,15 @@ fun AtNavigationRail(
         containerColor = Color.Transparent,
         contentColor = AtNavigationDefaults.navigationContentColor(),
         header = header,
-        content = content,
+        content = {
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                content()
+            }
+        },
     )
 }
 
@@ -157,28 +169,32 @@ fun AtNavigationRail(
  * Amazing Talker navigation drawer item with icon and label content slots. Wraps Material 3
  * [NavigationDrawerItem].
  *
+ * @param modifier Modifier to be applied to this item.
  * @param selected Whether this item is selected.
  * @param onClick The callback to be invoked when this item is selected.
  * @param icon The item icon content.
- * @param modifier Modifier to be applied to this item.
  * @param selectedIcon The item icon content when selected.
  * @param label The item text label content.
  */
 @Composable
 fun AtNavigationDrawerItem(
+    modifier: Modifier = Modifier,
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
     selectedIcon: @Composable () -> Unit = icon,
     label: @Composable () -> Unit,
 ) {
     NavigationDrawerItem(
+        modifier = modifier,
         selected = selected,
         onClick = onClick,
         icon = if (selected) selectedIcon else icon,
-        modifier = modifier,
-        label = label,
+        label = {
+            Box(modifier = Modifier.padding(horizontal = 16.dp)) {
+                label()
+            }
+        },
         colors = NavigationDrawerItemDefaults.colors(
             selectedIconColor = AtNavigationDefaults.navigationSelectedItemColor(),
             unselectedIconColor = AtNavigationDefaults.navigationContentColor(),
@@ -205,45 +221,100 @@ fun AtNavigationDrawer(
         modifier = modifier.sizeIn(minWidth = 200.dp, maxWidth = 300.dp),
         drawerContainerColor = Color.Transparent,
         drawerContentColor = AtNavigationDefaults.navigationContentColor(),
-        content = content,
+        content = {
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                content()
+            }
+        },
     )
 }
 
 @ThemePreviews
 @Composable
-fun AtNavigationPreview() {
-    val items = listOf("Schedule", "Home", "Contact Me")
-    val icons = listOf(
-        AtIcons.ScheduleBorder,
-        AtIcons.HomeBorder,
-        AtIcons.ContactMeBorder,
-    )
-    val selectedIcons = listOf(
-        AtIcons.Schedule,
-        AtIcons.Home,
-        AtIcons.ContactMe,
-    )
-
+fun AtNavigationBarPreview() {
     AtTheme {
         AtNavigationBar {
-            items.forEachIndexed { index, item ->
+            previewItems.forEachIndexed { index, item ->
                 AtNavigationBarItem(
+                    selected = index == 0,
+                    onClick = { },
                     icon = {
                         Icon(
-                            imageVector = icons[index],
+                            imageVector = previewIcons[index],
                             contentDescription = item,
                         )
                     },
                     selectedIcon = {
                         Icon(
-                            imageVector = selectedIcons[index],
+                            imageVector = previewSelectedIcons[index],
                             contentDescription = item,
                         )
                     },
                     label = { Text(item) },
-                    selected = index == 0,
-                    onClick = { },
                 )
+            }
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun AtNavigationRailPreview() {
+    AtTheme {
+        AtBackground {
+            AtNavigationRail {
+                previewItems.forEachIndexed { index, item ->
+                    AtNavigationRailItem(
+                        selected = index == 0,
+                        onClick = { },
+                        icon = {
+                            Icon(
+                                imageVector = previewIcons[index],
+                                contentDescription = item,
+                            )
+                        },
+                        selectedIcon = {
+                            Icon(
+                                imageVector = previewSelectedIcons[index],
+                                contentDescription = item,
+                            )
+                        },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun AtNavigationDrawerPreview() {
+    AtTheme {
+        AtBackground {
+            AtNavigationDrawer {
+                previewItems.forEachIndexed { index, item ->
+                    AtNavigationDrawerItem(
+                        selected = index == 0,
+                        onClick = { },
+                        icon = {
+                            Icon(
+                                imageVector = previewIcons[index],
+                                contentDescription = item,
+                            )
+                        },
+                        selectedIcon = {
+                            Icon(
+                                imageVector = previewSelectedIcons[index],
+                                contentDescription = item,
+                            )
+                        },
+                        label = { Text(item) },
+                    )
+                }
             }
         }
     }
@@ -262,3 +333,15 @@ object AtNavigationDefaults {
     @Composable
     fun navigationIndicatorColor() = MaterialTheme.colorScheme.primaryContainer
 }
+
+internal val previewItems = listOf("Schedule", "Home", "Contact Me")
+internal val previewIcons = listOf(
+    AtIcons.ScheduleBorder,
+    AtIcons.HomeBorder,
+    AtIcons.ContactMeBorder,
+)
+internal val previewSelectedIcons = listOf(
+    AtIcons.Schedule,
+    AtIcons.Home,
+    AtIcons.ContactMe,
+)
