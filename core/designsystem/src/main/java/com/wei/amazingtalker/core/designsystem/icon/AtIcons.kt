@@ -5,6 +5,7 @@ import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.SupportAgent
+import androidx.compose.material.icons.outlined.Upcoming
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowBackIosNew
 import androidx.compose.material.icons.rounded.ArrowForward
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.SupportAgent
+import androidx.compose.material.icons.rounded.Upcoming
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -39,4 +41,6 @@ object AtIcons {
     val ContactMe = Icons.Rounded.SupportAgent
     val ContactMeBorder = Icons.Outlined.SupportAgent
     val Phone = Icons.Rounded.Phone
+    val Upcoming = Icons.Rounded.Upcoming
+    val UpcomingBorder = Icons.Outlined.Upcoming
 }
