@@ -9,7 +9,7 @@
 
 UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
 
-這款 APP 的目標是展示如何遵循 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development) 最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
+這款 APP 的目標是展示如何遵循 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development?hl=en) 最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
 
 > [!NOTE]
 > 查看 [Amazing Talker：MAD 遷移之旅](https://github.com/azrael8576/amazing-talker/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
@@ -43,13 +43,13 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 - [_Retrofit2 & OkHttp3_](https://github.com/square/retrofit): Construct the REST APIs and paging network data.
 
 #### DI
-- [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android): for dependency injection.
+- [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android?hl=en): for dependency injection.
 
 #### Navigation
-- [_Navigation Compose_](https://developer.android.com/jetpack/compose/navigation): The [_Navigation component_](https://developer.android.com/guide/navigation) provides support for [_Jetpack Compose_](https://developer.android.com/jetpack/compose) applications.
+- [_Navigation Compose_](https://developer.android.com/jetpack/compose/navigation?hl=en): The [_Navigation component_](https://developer.android.com/guide/navigation?hl=en) provides support for [_Jetpack Compose_](https://developer.android.com/jetpack/compose?hl=en) applications.
 
 #### Data Storage
-- [_Proto DataStore_](https://developer.android.com/topic/libraries/architecture/datastore): A Jetpack solution for storing key-value pairs or typed objects using [_protocol buffers_](https://developers.google.com/protocol-buffers). It leverages Kotlin coroutines and Flow for asynchronous and transactional data storage.
+- [_Proto DataStore_](https://developer.android.com/topic/libraries/architecture/datastore?hl=en): A Jetpack solution for storing key-value pairs or typed objects using [_protocol buffers_](https://developers.google.com/protocol-buffers?hl=en). It leverages Kotlin coroutines and Flow for asynchronous and transactional data storage.
 
 #### Image Loading
 - [_Coil_](https://coil-kt.github.io/coil/): An image loading library for Android backed by Kotlin Coroutines.
@@ -88,20 +88,20 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## DesignSystem
 
-本專案採用 [_Material 3 Design_](https://m3.material.io/) ，使用自適應佈局來 [_Support different screen sizes_](https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes)。
+本專案採用 [_Material 3 Design_](https://m3.material.io/) ，使用自適應佈局來 [_Support different screen sizes_](https://developer.android.com/guide/topics/large-screens/support-different-screen-sizes?hl=en)。
 
 並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果，並為其進行封裝。 遵循 Google 官方 [_API Guidelines for Jetpack Compose_](https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md) 。
 > **Note:** Material 3 尚未 release collapsing toolbar 相關 UI 元件 API，截止 2023/09/27
 
 ## Architecture
 
-本專案遵循了 [_Android 官方應用架構指南_](https://developer.android.com/topic/architecture)。
+本專案遵循了 [_Android 官方應用架構指南_](https://developer.android.com/topic/architecture?hl=en)。
 
 ### MVI 最佳實踐
 
 #### UI 事件決策樹：
 以下圖表顯示尋找處理特定事件用途最佳方式時的決策樹。
-![image](https://developer.android.com/static/topic/libraries/architecture/images/mad-arch-uievents-tree.png?hl=zh-tw)
+![image](https://developer.android.com/static/topic/libraries/architecture/images/mad-arch-uievents-tree.png?hl=en)
 
 #### UI 事件：
 不要使用 `Channels`, `SharedFlow` 或其他回應式串流向 UI 公開 ViewModel 事件。
@@ -127,7 +127,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ### 1. Test double
 
-在 **Amazing Talker** 專案中，我們使用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android) 來進行依賴注入。而在資料層，我們將元件定義成接口形式，並依照具體需求進行實現綁定。
+在 **Amazing Talker** 專案中，我們使用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android?hl=en) 來進行依賴注入。而在資料層，我們將元件定義成接口形式，並依照具體需求進行實現綁定。
 
 #### 策略亮點：
 - **Amazing Talker** 並**未使用**任何 mocking libraries，而選擇使用 Hilt 的測試 API，方便我們將正式版本輕鬆替換成測試版本。
