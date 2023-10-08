@@ -70,6 +70,8 @@ class NavigationScreenshotTests() {
         AtNavigationBar {
             (0..2).forEach { index ->
                 AtNavigationBarItem(
+                    selected = index == 0,
+                    onClick = { },
                     icon = {
                         Icon(
                             imageVector = AtIcons.UpcomingBorder,
@@ -83,8 +85,6 @@ class NavigationScreenshotTests() {
                         )
                     },
                     label = { Text(label) },
-                    selected = index == 0,
-                    onClick = { },
                 )
             }
         }
