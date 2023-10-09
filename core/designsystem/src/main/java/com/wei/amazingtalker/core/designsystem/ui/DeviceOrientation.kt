@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 
 enum class DeviceOrientation {
     PORTRAIT,
-    LANDSCAPE
+    LANDSCAPE,
 }
 
 @Composable
