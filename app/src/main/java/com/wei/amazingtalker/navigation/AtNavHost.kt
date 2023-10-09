@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.window.layout.DisplayFeature
-import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
+import com.wei.amazingtalker.core.designsystem.ui.DeviceOrientation
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeScreen
 import com.wei.amazingtalker.feature.login.login.navigation.loginScreen
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeGraph
@@ -31,7 +31,7 @@ fun AtNavHost(
 ) {
     val navController = appState.navController
     val navigationType = appState.navigationType
-    val isCompact = navigationType == AtNavigationType.BOTTOM_NAVIGATION
+    val isPortrait = appState.currentDeviceOrientation == DeviceOrientation.PORTRAIT
     val contentType = appState.contentType
 
     NavHost(
@@ -47,11 +47,10 @@ fun AtNavHost(
             },
         )
         welcomeGraph(
-            isCompact = isCompact,
+            isPortrait = isPortrait,
             navController = navController,
             nestedGraphs = {
                 loginScreen(
-                    isCompact = isCompact,
                     onLoginNav = { appState.loginNavigate() },
                 )
             },
