@@ -80,7 +80,7 @@ import com.wei.amazingtalker.feature.login.login.navigation.navigateToLogin
 @Composable
 internal fun WelcomeRoute(
     modifier: Modifier = Modifier,
-    isCompact: Boolean,
+    isPortrait: Boolean,
     navController: NavController,
     viewModel: WelcomeViewModel = hiltViewModel(),
 ) {
@@ -93,7 +93,7 @@ internal fun WelcomeRoute(
     }
 
     WelcomeScreen(
-        isCompact = isCompact,
+        isPortrait = isPortrait,
         isPreview = false,
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) },
     )
@@ -101,7 +101,7 @@ internal fun WelcomeRoute(
 
 @Composable
 internal fun WelcomeScreen(
-    isCompact: Boolean,
+    isPortrait: Boolean,
     isPreview: Boolean = true,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
@@ -117,18 +117,18 @@ internal fun WelcomeScreen(
             }
 
             WelcomeScreenToolbar(
-                modifier = if (isCompact) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
+                modifier = if (isPortrait) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
                 isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked,
             )
             Box(
                 modifier = Modifier.weight(1f),
-                contentAlignment = if (isCompact) Alignment.BottomCenter else Alignment.CenterStart,
+                contentAlignment = if (isPortrait) Alignment.BottomCenter else Alignment.CenterStart,
             ) {
                 WelcomeGraphics(
                     isPreview = isPreview,
                 )
-                WelcomeContent(isCompact = isCompact)
+                WelcomeContent(isPortrait = isPortrait)
             }
 
             if (withBottomSpacer) {
@@ -225,9 +225,9 @@ fun WelcomeGraphics(
 @Composable
 fun WelcomeContent(
     modifier: Modifier = Modifier,
-    isCompact: Boolean,
+    isPortrait: Boolean,
 ) {
-    if (isCompact) {
+    if (isPortrait) {
         WelcomeTitlePortrait()
     } else {
         WelcomeTitleLandscape()
@@ -269,7 +269,7 @@ fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
 fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
-            isCompact = true,
+            isPortrait = true,
             onGetStartedButtonClicked = { },
         )
     }
@@ -280,7 +280,7 @@ fun WelcomeScreenPortraitPreview() {
 fun WelcomeScreenLandscapePreview() {
     AtTheme {
         WelcomeScreen(
-            isCompact = false,
+            isPortrait = false,
             onGetStartedButtonClicked = { },
         )
     }

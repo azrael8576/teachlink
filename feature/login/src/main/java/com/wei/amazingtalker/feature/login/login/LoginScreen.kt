@@ -67,7 +67,6 @@ import com.wei.amazingtalker.feature.login.utilities.TEST_PASSWORD
  */
 @Composable
 internal fun LoginRoute(
-    isCompact: Boolean,
     onLoginNav: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {

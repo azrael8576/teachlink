@@ -21,7 +21,9 @@ import androidx.window.layout.FoldingFeature
 import com.wei.amazingtalker.core.data.utils.NetworkMonitor
 import com.wei.amazingtalker.core.designsystem.ui.AtContentType
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
+import com.wei.amazingtalker.core.designsystem.ui.DeviceOrientation
 import com.wei.amazingtalker.core.designsystem.ui.DevicePosture
+import com.wei.amazingtalker.core.designsystem.ui.currentDeviceOrientation
 import com.wei.amazingtalker.core.designsystem.ui.isBookPosture
 import com.wei.amazingtalker.core.designsystem.ui.isSeparating
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeRoute
@@ -71,6 +73,9 @@ class AtAppState(
     networkMonitor: NetworkMonitor,
     displayFeatures: List<DisplayFeature>,
 ) {
+    val currentDeviceOrientation: DeviceOrientation
+        @Composable get() = currentDeviceOrientation()
+
     /**
      * We are using display's folding features to map the device postures a fold is in.
      * In the state of folding device If it's half fold in BookPosture we want to avoid content
@@ -200,9 +205,11 @@ class AtAppState(
                 TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
                     topLevelNavOptions,
                 )
+
                 TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
                     topLevelNavOptions,
                 )
+
                 else -> showFunctionalityNotAvailablePopup.value = true
             }
         }
