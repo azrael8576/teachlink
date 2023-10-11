@@ -1,11 +1,13 @@
 package com.wei.amazingtalker.feature.login.welcome
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -117,7 +120,13 @@ internal fun WelcomeScreen(
             }
 
             WelcomeScreenToolbar(
-                modifier = if (isPortrait) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
+                modifier = if (isPortrait) {
+                    Modifier.padding(horizontal = 16.dp)
+                } else {
+                    Modifier.padding(
+                        horizontal = 24.dp,
+                    )
+                },
                 isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked,
             )
@@ -238,31 +247,63 @@ fun WelcomeContent(
 fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
     val welcomeTitle = stringResource(R.string.welcome_title)
 
-    Text(
+    Box(
         modifier = modifier
-            .padding(bottom = 32.dp)
-            .semantics { contentDescription = welcomeTitle },
-        style = MaterialTheme.typography.headlineMedium,
-        text = welcomeTitle,
-        textAlign = TextAlign.Center,
-        color = Color.White,
-    )
+            .fillMaxWidth()
+            .gradientBackgroundPortrait(),
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(vertical = 40.dp)
+                .semantics { contentDescription = welcomeTitle }
+                .align(alignment = Alignment.Center),
+            style = MaterialTheme.typography.displaySmall,
+            text = welcomeTitle,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+        )
+    }
 }
 
 @Composable
 fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
     val welcomeTitle = stringResource(R.string.welcome_title)
 
-    Text(
+    Box(
         modifier = modifier
-            .padding(start = 32.dp)
-            .semantics { contentDescription = welcomeTitle },
-        style = MaterialTheme.typography.headlineMedium,
-        text = welcomeTitle,
-        textAlign = TextAlign.Start,
-        color = Color.Black,
-    )
+            .fillMaxHeight()
+            .gradientBackgroundLandscape(),
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .semantics { contentDescription = welcomeTitle }
+                .align(alignment = Alignment.Center),
+            style = MaterialTheme.typography.headlineLarge,
+            text = welcomeTitle,
+            textAlign = TextAlign.Start,
+            color = Color.Black,
+        )
+    }
 }
+
+internal fun Modifier.gradientBackgroundPortrait(): Modifier = this.background(
+    brush = Brush.verticalGradient(
+        colors = listOf(
+            Color.Black.copy(alpha = 0f),
+            Color.Black.copy(alpha = 0.5f),
+        ),
+    ),
+)
+
+internal fun Modifier.gradientBackgroundLandscape(): Modifier = this.background(
+    brush = Brush.horizontalGradient(
+        colors = listOf(
+            Color.White.copy(alpha = 0.5f),
+            Color.White.copy(alpha = 0f),
+        ),
+    ),
+)
 
 @DevicePortraitPreviews
 @Composable
