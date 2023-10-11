@@ -224,18 +224,18 @@ internal fun ContactMeTwoPaneSecondContent(
             if (withTopSpacer) {
                 item {
                     Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
             item {
-                Spacer(modifier = Modifier.height(8.dp))
                 ContactMeCard(
                     uiStates = uiStates,
                     onPhoneClick = onPhoneClick,
                 )
-                Spacer(modifier = Modifier.height(8.dp))
             }
             if (withBottomSpacer) {
                 item {
+                    Spacer(modifier = Modifier.height(16.dp))
                     Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
                 }
             }
@@ -259,6 +259,7 @@ internal fun ContactMeSinglePaneContent(
         if (withTopSpacer) {
             item {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
         item {
@@ -279,10 +280,10 @@ internal fun ContactMeSinglePaneContent(
                 uiStates = uiStates,
                 onPhoneClick = onPhoneClick,
             )
-            Spacer(modifier = Modifier.height(8.dp))
         }
         if (withBottomSpacer) {
             item {
+                Spacer(modifier = Modifier.height(16.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
         }
