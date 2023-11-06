@@ -68,6 +68,7 @@ android {
 dependencies {
     implementation(project(":feature:login"))
     implementation(project(":feature:teacherschedule"))
+    implementation(project(":feature:home"))
     implementation(project(":feature:contactme"))
 
     implementation(project(":core:designsystem"))
