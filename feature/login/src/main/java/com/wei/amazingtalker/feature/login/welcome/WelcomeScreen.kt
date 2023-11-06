@@ -35,6 +35,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,6 +54,7 @@ import com.wei.amazingtalker.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.amazingtalker.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.amazingtalker.feature.login.R
 import com.wei.amazingtalker.feature.login.login.navigation.navigateToLogin
+import com.wei.amazingtalker.core.designsystem.R as DesignsystemR
 
 /**
  *
@@ -101,6 +106,10 @@ internal fun WelcomeRoute(
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) },
     )
 }
+
+val NotoSansFontFamily = FontFamily(
+    Font(DesignsystemR.font.noto_sans_tc_variablefont_wght),
+)
 
 @Composable
 internal fun WelcomeScreen(
@@ -236,15 +245,24 @@ fun WelcomeContent(
     modifier: Modifier = Modifier,
     isPortrait: Boolean,
 ) {
+    val style = TextStyle(
+        fontFamily = NotoSansFontFamily,
+        fontSize = MaterialTheme.typography.displaySmall.fontSize,
+        fontWeight = FontWeight.Bold,
+    )
+
     if (isPortrait) {
-        WelcomeTitlePortrait()
+        WelcomeTitlePortrait(style = style)
     } else {
-        WelcomeTitleLandscape()
+        WelcomeTitleLandscape(style = style)
     }
 }
 
 @Composable
-fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
+fun WelcomeTitlePortrait(
+    modifier: Modifier = Modifier,
+    style: TextStyle,
+) {
     val welcomeTitle = stringResource(R.string.welcome_title)
 
     Box(
@@ -254,10 +272,10 @@ fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = 40.dp)
+                .padding(vertical = 24.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
-            style = MaterialTheme.typography.displaySmall,
+            style = style,
             text = welcomeTitle,
             textAlign = TextAlign.Center,
             color = Color.White,
@@ -266,7 +284,10 @@ fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
+fun WelcomeTitleLandscape(
+    modifier: Modifier = Modifier,
+    style: TextStyle,
+) {
     val welcomeTitle = stringResource(R.string.welcome_title)
 
     Box(
@@ -279,7 +300,7 @@ fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
                 .padding(horizontal = 24.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
-            style = MaterialTheme.typography.headlineLarge,
+            style = style,
             text = welcomeTitle,
             textAlign = TextAlign.Start,
             color = Color.Black,
