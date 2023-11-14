@@ -18,9 +18,11 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ### Phone
 <img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_phone.png" alt="Phone">
+<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_phone_home.png" alt="Phone-Home">
 
-### Tablet (Dark Mode)
+### Tablet
 <img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_tablet_dark.png" alt="Tablet-Dark">
+<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_tablet_home.png" alt="Tablet-Home">
 
 ### Fold
 <img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/display_fold_table.png" alt="Fold">
