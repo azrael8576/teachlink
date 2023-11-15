@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.window.layout.DisplayFeature
 import com.wei.amazingtalker.core.designsystem.ui.DeviceOrientation
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeScreen
+import com.wei.amazingtalker.feature.home.home.navigation.homeGraph
 import com.wei.amazingtalker.feature.login.login.navigation.loginScreen
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeGraph
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeRoute
@@ -39,13 +40,6 @@ fun AtNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        scheduleGraph(
-            navController = navController,
-            tokenInvalidNavigate = { appState.tokenInvalidNavigate() },
-            nestedGraphs = {
-                scheduleDetailScreen(navController = navController)
-            },
-        )
         welcomeGraph(
             isPortrait = isPortrait,
             navController = navController,
@@ -55,6 +49,14 @@ fun AtNavHost(
                 )
             },
         )
+        scheduleGraph(
+            navController = navController,
+            tokenInvalidNavigate = { appState.tokenInvalidNavigate() },
+            nestedGraphs = {
+                scheduleDetailScreen(navController = navController)
+            },
+        )
+        homeGraph()
         contactMeScreen(
             navController = navController,
             contentType = contentType,
