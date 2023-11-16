@@ -1,11 +1,13 @@
 package com.wei.amazingtalker.feature.login.welcome
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -32,6 +35,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,6 +54,7 @@ import com.wei.amazingtalker.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.amazingtalker.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.amazingtalker.feature.login.R
 import com.wei.amazingtalker.feature.login.login.navigation.navigateToLogin
+import com.wei.amazingtalker.core.designsystem.R as DesignsystemR
 
 /**
  *
@@ -80,7 +88,7 @@ import com.wei.amazingtalker.feature.login.login.navigation.navigateToLogin
 @Composable
 internal fun WelcomeRoute(
     modifier: Modifier = Modifier,
-    isCompact: Boolean,
+    isPortrait: Boolean,
     navController: NavController,
     viewModel: WelcomeViewModel = hiltViewModel(),
 ) {
@@ -93,15 +101,19 @@ internal fun WelcomeRoute(
     }
 
     WelcomeScreen(
-        isCompact = isCompact,
+        isPortrait = isPortrait,
         isPreview = false,
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) },
     )
 }
 
+val NotoSansFontFamily = FontFamily(
+    Font(DesignsystemR.font.noto_sans_tc_variablefont_wght),
+)
+
 @Composable
 internal fun WelcomeScreen(
-    isCompact: Boolean,
+    isPortrait: Boolean,
     isPreview: Boolean = true,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
@@ -117,18 +129,24 @@ internal fun WelcomeScreen(
             }
 
             WelcomeScreenToolbar(
-                modifier = if (isCompact) Modifier.padding(horizontal = 16.dp) else Modifier.padding(horizontal = 24.dp),
+                modifier = if (isPortrait) {
+                    Modifier.padding(horizontal = 16.dp)
+                } else {
+                    Modifier.padding(
+                        horizontal = 24.dp,
+                    )
+                },
                 isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked,
             )
             Box(
                 modifier = Modifier.weight(1f),
-                contentAlignment = if (isCompact) Alignment.BottomCenter else Alignment.CenterStart,
+                contentAlignment = if (isPortrait) Alignment.BottomCenter else Alignment.CenterStart,
             ) {
                 WelcomeGraphics(
                     isPreview = isPreview,
                 )
-                WelcomeContent(isCompact = isCompact)
+                WelcomeContent(isPortrait = isPortrait)
             }
 
             if (withBottomSpacer) {
@@ -225,51 +243,95 @@ fun WelcomeGraphics(
 @Composable
 fun WelcomeContent(
     modifier: Modifier = Modifier,
-    isCompact: Boolean,
+    isPortrait: Boolean,
 ) {
-    if (isCompact) {
-        WelcomeTitlePortrait()
+    val style = TextStyle(
+        fontFamily = NotoSansFontFamily,
+        fontSize = MaterialTheme.typography.displaySmall.fontSize,
+        fontWeight = FontWeight.Bold,
+    )
+
+    if (isPortrait) {
+        WelcomeTitlePortrait(style = style)
     } else {
-        WelcomeTitleLandscape()
+        WelcomeTitleLandscape(style = style)
     }
 }
 
 @Composable
-fun WelcomeTitlePortrait(modifier: Modifier = Modifier) {
+fun WelcomeTitlePortrait(
+    modifier: Modifier = Modifier,
+    style: TextStyle,
+) {
     val welcomeTitle = stringResource(R.string.welcome_title)
 
-    Text(
+    Box(
         modifier = modifier
-            .padding(bottom = 32.dp)
-            .semantics { contentDescription = welcomeTitle },
-        style = MaterialTheme.typography.headlineMedium,
-        text = welcomeTitle,
-        textAlign = TextAlign.Center,
-        color = Color.White,
-    )
+            .fillMaxWidth()
+            .gradientBackgroundPortrait(),
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(vertical = 24.dp)
+                .semantics { contentDescription = welcomeTitle }
+                .align(alignment = Alignment.Center),
+            style = style,
+            text = welcomeTitle,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+        )
+    }
 }
 
 @Composable
-fun WelcomeTitleLandscape(modifier: Modifier = Modifier) {
+fun WelcomeTitleLandscape(
+    modifier: Modifier = Modifier,
+    style: TextStyle,
+) {
     val welcomeTitle = stringResource(R.string.welcome_title)
 
-    Text(
+    Box(
         modifier = modifier
-            .padding(start = 32.dp)
-            .semantics { contentDescription = welcomeTitle },
-        style = MaterialTheme.typography.headlineMedium,
-        text = welcomeTitle,
-        textAlign = TextAlign.Start,
-        color = Color.Black,
-    )
+            .fillMaxHeight()
+            .gradientBackgroundLandscape(),
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .semantics { contentDescription = welcomeTitle }
+                .align(alignment = Alignment.Center),
+            style = style,
+            text = welcomeTitle,
+            textAlign = TextAlign.Start,
+            color = Color.Black,
+        )
+    }
 }
+
+internal fun Modifier.gradientBackgroundPortrait(): Modifier = this.background(
+    brush = Brush.verticalGradient(
+        colors = listOf(
+            Color.Black.copy(alpha = 0f),
+            Color.Black.copy(alpha = 0.5f),
+        ),
+    ),
+)
+
+internal fun Modifier.gradientBackgroundLandscape(): Modifier = this.background(
+    brush = Brush.horizontalGradient(
+        colors = listOf(
+            Color.White.copy(alpha = 0.5f),
+            Color.White.copy(alpha = 0f),
+        ),
+    ),
+)
 
 @DevicePortraitPreviews
 @Composable
 fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
-            isCompact = true,
+            isPortrait = true,
             onGetStartedButtonClicked = { },
         )
     }
@@ -280,7 +342,7 @@ fun WelcomeScreenPortraitPreview() {
 fun WelcomeScreenLandscapePreview() {
     AtTheme {
         WelcomeScreen(
-            isCompact = false,
+            isPortrait = false,
             onGetStartedButtonClicked = { },
         )
     }

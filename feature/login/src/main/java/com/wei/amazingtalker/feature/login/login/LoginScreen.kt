@@ -67,7 +67,6 @@ import com.wei.amazingtalker.feature.login.utilities.TEST_PASSWORD
  */
 @Composable
 internal fun LoginRoute(
-    isCompact: Boolean,
     onLoginNav: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
@@ -119,20 +118,20 @@ internal fun LoginScreen(
                 if (withTopSpacer) {
                     Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
                 }
-                Spacer(modifier = Modifier.weight(1.5f))
+                Spacer(modifier = Modifier.weight(1f))
                 Title()
-                Spacer(modifier = Modifier.weight(3f))
+                Spacer(modifier = Modifier.weight(1.5f))
                 AccountTextField(accountState)
                 PasswordTextField(passwordState)
-                Spacer(modifier = Modifier.weight(0.5f))
+                Spacer(modifier = Modifier.weight(0.1f))
                 ForgotPasswordText()
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(0.5f))
                 LoginButton(
                     accountState,
                     passwordState,
                     login,
                 )
-                Spacer(modifier = Modifier.weight(2f))
+                Spacer(modifier = Modifier.weight(1f))
                 if (withBottomSpacer) {
                     Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
                 }
@@ -147,7 +146,7 @@ private fun Title(modifier: Modifier = Modifier) {
 
     Text(
         text = title,
-        style = MaterialTheme.typography.displayLarge,
+        style = MaterialTheme.typography.displayMedium,
         modifier = modifier
             .semantics { contentDescription = "" },
     )
@@ -197,13 +196,14 @@ internal fun PasswordTextField(
 }
 
 @Composable
-internal fun ForgotPasswordText() {
+internal fun ForgotPasswordText(modifier: Modifier = Modifier) {
     val forgotPassword = stringResource(R.string.forgot_password)
 
     Text(
         text = forgotPassword,
-        style = MaterialTheme.typography.bodySmall,
+        style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
+            .padding(top = 16.dp)
             .semantics { contentDescription = forgotPassword },
     )
 }
@@ -225,7 +225,10 @@ internal fun LoginButton(
             .padding(top = 8.dp)
             .semantics { contentDescription = loginTextDescription },
     ) {
-        Text(loginText)
+        Text(
+            loginText,
+            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+        )
     }
 }
 
