@@ -88,6 +88,8 @@ fun AtTheme(
     androidTheme: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    val typography = getAppTypography()
+
     // Color scheme
     val colorScheme = when {
         androidTheme -> if (darkTheme) DarkColors else LightColors
@@ -110,6 +112,7 @@ fun AtTheme(
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
+            typography = typography,
             content = content,
         )
     }
