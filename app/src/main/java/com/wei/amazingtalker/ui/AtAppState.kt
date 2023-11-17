@@ -159,9 +159,9 @@ class AtAppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
+            homeRoute -> TopLevelDestination.HOME
             scheduleRoute -> TopLevelDestination.SCHEDULE
             contactMeRoute -> TopLevelDestination.CONTACT_ME
-            homeRoute -> TopLevelDestination.HOME
             else -> null
         }
 
@@ -205,11 +205,11 @@ class AtAppState(
             }
 
             when (topLevelDestination) {
-                TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
+                TopLevelDestination.HOME -> navController.navigateToHome(
                     topLevelNavOptions,
                 )
 
-                TopLevelDestination.HOME -> navController.navigateToHome(
+                TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
                     topLevelNavOptions,
                 )
 
@@ -224,7 +224,7 @@ class AtAppState(
 
     fun loginNavigate() {
         navController.popBackStack()
-        navController.navigateToSchedule()
+        navController.navigateToHome()
     }
 
     fun tokenInvalidNavigate() {

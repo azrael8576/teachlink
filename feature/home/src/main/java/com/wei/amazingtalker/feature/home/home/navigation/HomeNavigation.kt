@@ -12,8 +12,14 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     this.navigate(homeRoute, navOptions)
 }
 
-fun NavGraphBuilder.homeGraph() {
+fun NavGraphBuilder.homeGraph(
+    navController: NavController,
+    tokenInvalidNavigate: () -> Unit,
+) {
     composable(route = homeRoute) {
-        HomeRoute()
+        HomeRoute(
+            navController = navController,
+            tokenInvalidNavigate = tokenInvalidNavigate,
+        )
     }
 }

@@ -47,6 +47,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
@@ -88,7 +89,10 @@ import com.wei.amazingtalker.feature.home.home.ui.StatusCard
  *
  */
 @Composable
-internal fun HomeRoute() {
+internal fun HomeRoute(
+    navController: NavController,
+    tokenInvalidNavigate: () -> Unit,
+) {
     HomeScreen()
 }
 
