@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 首頁 -->
     <string name="profile_picture">%s 的大頭貼</string>
+    <string name="menu">選單</string>
 </resources>

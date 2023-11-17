@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 首頁 -->
     <string name="profile_picture">%s\'s profile picture</string>
+    <string name="menu">Menu</string>
 </resources>

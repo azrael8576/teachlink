@@ -89,8 +89,8 @@ class AtAppStateTest {
         }
 
         assertThat(state.topLevelDestinations).hasSize(3)
-        assertThat(state.topLevelDestinations[0].name).ignoringCase().contains("schedule")
-        assertThat(state.topLevelDestinations[1].name).ignoringCase().contains("home")
+        assertThat(state.topLevelDestinations[0].name).ignoringCase().contains("home")
+        assertThat(state.topLevelDestinations[1].name).ignoringCase().contains("schedule")
         assertThat(state.topLevelDestinations[2].name).ignoringCase().contains("contact_me")
     }
 

@@ -314,12 +314,14 @@ fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
 private fun MenuButton(
     onMenuClick: () -> Unit,
 ) {
+    val menu = stringResource(R.string.menu)
+
     IconButton(
         onClick = onMenuClick,
         modifier = Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .semantics { contentDescription = "" },
+            .semantics { contentDescription = menu },
     ) {
         Icon(
             imageVector = AtIcons.Menu,
