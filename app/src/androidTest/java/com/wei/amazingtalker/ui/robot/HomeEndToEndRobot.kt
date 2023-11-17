@@ -8,11 +8,10 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
-import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker.MainActivity
 import kotlin.properties.ReadOnlyProperty
-import com.wei.amazingtalker.feature.login.R as FeatureLoginR
+import com.wei.amazingtalker.feature.home.R as FeatureHomeR
 
 /**
  * Screen Robot for End To End Test.
@@ -23,15 +22,14 @@ import com.wei.amazingtalker.feature.login.R as FeatureLoginR
  * Testing cheatsheet：
  * https://developer.android.com/jetpack/compose/testing-cheatsheet
  */
-internal fun loginEndToEndRobot(
+internal fun homeEndToEndRobot(
     composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
-    func: LoginEndToEndRobotRobot.() -> Unit,
-) = LoginEndToEndRobotRobot(composeTestRule).apply(func)
+    func: HomeEndToEndRobot.() -> Unit,
+) = HomeEndToEndRobot(composeTestRule).apply(func)
 
-internal open class LoginEndToEndRobotRobot(
+internal open class HomeEndToEndRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
-
     private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
         ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
@@ -41,34 +39,25 @@ internal open class LoginEndToEndRobotRobot(
     }
 
     // The strings used for matching in these tests
-    private val loginDescription by composeTestRule.stringResource(FeatureLoginR.string.content_description_login)
+    private val menuDescription by composeTestRule.stringResource(FeatureHomeR.string.menu)
 
-    private val loginButton by lazy {
+    private val menuButton by lazy {
         composeTestRule.onNode(
             withRole(Role.Button)
-                .and(hasContentDescription(loginDescription)),
+                .and(hasContentDescription(menuDescription)),
         )
     }
 
-    private fun verifyLoginButtonDisplayed() {
-        loginButton.assertExists().assertIsDisplayed()
+    fun verifyMenuButtonDisplayed() {
+        menuButton.assertExists().assertIsDisplayed()
     }
 
-    fun isLoginButtonDisplayed(): Boolean {
+    fun isMenuButtonDisplayed(): Boolean {
         return try {
-            verifyLoginButtonDisplayed()
+            verifyMenuButtonDisplayed()
             true
         } catch (e: AssertionError) {
             false
-        }
-    }
-
-    infix fun login(func: HomeEndToEndRobot.() -> Unit): HomeEndToEndRobot {
-        loginButton.performClick()
-        return homeEndToEndRobot(composeTestRule) {
-            // 等待任何動畫完成
-            composeTestRule.waitUntil(3_000) { isMenuButtonDisplayed() }
-            func()
         }
     }
 }

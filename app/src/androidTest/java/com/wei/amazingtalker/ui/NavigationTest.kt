@@ -51,11 +51,11 @@ class NavigationTest {
     }
 
     @Test
-    fun isScheduleScreen_afterLogin() {
+    fun isHomeScreen_afterLogin() {
         welcomeEndToEndRobot(composeTestRule) {
         } getStartedClick {
         } login {
-            verifyScheduleTopAppBarDisplayed()
+            verifyMenuButtonDisplayed()
         }
     }
 
@@ -77,11 +77,11 @@ class NavigationTest {
     }
 
     /*
-    * When pressing back from any top level destination except "Schedule", the app navigates back
-    * to the "Schedule" destination, no matter which destinations you visited in between.
+    * When pressing back from any top level destination except "Home", the app navigates back
+    * to the "Home" destination, no matter which destinations you visited in between.
     */
     @Test
-    fun navigationBar_backFromAnyDestination_returnsToSchedule() {
+    fun navigationBar_backFromAnyDestination_returnsToHome() {
         welcomeEndToEndRobot(composeTestRule) {
         } getStartedClick {
         } login {
@@ -91,7 +91,7 @@ class NavigationTest {
                 // WHEN the user uses the system button/gesture to go back
                 Espresso.pressBack()
             }
-            verifyScheduleTopAppBarDisplayed()
+            verifyMenuButtonDisplayed()
         }
     }
 
@@ -106,8 +106,8 @@ class NavigationTest {
             navigationRobot(composeTestRule) {
                 // GIVEN the user navigates to the Contact Me destination
                 clickNavContactMe()
-                // and then navigates to the Schedule destination
-                clickNavSchedule()
+                // and then navigates to the Home destination
+                clickNavHome()
                 // WHEN the user uses the system button/gesture to go back
                 Espresso.pressBack()
                 // THEN the app quits
