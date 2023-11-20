@@ -3,4 +3,13 @@
     <!-- 首頁 -->
     <string name="profile_picture">%s\'s profile picture</string>
     <string name="menu">Menu</string>
+    <string name="tutor">Tutor</string>
+    <string name="tutors">Tutors</string>
+    <string name="chats">Chats</string>
+    <string name="my_courses">My Courses</string>
+    <string name="completed">Completed</string>
+    <string name="pupil">Pupil</string>
+    <string name="rating">Rating</string>
+    <string name="lessons">Lessons</string>
+    <string name="started">Started</string>
 </resources>

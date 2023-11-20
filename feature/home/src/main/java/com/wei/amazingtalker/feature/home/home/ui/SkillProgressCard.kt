@@ -25,8 +25,10 @@ import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CircularProgressCard(
+fun SkillProgressCard(
     modifier: Modifier,
+    skillName: String,
+    skillLevel: String,
     progress: Int,
     onClick: () -> Unit,
 ) {
@@ -43,13 +45,13 @@ fun CircularProgressCard(
             modifier = Modifier.padding(16.dp),
             content = {
                 Text(
-                    text = "Business English",
+                    text = skillName,
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    text = "Advanced level",
+                    text = skillLevel,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.outlineVariant,
                     maxLines = 1,
@@ -64,28 +66,31 @@ fun CircularProgressCard(
 
 @Composable
 private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
+    val strokeLineWidth = 4.dp
+    val startAngle = -90f
+    val sweepAngleFactor = 360 / 100f
+
     BoxWithConstraints(
         contentAlignment = Alignment.Center,
         modifier = modifier,
     ) {
         val diameter = minOf(maxWidth, maxHeight)
         val onPrimaryColor = MaterialTheme.colorScheme.onPrimary
-        val outlineVariantColor =
-            MaterialTheme.colorScheme.outlineVariant
+        val outlineVariantColor = MaterialTheme.colorScheme.outlineVariant
 
         Canvas(modifier = Modifier.size(diameter)) {
             val canvasWidth = size.width
             drawCircle(
                 color = outlineVariantColor,
                 radius = canvasWidth / 2,
-                style = Stroke(width = 4.dp.toPx()),
+                style = Stroke(width = strokeLineWidth.toPx()),
             )
             drawArc(
                 color = onPrimaryColor,
-                startAngle = -90f,
-                sweepAngle = (360 * (64 / 100.0)).toFloat(),
+                startAngle = startAngle,
+                sweepAngle = progress * sweepAngleFactor,
                 useCenter = false,
-                style = Stroke(width = 4.dp.toPx()),
+                style = Stroke(width = strokeLineWidth.toPx()),
             )
         }
         Text(
@@ -99,10 +104,12 @@ private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
 @Composable
 fun HomeScreenPreview() {
     AtTheme {
-        CircularProgressCard(
+        SkillProgressCard(
             modifier = Modifier
                 .width(200.dp)
                 .height(152.dp),
+            skillName = "Business English",
+            skillLevel = "Advanced level",
             progress = 64,
             onClick = {},
         )
