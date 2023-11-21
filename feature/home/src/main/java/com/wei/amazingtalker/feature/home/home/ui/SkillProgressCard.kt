@@ -19,20 +19,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.feature.home.home.utilities.CARD_CORNER_SIZE
+import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CircularProgressCard(
+fun SkillProgressCard(
     modifier: Modifier,
+    skillName: String,
+    skillLevel: String,
     progress: Int,
     onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(size = 24.dp),
+        shape = RoundedCornerShape(size = CARD_CORNER_SIZE.dp),
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary,
@@ -40,22 +44,22 @@ fun CircularProgressCard(
         onClick = onClick,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(LARGE_SPACING.dp),
             content = {
                 Text(
-                    text = "Business English",
+                    text = skillName,
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    text = "Advanced level",
+                    text = skillLevel,
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.outlineVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(LARGE_SPACING.dp))
                 CircularProgress(modifier = Modifier.weight(1f), progress = progress)
             },
         )
@@ -64,28 +68,31 @@ fun CircularProgressCard(
 
 @Composable
 private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
+    val strokeLineWidth = 4.dp
+    val startAngle = -90f
+    val sweepAngleFactor = 360 / 100f
+
     BoxWithConstraints(
         contentAlignment = Alignment.Center,
         modifier = modifier,
     ) {
         val diameter = minOf(maxWidth, maxHeight)
         val onPrimaryColor = MaterialTheme.colorScheme.onPrimary
-        val outlineVariantColor =
-            MaterialTheme.colorScheme.outlineVariant
+        val outlineVariantColor = MaterialTheme.colorScheme.outlineVariant
 
         Canvas(modifier = Modifier.size(diameter)) {
             val canvasWidth = size.width
             drawCircle(
                 color = outlineVariantColor,
                 radius = canvasWidth / 2,
-                style = Stroke(width = 4.dp.toPx()),
+                style = Stroke(width = strokeLineWidth.toPx()),
             )
             drawArc(
                 color = onPrimaryColor,
-                startAngle = -90f,
-                sweepAngle = (360 * (64 / 100.0)).toFloat(),
+                startAngle = startAngle,
+                sweepAngle = progress * sweepAngleFactor,
                 useCenter = false,
-                style = Stroke(width = 4.dp.toPx()),
+                style = Stroke(width = strokeLineWidth.toPx()),
             )
         }
         Text(
@@ -95,14 +102,16 @@ private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun HomeScreenPreview() {
     AtTheme {
-        CircularProgressCard(
+        SkillProgressCard(
             modifier = Modifier
                 .width(200.dp)
                 .height(152.dp),
+            skillName = "Business English",
+            skillLevel = "Advanced level",
             progress = 64,
             onClick = {},
         )
