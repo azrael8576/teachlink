@@ -68,7 +68,7 @@ internal open class NavigationRobot(
         composeTestRule.waitForIdle()
     }
 
-    private fun clickNavHome() {
+    internal fun clickNavHome() {
         navHome.performClick()
         // 等待任何動畫完成
         composeTestRule.waitForIdle()

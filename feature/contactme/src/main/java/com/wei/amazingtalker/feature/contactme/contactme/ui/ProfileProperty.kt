@@ -15,7 +15,7 @@ import com.wei.amazingtalker.core.designsystem.component.baselineHeight
 @Composable
 fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
     Column(modifier = Modifier.padding(vertical = 8.dp)) {
-        Divider()
+        Divider(color = MaterialTheme.colorScheme.outline)
         Text(
             text = label,
             modifier = Modifier

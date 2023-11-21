@@ -28,6 +28,8 @@ import com.wei.amazingtalker.core.designsystem.ui.isBookPosture
 import com.wei.amazingtalker.core.designsystem.ui.isSeparating
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeRoute
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.navigateToContactMe
+import com.wei.amazingtalker.feature.home.home.navigation.homeRoute
+import com.wei.amazingtalker.feature.home.home.navigation.navigateToHome
 import com.wei.amazingtalker.feature.login.login.navigation.loginRoute
 import com.wei.amazingtalker.feature.login.welcome.navigation.navigateToWelcome
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeRoute
@@ -157,6 +159,7 @@ class AtAppState(
 
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
+            homeRoute -> TopLevelDestination.HOME
             scheduleRoute -> TopLevelDestination.SCHEDULE
             contactMeRoute -> TopLevelDestination.CONTACT_ME
             else -> null
@@ -202,6 +205,10 @@ class AtAppState(
             }
 
             when (topLevelDestination) {
+                TopLevelDestination.HOME -> navController.navigateToHome(
+                    topLevelNavOptions,
+                )
+
                 TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
                     topLevelNavOptions,
                 )
@@ -217,7 +224,7 @@ class AtAppState(
 
     fun loginNavigate() {
         navController.popBackStack()
-        navController.navigateToSchedule()
+        navController.navigateToHome()
     }
 
     fun tokenInvalidNavigate() {

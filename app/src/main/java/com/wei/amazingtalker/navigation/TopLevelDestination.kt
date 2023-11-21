@@ -15,17 +15,17 @@ enum class TopLevelDestination(
     val iconTextId: Int,
     val titleTextId: Int,
 ) {
-    SCHEDULE(
-        selectedIcon = AtIcons.Schedule,
-        unselectedIcon = AtIcons.ScheduleBorder,
-        iconTextId = R.string.schedule,
-        titleTextId = R.string.schedule,
-    ),
     HOME(
         selectedIcon = AtIcons.Home,
         unselectedIcon = AtIcons.HomeBorder,
         iconTextId = R.string.home,
         titleTextId = R.string.home,
+    ),
+    SCHEDULE(
+        selectedIcon = AtIcons.Schedule,
+        unselectedIcon = AtIcons.ScheduleBorder,
+        iconTextId = R.string.schedule,
+        titleTextId = R.string.schedule,
     ),
     CONTACT_ME(
         selectedIcon = AtIcons.ContactMe,
