@@ -2,6 +2,7 @@
 <resources>
     <!-- 首頁 -->
     <string name="profile_picture">%s 的大頭貼</string>
+    <string name="add_user">新增使用者</string>
     <string name="menu">選單</string>
     <string name="tutor">教師</string>
     <string name="tutors">教師</string>
@@ -12,4 +13,5 @@
     <string name="rating">評價</string>
     <string name="lessons">堂數</string>
     <string name="started">開始時間</string>
+    <string name="hello">Hello, %1$s</string>
 </resources>

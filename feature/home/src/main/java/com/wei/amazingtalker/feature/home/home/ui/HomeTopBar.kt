@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,43 +23,51 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.loadImageUsingCoil
+import com.wei.amazingtalker.feature.home.home.utilities.DEFAULT_SPACING
+import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 @Composable
 fun HomeTopBar(
     modifier: Modifier = Modifier,
+    userName: String,
+    avatarId: Int,
     onUserProfileImageClick: () -> Unit,
     onAddUserClick: () -> Unit,
     onMenuClick: () -> Unit,
 ) {
-    Column(modifier = modifier.padding(top = 16.dp)) {
+    Column(modifier = modifier.padding(top = LARGE_SPACING.dp)) {
         Row {
             Box {
                 AddUserButton(
                     modifier = Modifier.offset(x = (48 - 12).dp),
                     onAddUserClick = onAddUserClick,
                 )
-                UserProfileImage(
-                    name = "He, Xuan-Wei",
-                    isPreview = true,
+                UserAvatar(
+                    userName = userName,
+                    avatarId = avatarId,
                     onUserProfileImageClick = onUserProfileImageClick,
                 )
             }
             Spacer(modifier = modifier.weight(1f))
             MenuButton(onMenuClick = onMenuClick)
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(DEFAULT_SPACING.dp))
+        val helloUserName = stringResource(R.string.hello, userName)
+
         Text(
-            text = "Hello, Wei",
+            text = helloUserName,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.semantics { contentDescription = "" },
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier.semantics { contentDescription = helloUserName },
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(DEFAULT_SPACING.dp))
     }
 }
 
@@ -68,6 +77,8 @@ private fun AddUserButton(
     onAddUserClick: () -> Unit,
 ) {
     Box(modifier = modifier) {
+        val addUser = stringResource(R.string.add_user)
+
         IconButton(
             onClick = {
                 onAddUserClick()
@@ -75,7 +86,7 @@ private fun AddUserButton(
             modifier = Modifier
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
-                .semantics { contentDescription = "" },
+                .semantics { contentDescription = addUser },
         ) {
             Icon(
                 imageVector = AtIcons.Add,
@@ -87,23 +98,27 @@ private fun AddUserButton(
 }
 
 @Composable
-internal fun UserProfileImage(
+internal fun UserAvatar(
     modifier: Modifier = Modifier,
-    name: String,
-    isPreview: Boolean,
+    userName: String,
+    avatarId: Int,
+    isPreview: Boolean = true,
     onUserProfileImageClick: () -> Unit,
 ) {
-    val resId = R.drawable.he_wei
-    val painter = loadImageUsingCoil(resId, isPreview)
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
+    val painter = loadImageUsingCoil(avatarId, isPreview)
+    val profilePictureDescription = stringResource(R.string.profile_picture).format(userName)
 
     IconButton(
         onClick = onUserProfileImageClick,
-        modifier = modifier.size(48.dp),
+        modifier = modifier
+            .size(48.dp)
+            .semantics {
+                contentDescription = profilePictureDescription
+            },
     ) {
         Image(
             painter = painter,
-            contentDescription = profilePictureDescription,
+            contentDescription = null,
             modifier = modifier
                 .clip(CircleShape)
                 .fillMaxSize(),
@@ -132,15 +147,19 @@ private fun MenuButton(
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun HomeTopBarPreview() {
     AtTheme {
-        HomeTopBar(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            onUserProfileImageClick = {},
-            onAddUserClick = {},
-            onMenuClick = {},
-        )
+        Surface {
+            HomeTopBar(
+                modifier = Modifier.padding(horizontal = LARGE_SPACING.dp),
+                userName = "TEST_NAME",
+                avatarId = R.drawable.he_wei,
+                onUserProfileImageClick = {},
+                onAddUserClick = {},
+                onMenuClick = {},
+            )
+        }
     }
 }

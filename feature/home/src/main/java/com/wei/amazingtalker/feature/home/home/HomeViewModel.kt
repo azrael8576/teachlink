@@ -1,11 +1,12 @@
 package com.wei.amazingtalker.feature.home.home
 
 import com.wei.amazingtalker.core.base.BaseViewModel
-import com.wei.amazingtalker.feature.home.home.utilities.CLASS_NAME
-import com.wei.amazingtalker.feature.home.home.utilities.SKILL_LEVEL
-import com.wei.amazingtalker.feature.home.home.utilities.SKILL_LEVEL_PROGRESS
-import com.wei.amazingtalker.feature.home.home.utilities.SKILL_NAME
-import com.wei.amazingtalker.feature.home.home.utilities.TUTOR_NAME
+import com.wei.amazingtalker.feature.home.home.utilities.TEST_CLASS_NAME
+import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_LEVEL
+import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_LEVEL_PROGRESS
+import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_NAME
+import com.wei.amazingtalker.feature.home.home.utilities.TEST_TUTOR_NAME
+import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,21 +22,23 @@ class HomeViewModel @Inject constructor() : BaseViewModel<
     }
 
     private fun getProfile() {
+        // TODO call api.
         updateState {
             copy(
-                displayName = "Wei",
+                userName = "Wei",
                 chatCount = 102,
                 courseProgress = 20,
                 courseCount = 14,
                 pupilRating = 9.9,
-                tutorName = TUTOR_NAME,
-                className = CLASS_NAME,
+                tutorName = TEST_TUTOR_NAME,
+                className = TEST_CLASS_NAME,
                 lessonsCountDisplay = "30+",
                 ratingCount = 4.9,
                 startedDate = "11.04",
-                skillName = SKILL_NAME,
-                skillLevel = SKILL_LEVEL,
-                skillLevelProgress = SKILL_LEVEL_PROGRESS,
+                contacts = TestContacts,
+                skillName = TEST_SKILL_NAME,
+                skillLevel = TEST_SKILL_LEVEL,
+                skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
             )
         }
     }

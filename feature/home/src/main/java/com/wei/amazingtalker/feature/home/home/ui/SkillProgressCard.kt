@@ -19,9 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.feature.home.home.utilities.CARD_CORNER_SIZE
+import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,7 +36,7 @@ fun SkillProgressCard(
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(size = 24.dp),
+        shape = RoundedCornerShape(size = CARD_CORNER_SIZE.dp),
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary,
@@ -42,7 +44,7 @@ fun SkillProgressCard(
         onClick = onClick,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(LARGE_SPACING.dp),
             content = {
                 Text(
                     text = skillName,
@@ -57,7 +59,7 @@ fun SkillProgressCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(LARGE_SPACING.dp))
                 CircularProgress(modifier = Modifier.weight(1f), progress = progress)
             },
         )
@@ -100,7 +102,7 @@ private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun HomeScreenPreview() {
     AtTheme {

@@ -21,12 +21,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.HomeViewState
 import com.wei.amazingtalker.feature.home.home.Tab
+import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 @Composable
 fun HomeTabRow(
@@ -39,7 +40,7 @@ fun HomeTabRow(
 
     ScrollableTabRow(
         selectedTabIndex = currentSelectedTab.ordinal,
-        edgePadding = 16.dp,
+        edgePadding = LARGE_SPACING.dp,
         modifier = Modifier.fillMaxWidth(),
     ) {
         MyCoursesTab(
@@ -77,8 +78,8 @@ fun MyCoursesTab(
     ) {
         Text(
             text = myCourses,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(LARGE_SPACING.dp),
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
         )
     }
@@ -101,12 +102,12 @@ fun ChatTab(
         },
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(LARGE_SPACING.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = chats,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
             )
             Spacer(modifier = Modifier.width(4.dp))
@@ -126,7 +127,7 @@ fun ChatCountBadge(count: String) {
     ) {
         Text(
             text = count,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.padding(vertical = 2.dp, horizontal = 4.dp),
         )
@@ -145,15 +146,15 @@ fun TutorsTab(isSelected: Boolean, onTabClick: () -> Unit) {
         },
     ) {
         Text(
-            text = stringResource(R.string.tutors),
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(16.dp),
+            text = tutors,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(LARGE_SPACING.dp),
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
         )
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun HomeTabRowPreview() {
     AtTheme {

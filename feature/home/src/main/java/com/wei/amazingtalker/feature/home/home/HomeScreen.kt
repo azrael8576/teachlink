@@ -33,9 +33,11 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.ui.HomeTabRow
 import com.wei.amazingtalker.feature.home.home.ui.HomeTopBar
 import com.wei.amazingtalker.feature.home.home.ui.MyCoursesTabContent
+import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 /**
  *
@@ -108,14 +110,15 @@ internal fun HomeScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val horizontalBasePadding = Modifier.padding(horizontal = 16.dp)
-
             if (withTopSpacer) {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
+            val horizontalBasePadding = Modifier.padding(horizontal = LARGE_SPACING.dp)
 
             HomeTopBar(
                 modifier = horizontalBasePadding,
+                userName = uiStates.userName,
+                avatarId = R.drawable.he_wei,
                 onAddUserClick = {
                     /*TODO*/
                     showPopup.value = true
@@ -205,5 +208,5 @@ fun HomeScreenPreview() {
 }
 
 internal val previewUIState = HomeViewState(
-    displayName = "Wei",
+    userName = "Wei",
 )
