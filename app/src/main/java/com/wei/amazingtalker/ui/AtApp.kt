@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -120,8 +122,11 @@ fun AtApp(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
                         if (!appState.isFullScreenCurrentDestination) {
-                            val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
-                            AtAppSnackbar(snackbarData, isError)
+                            Column {
+                                val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                                AtAppSnackbar(snackbarData, isError)
+                                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+                            }
                         }
                     },
                 )
