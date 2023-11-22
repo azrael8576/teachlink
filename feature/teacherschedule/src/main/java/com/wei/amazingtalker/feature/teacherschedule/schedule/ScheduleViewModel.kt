@@ -12,6 +12,7 @@ import com.wei.amazingtalker.core.result.DataSourceResult
 import com.wei.amazingtalker.core.utils.AtClocks
 import com.wei.amazingtalker.core.utils.Clocks
 import com.wei.amazingtalker.core.utils.UiText
+import com.wei.amazingtalker.feature.teacherschedule.BuildConfig
 import com.wei.amazingtalker.feature.teacherschedule.domain.GetTeacherScheduleUseCase
 import com.wei.amazingtalker.feature.teacherschedule.utilities.WeekDataHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -132,10 +133,9 @@ class ScheduleViewModel @Inject constructor(
                         isScrollInProgress = true,
                     )
                 }
-                showSnackBar(
-                    snackbarState = SnackbarState.Error,
-                    message = listOf(result.exception.toString()),
-                )
+                if (BuildConfig.DEBUG) {
+                    Timber.e(result.exception.toString())
+                }
             }
 
             is DataSourceResult.Loading -> {
