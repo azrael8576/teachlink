@@ -1,6 +1,5 @@
 package com.wei.amazingtalker.feature.home.home.ui
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,11 +16,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
@@ -92,13 +93,11 @@ internal fun ContactAvatar(
 ) {
     val painter = loadImageUsingCoil(avatarId, true)
     val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
-    val canvasSize = 16.dp
-    val statusIndicatorOffset = 3.dp
-    val offlineStatusIndicatorOffset = statusIndicatorOffset * 2
 
     Box(
         modifier = modifier
-            .size(ContactHeadShotSize.dp),
+            .size(ContactHeadShotSize.dp)
+            .statusIndicator(status),
     ) {
         Image(
             painter = painter,
@@ -107,41 +106,51 @@ internal fun ContactAvatar(
                 .matchParentSize()
                 .clip(CircleShape),
         )
+    }
+}
 
-        val canvasBackground = MaterialTheme.colorScheme.secondary
+fun Modifier.statusIndicator(
+    status: OnlineStatus,
+    canvasSize: Dp = 16.dp,
+    statusIndicatorOffset: Dp = 3.dp,
+    offlineStatusIndicatorOffset: Dp = 6.dp,
+): Modifier = composed {
+    val canvasBackground = MaterialTheme.colorScheme.secondary
 
-        Canvas(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .size(canvasSize),
-        ) {
+    this.then(
+        drawWithContent {
+            drawContent()
+
             val circleColor = when (status) {
                 OnlineStatus.FREE -> FreeColor
                 OnlineStatus.BUSY -> BusyColor
                 OnlineStatus.OFFLINE -> OfflineColor
             }
 
+            val radius = size.minDimension.coerceAtMost(canvasSize.toPx()) / 2
+            val center = Offset(size.width - radius, size.height - radius)
+
             drawCircle(
                 color = canvasBackground,
-                radius = size.minDimension / 2,
-                center = Offset(size.width / 2, size.height / 2),
+                radius = radius,
+                center = center,
             )
 
             drawCircle(
                 color = circleColor,
-                radius = size.minDimension / 2 - statusIndicatorOffset.toPx(),
-                center = Offset(size.width / 2, size.height / 2),
+                radius = radius - statusIndicatorOffset.toPx(),
+                center = center,
             )
 
             if (status == OnlineStatus.OFFLINE) {
                 drawCircle(
                     color = canvasBackground,
-                    radius = size.minDimension / 2 - offlineStatusIndicatorOffset.toPx(),
-                    center = Offset(size.width / 2, size.height / 2),
+                    radius = radius - offlineStatusIndicatorOffset.toPx(),
+                    center = center,
                 )
             }
-        }
-    }
+        },
+    )
 }
 
 @Composable
@@ -158,7 +167,7 @@ fun PlaceholderAvatar(
 @ThemePreviews
 @Composable
 fun ContactCardPreview() {
-    val cardSize = calculateCardSize()
+    val cardSize = (ContactHeadShotSize * 2) + (DEFAULT_SPACING * 2) + 4
 
     AtTheme {
         ContactCard(

@@ -27,18 +27,20 @@ class HomeViewModel @Inject constructor() : BaseViewModel<
             copy(
                 userName = "Wei",
                 chatCount = 102,
-                courseProgress = 20,
-                courseCount = 14,
-                pupilRating = 9.9,
-                tutorName = TEST_TUTOR_NAME,
-                className = TEST_CLASS_NAME,
-                lessonsCountDisplay = "30+",
-                ratingCount = 4.9,
-                startedDate = "11.04",
-                contacts = TestContacts,
-                skillName = TEST_SKILL_NAME,
-                skillLevel = TEST_SKILL_LEVEL,
-                skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
+                myCoursesContentState = MyCoursesContentState(
+                    courseProgress = 20,
+                    courseCount = 14,
+                    pupilRating = 9.9,
+                    tutorName = TEST_TUTOR_NAME,
+                    className = TEST_CLASS_NAME,
+                    lessonsCountDisplay = "30+",
+                    ratingCount = 4.9,
+                    startedDate = "11.04",
+                    contacts = TestContacts,
+                    skillName = TEST_SKILL_NAME,
+                    skillLevel = TEST_SKILL_LEVEL,
+                    skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
+                ),
             )
         }
     }

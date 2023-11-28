@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,11 +31,11 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.ui.HomeTabRow
 import com.wei.amazingtalker.feature.home.home.ui.HomeTopBar
-import com.wei.amazingtalker.feature.home.home.ui.MyCoursesTabContent
 import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 /**
@@ -140,9 +139,9 @@ internal fun HomeScreen(
 
             when (uiStates.selectedTab) {
                 Tab.MY_COURSES -> {
-                    MyCoursesTabContent(
+                    MyCoursesContent(
                         modifier = horizontalBasePadding,
-                        uiStates = uiStates,
+                        uiStates = uiStates.myCoursesContentState,
                         onCardClick = { showPopup.value = true },
                     )
                 }
@@ -196,17 +195,15 @@ fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun HomeScreenPreview() {
     AtTheme {
         HomeScreen(
-            uiStates = previewUIState,
+            uiStates = HomeViewState(
+                userName = "Wei",
+            ),
             onTabClick = { },
         )
     }
 }
-
-internal val previewUIState = HomeViewState(
-    userName = "Wei",
-)
