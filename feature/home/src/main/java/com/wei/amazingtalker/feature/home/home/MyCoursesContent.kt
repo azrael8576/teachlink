@@ -1,4 +1,4 @@
-package com.wei.amazingtalker.feature.home.home.ui
+package com.wei.amazingtalker.feature.home.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,12 +24,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.feature.home.R
-import com.wei.amazingtalker.feature.home.home.HomeViewState
+import com.wei.amazingtalker.feature.home.home.ui.ContactCard
+import com.wei.amazingtalker.feature.home.home.ui.SkillProgressCard
+import com.wei.amazingtalker.feature.home.home.ui.StatusCard
 import com.wei.amazingtalker.feature.home.home.utilities.CARD_CORNER_SIZE
 import com.wei.amazingtalker.feature.home.home.utilities.ContactHeadShotSize
 import com.wei.amazingtalker.feature.home.home.utilities.DEFAULT_SPACING
@@ -41,9 +44,9 @@ import com.wei.amazingtalker.feature.home.home.utilities.TEST_TUTOR_NAME
 import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
 
 @Composable
-fun MyCoursesTabContent(
+fun MyCoursesContent(
     modifier: Modifier = Modifier,
-    uiStates: HomeViewState,
+    uiStates: MyCoursesContentState,
     onCardClick: () -> Unit,
 ) {
     LazyColumn {
@@ -344,27 +347,29 @@ internal fun calculateCardSize(): Int {
     return (ContactHeadShotSize * 2) + (DEFAULT_SPACING * 2) + 4
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
-fun MyCoursesTabContentPreview() {
+fun MyCoursesContentPreview() {
     AtTheme {
-        MyCoursesTabContent(
-            modifier = Modifier.padding(horizontal = LARGE_SPACING.dp),
-            onCardClick = {},
-            uiStates = HomeViewState(
-                courseProgress = 20,
-                courseCount = 30,
-                pupilRating = 9.9,
-                tutorName = TEST_TUTOR_NAME,
-                className = TEST_CLASS_NAME,
-                lessonsCountDisplay = "40+",
-                ratingCount = 4.9,
-                startedDate = "11.04",
-                contacts = TestContacts,
-                skillName = TEST_SKILL_NAME,
-                skillLevel = TEST_SKILL_LEVEL,
-                skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
-            ),
-        )
+        Surface {
+            MyCoursesContent(
+                modifier = Modifier.padding(horizontal = LARGE_SPACING.dp),
+                onCardClick = {},
+                uiStates = MyCoursesContentState(
+                    courseProgress = 20,
+                    courseCount = 30,
+                    pupilRating = 9.9,
+                    tutorName = TEST_TUTOR_NAME,
+                    className = TEST_CLASS_NAME,
+                    lessonsCountDisplay = "40+",
+                    ratingCount = 4.9,
+                    startedDate = "11.04",
+                    contacts = TestContacts,
+                    skillName = TEST_SKILL_NAME,
+                    skillLevel = TEST_SKILL_LEVEL,
+                    skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
+                ),
+            )
+        }
     }
 }
