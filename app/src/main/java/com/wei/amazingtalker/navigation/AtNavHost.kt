@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.window.layout.DisplayFeature
 import com.wei.amazingtalker.core.designsystem.ui.DeviceOrientation
-import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeScreen
+import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeGraph
 import com.wei.amazingtalker.feature.home.home.navigation.homeGraph
 import com.wei.amazingtalker.feature.home.home.navigation.homeRoute
 import com.wei.amazingtalker.feature.login.login.navigation.loginScreen
@@ -60,7 +60,7 @@ fun AtNavHost(
                 scheduleDetailScreen(navController = navController)
             },
         )
-        contactMeScreen(
+        contactMeGraph(
             navController = navController,
             contentType = contentType,
             displayFeatures = displayFeatures,

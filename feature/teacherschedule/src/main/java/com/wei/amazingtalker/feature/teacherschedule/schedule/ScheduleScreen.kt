@@ -71,7 +71,7 @@ import com.wei.amazingtalker.core.designsystem.management.states.topappbar.Fixed
 import com.wei.amazingtalker.core.designsystem.management.states.topappbar.TopAppBarState
 import com.wei.amazingtalker.core.designsystem.management.states.topappbar.scrollflags.EnterAlwaysState
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.feature.teacherschedule.R
 import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.DateTabLayout
@@ -333,7 +333,7 @@ internal fun ScheduleList(
                 }
 
                 item {
-                    Spacer(Modifier.height(spacing_large.dp))
+                    Spacer(Modifier.height(SPACING_LARGE.dp))
                 }
             }
 
@@ -343,7 +343,7 @@ internal fun ScheduleList(
                     text = loading,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
-                        .padding(spacing_large.dp)
+                        .padding(SPACING_LARGE.dp)
                         .semantics { contentDescription = loading },
                 )
             }
@@ -355,7 +355,7 @@ internal fun ScheduleList(
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier
-                        .padding(spacing_large.dp)
+                        .padding(SPACING_LARGE.dp)
                         .semantics { contentDescription = loadFailed },
                 )
             }
@@ -494,10 +494,10 @@ private fun WeekActionBarBottom(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = spacing_large.dp),
+            .padding(horizontal = SPACING_LARGE.dp),
     ) {
         Column {
-            Spacer(modifier = Modifier.height(spacing_large.dp))
+            Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
             Divider(
                 modifier = Modifier.fillMaxWidth(),
                 thickness = 1.dp,

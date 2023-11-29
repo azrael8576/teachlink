@@ -51,7 +51,7 @@ import com.wei.amazingtalker.core.designsystem.component.AtNavigationDrawerItem
 import com.wei.amazingtalker.core.designsystem.component.AtNavigationRail
 import com.wei.amazingtalker.core.designsystem.component.AtNavigationRailItem
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker.core.manager.ErrorTextPrefix
 import com.wei.amazingtalker.core.manager.Message
@@ -165,7 +165,7 @@ fun AtApp(
                         currentDestination = appState.currentDestination,
                         modifier = Modifier
                             .testTag(atNavDrawer)
-                            .padding(spacing_large.dp)
+                            .padding(SPACING_LARGE.dp)
                             .safeDrawingPadding(),
                     )
                 }

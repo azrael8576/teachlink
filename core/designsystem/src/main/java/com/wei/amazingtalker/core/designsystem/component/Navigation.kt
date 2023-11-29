@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 
 /**
  * Amazing Talker navigation bar item with icon and label content slots. Wraps Material 3
@@ -192,7 +192,7 @@ fun AtNavigationDrawerItem(
         onClick = onClick,
         icon = if (selected) selectedIcon else icon,
         label = {
-            Box(modifier = Modifier.padding(horizontal = spacing_large.dp)) {
+            Box(modifier = Modifier.padding(horizontal = SPACING_LARGE.dp)) {
                 label()
             }
         },

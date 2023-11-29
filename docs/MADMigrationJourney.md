@@ -16,9 +16,9 @@
 - Unit Tests 。 查看分支：`test/unit-tests`
 - 引入 Jetpack DataStore 做為本地數據存儲。 查看分支： `feat/datastore-module`
 - Support All Screen Sizes。 查看分支： `feat/adaptive-layouts`
+- CI/CD。 查看分支： `chore/ci-cd`
 
 ### 🚧 進行中的工作
 
 該 APP 目前仍在開發階段，正進行以下的技術遷移和改進：
-- CI/CD。 查看分支： `chore/ci-cd`
 - 引入 Baseline Profiles 啟動優化

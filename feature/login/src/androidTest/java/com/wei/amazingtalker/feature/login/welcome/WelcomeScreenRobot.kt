@@ -68,6 +68,7 @@ internal open class WelcomeScreenRobot(
             AtTheme {
                 WelcomeScreen(
                     isPortrait = true,
+                    isPreview = true,
                     onGetStartedButtonClicked = { },
                 )
             }

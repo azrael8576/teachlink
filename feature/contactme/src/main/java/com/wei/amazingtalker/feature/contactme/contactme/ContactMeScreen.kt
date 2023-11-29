@@ -33,9 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -44,19 +41,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.window.layout.DisplayFeature
-import coil.ImageLoader
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 import com.google.accompanist.adaptive.TwoPane
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.amazingtalker.core.designsystem.component.baselineHeight
+import com.wei.amazingtalker.core.designsystem.component.coilImagePainter
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_large
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
-import com.wei.amazingtalker.core.designsystem.theme.spacing_small
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_EXTRA_LARGE
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_SMALL
 import com.wei.amazingtalker.core.designsystem.ui.AtContentType
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker.core.designsystem.ui.DeviceLandscapePreviews
@@ -126,7 +120,7 @@ internal fun ContactMeScreen(
     contentType: AtContentType,
     displayFeatures: List<DisplayFeature>,
     navigationType: AtNavigationType = AtNavigationType.PERMANENT_NAVIGATION_DRAWER,
-    isPreview: Boolean = true,
+    isPreview: Boolean = false,
     onPhoneClick: () -> Unit,
 ) {
     Surface(
@@ -159,7 +153,7 @@ internal fun ContactMeScreen(
                             onPhoneClick = onPhoneClick,
                         )
                     },
-                    strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = spacing_large.dp),
+                    strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = SPACING_LARGE.dp),
                     displayFeatures = displayFeatures,
                 )
             }
@@ -227,7 +221,7 @@ internal fun ContactMeTwoPaneSecondContent(
             if (withTopSpacer) {
                 item {
                     Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                    Spacer(modifier = Modifier.height(spacing_large.dp))
+                    Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                 }
             }
             item {
@@ -238,7 +232,7 @@ internal fun ContactMeTwoPaneSecondContent(
             }
             if (withBottomSpacer) {
                 item {
-                    Spacer(modifier = Modifier.height(spacing_large.dp))
+                    Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                     Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
                 }
             }
@@ -262,7 +256,7 @@ internal fun ContactMeSinglePaneContent(
         if (withTopSpacer) {
             item {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                Spacer(modifier = Modifier.height(spacing_large.dp))
+                Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
             }
         }
         item {
@@ -278,7 +272,7 @@ internal fun ContactMeSinglePaneContent(
             )
         }
         item {
-            Spacer(modifier = Modifier.height(spacing_small.dp))
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
             ContactMeCard(
                 uiStates = uiStates,
                 onPhoneClick = onPhoneClick,
@@ -286,7 +280,7 @@ internal fun ContactMeSinglePaneContent(
         }
         if (withBottomSpacer) {
             item {
-                Spacer(modifier = Modifier.height(spacing_large.dp))
+                Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
         }
@@ -300,7 +294,7 @@ internal fun DisplayHeadShot(
     isPreview: Boolean,
 ) {
     val resId = R.drawable.he_wei
-    val painter = loadImageUsingCoil(resId, isPreview)
+    val painter = coilImagePainter(resId, isPreview)
 
     val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
     Image(
@@ -314,23 +308,6 @@ internal fun DisplayHeadShot(
 }
 
 @Composable
-fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
-    val request = ImageRequest.Builder(LocalContext.current)
-        .data(resId)
-        .build()
-    return if (isPreview) {
-        painterResource(id = resId)
-    } else {
-        rememberAsyncImagePainter(request, imageLoader)
-    }
-}
-
-@Composable
 fun ContactMeCard(
     uiStates: ContactMeViewState,
     modifier: Modifier = Modifier,
@@ -338,7 +315,7 @@ fun ContactMeCard(
 ) {
     Card(
         modifier = modifier
-            .padding(horizontal = spacing_extra_large.dp)
+            .padding(horizontal = SPACING_EXTRA_LARGE.dp)
             .clip(CardDefaults.shape),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -346,7 +323,7 @@ fun ContactMeCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(spacing_large.dp)
+                .padding(SPACING_LARGE.dp)
                 .fillMaxWidth(),
         ) {
             Row(
@@ -405,7 +382,7 @@ private fun NameAndPosition(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier
                 .padding(bottom = 20.dp)
-                .baselineHeight(spacing_extra_large.dp)
+                .baselineHeight(SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = position },
         )
     }
@@ -464,6 +441,7 @@ fun ContactMeScreenSinglePanePreview() {
             uiStates = previewUIState,
             contentType = AtContentType.SINGLE_PANE,
             displayFeatures = emptyList<DisplayFeature>(),
+            isPreview = true,
             onPhoneClick = { },
         )
     }

@@ -18,7 +18,7 @@ val FreeColor = Color(0xFF58D264)
 @Stable
 val OfflineColor = Color(0xFFB6B6B6)
 
-const val ContactHeadShotSize = 64
+const val CONTACT_HEAD_SHOT_SIZE = 64
 
 const val TEST_TUTOR_NAME = "jamie-coleman"
 const val TEST_CLASS_NAME = "English Grammar"
