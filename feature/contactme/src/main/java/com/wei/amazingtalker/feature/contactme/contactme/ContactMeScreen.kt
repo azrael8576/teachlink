@@ -54,6 +54,9 @@ import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailab
 import com.wei.amazingtalker.core.designsystem.component.baselineHeight
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_small
 import com.wei.amazingtalker.core.designsystem.ui.AtContentType
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker.core.designsystem.ui.DeviceLandscapePreviews
@@ -156,7 +159,7 @@ internal fun ContactMeScreen(
                             onPhoneClick = onPhoneClick,
                         )
                     },
-                    strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = 16.dp),
+                    strategy = HorizontalTwoPaneStrategy(splitFraction = 0.5f, gapWidth = spacing_large.dp),
                     displayFeatures = displayFeatures,
                 )
             }
@@ -224,7 +227,7 @@ internal fun ContactMeTwoPaneSecondContent(
             if (withTopSpacer) {
                 item {
                     Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(spacing_large.dp))
                 }
             }
             item {
@@ -235,7 +238,7 @@ internal fun ContactMeTwoPaneSecondContent(
             }
             if (withBottomSpacer) {
                 item {
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(spacing_large.dp))
                     Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
                 }
             }
@@ -259,7 +262,7 @@ internal fun ContactMeSinglePaneContent(
         if (withTopSpacer) {
             item {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(spacing_large.dp))
             }
         }
         item {
@@ -275,7 +278,7 @@ internal fun ContactMeSinglePaneContent(
             )
         }
         item {
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(spacing_small.dp))
             ContactMeCard(
                 uiStates = uiStates,
                 onPhoneClick = onPhoneClick,
@@ -283,7 +286,7 @@ internal fun ContactMeSinglePaneContent(
         }
         if (withBottomSpacer) {
             item {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(spacing_large.dp))
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
         }
@@ -335,7 +338,7 @@ fun ContactMeCard(
 ) {
     Card(
         modifier = modifier
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = spacing_extra_large.dp)
             .clip(CardDefaults.shape),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -343,7 +346,7 @@ fun ContactMeCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 16.dp)
+                .padding(spacing_large.dp)
                 .fillMaxWidth(),
         ) {
             Row(
@@ -402,7 +405,7 @@ private fun NameAndPosition(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier
                 .padding(bottom = 20.dp)
-                .baselineHeight(24.dp)
+                .baselineHeight(spacing_extra_large.dp)
                 .semantics { contentDescription = position },
         )
     }

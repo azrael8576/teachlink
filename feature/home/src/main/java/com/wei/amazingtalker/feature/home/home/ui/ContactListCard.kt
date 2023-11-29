@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,14 +25,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.shapes
+import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_small
+import com.wei.amazingtalker.core.designsystem.theme.spacing_medium
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.Contact
 import com.wei.amazingtalker.feature.home.home.OnlineStatus
 import com.wei.amazingtalker.feature.home.home.loadImageUsingCoil
 import com.wei.amazingtalker.feature.home.home.utilities.BusyColor
-import com.wei.amazingtalker.feature.home.home.utilities.CARD_CORNER_SIZE
 import com.wei.amazingtalker.feature.home.home.utilities.ContactHeadShotSize
-import com.wei.amazingtalker.feature.home.home.utilities.DEFAULT_SPACING
 import com.wei.amazingtalker.feature.home.home.utilities.FreeColor
 import com.wei.amazingtalker.feature.home.home.utilities.OfflineColor
 import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
@@ -45,18 +45,18 @@ fun ContactCard(
 ) {
     val maxDisplayContacts = 4
     val contactsPerRow = 2
-    val spacingSize = 4.dp
+    val spacingSize = spacing_extra_small.dp
 
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(size = CARD_CORNER_SIZE.dp),
+        shape = shapes.extraLarge,
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onSecondary,
             containerColor = MaterialTheme.colorScheme.secondary,
         ),
     ) {
         Column(
-            modifier = Modifier.padding(DEFAULT_SPACING.dp),
+            modifier = Modifier.padding(spacing_medium.dp),
         ) {
             val displayContacts = contacts.take(maxDisplayContacts)
             for (i in 0 until maxDisplayContacts / contactsPerRow) {
@@ -167,7 +167,7 @@ fun PlaceholderAvatar(
 @ThemePreviews
 @Composable
 fun ContactCardPreview() {
-    val cardSize = (ContactHeadShotSize * 2) + (DEFAULT_SPACING * 2) + 4
+    val cardSize = (ContactHeadShotSize * 2) + (spacing_medium * 2) + 4
 
     AtTheme {
         ContactCard(

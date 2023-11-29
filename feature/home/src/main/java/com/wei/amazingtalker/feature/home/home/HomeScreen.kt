@@ -33,10 +33,10 @@ import coil.request.ImageRequest
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.ui.HomeTabRow
 import com.wei.amazingtalker.feature.home.home.ui.HomeTopBar
-import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
 
 /**
  *
@@ -112,7 +112,7 @@ internal fun HomeScreen(
             if (withTopSpacer) {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
-            val horizontalBasePadding = Modifier.padding(horizontal = LARGE_SPACING.dp)
+            val horizontalBasePadding = Modifier.padding(horizontal = spacing_large.dp)
 
             HomeTopBar(
                 modifier = horizontalBasePadding,

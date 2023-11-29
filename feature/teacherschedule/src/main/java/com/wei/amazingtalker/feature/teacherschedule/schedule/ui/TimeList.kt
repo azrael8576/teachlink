@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +17,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.shapes
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_medium
 import com.wei.amazingtalker.core.model.data.DuringDayType
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
@@ -42,8 +44,8 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
         modifier = Modifier
-            .padding(top = 16.dp)
-            .padding(horizontal = 16.dp)
+            .padding(top = spacing_large.dp)
+            .padding(horizontal = spacing_large.dp)
             .semantics { contentDescription = yourLocalTimeZone },
     )
 }
@@ -62,8 +64,8 @@ internal fun DuringDay(duringDayType: DuringDayType) {
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
-            .padding(top = 16.dp)
-            .padding(horizontal = 16.dp)
+            .padding(top = spacing_large.dp)
+            .padding(horizontal = spacing_large.dp)
             .semantics { contentDescription = duringDay },
     )
 }
@@ -93,20 +95,23 @@ private fun AvailableTimeSlot(
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val availableDescription =
-        String.format(stringResource(R.string.content_description_available_time_slot), startTimeText)
+        String.format(
+            stringResource(R.string.content_description_available_time_slot),
+            startTimeText,
+        )
 
     Button(
         onClick = { onTimeSlotClick() },
         modifier = modifier
-            .padding(top = 16.dp)
-            .padding(horizontal = 16.dp)
+            .padding(top = spacing_large.dp)
+            .padding(horizontal = spacing_large.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = availableDescription },
-        shape = RoundedCornerShape(12.dp),
+        shape = shapes.medium,
     ) {
         Text(
             text = startTimeText,
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier.padding(vertical = spacing_medium.dp),
         )
     }
 }
@@ -118,17 +123,20 @@ private fun UnavailableTimeSlot(
 ) {
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val unavailableDescription =
-        String.format(stringResource(R.string.content_description_unavailable_time_slot), startTimeText)
+        String.format(
+            stringResource(R.string.content_description_unavailable_time_slot),
+            startTimeText,
+        )
 
     OutlinedButton(
         onClick = {},
         enabled = false,
         modifier = modifier
-            .padding(top = 16.dp)
-            .padding(horizontal = 16.dp)
+            .padding(top = spacing_large.dp)
+            .padding(horizontal = spacing_large.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = unavailableDescription },
-        shape = RoundedCornerShape(12.dp),
+        shape = shapes.medium,
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground,
@@ -138,7 +146,7 @@ private fun UnavailableTimeSlot(
         Text(
             text = startTimeText,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier.padding(vertical = spacing_medium.dp),
         )
     }
 }
