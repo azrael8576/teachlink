@@ -1,7 +1,7 @@
 package com.wei.amazingtalker.core.designsystem.theme
 
-const val spacing_extra_small = 4
-const val spacing_small = 8
-const val spacing_medium = 12
-const val spacing_large = 16
-const val spacing_extra_large = 24
+const val SPACING_EXTRA_SMALL = 4
+const val SPACING_SMALL = 8
+const val SPACING_MEDIUM = 12
+const val SPACING_LARGE = 16
+const val SPACING_EXTRA_LARGE = 24

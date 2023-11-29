@@ -27,11 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -44,14 +41,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import coil.ImageLoader
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
+import com.wei.amazingtalker.core.designsystem.component.coilImagePainter
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_large
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_EXTRA_LARGE
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.amazingtalker.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.amazingtalker.feature.login.R
@@ -104,7 +98,6 @@ internal fun WelcomeRoute(
 
     WelcomeScreen(
         isPortrait = isPortrait,
-        isPreview = false,
         onGetStartedButtonClicked = { viewModel.dispatch(WelcomeViewAction.GetStarted) },
     )
 }
@@ -116,7 +109,7 @@ val NotoSansFontFamily = FontFamily(
 @Composable
 internal fun WelcomeScreen(
     isPortrait: Boolean,
-    isPreview: Boolean = true,
+    isPreview: Boolean = false,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
     onGetStartedButtonClicked: () -> Unit,
@@ -132,10 +125,10 @@ internal fun WelcomeScreen(
 
             WelcomeScreenToolbar(
                 modifier = if (isPortrait) {
-                    Modifier.padding(horizontal = spacing_large.dp)
+                    Modifier.padding(horizontal = SPACING_LARGE.dp)
                 } else {
                     Modifier.padding(
-                        horizontal = spacing_extra_large.dp,
+                        horizontal = SPACING_EXTRA_LARGE.dp,
                     )
                 },
                 isPreview = isPreview,
@@ -155,23 +148,6 @@ internal fun WelcomeScreen(
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
         }
-    }
-}
-
-@Composable
-fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
-    val request = ImageRequest.Builder(LocalContext.current)
-        .data(resId)
-        .build()
-    return if (isPreview) {
-        painterResource(id = resId)
-    } else {
-        rememberAsyncImagePainter(request, imageLoader)
     }
 }
 
@@ -197,7 +173,7 @@ fun AtLogoImg(
     isPreview: Boolean,
 ) {
     val resId = R.drawable.ic_logo
-    val painter = loadImageUsingCoil(resId, isPreview)
+    val painter = coilImagePainter(resId, isPreview)
 
     Image(
         painter = painter,
@@ -228,7 +204,7 @@ fun WelcomeGraphics(
     isPreview: Boolean,
 ) {
     val resId = R.drawable.welcome_background
-    val painter = loadImageUsingCoil(resId, isPreview)
+    val painter = coilImagePainter(resId, isPreview)
 
     Box(modifier = modifier.fillMaxWidth()) {
         Image(
@@ -274,7 +250,7 @@ fun WelcomeTitlePortrait(
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = spacing_extra_large.dp)
+                .padding(vertical = SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
             style = style,
@@ -299,7 +275,7 @@ fun WelcomeTitleLandscape(
     ) {
         Text(
             modifier = Modifier
-                .padding(horizontal = spacing_extra_large.dp)
+                .padding(horizontal = SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
             style = style,
@@ -334,6 +310,7 @@ fun WelcomeScreenPortraitPreview() {
     AtTheme {
         WelcomeScreen(
             isPortrait = true,
+            isPreview = true,
             onGetStartedButtonClicked = { },
         )
     }
@@ -345,6 +322,7 @@ fun WelcomeScreenLandscapePreview() {
     AtTheme {
         WelcomeScreen(
             isPortrait = false,
+            isPreview = true,
             onGetStartedButtonClicked = { },
         )
     }

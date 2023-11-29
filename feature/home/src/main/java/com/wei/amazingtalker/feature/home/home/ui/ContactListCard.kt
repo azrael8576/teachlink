@@ -24,16 +24,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
+import com.wei.amazingtalker.core.designsystem.component.coilImagePainter
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_EXTRA_SMALL
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.amazingtalker.core.designsystem.theme.shapes
-import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_small
-import com.wei.amazingtalker.core.designsystem.theme.spacing_medium
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.Contact
 import com.wei.amazingtalker.feature.home.home.OnlineStatus
-import com.wei.amazingtalker.feature.home.home.loadImageUsingCoil
 import com.wei.amazingtalker.feature.home.home.utilities.BusyColor
-import com.wei.amazingtalker.feature.home.home.utilities.ContactHeadShotSize
+import com.wei.amazingtalker.feature.home.home.utilities.CONTACT_HEAD_SHOT_SIZE
 import com.wei.amazingtalker.feature.home.home.utilities.FreeColor
 import com.wei.amazingtalker.feature.home.home.utilities.OfflineColor
 import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
@@ -42,10 +42,11 @@ import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
 fun ContactCard(
     modifier: Modifier = Modifier,
     contacts: List<Contact>,
+    isPreview: Boolean,
 ) {
     val maxDisplayContacts = 4
     val contactsPerRow = 2
-    val spacingSize = spacing_extra_small.dp
+    val spacingSize = SPACING_EXTRA_SMALL.dp
 
     Card(
         modifier = modifier,
@@ -56,7 +57,7 @@ fun ContactCard(
         ),
     ) {
         Column(
-            modifier = Modifier.padding(spacing_medium.dp),
+            modifier = Modifier.padding(SPACING_MEDIUM.dp),
         ) {
             val displayContacts = contacts.take(maxDisplayContacts)
             for (i in 0 until maxDisplayContacts / contactsPerRow) {
@@ -68,6 +69,7 @@ fun ContactCard(
                                 name = it.name,
                                 avatarId = it.avatarId,
                                 status = it.status,
+                                isPreview = isPreview,
                             )
                         } ?: PlaceholderAvatar()
 
@@ -90,13 +92,14 @@ internal fun ContactAvatar(
     name: String,
     avatarId: Int,
     status: OnlineStatus,
+    isPreview: Boolean,
 ) {
-    val painter = loadImageUsingCoil(avatarId, true)
+    val painter = coilImagePainter(avatarId, true)
     val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
 
     Box(
         modifier = modifier
-            .size(ContactHeadShotSize.dp)
+            .size(CONTACT_HEAD_SHOT_SIZE.dp)
             .statusIndicator(status),
     ) {
         Image(
@@ -160,19 +163,20 @@ fun PlaceholderAvatar(
     Box(
         modifier = modifier
             .background(MaterialTheme.colorScheme.secondary)
-            .size(ContactHeadShotSize.dp),
+            .size(CONTACT_HEAD_SHOT_SIZE.dp),
     )
 }
 
 @ThemePreviews
 @Composable
 fun ContactCardPreview() {
-    val cardSize = (ContactHeadShotSize * 2) + (spacing_medium * 2) + 4
+    val cardSize = (CONTACT_HEAD_SHOT_SIZE * 2) + (SPACING_MEDIUM * 2) + 4
 
     AtTheme {
         ContactCard(
             modifier = Modifier.size(cardSize.dp),
             contacts = TestContacts,
+            isPreview = true,
         )
     }
 }

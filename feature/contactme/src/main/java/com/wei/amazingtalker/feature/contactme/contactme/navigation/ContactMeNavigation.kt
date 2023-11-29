@@ -15,7 +15,7 @@ fun NavController.navigateToContactMe(navOptions: NavOptions? = null) {
     this.navigate(contactMeRoute, navOptions)
 }
 
-fun NavGraphBuilder.contactMeScreen(
+fun NavGraphBuilder.contactMeGraph(
     navController: NavController,
     contentType: AtContentType,
     displayFeatures: List<DisplayFeature>,

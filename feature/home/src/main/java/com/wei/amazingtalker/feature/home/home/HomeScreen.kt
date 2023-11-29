@@ -17,23 +17,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import coil.ImageLoader
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.ui.HomeTabRow
 import com.wei.amazingtalker.feature.home.home.ui.HomeTopBar
@@ -90,6 +83,7 @@ internal fun HomeScreen(
     uiStates: HomeViewState,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
+    isPreview: Boolean = false,
     onTabClick: (Tab) -> Unit,
 ) {
     val showPopup = remember { mutableStateOf(false) }
@@ -112,12 +106,13 @@ internal fun HomeScreen(
             if (withTopSpacer) {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
             }
-            val horizontalBasePadding = Modifier.padding(horizontal = spacing_large.dp)
+            val horizontalBasePadding = Modifier.padding(horizontal = SPACING_LARGE.dp)
 
             HomeTopBar(
                 modifier = horizontalBasePadding,
                 userName = uiStates.userName,
                 avatarId = R.drawable.he_wei,
+                isPreview = isPreview,
                 onAddUserClick = {
                     /*TODO*/
                     showPopup.value = true
@@ -142,6 +137,7 @@ internal fun HomeScreen(
                     MyCoursesContent(
                         modifier = horizontalBasePadding,
                         uiStates = uiStates.myCoursesContentState,
+                        isPreview = isPreview,
                         onCardClick = { showPopup.value = true },
                     )
                 }
@@ -182,19 +178,6 @@ internal fun HomeScreen(
     }
 }
 
-@Composable
-fun loadImageUsingCoil(resId: Int, isPreview: Boolean): Painter {
-    val imageLoader = ImageLoader.Builder(LocalContext.current).components {
-        add(SvgDecoder.Factory())
-    }.build()
-    val request = ImageRequest.Builder(LocalContext.current).data(resId).build()
-    return if (isPreview) {
-        painterResource(id = resId)
-    } else {
-        rememberAsyncImagePainter(request, imageLoader)
-    }
-}
-
 @ThemePreviews
 @Composable
 fun HomeScreenPreview() {
@@ -203,6 +186,7 @@ fun HomeScreenPreview() {
             uiStates = HomeViewState(
                 userName = "Wei",
             ),
+            isPreview = true,
             onTabClick = { },
         )
     }

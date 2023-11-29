@@ -27,15 +27,15 @@ import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_EXTRA_SMALL
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_SMALL
 import com.wei.amazingtalker.core.designsystem.theme.shapes
-import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_small
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
-import com.wei.amazingtalker.core.designsystem.theme.spacing_small
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.ui.ContactCard
 import com.wei.amazingtalker.feature.home.home.ui.SkillProgressCard
 import com.wei.amazingtalker.feature.home.home.ui.StatusCard
-import com.wei.amazingtalker.feature.home.home.utilities.ContactHeadShotSize
+import com.wei.amazingtalker.feature.home.home.utilities.CONTACT_HEAD_SHOT_SIZE
 import com.wei.amazingtalker.feature.home.home.utilities.TEST_CLASS_NAME
 import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_LEVEL
 import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_LEVEL_PROGRESS
@@ -47,11 +47,12 @@ import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
 fun MyCoursesContent(
     modifier: Modifier = Modifier,
     uiStates: MyCoursesContentState,
+    isPreview: Boolean,
     onCardClick: () -> Unit,
 ) {
     LazyColumn {
         item {
-            Spacer(modifier = Modifier.height(spacing_large.dp))
+            Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
             Row(modifier = modifier) {
                 CourseProgressCard(
                     modifier = Modifier.weight(1f),
@@ -59,14 +60,14 @@ fun MyCoursesContent(
                     courseCount = uiStates.courseCount,
                     onClick = onCardClick,
                 )
-                Spacer(modifier = Modifier.width(spacing_small.dp))
+                Spacer(modifier = Modifier.width(SPACING_SMALL.dp))
                 PupilRatingCard(
                     modifier = Modifier.weight(1f),
                     pupilRating = uiStates.pupilRating,
                     onClick = onCardClick,
                 )
             }
-            Spacer(modifier = Modifier.height(spacing_small.dp))
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
             TutorProfileCard(
                 modifier = modifier,
                 tutorName = uiStates.tutorName,
@@ -77,15 +78,16 @@ fun MyCoursesContent(
                 onTutorClick = onCardClick,
                 onClick = onCardClick,
             )
-            Spacer(modifier = Modifier.height(spacing_small.dp))
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
             Row(modifier = modifier) {
                 val cardSize = calculateCardSize()
 
                 ContactCard(
                     modifier = Modifier.size(cardSize.dp),
                     contacts = uiStates.contacts,
+                    isPreview = isPreview,
                 )
-                Spacer(modifier = Modifier.width(spacing_small.dp))
+                Spacer(modifier = Modifier.width(SPACING_SMALL.dp))
                 SkillProgressCard(
                     modifier = Modifier
                         .size(cardSize.dp)
@@ -96,7 +98,7 @@ fun MyCoursesContent(
                     onClick = onCardClick,
                 )
             }
-            Spacer(modifier = Modifier.height(spacing_large.dp))
+            Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
         }
     }
 }
@@ -173,7 +175,7 @@ fun PupilRatingCard(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(16.dp),
                 )
-                Spacer(modifier = Modifier.width(spacing_extra_small.dp))
+                Spacer(modifier = Modifier.width(SPACING_EXTRA_SMALL.dp))
                 Text(
                     text = "$pupilRating",
                     style = MaterialTheme.typography.headlineSmall,
@@ -201,15 +203,15 @@ fun TutorProfileCard(
                 tutorName = tutorName,
                 onTutorClick = onTutorClick,
             )
-            Spacer(modifier = Modifier.height(spacing_small.dp))
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
             ClassName(className = className)
-            Spacer(modifier = Modifier.height(spacing_small.dp))
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
             ClassInfo(
                 lessonsCountDisplay = lessonsCountDisplay,
                 ratingCount = ratingCount,
                 startedDate = startedDate,
             )
-            Spacer(modifier = Modifier.height(spacing_small.dp))
+            Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
         },
         onClick = onClick,
     )
@@ -228,7 +230,7 @@ fun TutorCard(
         onClick = onClick,
     ) {
         Column(
-            modifier = Modifier.padding(spacing_small.dp),
+            modifier = Modifier.padding(SPACING_SMALL.dp),
             content = {
                 content()
             },
@@ -243,7 +245,7 @@ private fun ClassInfo(
     startedDate: String,
 ) {
     Row(
-        modifier = Modifier.padding(horizontal = spacing_small.dp),
+        modifier = Modifier.padding(horizontal = SPACING_SMALL.dp),
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,
@@ -297,7 +299,7 @@ private fun ClassInfo(
 
 @Composable
 private fun ClassName(className: String) {
-    Row(modifier = Modifier.padding(horizontal = spacing_small.dp)) {
+    Row(modifier = Modifier.padding(horizontal = SPACING_SMALL.dp)) {
         Text(
             text = className,
             style = MaterialTheme.typography.headlineLarge,
@@ -344,7 +346,7 @@ private fun TutorButton(
 }
 
 internal fun calculateCardSize(): Int {
-    return (ContactHeadShotSize * 2) + (spacing_small * 2) + 4
+    return (CONTACT_HEAD_SHOT_SIZE * 2) + (SPACING_SMALL * 2) + 4
 }
 
 @ThemePreviews
@@ -353,8 +355,7 @@ fun MyCoursesContentPreview() {
     AtTheme {
         Surface {
             MyCoursesContent(
-                modifier = Modifier.padding(horizontal = spacing_large.dp),
-                onCardClick = {},
+                modifier = Modifier.padding(horizontal = SPACING_LARGE.dp),
                 uiStates = MyCoursesContentState(
                     courseProgress = 20,
                     courseCount = 30,
@@ -369,6 +370,8 @@ fun MyCoursesContentPreview() {
                     skillLevel = TEST_SKILL_LEVEL,
                     skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
                 ),
+                isPreview = true,
+                onCardClick = {},
             )
         }
     }

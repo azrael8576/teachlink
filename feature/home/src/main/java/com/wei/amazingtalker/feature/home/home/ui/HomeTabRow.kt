@@ -23,9 +23,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_EXTRA_SMALL
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.theme.shapes
-import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_small
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.HomeViewState
 import com.wei.amazingtalker.feature.home.home.Tab
@@ -41,7 +41,7 @@ fun HomeTabRow(
 
     ScrollableTabRow(
         selectedTabIndex = currentSelectedTab.ordinal,
-        edgePadding = spacing_large.dp,
+        edgePadding = SPACING_LARGE.dp,
         modifier = Modifier.fillMaxWidth(),
     ) {
         MyCoursesTab(
@@ -80,7 +80,7 @@ fun MyCoursesTab(
         Text(
             text = myCourses,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(spacing_large.dp),
+            modifier = Modifier.padding(SPACING_LARGE.dp),
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
         )
     }
@@ -103,7 +103,7 @@ fun ChatTab(
         },
     ) {
         Row(
-            modifier = Modifier.padding(spacing_large.dp),
+            modifier = Modifier.padding(SPACING_LARGE.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -111,7 +111,7 @@ fun ChatTab(
                 style = MaterialTheme.typography.bodyLarge,
                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
             )
-            Spacer(modifier = Modifier.width(spacing_extra_small.dp))
+            Spacer(modifier = Modifier.width(SPACING_EXTRA_SMALL.dp))
             if (shouldDisplayChatCount) {
                 ChatCountBadge(count)
             }
@@ -130,7 +130,7 @@ fun ChatCountBadge(count: String) {
             text = count,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(vertical = 2.dp, horizontal = spacing_extra_small.dp),
+            modifier = Modifier.padding(vertical = 2.dp, horizontal = SPACING_EXTRA_SMALL.dp),
         )
     }
 }
@@ -149,7 +149,7 @@ fun TutorsTab(isSelected: Boolean, onTabClick: () -> Unit) {
         Text(
             text = tutors,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(spacing_large.dp),
+            modifier = Modifier.padding(SPACING_LARGE.dp),
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
         )
     }

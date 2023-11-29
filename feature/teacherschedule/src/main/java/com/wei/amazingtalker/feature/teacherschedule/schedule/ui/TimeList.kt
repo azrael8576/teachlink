@@ -17,9 +17,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.amazingtalker.core.designsystem.theme.shapes
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
-import com.wei.amazingtalker.core.designsystem.theme.spacing_medium
 import com.wei.amazingtalker.core.model.data.DuringDayType
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
@@ -44,8 +44,8 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
         modifier = Modifier
-            .padding(top = spacing_large.dp)
-            .padding(horizontal = spacing_large.dp)
+            .padding(top = SPACING_LARGE.dp)
+            .padding(horizontal = SPACING_LARGE.dp)
             .semantics { contentDescription = yourLocalTimeZone },
     )
 }
@@ -64,8 +64,8 @@ internal fun DuringDay(duringDayType: DuringDayType) {
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
-            .padding(top = spacing_large.dp)
-            .padding(horizontal = spacing_large.dp)
+            .padding(top = SPACING_LARGE.dp)
+            .padding(horizontal = SPACING_LARGE.dp)
             .semantics { contentDescription = duringDay },
     )
 }
@@ -103,15 +103,15 @@ private fun AvailableTimeSlot(
     Button(
         onClick = { onTimeSlotClick() },
         modifier = modifier
-            .padding(top = spacing_large.dp)
-            .padding(horizontal = spacing_large.dp)
+            .padding(top = SPACING_LARGE.dp)
+            .padding(horizontal = SPACING_LARGE.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = availableDescription },
         shape = shapes.medium,
     ) {
         Text(
             text = startTimeText,
-            modifier = Modifier.padding(vertical = spacing_medium.dp),
+            modifier = Modifier.padding(vertical = SPACING_MEDIUM.dp),
         )
     }
 }
@@ -132,8 +132,8 @@ private fun UnavailableTimeSlot(
         onClick = {},
         enabled = false,
         modifier = modifier
-            .padding(top = spacing_large.dp)
-            .padding(horizontal = spacing_large.dp)
+            .padding(top = SPACING_LARGE.dp)
+            .padding(horizontal = SPACING_LARGE.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = unavailableDescription },
         shape = shapes.medium,
@@ -146,7 +146,7 @@ private fun UnavailableTimeSlot(
         Text(
             text = startTimeText,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(vertical = spacing_medium.dp),
+            modifier = Modifier.padding(vertical = SPACING_MEDIUM.dp),
         )
     }
 }

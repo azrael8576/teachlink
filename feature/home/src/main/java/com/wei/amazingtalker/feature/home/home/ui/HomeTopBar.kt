@@ -26,23 +26,24 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
+import com.wei.amazingtalker.core.designsystem.component.coilImagePainter
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
-import com.wei.amazingtalker.core.designsystem.theme.spacing_small
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_SMALL
 import com.wei.amazingtalker.feature.home.R
-import com.wei.amazingtalker.feature.home.home.loadImageUsingCoil
 
 @Composable
 fun HomeTopBar(
     modifier: Modifier = Modifier,
     userName: String,
     avatarId: Int,
+    isPreview: Boolean,
     onUserProfileImageClick: () -> Unit,
     onAddUserClick: () -> Unit,
     onMenuClick: () -> Unit,
 ) {
-    Column(modifier = modifier.padding(top = spacing_large.dp)) {
+    Column(modifier = modifier.padding(top = SPACING_LARGE.dp)) {
         Row {
             Box {
                 AddUserButton(
@@ -52,13 +53,14 @@ fun HomeTopBar(
                 UserAvatar(
                     userName = userName,
                     avatarId = avatarId,
+                    isPreview = isPreview,
                     onUserProfileImageClick = onUserProfileImageClick,
                 )
             }
             Spacer(modifier = modifier.weight(1f))
             MenuButton(onMenuClick = onMenuClick)
         }
-        Spacer(modifier = Modifier.height(spacing_small.dp))
+        Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
         val helloUserName = stringResource(R.string.hello, userName)
 
         Text(
@@ -67,7 +69,7 @@ fun HomeTopBar(
             fontWeight = FontWeight.Normal,
             modifier = Modifier.semantics { contentDescription = helloUserName },
         )
-        Spacer(modifier = Modifier.height(spacing_small.dp))
+        Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
     }
 }
 
@@ -102,10 +104,10 @@ internal fun UserAvatar(
     modifier: Modifier = Modifier,
     userName: String,
     avatarId: Int,
-    isPreview: Boolean = true,
+    isPreview: Boolean,
     onUserProfileImageClick: () -> Unit,
 ) {
-    val painter = loadImageUsingCoil(avatarId, isPreview)
+    val painter = coilImagePainter(avatarId, isPreview)
     val profilePictureDescription = stringResource(R.string.profile_picture).format(userName)
 
     IconButton(
@@ -153,9 +155,10 @@ fun HomeTopBarPreview() {
     AtTheme {
         Surface {
             HomeTopBar(
-                modifier = Modifier.padding(horizontal = spacing_large.dp),
+                modifier = Modifier.padding(horizontal = SPACING_LARGE.dp),
                 userName = "TEST_NAME",
                 avatarId = R.drawable.he_wei,
+                isPreview = true,
                 onUserProfileImageClick = {},
                 onAddUserClick = {},
                 onMenuClick = {},

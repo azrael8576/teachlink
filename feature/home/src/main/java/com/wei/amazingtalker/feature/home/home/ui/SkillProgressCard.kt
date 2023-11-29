@@ -21,8 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.theme.shapes
-import com.wei.amazingtalker.core.designsystem.theme.spacing_large
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +43,7 @@ fun SkillProgressCard(
         onClick = onClick,
     ) {
         Column(
-            modifier = Modifier.padding(spacing_large.dp),
+            modifier = Modifier.padding(SPACING_LARGE.dp),
             content = {
                 Text(
                     text = skillName,
@@ -58,7 +58,7 @@ fun SkillProgressCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.height(spacing_large.dp))
+                Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                 CircularProgress(modifier = Modifier.weight(1f), progress = progress)
             },
         )
