@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,8 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
-import com.wei.amazingtalker.feature.home.home.utilities.CARD_CORNER_SIZE
-import com.wei.amazingtalker.feature.home.home.utilities.LARGE_SPACING
+import com.wei.amazingtalker.core.designsystem.theme.shapes
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +35,7 @@ fun SkillProgressCard(
 ) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(size = CARD_CORNER_SIZE.dp),
+        shape = shapes.extraLarge,
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary,
@@ -44,7 +43,7 @@ fun SkillProgressCard(
         onClick = onClick,
     ) {
         Column(
-            modifier = Modifier.padding(LARGE_SPACING.dp),
+            modifier = Modifier.padding(spacing_large.dp),
             content = {
                 Text(
                     text = skillName,
@@ -59,7 +58,7 @@ fun SkillProgressCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.height(LARGE_SPACING.dp))
+                Spacer(modifier = Modifier.height(spacing_large.dp))
                 CircularProgress(modifier = Modifier.weight(1f), progress = progress)
             },
         )

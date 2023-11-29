@@ -50,6 +50,8 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
 import com.wei.amazingtalker.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.amazingtalker.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.amazingtalker.feature.login.R
@@ -130,10 +132,10 @@ internal fun WelcomeScreen(
 
             WelcomeScreenToolbar(
                 modifier = if (isPortrait) {
-                    Modifier.padding(horizontal = 16.dp)
+                    Modifier.padding(horizontal = spacing_large.dp)
                 } else {
                     Modifier.padding(
-                        horizontal = 24.dp,
+                        horizontal = spacing_extra_large.dp,
                     )
                 },
                 isPreview = isPreview,
@@ -272,7 +274,7 @@ fun WelcomeTitlePortrait(
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = 24.dp)
+                .padding(vertical = spacing_extra_large.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
             style = style,
@@ -297,7 +299,7 @@ fun WelcomeTitleLandscape(
     ) {
         Text(
             modifier = Modifier
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = spacing_extra_large.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
             style = style,

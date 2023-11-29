@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_small
 import com.wei.amazingtalker.feature.login.BuildConfig
 import com.wei.amazingtalker.feature.login.R
 import com.wei.amazingtalker.feature.login.utilities.TEST_ACCOUNT
@@ -109,7 +111,7 @@ internal fun LoginScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(spacing_large.dp),
             contentAlignment = Alignment.Center,
         ) {
             Column(
@@ -203,7 +205,7 @@ internal fun ForgotPasswordText(modifier: Modifier = Modifier) {
         text = forgotPassword,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
-            .padding(top = 16.dp)
+            .padding(top = spacing_large.dp)
             .semantics { contentDescription = forgotPassword },
     )
 }
@@ -222,7 +224,7 @@ internal fun LoginButton(
             login(accountState.value, passwordState.value)
         },
         modifier = Modifier
-            .padding(top = 8.dp)
+            .padding(top = spacing_small.dp)
             .semantics { contentDescription = loginTextDescription },
     ) {
         Text(

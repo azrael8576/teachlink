@@ -19,9 +19,6 @@ val FreeColor = Color(0xFF58D264)
 val OfflineColor = Color(0xFFB6B6B6)
 
 const val ContactHeadShotSize = 64
-const val DEFAULT_SPACING = 8
-const val LARGE_SPACING = 16
-const val CARD_CORNER_SIZE = 24
 
 const val TEST_TUTOR_NAME = "jamie-coleman"
 const val TEST_CLASS_NAME = "English Grammar"

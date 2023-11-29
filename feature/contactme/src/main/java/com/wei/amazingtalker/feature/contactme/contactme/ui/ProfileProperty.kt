@@ -11,15 +11,17 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.baselineHeight
+import com.wei.amazingtalker.core.designsystem.theme.spacing_extra_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_medium
 
 @Composable
 fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(modifier = Modifier.padding(vertical = spacing_medium.dp)) {
         Divider(color = MaterialTheme.colorScheme.outline)
         Text(
             text = label,
             modifier = Modifier
-                .baselineHeight(24.dp)
+                .baselineHeight(spacing_extra_large.dp)
                 .semantics { contentDescription = label },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -32,7 +34,7 @@ fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
         Text(
             text = value,
             modifier = Modifier
-                .baselineHeight(24.dp)
+                .baselineHeight(spacing_extra_large.dp)
                 .semantics { contentDescription = value },
             style = style,
         )

@@ -29,6 +29,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.designsystem.theme.spacing_large
+import com.wei.amazingtalker.core.designsystem.theme.spacing_medium
 import com.wei.amazingtalker.core.model.data.DuringDayType
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
@@ -107,7 +109,7 @@ internal fun ScheduleDetailScreen(
                 text = teacherName,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = spacing_large.dp)
                     .testTag(stringResource(id = R.string.tag_teacher_name))
                     .semantics { contentDescription = teacherNameDescription },
             )
@@ -118,8 +120,8 @@ internal fun ScheduleDetailScreen(
                 text = startTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp)
+                    .padding(horizontal = spacing_large.dp)
+                    .padding(top = spacing_medium.dp)
                     .testTag(stringResource(id = R.string.tag_start_time))
                     .semantics { contentDescription = startTimeDescription },
             )
@@ -130,8 +132,8 @@ internal fun ScheduleDetailScreen(
                 text = endTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp)
+                    .padding(horizontal = spacing_large.dp)
+                    .padding(top = spacing_medium.dp)
                     .testTag(stringResource(id = R.string.tag_end_time))
                     .semantics { contentDescription = endTimeDescription },
             )
@@ -142,8 +144,8 @@ internal fun ScheduleDetailScreen(
                 text = state,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp)
+                    .padding(horizontal = spacing_large.dp)
+                    .padding(top = spacing_medium.dp)
                     .testTag(stringResource(id = R.string.tag_state))
                     .semantics { contentDescription = stateDescription },
             )
@@ -155,8 +157,8 @@ internal fun ScheduleDetailScreen(
                 text = duringDayType,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 8.dp)
+                    .padding(horizontal = spacing_large.dp)
+                    .padding(top = spacing_medium.dp)
                     .testTag(stringResource(id = R.string.tag_during_day_type))
                     .semantics { contentDescription = duringDayTypeDescription },
             )
