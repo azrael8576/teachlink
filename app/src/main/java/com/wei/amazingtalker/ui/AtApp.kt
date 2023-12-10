@@ -123,11 +123,9 @@ fun AtApp(
                     hostState = snackbarHostState,
                     snackbar = { snackbarData ->
                         if (!appState.isFullScreenCurrentDestination) {
-                            Column {
-                                val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
-                                AtAppSnackbar(snackbarData, isError)
-                                Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
-                            }
+                            // TODO [Revert]: Temporary removal of Spacer in Snackbar to prevent extra space on phone devices. See issue #38.
+                            val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                            AtAppSnackbar(snackbarData, isError)
                         }
                     },
                 )
