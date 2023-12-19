@@ -428,6 +428,7 @@ fun ContactMeScreenDualPanePreview() {
             uiStates = previewUIState,
             contentType = AtContentType.DUAL_PANE,
             displayFeatures = emptyList<DisplayFeature>(),
+            isPreview = true,
             onPhoneClick = { },
         )
     }
