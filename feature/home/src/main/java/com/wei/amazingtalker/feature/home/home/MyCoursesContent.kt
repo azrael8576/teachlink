@@ -24,6 +24,11 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.wei.amazingtalker.core.data.repository.fake.TEST_CLASS_NAME
+import com.wei.amazingtalker.core.data.repository.fake.TEST_SKILL_LEVEL
+import com.wei.amazingtalker.core.data.repository.fake.TEST_SKILL_LEVEL_PROGRESS
+import com.wei.amazingtalker.core.data.repository.fake.TEST_SKILL_NAME
+import com.wei.amazingtalker.core.data.repository.fake.TEST_TUTOR_NAME
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
@@ -36,11 +41,6 @@ import com.wei.amazingtalker.feature.home.home.ui.ContactCard
 import com.wei.amazingtalker.feature.home.home.ui.SkillProgressCard
 import com.wei.amazingtalker.feature.home.home.ui.StatusCard
 import com.wei.amazingtalker.feature.home.home.utilities.CONTACT_HEAD_SHOT_SIZE
-import com.wei.amazingtalker.feature.home.home.utilities.TEST_CLASS_NAME
-import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_LEVEL
-import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_LEVEL_PROGRESS
-import com.wei.amazingtalker.feature.home.home.utilities.TEST_SKILL_NAME
-import com.wei.amazingtalker.feature.home.home.utilities.TEST_TUTOR_NAME
 import com.wei.amazingtalker.feature.home.home.utilities.TestContacts
 
 @Composable

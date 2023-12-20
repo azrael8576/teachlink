@@ -38,7 +38,6 @@ fun HomeTopBar(
     modifier: Modifier = Modifier,
     userName: String,
     avatarId: Int,
-    isPreview: Boolean,
     onUserProfileImageClick: () -> Unit,
     onAddUserClick: () -> Unit,
     onMenuClick: () -> Unit,
@@ -53,7 +52,6 @@ fun HomeTopBar(
                 UserAvatar(
                     userName = userName,
                     avatarId = avatarId,
-                    isPreview = isPreview,
                     onUserProfileImageClick = onUserProfileImageClick,
                 )
             }
@@ -104,10 +102,9 @@ internal fun UserAvatar(
     modifier: Modifier = Modifier,
     userName: String,
     avatarId: Int,
-    isPreview: Boolean,
     onUserProfileImageClick: () -> Unit,
 ) {
-    val painter = coilImagePainter(avatarId, isPreview)
+    val painter = coilImagePainter(avatarId, true)
     val profilePictureDescription = stringResource(R.string.profile_picture).format(userName)
 
     IconButton(
@@ -158,7 +155,6 @@ fun HomeTopBarPreview() {
                 modifier = Modifier.padding(horizontal = SPACING_LARGE.dp),
                 userName = "TEST_NAME",
                 avatarId = R.drawable.he_wei,
-                isPreview = true,
                 onUserProfileImageClick = {},
                 onAddUserClick = {},
                 onMenuClick = {},

@@ -20,15 +20,9 @@ val OfflineColor = Color(0xFFB6B6B6)
 
 const val CONTACT_HEAD_SHOT_SIZE = 64
 
-const val TEST_TUTOR_NAME = "jamie-coleman"
-const val TEST_CLASS_NAME = "English Grammar"
-const val TEST_SKILL_NAME = "Business English"
-const val TEST_SKILL_LEVEL = "Advanced level"
-const val TEST_SKILL_LEVEL_PROGRESS = 64
-
 val TestContacts = listOf(
     Contact(
-        name = TEST_TUTOR_NAME,
+        name = "jamie-coleman",
         avatarId = R.drawable.jamie_coleman,
         status = OnlineStatus.FREE,
     ),

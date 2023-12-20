@@ -26,10 +26,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.theme.SPACING_SMALL
@@ -234,7 +234,7 @@ internal fun LoginButton(
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun LoginScreenPreview() {
     AtTheme {
