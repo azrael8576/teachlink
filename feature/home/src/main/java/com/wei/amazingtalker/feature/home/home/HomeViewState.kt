@@ -12,7 +12,8 @@ sealed class HomeViewAction : Action {
 }
 
 data class HomeViewState(
-    val userName: String = "N/A",
+    val loadingState: HomeViewLoadingState = HomeViewLoadingState.Loading,
+    val userDisplayName: String = "",
     val selectedTab: Tab = Tab.MY_COURSES,
     val chatCount: Int = 0,
     val myCoursesContentState: MyCoursesContentState = MyCoursesContentState(),
@@ -22,4 +23,10 @@ data class HomeViewState(
 
     val shouldDisplayChatCount: Boolean
         get() = chatCount > 0
+}
+
+sealed interface HomeViewLoadingState : State {
+    data object Success : HomeViewLoadingState
+    data object Error : HomeViewLoadingState
+    data object Loading : HomeViewLoadingState
 }

@@ -1,17 +1,21 @@
 package com.wei.amazingtalker.feature.home.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -110,9 +114,8 @@ internal fun HomeScreen(
 
             HomeTopBar(
                 modifier = horizontalBasePadding,
-                userName = uiStates.userName,
+                userName = uiStates.userDisplayName,
                 avatarId = R.drawable.he_wei,
-                isPreview = isPreview,
                 onAddUserClick = {
                     /*TODO*/
                     showPopup.value = true
@@ -132,49 +135,87 @@ internal fun HomeScreen(
                 onTabSelected = onTabClick,
             )
 
-            when (uiStates.selectedTab) {
-                Tab.MY_COURSES -> {
-                    MyCoursesContent(
-                        modifier = horizontalBasePadding,
-                        uiStates = uiStates.myCoursesContentState,
-                        isPreview = isPreview,
-                        onCardClick = { showPopup.value = true },
-                    )
-                }
-
-                Tab.CHATS -> {
-                    Column {
-                        Spacer(modifier = Modifier.weight(1f))
-                        Text(
-                            text = "Screen not available \uD83D\uDE48",
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.headlineMedium,
-                            modifier = Modifier
-                                .semantics { contentDescription = "" },
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                }
-
-                Tab.TUTORS -> {
-                    Column {
-                        Spacer(modifier = Modifier.weight(1f))
-                        Text(
-                            text = "Screen not available \uD83D\uDE48",
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.headlineMedium,
-                            modifier = Modifier
-                                .semantics { contentDescription = "" },
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                }
-            }
+            ContentSwitch(
+                uiStates = uiStates,
+                isPreview = isPreview,
+                showPopup = showPopup,
+            )
 
             if (withBottomSpacer) {
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
             }
         }
+    }
+}
+
+@Composable
+private fun ContentSwitch(
+    uiStates: HomeViewState,
+    isPreview: Boolean,
+    showPopup: MutableState<Boolean>,
+) {
+    when (uiStates.loadingState) {
+        HomeViewLoadingState.Success -> TabContent(uiStates, isPreview, showPopup)
+        HomeViewLoadingState.Error -> LoadingErrorContent()
+        HomeViewLoadingState.Loading -> LoadingContent()
+    }
+}
+
+@Composable
+private fun TabContent(
+    uiStates: HomeViewState,
+    isPreview: Boolean,
+    showPopup: MutableState<Boolean>,
+) {
+    val horizontalBasePadding = Modifier.padding(horizontal = SPACING_LARGE.dp)
+
+    when (uiStates.selectedTab) {
+        Tab.MY_COURSES -> {
+            MyCoursesContent(
+                modifier = horizontalBasePadding,
+                uiStates = uiStates.myCoursesContentState,
+                isPreview = isPreview,
+                onCardClick = { showPopup.value = true },
+            )
+        }
+
+        Tab.CHATS -> {
+            UnavailableScreenContent()
+        }
+
+        Tab.TUTORS -> {
+            UnavailableScreenContent()
+        }
+    }
+}
+
+@Composable
+private fun UnavailableScreenContent() {
+    Column {
+        Spacer(modifier = Modifier.weight(1f))
+        Text(
+            text = "Screen not available \uD83D\uDE48",
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier
+                .semantics { contentDescription = "" },
+        )
+        Spacer(modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+private fun LoadingErrorContent() {
+    // TODO Error Content
+}
+
+@Composable
+private fun LoadingContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(30.dp))
     }
 }
 
@@ -184,7 +225,7 @@ fun HomeScreenPreview() {
     AtTheme {
         HomeScreen(
             uiStates = HomeViewState(
-                userName = "Wei",
+                userDisplayName = "Wei",
             ),
             isPreview = true,
             onTabClick = { },

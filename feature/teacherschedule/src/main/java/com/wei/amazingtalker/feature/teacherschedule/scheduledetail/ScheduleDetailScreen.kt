@@ -22,11 +22,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.icon.AtIcons
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
@@ -188,7 +188,7 @@ private fun ScheduleDetailToolbar(
     }
 }
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun ScheduleDetailScreenPreview() {
     val nowTime = OffsetDateTime.now()
