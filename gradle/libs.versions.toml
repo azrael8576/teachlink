@@ -39,6 +39,7 @@ secrets = "2.0.1"
 lint = "31.0.2"
 robolectric = "4.10.3"
 roborazzi = "1.5.0-alpha-2"
+leakcanary = "2.12"
 
 [libraries]
 
@@ -169,6 +170,9 @@ robolectric-shadows = { group = "org.robolectric", name = "shadows-framework", v
 
 # roborazzi - A Screenshot tests lib in jvm.
 roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+
+# LeakCanary
+leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
