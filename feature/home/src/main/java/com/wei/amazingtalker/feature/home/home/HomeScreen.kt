@@ -21,6 +21,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -191,14 +193,16 @@ private fun TabContent(
 
 @Composable
 private fun UnavailableScreenContent() {
+    val screenNotAvailable = stringResource(R.string.screen_not_available)
+
     Column {
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "Screen not available \uD83D\uDE48",
+            text = screenNotAvailable,
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier
-                .semantics { contentDescription = "" },
+                .semantics { contentDescription = screenNotAvailable },
         )
         Spacer(modifier = Modifier.weight(1f))
     }
@@ -206,13 +210,20 @@ private fun UnavailableScreenContent() {
 
 @Composable
 private fun LoadingErrorContent() {
-    // TODO Error Content
-}
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(stringResource(R.string.tag_loading_error_content)),
+    ) {
+        // TODO Error Content
+    } }
 
 @Composable
 private fun LoadingContent() {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(stringResource(R.string.tag_loading_content)),
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(modifier = Modifier.size(30.dp))
@@ -225,6 +236,7 @@ fun HomeScreenPreview() {
     AtTheme {
         HomeScreen(
             uiStates = HomeViewState(
+                loadingState = HomeViewLoadingState.Success,
                 userDisplayName = "Wei",
             ),
             isPreview = true,

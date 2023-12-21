@@ -21,6 +21,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
@@ -47,9 +49,13 @@ fun ContactCard(
     val maxDisplayContacts = 4
     val contactsPerRow = 2
     val spacingSize = SPACING_EXTRA_SMALL.dp
+    val contactCard = stringResource(R.string.contact_card)
 
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .semantics {
+                contentDescription = contactCard
+            },
         shape = shapes.extraLarge,
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onSecondary,

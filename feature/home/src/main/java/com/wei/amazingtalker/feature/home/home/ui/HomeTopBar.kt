@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -65,7 +66,9 @@ fun HomeTopBar(
             text = helloUserName,
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Normal,
-            modifier = Modifier.semantics { contentDescription = helloUserName },
+            modifier = Modifier
+                .testTag(stringResource(R.string.tag_hello_user_name_text))
+                .semantics { contentDescription = helloUserName },
         )
         Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
     }
@@ -111,6 +114,7 @@ internal fun UserAvatar(
         onClick = onUserProfileImageClick,
         modifier = modifier
             .size(48.dp)
+            .testTag(stringResource(R.string.tag_user_avatar))
             .semantics {
                 contentDescription = profilePictureDescription
             },
