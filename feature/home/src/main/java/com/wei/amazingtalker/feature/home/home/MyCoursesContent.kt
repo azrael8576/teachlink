@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -111,11 +112,19 @@ fun CourseProgressCard(
     onClick: () -> Unit,
 ) {
     val completed = stringResource(id = R.string.completed)
+    val contentCourseProgressCard = stringResource(
+        R.string.course_progress_card,
+        completed,
+        courseProgress,
+        courseCount,
+    )
 
     StatusCard(
-        modifier = modifier.semantics {
-            contentDescription = completed
-        },
+        modifier = modifier
+            .testTag(stringResource(R.string.tag_course_progress_card))
+            .semantics {
+                contentDescription = contentCourseProgressCard
+            },
         onClick = onClick,
         content = {
             Row {
@@ -147,11 +156,13 @@ fun PupilRatingCard(
 ) {
     val pupil = stringResource(id = R.string.pupil)
     val rating = stringResource(id = R.string.rating)
+    val contentPupilRatingCard = "$pupil $rating $pupilRating"
 
     StatusCard(
         modifier = modifier
+            .testTag(stringResource(R.string.tag_pupil_rating_card))
             .semantics {
-                contentDescription = pupil + rating
+                contentDescription = contentPupilRatingCard
             },
         onClick = onClick,
         content = {
@@ -244,14 +255,22 @@ private fun ClassInfo(
     ratingCount: Double,
     startedDate: String,
 ) {
+    val lessons = stringResource(id = R.string.lessons)
+    val rating = stringResource(id = R.string.rating)
+    val started = stringResource(id = R.string.started)
+    val contentClassInfo = "$lessons $lessonsCountDisplay, $rating $ratingCount, $started $startedDate"
+
     Row(
-        modifier = Modifier.padding(horizontal = SPACING_SMALL.dp),
+        modifier = Modifier
+            .padding(horizontal = SPACING_SMALL.dp)
+            .testTag(stringResource(R.string.tag_class_info))
+            .semantics {
+                contentDescription = contentClassInfo
+            },
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,
         ) {
-            val lessons = stringResource(id = R.string.lessons)
-
             Text(
                 text = lessons,
                 style = MaterialTheme.typography.titleSmall,
@@ -266,8 +285,6 @@ private fun ClassInfo(
         Row(
             verticalAlignment = Alignment.Bottom,
         ) {
-            val rating = stringResource(id = R.string.rating)
-
             Text(
                 text = rating,
                 style = MaterialTheme.typography.titleSmall,
@@ -282,8 +299,6 @@ private fun ClassInfo(
         Row(
             verticalAlignment = Alignment.Bottom,
         ) {
-            val started = stringResource(id = R.string.started)
-
             Text(
                 text = started,
                 style = MaterialTheme.typography.titleSmall,
@@ -299,7 +314,14 @@ private fun ClassInfo(
 
 @Composable
 private fun ClassName(className: String) {
-    Row(modifier = Modifier.padding(horizontal = SPACING_SMALL.dp)) {
+    Row(
+        modifier = Modifier
+            .padding(horizontal = SPACING_SMALL.dp)
+            .testTag(stringResource(R.string.tag_class_name))
+            .semantics {
+                contentDescription = className
+            },
+    ) {
         Text(
             text = className,
             style = MaterialTheme.typography.headlineLarge,
@@ -315,6 +337,7 @@ private fun TutorButton(
     onTutorClick: () -> Unit,
 ) {
     val tutor = stringResource(id = R.string.tutor)
+    val contentTutorButton = "$tutor $tutorName"
 
     Button(
         onClick = onTutorClick,
@@ -322,6 +345,13 @@ private fun TutorButton(
             containerColor = MaterialTheme.colorScheme.background,
         ),
         contentPadding = ButtonDefaults.TextButtonContentPadding,
+        modifier = Modifier
+            .testTag(
+                stringResource(R.string.tag_tutor_button),
+            )
+            .semantics {
+                contentDescription = contentTutorButton
+            },
     ) {
         Icon(
             imageVector = AtIcons.Person,

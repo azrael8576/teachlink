@@ -14,4 +14,23 @@
     <string name="lessons">Lessons</string>
     <string name="started">Started</string>
     <string name="hello">Hello, %1$s</string>
+    <string name="course_progress_card">%1$s, percentage %2$s, count %3$s</string>
+    <string name="contact_card">聯絡人卡牌</string>
+    <string name="skill_progress_card">%1$s %2$s, percentage %3$s</string>
+    <string name="screen_not_available" translatable="false">Screen not available 🙈</string>
+
+    <!-- Test tag -->
+    <string name="tag_user_avatar" translatable="false">UserAvatar</string>
+    <string name="tag_hello_user_name_text" translatable="false">HelloUserNameText</string>
+    <string name="tag_course_progress_card" translatable="false">CourseProgressCard</string>
+    <string name="tag_pupil_rating_card" translatable="false">PupilRatingCard</string>
+    <string name="tag_tutor_button" translatable="false">TutorButton</string>
+    <string name="tag_class_name" translatable="false">ClassName</string>
+    <string name="tag_class_info" translatable="false">ClassInfo</string>
+    <string name="tag_skill_name" translatable="false">SkillName</string>
+    <string name="tag_skill_level" translatable="false">SkillLevel</string>
+    <string name="tag_circular_progress" translatable="false">CircularProgress</string>
+    <string name="tag_loading_content" translatable="false">LoadingContent</string>
+    <string name="tag_loading_error_content" translatable="false">LoadingErrorContent</string>
+
 </resources>

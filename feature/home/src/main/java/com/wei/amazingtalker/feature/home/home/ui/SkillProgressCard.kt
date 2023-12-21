@@ -17,12 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.wei.amazingtalker.core.designsystem.component.ThemePreviews
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
 import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.theme.shapes
+import com.wei.amazingtalker.feature.home.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,8 +38,16 @@ fun SkillProgressCard(
     progress: Int,
     onClick: () -> Unit,
 ) {
+    val contentSkillProgressCard = stringResource(
+        R.string.skill_progress_card,
+        skillName,
+        skillLevel,
+        progress,
+    )
     Card(
-        modifier = modifier,
+        modifier = modifier.semantics {
+            contentDescription = contentSkillProgressCard
+        },
         shape = shapes.extraLarge,
         colors = CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -50,6 +63,7 @@ fun SkillProgressCard(
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag(stringResource(R.string.tag_skill_name)),
                 )
                 Text(
                     text = skillLevel,
@@ -57,9 +71,15 @@ fun SkillProgressCard(
                     color = MaterialTheme.colorScheme.outlineVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.testTag(stringResource(R.string.tag_skill_level)),
                 )
                 Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
-                CircularProgress(modifier = Modifier.weight(1f), progress = progress)
+                CircularProgress(
+                    modifier = Modifier
+                        .weight(1f)
+                        .testTag(stringResource(R.string.tag_circular_progress)),
+                    progress = progress,
+                )
             },
         )
     }

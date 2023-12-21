@@ -14,4 +14,8 @@
     <string name="lessons">堂數</string>
     <string name="started">開始時間</string>
     <string name="hello">Hello, %1$s</string>
+    <string name="course_progress_card">%1$s, 百分比 %2$s, 堂數 %3$s</string>
+    <string name="contact_card">聯絡人卡牌</string>
+    <string name="skill_progress_card">%1$s %2$s, 百分比 %3$s</string>
+
 </resources>
