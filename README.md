@@ -182,11 +182,16 @@ Amazing Talker 主要包含以下幾種模組:
 > [!IMPORTANT]
 > 截圖是在 CI 上使用 Linux 記錄的，其他平台可能產生略有不同的圖像，使得測試失敗。
 
-## 原需求文件
-
-[_amazingtalker.notion.site/Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293)
+## Requirement Specification Document
+See the original assignment specification at [_Amazing Talker: Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293).
 
 ## License
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE)
 
 **Amazing Talker** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE) for more information.
+
+## Acknowledgments
+
+Special thanks to [JetBrains](https://www.jetbrains.com/) for their support in this project.
+
+![JetBrains Logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
