@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +37,7 @@ import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.feature.home.R
 import com.wei.amazingtalker.feature.home.home.ui.HomeTabRow
 import com.wei.amazingtalker.feature.home.home.ui.HomeTopBar
+import kotlinx.coroutines.delay
 
 /**
  *
@@ -95,6 +97,13 @@ internal fun HomeScreen(
     val showPopup = remember { mutableStateOf(false) }
 
     if (showPopup.value) {
+        /**
+         * This Demo for memory churn
+         */
+        LaunchedEffect(Unit) {
+            appendText()
+        }
+
         FunctionalityNotAvailablePopup(
             onDismiss = {
                 showPopup.value = false
@@ -149,6 +158,20 @@ internal fun HomeScreen(
         }
     }
 }
+
+/**
+ * This demo memory churn
+ */
+private suspend fun appendText() {
+    var str = ""
+    repeat(100000) {
+        // 使用字串符 + 拼接會 new 對象
+        str += it
+    }
+
+    delay(500)
+}
+
 
 @Composable
 private fun ContentSwitch(
