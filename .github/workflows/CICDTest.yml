@@ -37,7 +37,7 @@ jobs:
         run: ./gradlew assemble
 
       - name: Upload build outputs (APKs)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: APKs
           path: '**/build/outputs/apk/**/*.apk'
@@ -79,7 +79,7 @@ jobs:
 
       - name: Upload test results (XML)
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: '**/build/test-results/test*UnitTest/**.xml'
@@ -124,14 +124,14 @@ jobs:
 
       - name: Upload Profiling Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: profiling-report-${{ matrix.api-level }}
           path: '**/build/reports/profile'
 
       - name: Upload test reports
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-reports-${{ matrix.api-level }}
           path: '**/build/reports/androidTests'
