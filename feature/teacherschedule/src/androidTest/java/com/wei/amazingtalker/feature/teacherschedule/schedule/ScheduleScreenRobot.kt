@@ -111,8 +111,10 @@ internal open class ScheduleScreenRobot(
         )
     }
     private val weekDateText by lazy {
+        val (weekStart, weekEnd) = scheduleViewState.weekDateText
+
         composeTestRule.onNodeWithContentDescription(
-            weekDateDescription.format(scheduleViewState.weekDateText.first, scheduleViewState.weekDateText.second),
+            weekDateDescription.format(weekStart, weekEnd),
             useUnmergedTree = true,
         )
     }
@@ -233,6 +235,7 @@ internal open class ScheduleScreenRobot(
     fun verifyScheduleTopAppBarDisplayed() {
         scheduleTopAppBar.assertExists().assertIsDisplayed()
     }
+
     fun verifyScheduleToolbarDisplayed() {
         scheduleToolbar.assertExists().assertIsDisplayed()
     }

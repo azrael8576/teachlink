@@ -445,12 +445,12 @@ fun WeekActionBar(
                 )
             }
 
-            val weekDate = uiStates.weekDateText
+            val (weekStart, weekEnd) = uiStates.weekDateText
             val weekDataDescription = stringResource(R.string.content_description_week_date).format(
-                weekDate.first,
-                weekDate.second,
+                weekStart,
+                weekEnd,
             )
-            val weekDateText = "${weekDate.first} - ${weekDate.second}"
+            val weekDateText = "$weekStart - $weekEnd"
             TextButton(
                 modifier = Modifier
                     .weight(1f)
