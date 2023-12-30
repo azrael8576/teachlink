@@ -213,7 +213,8 @@ class ScheduleViewModel @Inject constructor(
             }
 
             is ScheduleViewAction.SelectedTab -> {
-                onTabSelected(action.date.first, action.date.second)
+                val (position, data) = action.date
+                onTabSelected(position, data)
             }
 
             ScheduleViewAction.ListScrolled -> {
