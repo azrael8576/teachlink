@@ -38,7 +38,7 @@ ksp = "1.9.10-1.0.13"
 secrets = "2.0.1"
 lint = "31.0.2"
 robolectric = "4.10.3"
-roborazzi = "1.9.0-alpha-2"
+roborazzi = "1.9.0-alpha-3"
 leakcanary = "2.12"
 
 [libraries]
