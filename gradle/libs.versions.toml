@@ -37,7 +37,7 @@ accompanist = "0.32.0"
 ksp = "1.9.10-1.0.13"
 secrets = "2.0.1"
 lint = "31.2.0"
-robolectric = "4.10.3"
+robolectric = "4.11.1"
 roborazzi = "1.9.0-alpha-3"
 leakcanary = "2.12"
 
