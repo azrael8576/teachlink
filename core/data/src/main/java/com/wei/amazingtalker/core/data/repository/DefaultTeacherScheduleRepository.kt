@@ -1,9 +1,10 @@
 package com.wei.amazingtalker.core.data.repository
 
+import com.wei.amazingtalker.core.data.model.asExternalModel
+import com.wei.amazingtalker.core.model.data.TeacherSchedule
 import com.wei.amazingtalker.core.network.AtDispatchers
 import com.wei.amazingtalker.core.network.AtNetworkDataSource
 import com.wei.amazingtalker.core.network.Dispatcher
-import com.wei.amazingtalker.core.network.model.NetworkTeacherSchedule
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,9 +31,9 @@ class DefaultTeacherScheduleRepository @Inject constructor(
     override suspend fun getTeacherAvailability(
         teacherName: String,
         startedAt: String,
-    ): Flow<NetworkTeacherSchedule> = withContext(ioDispatcher) {
+    ): Flow<TeacherSchedule> = withContext(ioDispatcher) {
         flow {
-            emit(network.getTeacherAvailability(teacherName, startedAt))
+            emit(network.getTeacherAvailability(teacherName, startedAt).asExternalModel())
         }
     }
 }

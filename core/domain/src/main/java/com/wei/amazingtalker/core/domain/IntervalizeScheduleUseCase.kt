@@ -3,7 +3,7 @@ package com.wei.amazingtalker.core.domain
 import com.wei.amazingtalker.core.extensions.getDuringDayType
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
-import com.wei.amazingtalker.core.network.model.NetworkTimeSlots
+import com.wei.amazingtalker.core.model.data.TimeSlots
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
@@ -27,7 +27,7 @@ class IntervalizeScheduleUseCase @Inject constructor() {
     private val currentTimezone = ZoneId.systemDefault()
 
     operator fun invoke(
-        teacherScheduleList: List<NetworkTimeSlots>,
+        teacherScheduleList: List<TimeSlots>,
         timeInterval: TimeInterval,
         scheduleState: ScheduleState,
     ): List<IntervalScheduleTimeSlot> {

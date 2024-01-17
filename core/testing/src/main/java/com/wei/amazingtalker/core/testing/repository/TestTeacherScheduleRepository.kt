@@ -1,7 +1,7 @@
 package com.wei.amazingtalker.core.testing.repository
 
 import com.wei.amazingtalker.core.data.repository.TeacherScheduleRepository
-import com.wei.amazingtalker.core.network.model.NetworkTeacherSchedule
+import com.wei.amazingtalker.core.model.data.TeacherSchedule
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,34 +13,34 @@ class TestTeacherScheduleRepository : TeacherScheduleRepository {
     private var errorException: Exception? = null
 
     /**
-     * The backing hot flow for the list of [NetworkTeacherSchedule] for testing.
+     * The backing hot flow for the list of [TeacherSchedule] for testing.
      */
-    private val networkTeacherScheduleFlow: MutableSharedFlow<NetworkTeacherSchedule> =
+    private val teacherScheduleFlow: MutableSharedFlow<TeacherSchedule> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     override suspend fun getTeacherAvailability(
         teacherName: String,
         startedAt: String,
-    ): Flow<NetworkTeacherSchedule> {
+    ): Flow<TeacherSchedule> {
         // If there's an exception, throw it in a flow
         errorException?.let { exception ->
             // This flow is used to simulate an error scenario.
             return flow {
-                emit(NetworkTeacherSchedule(emptyList(), emptyList()))
+                emit(TeacherSchedule(emptyList(), emptyList()))
             }.map {
                 throw exception
             }
         }
 
         // If there's no exception, return the normal flow
-        return networkTeacherScheduleFlow
+        return teacherScheduleFlow
     }
 
     /**
-     * A test-only API to allow controlling the list of NetworkTeacherSchedule from tests.
+     * A test-only API to allow controlling the list of TeacherSchedule from tests.
      */
-    fun sendNetworkTeacherSchedule(networkTeacherSchedules: NetworkTeacherSchedule) {
-        networkTeacherScheduleFlow.tryEmit(networkTeacherSchedules)
+    fun sendTeacherSchedule(teacherSchedules: TeacherSchedule) {
+        teacherScheduleFlow.tryEmit(teacherSchedules)
     }
 
     /**

@@ -3,8 +3,8 @@ package com.wei.amazingtalker.core.domain
 import com.google.common.truth.Truth.assertThat
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
-import com.wei.amazingtalker.core.network.model.NetworkTeacherSchedule
-import com.wei.amazingtalker.core.network.model.NetworkTimeSlots
+import com.wei.amazingtalker.core.model.data.TeacherSchedule
+import com.wei.amazingtalker.core.model.data.TimeSlots
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,7 +32,7 @@ class IntervalizeScheduleUseCaseTest(
         }
     }
 
-    private lateinit var internalTestSchedules: NetworkTeacherSchedule
+    private lateinit var internalTestSchedules: TeacherSchedule
     private val useCase = IntervalizeScheduleUseCase()
 
     /**
@@ -85,32 +85,32 @@ class IntervalizeScheduleUseCaseTest(
     }
 }
 
-private val testSchedules = NetworkTeacherSchedule(
+private val testSchedules = TeacherSchedule(
     available = listOf(
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T04:30:00Z",
             endUtc = "2023-07-31T09:30:00Z",
         ),
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T12:30:00Z",
             endUtc = "2023-07-31T18:30:00Z",
         ),
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T19:30:00Z",
             endUtc = "2023-07-31T20:30:00Z",
         ),
         // More Data...
     ),
     booked = listOf(
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T09:30:00Z",
             endUtc = "2023-07-31T10:30:00Z",
         ),
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T11:30:00Z",
             endUtc = "2023-07-31T12:30:00Z",
         ),
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T18:30:00Z",
             endUtc = "2023-07-31T19:30:00Z",
         ),
