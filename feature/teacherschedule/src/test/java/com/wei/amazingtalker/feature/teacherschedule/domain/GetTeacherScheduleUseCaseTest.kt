@@ -5,8 +5,8 @@ import com.wei.amazingtalker.core.domain.IntervalizeScheduleUseCase
 import com.wei.amazingtalker.core.domain.TimeInterval
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
-import com.wei.amazingtalker.core.network.model.NetworkTeacherSchedule
-import com.wei.amazingtalker.core.network.model.NetworkTimeSlots
+import com.wei.amazingtalker.core.model.data.TeacherSchedule
+import com.wei.amazingtalker.core.model.data.TimeSlots
 import com.wei.amazingtalker.core.result.DataSourceResult
 import com.wei.amazingtalker.core.testing.repository.TestTeacherScheduleRepository
 import com.wei.amazingtalker.core.testing.util.MainDispatcherRule
@@ -57,11 +57,11 @@ class GetTeacherScheduleUseCaseTest {
          * 使用 testSchedules.copy() 確保了每次設置前置條件時都是對原始數據的深度複製，
          * 這確保了每個測試的獨立性，避免了因數據共享而產生的潛在問題。
          */
-        val expectedTeacherSchedule = testNetworkTeacherSchedule.copy()
+        val expectedTeacherSchedule = testTeacherSchedule.copy()
         val expectedIntervalSchedule = generateExpectedIntervalSchedule(expectedTeacherSchedule, scheduleStateTimeInterval)
 
         // Act
-        testTeacherScheduleRepo.sendNetworkTeacherSchedule(testNetworkTeacherSchedule)
+        testTeacherScheduleRepo.sendTeacherSchedule(testTeacherSchedule)
         val resultFlow = getTeacherScheduleUseCase("testTeacherName", "testStartedAtUtc").take(2)
 
         // Assert
@@ -84,7 +84,7 @@ class GetTeacherScheduleUseCaseTest {
         assertThat(result.exception!!.message).isEqualTo(TestTeacherScheduleRepository.ErrorExceptionMessage)
     }
 
-    private fun generateExpectedIntervalSchedule(expectedTeacherSchedule: NetworkTeacherSchedule, scheduleStateTimeInterval: TimeInterval) =
+    private fun generateExpectedIntervalSchedule(expectedTeacherSchedule: TeacherSchedule, scheduleStateTimeInterval: TimeInterval) =
         mutableListOf<IntervalScheduleTimeSlot>().apply {
             addAll(
                 intervalizeScheduleUseCase(
@@ -103,23 +103,23 @@ class GetTeacherScheduleUseCaseTest {
         }.sortedBy { it.start }.toMutableList()
 }
 
-private val testNetworkTeacherSchedule = NetworkTeacherSchedule(
+private val testTeacherSchedule = TeacherSchedule(
     available = listOf(
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T04:30:00Z",
             endUtc = "2023-07-31T09:30:00Z",
         ),
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T13:30:00Z",
             endUtc = "2023-07-31T18:30:00Z",
         ),
     ),
     booked = listOf(
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T09:30:00Z",
             endUtc = "2023-07-31T10:00:00Z",
         ),
-        NetworkTimeSlots(
+        TimeSlots(
             startUtc = "2023-07-31T11:30:00Z",
             endUtc = "2023-07-31T13:30:00Z",
         ),
