@@ -12,11 +12,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactMeViewModel @Inject constructor() : BaseViewModel<
+class ContactMeViewModel
+@Inject
+constructor() : BaseViewModel<
     ContactMeViewAction,
     ContactMeViewState,
     >(ContactMeViewState()) {
-
     init {
         getProfile()
     }

@@ -9,7 +9,6 @@ import org.junit.Test
  * UI tests for [HomeScreen] composable.
  */
 class HomeScreenTest {
-
     /**
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *
@@ -53,10 +52,11 @@ class HomeScreenTest {
 
     @Test
     fun checkLoadErrorElementsVisibility_whenLoadError() {
-        val loadingUiState = HomeViewState(
-            loadingState = HomeViewLoadingState.Error,
-            userDisplayName = "Wei",
-        )
+        val loadingUiState =
+            HomeViewState(
+                loadingState = HomeViewLoadingState.Error,
+                userDisplayName = "Wei",
+            )
 
         homeScreenRobot(composeTestRule) {
             setHomeScreenContent(
@@ -69,10 +69,11 @@ class HomeScreenTest {
 
     @Test
     fun checkLoadingElementsVisibility_whenLoading() {
-        val loadingUiState = HomeViewState(
-            loadingState = HomeViewLoadingState.Loading,
-            userDisplayName = "Wei",
-        )
+        val loadingUiState =
+            HomeViewState(
+                loadingState = HomeViewLoadingState.Loading,
+                userDisplayName = "Wei",
+            )
 
         homeScreenRobot(composeTestRule) {
             setHomeScreenContent(
@@ -106,11 +107,12 @@ class HomeScreenTest {
 
     @Test
     fun checkScreenNotAvailableVisibility_whenLoadingStateIsSuccess_andChatsSelected() {
-        val loadingUiState = HomeViewState(
-            loadingState = HomeViewLoadingState.Success,
-            userDisplayName = "Wei",
-            selectedTab = Tab.CHATS,
-        )
+        val loadingUiState =
+            HomeViewState(
+                loadingState = HomeViewLoadingState.Success,
+                userDisplayName = "Wei",
+                selectedTab = Tab.CHATS,
+            )
 
         homeScreenRobot(composeTestRule) {
             setHomeScreenContent(uiStates = loadingUiState)
@@ -122,11 +124,12 @@ class HomeScreenTest {
 
     @Test
     fun checkScreenNotAvailableVisibility_whenLoadingStateIsSuccess_andTutorsSelected() {
-        val loadingUiState = HomeViewState(
-            loadingState = HomeViewLoadingState.Success,
-            userDisplayName = "Wei",
-            selectedTab = Tab.TUTORS,
-        )
+        val loadingUiState =
+            HomeViewState(
+                loadingState = HomeViewLoadingState.Success,
+                userDisplayName = "Wei",
+                selectedTab = Tab.TUTORS,
+            )
 
         homeScreenRobot(composeTestRule) {
             setHomeScreenContent(uiStates = loadingUiState)

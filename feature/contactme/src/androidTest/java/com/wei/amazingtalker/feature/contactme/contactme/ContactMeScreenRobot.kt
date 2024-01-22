@@ -38,8 +38,9 @@ internal fun contactMeScreenRobot(
 internal open class ContactMeScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     private val profilePictureDescription by composeTestRule.stringResource(R.string.profile_picture)
     private val linkedinString by composeTestRule.stringResource(R.string.linkedin)
@@ -183,7 +184,6 @@ internal fun contactMeScreenCallRobot(
 internal open class ContactMeScreenCallRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-
     private var isCallClicked: Boolean = false
 
     fun setIsCallClicked(backClicked: Boolean) {
@@ -195,12 +195,13 @@ internal open class ContactMeScreenCallRobot(
     }
 }
 
-val testUiState = ContactMeViewState(
-    nameTw = NAME_TW,
-    nameEng = NAME_ENG,
-    position = POSITION,
-    phone = PHONE,
-    linkedinUrl = LINKEDIN_URL,
-    email = EMAIL,
-    timeZone = TIME_ZONE,
-)
+val testUiState =
+    ContactMeViewState(
+        nameTw = NAME_TW,
+        nameEng = NAME_ENG,
+        position = POSITION,
+        phone = PHONE,
+        linkedinUrl = LINKEDIN_URL,
+        email = EMAIL,
+        timeZone = TIME_ZONE,
+    )

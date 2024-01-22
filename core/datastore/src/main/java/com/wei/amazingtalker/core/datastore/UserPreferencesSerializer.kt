@@ -10,7 +10,9 @@ import javax.inject.Inject
 /**
  * An [androidx.datastore.core.Serializer] for the [UserPreferences] proto.
  */
-class UserPreferencesSerializer @Inject constructor() : Serializer<UserPreferences> {
+class UserPreferencesSerializer
+@Inject
+constructor() : Serializer<UserPreferences> {
     override val defaultValue: UserPreferences = UserPreferences.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): UserPreferences =
@@ -21,7 +23,10 @@ class UserPreferencesSerializer @Inject constructor() : Serializer<UserPreferenc
             throw CorruptionException("Cannot read proto.", exception)
         }
 
-    override suspend fun writeTo(t: UserPreferences, output: OutputStream) {
+    override suspend fun writeTo(
+        t: UserPreferences,
+        output: OutputStream,
+    ) {
         // writeTo is already called on the data store background thread
         t.writeTo(output)
     }

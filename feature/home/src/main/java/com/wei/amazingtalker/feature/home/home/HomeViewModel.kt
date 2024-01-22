@@ -15,13 +15,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel
+@Inject
+constructor(
     private val profileRepository: ProfileRepository,
 ) : BaseViewModel<
     HomeViewAction,
     HomeViewState,
     >(HomeViewState()) {
-
     init {
         loadUserProfile()
     }
@@ -58,20 +59,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun CoursesContent.toMyCoursesContentState(skill: Skill) = MyCoursesContentState(
-        courseProgress = courseProgress,
-        courseCount = courseCount,
-        pupilRating = pupilRating,
-        tutorName = tutorName,
-        className = className,
-        lessonsCountDisplay = lessonsCountDisplay,
-        ratingCount = ratingCount,
-        startedDate = startedDate,
-        skillName = skill.skillName,
-        skillLevel = skill.skillLevel,
-        skillLevelProgress = skill.skillLevelProgress,
-        contacts = TestContacts, // TestData
-    )
+    private fun CoursesContent.toMyCoursesContentState(skill: Skill) =
+        MyCoursesContentState(
+            courseProgress = courseProgress,
+            courseCount = courseCount,
+            pupilRating = pupilRating,
+            tutorName = tutorName,
+            className = className,
+            lessonsCountDisplay = lessonsCountDisplay,
+            ratingCount = ratingCount,
+            startedDate = startedDate,
+            skillName = skill.skillName,
+            skillLevel = skill.skillLevel,
+            skillLevelProgress = skill.skillLevelProgress,
+            // TestData
+            contacts = TestContacts,
+        )
 
     private fun handleError() {
         updateState { copy(loadingState = HomeViewLoadingState.Error) }

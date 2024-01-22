@@ -7,7 +7,6 @@ import androidx.annotation.StringRes
  * UiText 是一個密封接口，用來封裝不同形式的文字內容。
  */
 sealed class UiText {
-
     /**
      * DynamicString 是 UiText 的一種形式，表示可以動態變化的文字。
      * @param value 文字的內容。
@@ -23,12 +22,10 @@ sealed class UiText {
         @StringRes val resId: Int,
         val args: List<Args> = emptyList(),
     ) : UiText() {
-
         /**
          * Args 是 StringResource 參數的密封接口，可以是動態字串或 UiText 類型。
          */
         sealed class Args {
-
             /**
              * DynamicString 是 Args 的一種形式，表示可以動態變化的文字。
              * @param value 文字的內容。

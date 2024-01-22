@@ -21,7 +21,6 @@ import kotlin.properties.ReadOnlyProperty
  * https://developer.android.com/jetpack/compose/testing-cheatsheet
  */
 class UiTextTest {
-
     /**
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *
@@ -31,8 +30,9 @@ class UiTextTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
     private val testString by composeTestRule.stringResource(R.string.generic_hello)
@@ -79,10 +79,11 @@ class UiTextTest {
     @Test
     fun stringResource_returnsExpectedValue_withSingleArg() {
         val argName = "Alice"
-        val uiText = UiText.StringResource(
-            R.string.greeting_with_name,
-            listOf(UiText.StringResource.Args.DynamicString(argName)),
-        )
+        val uiText =
+            UiText.StringResource(
+                R.string.greeting_with_name,
+                listOf(UiText.StringResource.Args.DynamicString(argName)),
+            )
 
         composeTestRule.setContent {
             TestUiTextContent(uiText)
@@ -102,13 +103,14 @@ class UiTextTest {
     fun stringResource_returnsExpectedValue_withMultipleArgs() {
         val argName = "Alice"
         val argWeather = "sunny"
-        val uiText = UiText.StringResource(
-            R.string.greeting_with_name_and_weather,
-            listOf(
-                UiText.StringResource.Args.DynamicString(argName),
-                UiText.StringResource.Args.DynamicString(argWeather),
-            ),
-        )
+        val uiText =
+            UiText.StringResource(
+                R.string.greeting_with_name_and_weather,
+                listOf(
+                    UiText.StringResource.Args.DynamicString(argName),
+                    UiText.StringResource.Args.DynamicString(argWeather),
+                ),
+            )
 
         composeTestRule.setContent {
             TestUiTextContent(uiText)
@@ -129,13 +131,14 @@ class UiTextTest {
     fun stringResource_returnsExpectedValue_withNestedUiTextArg() {
         val argName = UiText.DynamicString("Alice")
         val argWeather = "sunny"
-        val uiText = UiText.StringResource(
-            R.string.greeting_with_name_and_weather,
-            listOf(
-                UiText.StringResource.Args.UiTextArg(argName),
-                UiText.StringResource.Args.DynamicString(argWeather),
-            ),
-        )
+        val uiText =
+            UiText.StringResource(
+                R.string.greeting_with_name_and_weather,
+                listOf(
+                    UiText.StringResource.Args.UiTextArg(argName),
+                    UiText.StringResource.Args.DynamicString(argWeather),
+                ),
+            )
 
         composeTestRule.setContent {
             TestUiTextContent(uiText)

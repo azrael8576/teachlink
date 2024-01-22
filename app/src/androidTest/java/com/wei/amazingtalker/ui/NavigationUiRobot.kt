@@ -36,8 +36,9 @@ internal fun navigationUiRobot(
 internal open class NavigationUiRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<HiltComponentActivity>, HiltComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
     private val atBottomBarTag by composeTestRule.stringResource(R.string.tag_at_bottom_bar)
@@ -73,12 +74,13 @@ internal open class NavigationUiRobot(
         composeTestRule.setContent {
             TestHarness(dpSize) {
                 BoxWithConstraints {
-                    val displayFeatures = if (foldingState != null) {
-                        val foldBounds = FoldingDeviceUtil.getFoldBounds(dpSize)
-                        listOf(FoldingDeviceUtil.getFoldingFeature(foldBounds, foldingState))
-                    } else {
-                        emptyList()
-                    }
+                    val displayFeatures =
+                        if (foldingState != null) {
+                            val foldBounds = FoldingDeviceUtil.getFoldBounds(dpSize)
+                            listOf(FoldingDeviceUtil.getFoldingFeature(foldBounds, foldingState))
+                        } else {
+                            emptyList()
+                        }
 
                     AtApp(
                         windowSizeClass = WindowSizeClass.calculateFromSize(dpSize),

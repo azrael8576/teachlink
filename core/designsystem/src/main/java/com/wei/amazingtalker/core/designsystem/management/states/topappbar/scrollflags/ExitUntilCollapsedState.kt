@@ -11,46 +11,46 @@ class ExitUntilCollapsedState(
     heightRange: IntRange,
     scrollOffset: Float = 0f,
 ) : FixedScrollFlagState(heightRange) {
-
-    override var _scrollOffset by mutableStateOf(
+    override var mScrollOffset by mutableStateOf(
         value = scrollOffset.coerceIn(0f, rangeDifference.toFloat()),
         policy = structuralEqualityPolicy(),
     )
 
     override var scrollOffset: Float
-        get() = _scrollOffset
+        get() = mScrollOffset
         set(value) {
             if (scrollTopLimitReached) {
-                val oldOffset = _scrollOffset
-                _scrollOffset = value.coerceIn(0f, rangeDifference.toFloat())
-                _consumed = oldOffset - _scrollOffset
+                val oldOffset = mScrollOffset
+                mScrollOffset = value.coerceIn(0f, rangeDifference.toFloat())
+                mConsumed = oldOffset - mScrollOffset
             } else {
-                _consumed = 0f
+                mConsumed = 0f
             }
         }
 
     companion object {
-        val Saver = run {
+        val Saver =
+            run {
 
-            val minHeightKey = "MinHeight"
-            val maxHeightKey = "MaxHeight"
-            val scrollOffsetKey = "ScrollOffset"
+                val minHeightKey = "MinHeight"
+                val maxHeightKey = "MaxHeight"
+                val scrollOffsetKey = "ScrollOffset"
 
-            mapSaver(
-                save = {
-                    mapOf(
-                        minHeightKey to it.minHeight,
-                        maxHeightKey to it.maxHeight,
-                        scrollOffsetKey to it.scrollOffset,
-                    )
-                },
-                restore = {
-                    ExitUntilCollapsedState(
-                        heightRange = (it[minHeightKey] as Int)..(it[maxHeightKey] as Int),
-                        scrollOffset = it[scrollOffsetKey] as Float,
-                    )
-                },
-            )
-        }
+                mapSaver(
+                    save = {
+                        mapOf(
+                            minHeightKey to it.minHeight,
+                            maxHeightKey to it.maxHeight,
+                            scrollOffsetKey to it.scrollOffset,
+                        )
+                    },
+                    restore = {
+                        ExitUntilCollapsedState(
+                            heightRange = (it[minHeightKey] as Int)..(it[maxHeightKey] as Int),
+                            scrollOffset = it[scrollOffsetKey] as Float,
+                        )
+                    },
+                )
+            }
     }
 }

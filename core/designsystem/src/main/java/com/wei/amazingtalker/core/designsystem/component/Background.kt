@@ -50,7 +50,7 @@ annotation class ThemePreviews
 @ThemePreviews
 @Composable
 fun BackgroundDefault() {
-    AtTheme() {
+    AtTheme {
         AtBackground(Modifier.size(100.dp), content = {})
     }
 }

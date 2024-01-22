@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 /**
  *
+ *
  * UI 事件決策樹
  * 下圖顯示了一個決策樹，用於查找處理特定事件用例的最佳方法。
  *
@@ -34,9 +35,7 @@ import kotlinx.coroutines.flow.asStateFlow
  *     └─────────────────────────────────┘   └──────────────────────────────────────┘
  *
  *
- */
-
-/**
+ *
  * BaseViewModel 是一個抽象類別，封裝了 ViewModel 的共享邏輯。
  * 該類使用了 MVI 架構，states 它表示了 UI 的狀態和 UI 事件。狀態是指 UI 在任何給定時間點的展示狀態，事件是指一次性的、非持久性的用戶界面操作，例如顯示一個 Snackbar。
  * 若為 UI 事件。你應該考慮接收 UI 事件後的狀態之變化，而不是直接傳遞 Event。

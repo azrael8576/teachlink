@@ -6,7 +6,9 @@ import javax.inject.Inject
 /**
  * UriDecoder 是一個實現了 StringDecoder 接口的類別，它用來對 URI 進行解碼。
  */
-class UriDecoder @Inject constructor() : StringDecoder {
+class UriDecoder
+@Inject
+constructor() : StringDecoder {
     /**
      * 使用 Uri.decode 方法對傳入的已編碼字符串進行解碼。
      *

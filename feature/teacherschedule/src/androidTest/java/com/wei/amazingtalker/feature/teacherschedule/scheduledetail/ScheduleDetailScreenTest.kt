@@ -9,7 +9,6 @@ import org.junit.Test
  * UI tests for [ScheduleDetailScreen] composable.
  */
 class ScheduleDetailScreenTest {
-
     /**
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *

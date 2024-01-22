@@ -30,13 +30,15 @@ internal fun homeEndToEndRobot(
 internal open class HomeEndToEndRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
-    private fun withRole(role: Role) = SemanticsMatcher("${SemanticsProperties.Role.name} contains '$role'") {
-        val roleProperty = it.config.getOrNull(SemanticsProperties.Role) ?: false
-        roleProperty == role
-    }
+    private fun withRole(role: Role) =
+        SemanticsMatcher("${SemanticsProperties.Role.name} contains '$role'") {
+            val roleProperty = it.config.getOrNull(SemanticsProperties.Role) ?: false
+            roleProperty == role
+        }
 
     // The strings used for matching in these tests
     private val menuDescription by composeTestRule.stringResource(FeatureHomeR.string.menu)

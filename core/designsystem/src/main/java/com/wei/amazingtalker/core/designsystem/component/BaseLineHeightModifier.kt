@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.Dp
 data class BaselineHeightModifier(
     val heightFromBaseline: Dp,
 ) : LayoutModifier {
-
     override fun MeasureScope.measure(
         measurable: Measurable,
         constraints: Constraints,
@@ -43,5 +42,4 @@ data class BaselineHeightModifier(
     }
 }
 
-fun Modifier.baselineHeight(heightFromBaseline: Dp): Modifier =
-    this.then(BaselineHeightModifier(heightFromBaseline))
+fun Modifier.baselineHeight(heightFromBaseline: Dp): Modifier = this.then(BaselineHeightModifier(heightFromBaseline))

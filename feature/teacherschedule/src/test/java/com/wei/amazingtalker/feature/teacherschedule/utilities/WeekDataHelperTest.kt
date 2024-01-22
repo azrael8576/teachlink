@@ -13,7 +13,6 @@ import java.time.ZoneOffset
  * {Arrange}{Act}{Assert}
  */
 class WeekDataHelperTest {
-
     private lateinit var weekDataHelper: WeekDataHelper
 
     @Before
@@ -54,7 +53,18 @@ class WeekDataHelperTest {
         val result = weekDataHelper.getWeekStart(localTime)
 
         // Assert
-        assertThat(result).isEqualTo(OffsetDateTime.of(2023, 7, 31, 10, 30, 0, 0, ZoneOffset.UTC)) // Monday
+        assertThat(result).isEqualTo(
+            OffsetDateTime.of(
+                2023,
+                7,
+                31,
+                10,
+                30,
+                0,
+                0,
+                ZoneOffset.UTC,
+            ),
+        ) // Monday
     }
 
     @Test
@@ -78,7 +88,18 @@ class WeekDataHelperTest {
         val result = weekDataHelper.getWeekEnd(localTime)
 
         // Assert
-        assertThat(result).isEqualTo(OffsetDateTime.of(2023, 8, 6, 10, 30, 0, 0, ZoneOffset.UTC)) // Sunday
+        assertThat(result).isEqualTo(
+            OffsetDateTime.of(
+                2023,
+                8,
+                6,
+                10,
+                30,
+                0,
+                0,
+                ZoneOffset.UTC,
+            ),
+        ) // Sunday
     }
 
     @Test

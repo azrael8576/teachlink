@@ -66,7 +66,8 @@ fun HomeTopBar(
             text = helloUserName,
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Normal,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .testTag(stringResource(R.string.tag_hello_user_name_text))
                 .semantics { contentDescription = helloUserName },
         )
@@ -86,7 +87,8 @@ private fun AddUserButton(
             onClick = {
                 onAddUserClick()
             },
-            modifier = Modifier
+            modifier =
+            Modifier
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .semantics { contentDescription = addUser },
@@ -112,7 +114,8 @@ internal fun UserAvatar(
 
     IconButton(
         onClick = onUserProfileImageClick,
-        modifier = modifier
+        modifier =
+        modifier
             .size(48.dp)
             .testTag(stringResource(R.string.tag_user_avatar))
             .semantics {
@@ -122,7 +125,8 @@ internal fun UserAvatar(
         Image(
             painter = painter,
             contentDescription = null,
-            modifier = modifier
+            modifier =
+            modifier
                 .clip(CircleShape)
                 .fillMaxSize(),
         )
@@ -130,14 +134,13 @@ internal fun UserAvatar(
 }
 
 @Composable
-private fun MenuButton(
-    onMenuClick: () -> Unit,
-) {
+private fun MenuButton(onMenuClick: () -> Unit) {
     val menu = stringResource(R.string.menu)
 
     IconButton(
         onClick = onMenuClick,
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .semantics { contentDescription = menu },

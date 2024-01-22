@@ -11,7 +11,6 @@ import org.junit.Test
  * UI tests for [ContactMeScreen] composable.
  */
 class ContactMeScreenTest {
-
     /**
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *

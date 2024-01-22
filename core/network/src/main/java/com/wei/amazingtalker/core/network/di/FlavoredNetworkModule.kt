@@ -13,7 +13,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 interface FlavoredNetworkModule {
-
     @Binds
     fun binds(implementation: RetrofitAtNetwork): AtNetworkDataSource
 }

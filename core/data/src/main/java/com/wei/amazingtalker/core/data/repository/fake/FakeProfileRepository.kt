@@ -21,11 +21,12 @@ import javax.inject.Inject
  * @param ioDispatcher 用於執行 IO 相關操作的 CoroutineDispatcher。
  * @param network 數據源的網路接口。
  */
-class FakeProfileRepository @Inject constructor(
+class FakeProfileRepository
+@Inject
+constructor(
     @Dispatcher(AtDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val network: AtNetworkDataSource,
 ) : ProfileRepository {
-
     /**
      * 模擬從資料來源獲取指定用戶的資料。
      * @param userId 用戶的唯一標識符。
@@ -40,26 +41,29 @@ class FakeProfileRepository @Inject constructor(
 }
 
 val testNetworkUserProfile: NetworkUserProfile
-    get() = NetworkUserProfile(
-        userName = "He, Xuan-Wei",
-        userDisplayName = "Wei",
-        chatCount = 102,
-        coursesContent = NetworkCoursesContent(
-            courseProgress = 20,
-            courseCount = 14,
-            pupilRating = 9.9,
-            tutorName = TEST_TUTOR_NAME,
-            className = TEST_CLASS_NAME,
-            lessonsCountDisplay = "30+",
-            ratingCount = 4.9,
-            startedDate = "11.04",
-        ),
-        skill = NetworkSkill(
-            skillName = TEST_SKILL_NAME,
-            skillLevel = TEST_SKILL_LEVEL,
-            skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
-        ),
-    )
+    get() =
+        NetworkUserProfile(
+            userName = "He, Xuan-Wei",
+            userDisplayName = "Wei",
+            chatCount = 102,
+            coursesContent =
+            NetworkCoursesContent(
+                courseProgress = 20,
+                courseCount = 14,
+                pupilRating = 9.9,
+                tutorName = TEST_TUTOR_NAME,
+                className = TEST_CLASS_NAME,
+                lessonsCountDisplay = "30+",
+                ratingCount = 4.9,
+                startedDate = "11.04",
+            ),
+            skill =
+            NetworkSkill(
+                skillName = TEST_SKILL_NAME,
+                skillLevel = TEST_SKILL_LEVEL,
+                skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
+            ),
+        )
 
 const val TEST_TUTOR_NAME = "jamie-coleman"
 const val TEST_CLASS_NAME = "English Grammar"

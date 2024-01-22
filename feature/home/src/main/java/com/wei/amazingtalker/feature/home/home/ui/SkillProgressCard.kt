@@ -38,18 +38,21 @@ fun SkillProgressCard(
     progress: Int,
     onClick: () -> Unit,
 ) {
-    val contentSkillProgressCard = stringResource(
-        R.string.skill_progress_card,
-        skillName,
-        skillLevel,
-        progress,
-    )
+    val contentSkillProgressCard =
+        stringResource(
+            R.string.skill_progress_card,
+            skillName,
+            skillLevel,
+            progress,
+        )
     Card(
-        modifier = modifier.semantics {
+        modifier =
+        modifier.semantics {
             contentDescription = contentSkillProgressCard
         },
         shape = shapes.extraLarge,
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onPrimary,
             containerColor = MaterialTheme.colorScheme.primary,
         ),
@@ -75,7 +78,8 @@ fun SkillProgressCard(
                 )
                 Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                 CircularProgress(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .weight(1f)
                         .testTag(stringResource(R.string.tag_circular_progress)),
                     progress = progress,
@@ -86,7 +90,10 @@ fun SkillProgressCard(
 }
 
 @Composable
-private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
+private fun CircularProgress(
+    modifier: Modifier = Modifier,
+    progress: Int,
+) {
     val strokeLineWidth = 4.dp
     val startAngle = -90f
     val sweepAngleFactor = 360 / 100f
@@ -126,7 +133,8 @@ private fun CircularProgress(modifier: Modifier = Modifier, progress: Int) {
 fun HomeScreenPreview() {
     AtTheme {
         SkillProgressCard(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .width(200.dp)
                 .height(152.dp),
             skillName = "Business English",

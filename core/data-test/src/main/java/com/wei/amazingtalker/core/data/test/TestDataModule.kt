@@ -19,24 +19,15 @@ import dagger.hilt.testing.TestInstallIn
     replaces = [DataModule::class],
 )
 interface TestDataModule {
+    @Binds
+    fun bindsProfileRepository(profileRepository: FakeProfileRepository): ProfileRepository
 
     @Binds
-    fun bindsProfileRepository(
-        profileRepository: FakeProfileRepository,
-    ): ProfileRepository
+    fun bindsTeacherScheduleRepository(teacherScheduleRepository: DefaultTeacherScheduleRepository): TeacherScheduleRepository
 
     @Binds
-    fun bindsTeacherScheduleRepository(
-        teacherScheduleRepository: DefaultTeacherScheduleRepository,
-    ): TeacherScheduleRepository
+    fun bindsNetworkMonitor(networkMonitor: AlwaysOnlineNetworkMonitor): NetworkMonitor
 
     @Binds
-    fun bindsNetworkMonitor(
-        networkMonitor: AlwaysOnlineNetworkMonitor,
-    ): NetworkMonitor
-
-    @Binds
-    fun bindsUserDataRepository(
-        userDataRepository: DefaultUserDataRepository,
-    ): UserDataRepository
+    fun bindsUserDataRepository(userDataRepository: DefaultUserDataRepository): UserDataRepository
 }

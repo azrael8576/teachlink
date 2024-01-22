@@ -15,25 +15,32 @@ import com.wei.amazingtalker.core.designsystem.theme.SPACING_EXTRA_LARGE
 import com.wei.amazingtalker.core.designsystem.theme.SPACING_MEDIUM
 
 @Composable
-fun ProfileProperty(label: String, value: String, isLink: Boolean = false) {
+fun ProfileProperty(
+    label: String,
+    value: String,
+    isLink: Boolean = false,
+) {
     Column(modifier = Modifier.padding(vertical = SPACING_MEDIUM.dp)) {
         Divider(color = MaterialTheme.colorScheme.outline)
         Text(
             text = label,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .baselineHeight(SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = label },
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        val style = if (isLink) {
-            MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.primary)
-        } else {
-            MaterialTheme.typography.bodyLarge
-        }
+        val style =
+            if (isLink) {
+                MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.primary)
+            } else {
+                MaterialTheme.typography.bodyLarge
+            }
         Text(
             text = value,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .baselineHeight(SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = value },
             style = style,

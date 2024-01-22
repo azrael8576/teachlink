@@ -21,16 +21,18 @@ internal fun DecorativeBackgroundText(
     repetitions: Int,
     rotationZ: Float = 0f,
     scale: Float = 1f,
-    textStyle: TextStyle = TextStyle(
-        fontSize = MaterialTheme.typography.displayLarge.fontSize,
-        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-        textAlign = TextAlign.Center,
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
-    ),
+    textStyle: TextStyle =
+        TextStyle(
+            fontSize = MaterialTheme.typography.displayLarge.fontSize,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+            textAlign = TextAlign.Center,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Bold,
+        ),
 ) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .graphicsLayer(rotationZ = rotationZ)
             .scale(scale),
     ) {
@@ -45,10 +47,11 @@ internal fun DecorativeBackgroundText(
 }
 
 @Composable
-fun decorativeTextStyle(color: Color) = TextStyle(
-    fontSize = MaterialTheme.typography.displayLarge.fontSize,
-    color = color.copy(alpha = 0.8f),
-    textAlign = TextAlign.Center,
-    fontFamily = FontFamily.Default,
-    fontWeight = FontWeight.Bold,
-)
+fun decorativeTextStyle(color: Color) =
+    TextStyle(
+        fontSize = MaterialTheme.typography.displayLarge.fontSize,
+        color = color.copy(alpha = 0.8f),
+        textAlign = TextAlign.Center,
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+    )

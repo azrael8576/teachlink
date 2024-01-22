@@ -2,7 +2,7 @@ package com.wei.amazingtalker.feature.teacherschedule.schedule
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.wei.amazingtalker.core.testing.data.testCurrentTime
+import com.wei.amazingtalker.core.testing.data.TEST_CURRENT_TIME
 import org.junit.Rule
 import org.junit.Test
 import java.time.Clock
@@ -15,7 +15,6 @@ import java.time.ZoneOffset
  * UI tests for [ScheduleScreen] composable.
  */
 class ScheduleScreenTest {
-
     /**
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *
@@ -90,9 +89,12 @@ class ScheduleScreenTest {
     fun checkPrevWeekClickNotInvoked_whenWeekStartIsLaterCurrent_afterClick() {
         scheduleScreenRobot(composeTestRule) {
             // mock currentTime
-            val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
+            val fixedClock = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneId.systemDefault())
             val fixedClockUtc =
-                Clock.fixed(Instant.parse(testCurrentTime).plus(Period.ofWeeks(2)), ZoneOffset.UTC)
+                Clock.fixed(
+                    Instant.parse(TEST_CURRENT_TIME).plus(Period.ofWeeks(2)),
+                    ZoneOffset.UTC,
+                )
             setScheduleScreenContent(
                 ScheduleViewState(
                     currentClock = fixedClock,
@@ -150,8 +152,8 @@ class ScheduleScreenTest {
     @Test
     fun checkSuccessElementsExists_whenSuccess() {
         // mock currentTime
-        val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
-        val fixedClockUtc = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
+        val fixedClock = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneId.systemDefault())
+        val fixedClockUtc = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneOffset.UTC)
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(
                 ScheduleViewState(
@@ -172,8 +174,8 @@ class ScheduleScreenTest {
     @Test
     fun checkTimeSlotClickInvoked_afterClickAvailableTimeSlot() {
         // mock currentTime
-        val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
-        val fixedClockUtc = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
+        val fixedClock = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneId.systemDefault())
+        val fixedClockUtc = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneOffset.UTC)
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(
                 ScheduleViewState(
@@ -191,8 +193,8 @@ class ScheduleScreenTest {
     @Test
     fun checkTimeSlotClickNotInvoked_afterClickUnavailableTimeSlot() {
         // mock currentTime
-        val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
-        val fixedClockUtc = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
+        val fixedClock = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneId.systemDefault())
+        val fixedClockUtc = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneOffset.UTC)
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(
                 ScheduleViewState(
@@ -209,9 +211,10 @@ class ScheduleScreenTest {
 
     @Test
     fun checkLoadingElementsVisibility_whenLoading() {
-        val loadingUiState = ScheduleViewState(
-            timeListUiState = TimeListUiState.Loading,
-        )
+        val loadingUiState =
+            ScheduleViewState(
+                timeListUiState = TimeListUiState.Loading,
+            )
 
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(uiStates = loadingUiState)
@@ -222,9 +225,10 @@ class ScheduleScreenTest {
 
     @Test
     fun checkLoadFailedElementsVisibility_whenLoadFailed() {
-        val loadFailedUiState = ScheduleViewState(
-            timeListUiState = TimeListUiState.LoadFailed,
-        )
+        val loadFailedUiState =
+            ScheduleViewState(
+                timeListUiState = TimeListUiState.LoadFailed,
+            )
 
         scheduleScreenRobot(composeTestRule) {
             setScheduleScreenContent(uiStates = loadFailedUiState)

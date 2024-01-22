@@ -102,9 +102,10 @@ internal fun WelcomeRoute(
     )
 }
 
-val NotoSansFontFamily = FontFamily(
-    Font(DesignsystemR.font.noto_sans_tc_variablefont_wght),
-)
+val NotoSansFontFamily =
+    FontFamily(
+        Font(DesignsystemR.font.noto_sans_tc_variablefont_wght),
+    )
 
 @Composable
 internal fun WelcomeScreen(
@@ -116,7 +117,8 @@ internal fun WelcomeScreen(
 ) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize(),
         ) {
             if (withTopSpacer) {
@@ -124,7 +126,8 @@ internal fun WelcomeScreen(
             }
 
             WelcomeScreenToolbar(
-                modifier = if (isPortrait) {
+                modifier =
+                if (isPortrait) {
                     Modifier.padding(horizontal = SPACING_LARGE.dp)
                 } else {
                     Modifier.padding(
@@ -210,7 +213,8 @@ fun WelcomeGraphics(
         Image(
             painter = painter,
             contentDescription = null,
-            modifier = modifier
+            modifier =
+            modifier
                 .fillMaxSize()
                 .testTag(stringResource(R.string.tag_welcome_graphics)),
             contentScale = ContentScale.Crop,
@@ -223,11 +227,12 @@ fun WelcomeContent(
     modifier: Modifier = Modifier,
     isPortrait: Boolean,
 ) {
-    val style = TextStyle(
-        fontFamily = NotoSansFontFamily,
-        fontSize = MaterialTheme.typography.displaySmall.fontSize,
-        fontWeight = FontWeight.Bold,
-    )
+    val style =
+        TextStyle(
+            fontFamily = NotoSansFontFamily,
+            fontSize = MaterialTheme.typography.displaySmall.fontSize,
+            fontWeight = FontWeight.Bold,
+        )
 
     if (isPortrait) {
         WelcomeTitlePortrait(style = style)
@@ -244,12 +249,14 @@ fun WelcomeTitlePortrait(
     val welcomeTitle = stringResource(R.string.welcome_title)
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .gradientBackgroundPortrait(),
     ) {
         Text(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(vertical = SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
@@ -269,12 +276,14 @@ fun WelcomeTitleLandscape(
     val welcomeTitle = stringResource(R.string.welcome_title)
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxHeight()
             .gradientBackgroundLandscape(),
     ) {
         Text(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(horizontal = SPACING_EXTRA_LARGE.dp)
                 .semantics { contentDescription = welcomeTitle }
                 .align(alignment = Alignment.Center),
@@ -286,23 +295,29 @@ fun WelcomeTitleLandscape(
     }
 }
 
-internal fun Modifier.gradientBackgroundPortrait(): Modifier = this.background(
-    brush = Brush.verticalGradient(
-        colors = listOf(
-            Color.Black.copy(alpha = 0f),
-            Color.Black.copy(alpha = 0.5f),
+internal fun Modifier.gradientBackgroundPortrait(): Modifier =
+    this.background(
+        brush =
+        Brush.verticalGradient(
+            colors =
+            listOf(
+                Color.Black.copy(alpha = 0f),
+                Color.Black.copy(alpha = 0.5f),
+            ),
         ),
-    ),
-)
+    )
 
-internal fun Modifier.gradientBackgroundLandscape(): Modifier = this.background(
-    brush = Brush.horizontalGradient(
-        colors = listOf(
-            Color.White.copy(alpha = 0.5f),
-            Color.White.copy(alpha = 0f),
+internal fun Modifier.gradientBackgroundLandscape(): Modifier =
+    this.background(
+        brush =
+        Brush.horizontalGradient(
+            colors =
+            listOf(
+                Color.White.copy(alpha = 0.5f),
+                Color.White.copy(alpha = 0f),
+            ),
         ),
-    ),
-)
+    )
 
 @DevicePortraitPreviews
 @Composable

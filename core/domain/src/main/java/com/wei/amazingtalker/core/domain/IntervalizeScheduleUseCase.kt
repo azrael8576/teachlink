@@ -23,7 +23,9 @@ enum class TimeInterval(val value: Long) {
  * @param scheduleState 時間段的狀態
  * @return MutableList<IntervalScheduleTimeSlot> 切分後的時間段物件的列表
  */
-class IntervalizeScheduleUseCase @Inject constructor() {
+class IntervalizeScheduleUseCase
+@Inject
+constructor() {
     private val currentTimezone = ZoneId.systemDefault()
 
     operator fun invoke(

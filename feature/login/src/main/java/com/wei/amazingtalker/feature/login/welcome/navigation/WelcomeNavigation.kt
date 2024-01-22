@@ -8,11 +8,11 @@ import androidx.navigation.compose.composable
 import com.wei.amazingtalker.feature.login.welcome.WelcomeRoute
 import timber.log.Timber
 
-const val welcomeRoute = "welcome_route"
+const val WELCOME_ROUTE = "welcome_route"
 
 fun NavController.navigateToWelcome(navOptions: NavOptions? = null) {
     Timber.d("navigateToWelcome")
-    this.navigate(welcomeRoute, navOptions)
+    this.navigate(WELCOME_ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.welcomeGraph(
@@ -20,7 +20,7 @@ fun NavGraphBuilder.welcomeGraph(
     navController: NavHostController,
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
-    composable(route = welcomeRoute) {
+    composable(route = WELCOME_ROUTE) {
         WelcomeRoute(
             isPortrait = isPortrait,
             navController = navController,

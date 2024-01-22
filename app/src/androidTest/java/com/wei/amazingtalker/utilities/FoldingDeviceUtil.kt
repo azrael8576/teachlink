@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.DpSize
 import androidx.window.layout.FoldingFeature
 
 object FoldingDeviceUtil {
-
     fun getFoldBounds(dpSize: DpSize): Rect {
         val middleWidth = (dpSize.width / 2f).value.toInt()
         return Rect(
@@ -16,12 +15,17 @@ object FoldingDeviceUtil {
         )
     }
 
-    fun getFoldingFeature(foldBounds: Rect, state: FoldingFeature.State): FoldingFeature {
+    fun getFoldingFeature(
+        foldBounds: Rect,
+        state: FoldingFeature.State,
+    ): FoldingFeature {
         return object : FoldingFeature {
             override val bounds: Rect = foldBounds
             override val isSeparating: Boolean = true
-            override val occlusionType: FoldingFeature.OcclusionType = FoldingFeature.OcclusionType.NONE
-            override val orientation: FoldingFeature.Orientation = FoldingFeature.Orientation.VERTICAL
+            override val occlusionType: FoldingFeature.OcclusionType =
+                FoldingFeature.OcclusionType.NONE
+            override val orientation: FoldingFeature.Orientation =
+                FoldingFeature.Orientation.VERTICAL
             override val state: FoldingFeature.State = state
         }
     }

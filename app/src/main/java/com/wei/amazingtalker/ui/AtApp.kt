@@ -51,7 +51,7 @@ import com.wei.amazingtalker.core.designsystem.component.AtNavigationRailItem
 import com.wei.amazingtalker.core.designsystem.component.FunctionalityNotAvailablePopup
 import com.wei.amazingtalker.core.designsystem.theme.SPACING_LARGE
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
-import com.wei.amazingtalker.core.manager.ErrorTextPrefix
+import com.wei.amazingtalker.core.manager.ERROR_TEXT_PREFIX
 import com.wei.amazingtalker.core.manager.Message
 import com.wei.amazingtalker.core.manager.SnackbarManager
 import com.wei.amazingtalker.core.manager.SnackbarState
@@ -70,11 +70,12 @@ fun AtApp(
     windowSizeClass: WindowSizeClass,
     displayFeatures: List<DisplayFeature>,
     isTokenValid: Boolean = true,
-    appState: AtAppState = rememberAtAppState(
-        networkMonitor = networkMonitor,
-        windowSizeClass = windowSizeClass,
-        displayFeatures = displayFeatures,
-    ),
+    appState: AtAppState =
+        rememberAtAppState(
+            networkMonitor = networkMonitor,
+            windowSizeClass = windowSizeClass,
+            displayFeatures = displayFeatures,
+        ),
     snackbarManager: SnackbarManager,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -110,7 +111,8 @@ fun AtApp(
     }
     AtBackground {
         Scaffold(
-            modifier = Modifier.semantics {
+            modifier =
+            Modifier.semantics {
                 testTagsAsResourceId = true
             },
             containerColor = Color.Transparent,
@@ -122,7 +124,7 @@ fun AtApp(
                     snackbar = { snackbarData ->
                         if (!appState.isFullScreenCurrentDestination) {
                             // TODO [Revert]: Temporary removal of Spacer in Snackbar to prevent extra space on phone devices. See issue #38.
-                            val isError = snackbarData.visuals.message.startsWith(ErrorTextPrefix)
+                            val isError = snackbarData.visuals.message.startsWith(ERROR_TEXT_PREFIX)
                             AtAppSnackbar(snackbarData, isError)
                         }
                     },
@@ -159,7 +161,8 @@ fun AtApp(
                         destinations = appState.topLevelDestinations,
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .testTag(atNavDrawer)
                             .padding(SPACING_LARGE.dp)
                             .safeDrawingPadding(),
@@ -173,14 +176,16 @@ fun AtApp(
                         destinations = appState.topLevelDestinations,
                         onNavigateToDestination = appState::navigateToTopLevelDestination,
                         currentDestination = appState.currentDestination,
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .testTag(atNavRail)
                             .safeDrawingPadding(),
                     )
                 }
 
                 Column(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize(),
                 ) {
                     AtNavHost(
@@ -312,7 +317,7 @@ suspend fun collectAndShowSnackbar(
 
             if (message.state == SnackbarState.Error) {
                 snackbarHostState.showSnackbar(
-                    message = ErrorTextPrefix + text,
+                    message = ERROR_TEXT_PREFIX + text,
                 )
             } else {
                 snackbarHostState.showSnackbar(message = text)
@@ -322,13 +327,17 @@ suspend fun collectAndShowSnackbar(
     }
 }
 
-fun getMessageText(message: Message, context: Context): String {
+fun getMessageText(
+    message: Message,
+    context: Context,
+): String {
     return when (message.uiText) {
         is UiText.DynamicString -> (message.uiText as UiText.DynamicString).value
-        is UiText.StringResource -> context.getString(
-            (message.uiText as UiText.StringResource).resId,
-            *(message.uiText as UiText.StringResource).args.map { it.toString(context) }
-                .toTypedArray(),
-        )
+        is UiText.StringResource ->
+            context.getString(
+                (message.uiText as UiText.StringResource).resId,
+                *(message.uiText as UiText.StringResource).args.map { it.toString(context) }
+                    .toTypedArray(),
+            )
     }
 }

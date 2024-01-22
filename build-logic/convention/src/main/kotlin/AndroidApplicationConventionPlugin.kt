@@ -1,6 +1,6 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.wei.amazingtalker.configureGradleManagedDevices
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.wei.amazingtalker.configureGradleManagedDevices
 import com.wei.amazingtalker.configureKotlinAndroid
 import com.wei.amazingtalker.configurePrintApksTask
 import org.gradle.api.Plugin
@@ -25,5 +25,4 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
         }
     }
-
 }

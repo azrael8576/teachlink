@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class TestTeacherScheduleRepository : TeacherScheduleRepository {
-
     private var errorException: Exception? = null
 
     /**
@@ -47,10 +46,10 @@ class TestTeacherScheduleRepository : TeacherScheduleRepository {
      * A test-only API to cause `getTeacherAvailability()` to throw an exception.
      */
     fun causeError() {
-        errorException = Exception(ErrorExceptionMessage)
+        errorException = Exception(ERROR_EXCEPTION_MESSAGE)
     }
 
     companion object {
-        const val ErrorExceptionMessage = "Test exception"
+        const val ERROR_EXCEPTION_MESSAGE = "Test exception"
     }
 }

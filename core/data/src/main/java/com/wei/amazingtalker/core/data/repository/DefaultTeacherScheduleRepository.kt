@@ -17,11 +17,12 @@ import javax.inject.Inject
  * @param ioDispatcher 用於執行 IO 相關操作的 CoroutineDispatcher。
  * @param network 數據源的網路接口。
  */
-class DefaultTeacherScheduleRepository @Inject constructor(
+class DefaultTeacherScheduleRepository
+@Inject
+constructor(
     @Dispatcher(AtDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val network: AtNetworkDataSource,
 ) : TeacherScheduleRepository {
-
     /**
      * 從數據源獲取教師的可用性。
      * @param teacherName 教師名稱。
@@ -31,9 +32,10 @@ class DefaultTeacherScheduleRepository @Inject constructor(
     override suspend fun getTeacherAvailability(
         teacherName: String,
         startedAt: String,
-    ): Flow<TeacherSchedule> = withContext(ioDispatcher) {
-        flow {
-            emit(network.getTeacherAvailability(teacherName, startedAt).asExternalModel())
+    ): Flow<TeacherSchedule> =
+        withContext(ioDispatcher) {
+            flow {
+                emit(network.getTeacherAvailability(teacherName, startedAt).asExternalModel())
+            }
         }
-    }
 }

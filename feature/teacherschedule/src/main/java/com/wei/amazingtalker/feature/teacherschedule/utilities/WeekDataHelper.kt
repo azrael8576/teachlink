@@ -9,8 +9,13 @@ import javax.inject.Inject
 /**
  * 輔助處理關於週數據的類別。
  */
-class WeekDataHelper @Inject constructor() {
-    fun getQueryDateUtc(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean): OffsetDateTime {
+class WeekDataHelper
+@Inject
+constructor() {
+    fun getQueryDateUtc(
+        queryDateLocal: OffsetDateTime,
+        resetToStartOfDay: Boolean,
+    ): OffsetDateTime {
         return if (resetToStartOfDay) {
             queryDateLocal
                 .withHour(0)
@@ -35,7 +40,10 @@ class WeekDataHelper @Inject constructor() {
         return localTime.plusDays(betweenWeekSunday.toLong())
     }
 
-    fun getWeekDateText(weekStart: OffsetDateTime, weekEnd: OffsetDateTime): Pair<String, String> {
+    fun getWeekDateText(
+        weekStart: OffsetDateTime,
+        weekEnd: OffsetDateTime,
+    ): Pair<String, String> {
         val weekStartFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val weekEndFormatter = DateTimeFormatter.ofPattern("MM-dd")
         return Pair(weekStartFormatter.format(weekStart), weekEndFormatter.format(weekEnd))

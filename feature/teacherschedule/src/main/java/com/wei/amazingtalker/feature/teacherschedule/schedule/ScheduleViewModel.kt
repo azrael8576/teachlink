@@ -27,7 +27,9 @@ import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class ScheduleViewModel @Inject constructor(
+class ScheduleViewModel
+@Inject
+constructor(
     @Clocks(AtClocks.DefaultClock) private val clock: Clock,
     @Clocks(AtClocks.UtcClock) private val clockUtc: Clock,
     private val getTeacherScheduleUseCase: GetTeacherScheduleUseCase,
@@ -42,8 +44,7 @@ class ScheduleViewModel @Inject constructor(
         queryClockUtc = clockUtc,
     ),
 ) {
-
-    private val _scheduleTimeList =
+    private val scheduleTimeList =
         MutableStateFlow<DataSourceResult<MutableList<IntervalScheduleTimeSlot>>>(DataSourceResult.Loading)
     private var getScheduleJob: Job? = null
 
@@ -59,11 +60,15 @@ class ScheduleViewModel @Inject constructor(
         fetchTeacherSchedule()
     }
 
-    private fun updateWeekData(queryDateLocal: OffsetDateTime, resetToStartOfDay: Boolean) {
+    private fun updateWeekData(
+        queryDateLocal: OffsetDateTime,
+        resetToStartOfDay: Boolean,
+    ) {
         updateState {
             copy(
                 selectedIndex = 0,
-                _queryDateUtc = weekDataHelper.getQueryDateUtc(
+                _queryDateUtc =
+                weekDataHelper.getQueryDateUtc(
                     queryDateLocal = queryDateLocal,
                     resetToStartOfDay = resetToStartOfDay,
                 ),
@@ -74,31 +79,35 @@ class ScheduleViewModel @Inject constructor(
     private fun fetchTeacherSchedule() {
         getScheduleJob?.cancel()
 
-        getScheduleJob = viewModelScope.launch {
-            getTeacherScheduleUseCase(
-                teacherName = states.value._currentTeacherName,
-                startedAtUtc = states.value._queryDateUtc.toString(),
-            ).stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = DataSourceResult.Loading,
-            ).collect { result ->
-                _scheduleTimeList.value = result
-                filterTimeListByDate(
-                    _scheduleTimeList.value,
-                    states.value.dateTabs[states.value.selectedIndex],
-                )
+        getScheduleJob =
+            viewModelScope.launch {
+                getTeacherScheduleUseCase(
+                    teacherName = states.value._currentTeacherName,
+                    startedAtUtc = states.value._queryDateUtc.toString(),
+                ).stateIn(
+                    scope = viewModelScope,
+                    started = SharingStarted.WhileSubscribed(5_000),
+                    initialValue = DataSourceResult.Loading,
+                ).collect { result ->
+                    scheduleTimeList.value = result
+                    filterTimeListByDate(
+                        scheduleTimeList.value,
+                        states.value.dateTabs[states.value.selectedIndex],
+                    )
+                }
             }
-        }
     }
 
-    private fun onTabSelected(position: Int, date: OffsetDateTime) {
+    private fun onTabSelected(
+        position: Int,
+        date: OffsetDateTime,
+    ) {
         Timber.d("onTabSelected $date $position")
         updateState {
             copy(selectedIndex = position)
         }
         filterTimeListByDate(
-            _scheduleTimeList.value,
+            scheduleTimeList.value,
             states.value.dateTabs[states.value.selectedIndex],
         )
     }
@@ -110,11 +119,12 @@ class ScheduleViewModel @Inject constructor(
     ) {
         when (result) {
             is DataSourceResult.Success -> {
-                val groupedTimeSlots = result.data
-                    .filter { item ->
-                        item.start.dayOfYear == date.dayOfYear
-                    }
-                    .groupBy { it.duringDayType }
+                val groupedTimeSlots =
+                    result.data
+                        .filter { item ->
+                            item.start.dayOfYear == date.dayOfYear
+                        }
+                        .groupBy { it.duringDayType }
 
                 updateState {
                     Timber.d("filterTimeListByDate Success $date \n $groupedTimeSlots")
@@ -188,7 +198,8 @@ class ScheduleViewModel @Inject constructor(
         } else {
             snackbarManager.showMessage(
                 state = snackbarState,
-                uiText = UiText.StringResource(
+                uiText =
+                UiText.StringResource(
                     resId,
                     message.map {
                         UiText.StringResource.Args.DynamicString(it)

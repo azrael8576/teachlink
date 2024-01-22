@@ -4,7 +4,7 @@ import com.wei.amazingtalker.core.base.Action
 import com.wei.amazingtalker.core.base.State
 
 sealed class ContactMeViewAction : Action {
-    object Call : ContactMeViewAction()
+    data object Call : ContactMeViewAction()
 }
 
 data class ContactMeViewState(

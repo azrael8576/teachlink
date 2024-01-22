@@ -28,25 +28,27 @@ interface RetrofitAtNetworkApi {
     ): NetworkTeacherSchedule
 }
 
-private const val AtBaseUrl = BuildConfig.BACKEND_URL
+private const val AT_BASE_URL = BuildConfig.BACKEND_URL
 
 /**
  * [Retrofit] backed [AtNetworkDataSource]
  */
 @Singleton
-class RetrofitAtNetwork @Inject constructor(
+class RetrofitAtNetwork
+@Inject
+constructor(
     networkJson: Json,
     okhttpCallFactory: Call.Factory,
 ) : AtNetworkDataSource {
-
-    private val networkApi = Retrofit.Builder()
-        .baseUrl(AtBaseUrl)
-        .callFactory(okhttpCallFactory)
-        .addConverterFactory(
-            networkJson.asConverterFactory("application/json".toMediaType()),
-        )
-        .build()
-        .create(RetrofitAtNetworkApi::class.java)
+    private val networkApi =
+        Retrofit.Builder()
+            .baseUrl(AT_BASE_URL)
+            .callFactory(okhttpCallFactory)
+            .addConverterFactory(
+                networkJson.asConverterFactory("application/json".toMediaType()),
+            )
+            .build()
+            .create(RetrofitAtNetworkApi::class.java)
 
     override suspend fun getTeacherAvailability(
         teacherName: String,

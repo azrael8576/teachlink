@@ -96,20 +96,23 @@ internal fun LoginScreen(
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
 ) {
-    val accountState = rememberSaveable {
-        mutableStateOf(account)
-    }
+    val accountState =
+        rememberSaveable {
+            mutableStateOf(account)
+        }
 
-    val passwordState = rememberSaveable {
-        mutableStateOf(password)
-    }
+    val passwordState =
+        rememberSaveable {
+            mutableStateOf(password)
+        }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(SPACING_LARGE.dp),
             contentAlignment = Alignment.Center,
@@ -149,21 +152,21 @@ private fun Title(modifier: Modifier = Modifier) {
     Text(
         text = title,
         style = MaterialTheme.typography.displayMedium,
-        modifier = modifier
+        modifier =
+        modifier
             .semantics { contentDescription = "" },
     )
 }
 
 @Composable
-internal fun AccountTextField(
-    accountState: MutableState<String>,
-) {
+internal fun AccountTextField(accountState: MutableState<String>) {
     val account = stringResource(R.string.account)
     val accountDescription = stringResource(R.string.content_description_account)
 
     TextField(
         value = accountState.value,
-        modifier = Modifier
+        modifier =
+        Modifier
             .semantics { contentDescription = accountDescription },
         onValueChange = {
             accountState.value = it
@@ -176,15 +179,14 @@ internal fun AccountTextField(
 }
 
 @Composable
-internal fun PasswordTextField(
-    passwordState: MutableState<String>,
-) {
+internal fun PasswordTextField(passwordState: MutableState<String>) {
     val password = stringResource(R.string.password)
     val passwordDescription = stringResource(R.string.content_description_password)
 
     TextField(
         value = passwordState.value,
-        modifier = Modifier
+        modifier =
+        Modifier
             .semantics { contentDescription = passwordDescription },
         onValueChange = {
             passwordState.value = it
@@ -204,7 +206,8 @@ internal fun ForgotPasswordText(modifier: Modifier = Modifier) {
     Text(
         text = forgotPassword,
         style = MaterialTheme.typography.bodyMedium,
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(top = SPACING_LARGE.dp)
             .semantics { contentDescription = forgotPassword },
     )
@@ -223,7 +226,8 @@ internal fun LoginButton(
         onClick = {
             login(accountState.value, passwordState.value)
         },
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(top = SPACING_SMALL.dp)
             .semantics { contentDescription = loginTextDescription },
     ) {

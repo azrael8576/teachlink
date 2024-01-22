@@ -90,7 +90,8 @@ fun MyCoursesContent(
                 )
                 Spacer(modifier = Modifier.width(SPACING_SMALL.dp))
                 SkillProgressCard(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(cardSize.dp)
                         .weight(1f),
                     skillName = uiStates.skillName,
@@ -112,15 +113,17 @@ fun CourseProgressCard(
     onClick: () -> Unit,
 ) {
     val completed = stringResource(id = R.string.completed)
-    val contentCourseProgressCard = stringResource(
-        R.string.course_progress_card,
-        completed,
-        courseProgress,
-        courseCount,
-    )
+    val contentCourseProgressCard =
+        stringResource(
+            R.string.course_progress_card,
+            completed,
+            courseProgress,
+            courseCount,
+        )
 
     StatusCard(
-        modifier = modifier
+        modifier =
+        modifier
             .testTag(stringResource(R.string.tag_course_progress_card))
             .semantics {
                 contentDescription = contentCourseProgressCard
@@ -159,7 +162,8 @@ fun PupilRatingCard(
     val contentPupilRatingCard = "$pupil $rating $pupilRating"
 
     StatusCard(
-        modifier = modifier
+        modifier =
+        modifier
             .testTag(stringResource(R.string.tag_pupil_rating_card))
             .semantics {
                 contentDescription = contentPupilRatingCard
@@ -258,10 +262,12 @@ private fun ClassInfo(
     val lessons = stringResource(id = R.string.lessons)
     val rating = stringResource(id = R.string.rating)
     val started = stringResource(id = R.string.started)
-    val contentClassInfo = "$lessons $lessonsCountDisplay, $rating $ratingCount, $started $startedDate"
+    val contentClassInfo =
+        "$lessons $lessonsCountDisplay, $rating $ratingCount, $started $startedDate"
 
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(horizontal = SPACING_SMALL.dp)
             .testTag(stringResource(R.string.tag_class_info))
             .semantics {
@@ -315,7 +321,8 @@ private fun ClassInfo(
 @Composable
 private fun ClassName(className: String) {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(horizontal = SPACING_SMALL.dp)
             .testTag(stringResource(R.string.tag_class_name))
             .semantics {
@@ -341,11 +348,13 @@ private fun TutorButton(
 
     Button(
         onClick = onTutorClick,
-        colors = ButtonDefaults.buttonColors(
+        colors =
+        ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.background,
         ),
         contentPadding = ButtonDefaults.TextButtonContentPadding,
-        modifier = Modifier
+        modifier =
+        Modifier
             .testTag(
                 stringResource(R.string.tag_tutor_button),
             )
@@ -386,7 +395,8 @@ fun MyCoursesContentPreview() {
         Surface {
             MyCoursesContent(
                 modifier = Modifier.padding(horizontal = SPACING_LARGE.dp),
-                uiStates = MyCoursesContentState(
+                uiStates =
+                MyCoursesContentState(
                     courseProgress = 20,
                     courseCount = 30,
                     pupilRating = 9.9,

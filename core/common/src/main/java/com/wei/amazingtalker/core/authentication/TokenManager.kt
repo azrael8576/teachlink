@@ -29,6 +29,8 @@ object TokenManager {
 
 sealed interface TokenState {
     data class Valid(val token: String) : TokenState
-    object Invalid : TokenState
-    object Loading : TokenState
+
+    data object Invalid : TokenState
+
+    data object Loading : TokenState
 }

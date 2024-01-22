@@ -9,10 +9,10 @@ import com.wei.amazingtalker.core.designsystem.ui.AtContentType
 import com.wei.amazingtalker.core.designsystem.ui.AtNavigationType
 import com.wei.amazingtalker.feature.contactme.contactme.ContactMeRoute
 
-const val contactMeRoute = "contact_me_route"
+const val CONTACT_ME_ROUTE = "contact_me_route"
 
 fun NavController.navigateToContactMe(navOptions: NavOptions? = null) {
-    this.navigate(contactMeRoute, navOptions)
+    this.navigate(CONTACT_ME_ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.contactMeGraph(
@@ -22,7 +22,7 @@ fun NavGraphBuilder.contactMeGraph(
     navigationType: AtNavigationType,
     nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
-    composable(route = contactMeRoute) {
+    composable(route = CONTACT_ME_ROUTE) {
         ContactMeRoute(
             navController = navController,
             contentType = contentType,

@@ -21,11 +21,11 @@ import androidx.compose.ui.unit.height
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.google.common.truth.Truth.assertThat
 import com.wei.amazingtalker.core.designsystem.theme.AtTheme
+import com.wei.amazingtalker.core.testing.data.TEST_CURRENT_TIME
 import com.wei.amazingtalker.core.testing.data.fixedClock
 import com.wei.amazingtalker.core.testing.data.fixedClockUtc
 import com.wei.amazingtalker.core.testing.data.groupedTimeSlots
 import com.wei.amazingtalker.core.testing.data.testAvailableTimeSlot
-import com.wei.amazingtalker.core.testing.data.testCurrentTime
 import com.wei.amazingtalker.core.testing.data.testUnavailableTimeSlot
 import com.wei.amazingtalker.feature.teacherschedule.R
 import com.wei.amazingtalker.feature.teacherschedule.schedule.ui.dateFormatter
@@ -54,8 +54,9 @@ internal fun scheduleScreenRobot(
 internal open class ScheduleScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
     private val morningString by composeTestRule.stringResource(R.string.morning)
@@ -75,10 +76,11 @@ internal open class ScheduleScreenRobot(
     private val scheduleToolbarTag by composeTestRule.stringResource(R.string.tag_schedule_toolbar)
     private val scheduleListTag by composeTestRule.stringResource(R.string.tag_schedule_list)
 
-    private val scheduleViewState = ScheduleViewState(
-        currentClock = fixedClock,
-        queryClockUtc = fixedClockUtc,
-    )
+    private val scheduleViewState =
+        ScheduleViewState(
+            currentClock = fixedClock,
+            queryClockUtc = fixedClockUtc,
+        )
 
     private var isPreviousWeekClicked: Boolean = false
     private var isNextWeekClicked: Boolean = false
@@ -149,7 +151,7 @@ internal open class ScheduleScreenRobot(
         )
     }
     private val yourLocalTimeZone by lazy {
-        val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
+        val fixedClock = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneId.systemDefault())
         composeTestRule.onNodeWithContentDescription(
             String.format(
                 yourLocalTimeZoneString,
@@ -208,9 +210,7 @@ internal open class ScheduleScreenRobot(
         )
     }
 
-    fun setScheduleScreenContent(
-        uiStates: ScheduleViewState = scheduleViewState,
-    ) {
+    fun setScheduleScreenContent(uiStates: ScheduleViewState = scheduleViewState) {
         composeTestRule.setContent {
             resetInteractionFlags()
             AtTheme {
