@@ -15,6 +15,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "amazingtalker"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 
 include(":core:network")

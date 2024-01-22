@@ -44,7 +44,10 @@ android {
         release {
             isMinifyEnabled = true
             applicationIdSuffix = AtBuildType.RELEASE.applicationIdSuffix
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
 
             // To publish on the Play store a private signing key is required, but to allow anyone
             // who clones the code to sign and run the release variant, use the debug signing key.
@@ -66,27 +69,32 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:login"))
-    implementation(project(":feature:teacherschedule"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:contactme"))
+    implementation(projects.feature.login)
+    implementation(projects.feature.teacherschedule)
+    implementation(projects.feature.home)
+    implementation(projects.feature.contactme)
 
-    implementation(project(":core:designsystem"))
-    implementation(project(":core:common"))
-    implementation(project(":core:data"))
-    implementation(project(":core:model"))
-    implementation(project(":core:datastore"))
+    implementation(projects.core.designsystem)
+    implementation(projects.core.common)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
+    implementation(projects.core.datastore)
 
-    androidTestImplementation(project(":core:designsystem"))
-    androidTestImplementation(project(":core:datastore-test"))
-    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(projects.core.designsystem)
+    androidTestImplementation(projects.core.datastoreTest)
+    androidTestImplementation(projects.core.testing)
+
     androidTestImplementation(libs.androidx.navigation.testing)
     androidTestImplementation(libs.accompanist.testharness)
-    testImplementation(project(":core:datastore-test"))
-    testImplementation(project(":core:testing"))
+
+    testImplementation(projects.core.datastoreTest)
+    testImplementation(projects.core.testing)
+
     testImplementation(libs.androidx.navigation.testing)
     testImplementation(libs.accompanist.testharness)
-    debugImplementation(project(":ui-test-hilt-manifest"))
+
+    debugImplementation(projects.uiTestHiltManifest)
+
     debugImplementation(libs.androidx.compose.ui.testManifest)
 
     implementation(libs.androidx.core.ktx)

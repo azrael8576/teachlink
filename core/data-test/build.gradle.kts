@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    api(project(":core:data"))
+    api(projects.core.data)
 
     implementation(libs.hilt.android.testing)
 }

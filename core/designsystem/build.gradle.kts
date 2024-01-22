@@ -13,7 +13,7 @@ android {
 }
 
 dependencies {
-    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(projects.core.testing)
 
     // Write trace events to the system trace buffer.
     api(libs.androidx.tracing.ktx)

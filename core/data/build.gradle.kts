@@ -14,8 +14,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
-    implementation(project(":core:network"))
-    implementation(project(":core:model"))
-    implementation(project(":core:datastore"))
+    implementation(projects.core.common)
+    implementation(projects.core.network)
+    implementation(projects.core.model)
+    implementation(projects.core.datastore)
 }
