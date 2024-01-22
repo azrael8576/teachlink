@@ -17,11 +17,12 @@ internal val SCHEDULE_STATE_TIME_INTERVAL: TimeInterval = TimeInterval.INTERVAL_
  * 用於獲取教師課程表的 use case。它從 [TeacherScheduleRepository] 獲取課程表信息，
  * 並使用 [IntervalizeScheduleUseCase] 將其分解成區間時段。
  */
-class GetTeacherScheduleUseCase @Inject constructor(
+class GetTeacherScheduleUseCase
+@Inject
+constructor(
     private val teacherScheduleRepository: TeacherScheduleRepository,
     private val intervalizeScheduleUseCase: IntervalizeScheduleUseCase,
 ) {
-
     suspend operator fun invoke(
         teacherName: String,
         startedAtUtc: String,

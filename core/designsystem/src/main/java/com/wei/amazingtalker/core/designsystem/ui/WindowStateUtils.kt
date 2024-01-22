@@ -49,19 +49,23 @@ fun isSeparating(foldFeature: FoldingFeature?): Boolean {
  * Different type of navigation supported by app depending on device size and state.
  */
 enum class AtNavigationType {
-    BOTTOM_NAVIGATION, NAVIGATION_RAIL, PERMANENT_NAVIGATION_DRAWER
+    BOTTOM_NAVIGATION,
+    NAVIGATION_RAIL,
+    PERMANENT_NAVIGATION_DRAWER,
 }
 
 /**
  * Different position of navigation content inside Navigation Rail, Navigation Drawer depending on device size and state.
  */
 enum class AtNavigationContentPosition {
-    TOP, CENTER
+    TOP,
+    CENTER,
 }
 
 /**
  * App Content shown depending on device size and state.
  */
 enum class AtContentType {
-    SINGLE_PANE, DUAL_PANE
+    SINGLE_PANE,
+    DUAL_PANE,
 }

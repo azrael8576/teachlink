@@ -4,7 +4,9 @@ import com.wei.amazingtalker.core.base.Action
 import com.wei.amazingtalker.core.base.State
 
 enum class Tab {
-    MY_COURSES, CHATS, TUTORS
+    MY_COURSES,
+    CHATS,
+    TUTORS,
 }
 
 sealed class HomeViewAction : Action {
@@ -27,6 +29,8 @@ data class HomeViewState(
 
 sealed interface HomeViewLoadingState : State {
     data object Success : HomeViewLoadingState
+
     data object Error : HomeViewLoadingState
+
     data object Loading : HomeViewLoadingState
 }

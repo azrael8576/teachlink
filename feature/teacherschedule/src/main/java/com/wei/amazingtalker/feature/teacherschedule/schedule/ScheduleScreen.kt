@@ -173,49 +173,51 @@ internal fun ScheduleScreen(
     onListScroll: () -> Unit,
     onTimeSlotClick: (IntervalScheduleTimeSlot) -> Unit,
 ) {
-    val toolbarHeightRange = with(LocalDensity.current) {
-        MinToolbarHeight.roundToPx()..MaxToolbarHeight.roundToPx()
-    }
+    val toolbarHeightRange =
+        with(LocalDensity.current) {
+            MinToolbarHeight.roundToPx()..MaxToolbarHeight.roundToPx()
+        }
     val toolbarState = rememberToolbarState(toolbarHeightRange)
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(
-                available: Offset,
-                source: NestedScrollSource,
-            ): Offset {
-                toolbarState.scrollTopLimitReached =
-                    listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
-                toolbarState.scrollOffset = toolbarState.scrollOffset - available.y
-                return Offset(0f, toolbarState.consumed)
-            }
-
-            override suspend fun onPostFling(
-                consumed: Velocity,
-                available: Velocity,
-            ): Velocity {
-                if (available.y > 0) {
-                    scope.launch {
-                        animateDecay(
-                            initialValue = toolbarState.height + toolbarState.offset,
-                            initialVelocity = available.y,
-                            animationSpec = FloatExponentialDecaySpec(),
-                        ) { value, _ ->
-                            toolbarState.scrollTopLimitReached =
-                                listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
-                            toolbarState.scrollOffset =
-                                toolbarState.scrollOffset - (value - (toolbarState.height + toolbarState.offset))
-                            if (toolbarState.scrollOffset == 0f) scope.coroutineContext.cancelChildren()
-                        }
-                    }
+    val nestedScrollConnection =
+        remember {
+            object : NestedScrollConnection {
+                override fun onPreScroll(
+                    available: Offset,
+                    source: NestedScrollSource,
+                ): Offset {
+                    toolbarState.scrollTopLimitReached =
+                        listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+                    toolbarState.scrollOffset = toolbarState.scrollOffset - available.y
+                    return Offset(0f, toolbarState.consumed)
                 }
 
-                return super.onPostFling(consumed, available)
+                override suspend fun onPostFling(
+                    consumed: Velocity,
+                    available: Velocity,
+                ): Velocity {
+                    if (available.y > 0) {
+                        scope.launch {
+                            animateDecay(
+                                initialValue = toolbarState.height + toolbarState.offset,
+                                initialVelocity = available.y,
+                                animationSpec = FloatExponentialDecaySpec(),
+                            ) { value, _ ->
+                                toolbarState.scrollTopLimitReached =
+                                    listState.firstVisibleItemIndex == 0 && listState.firstVisibleItemScrollOffset == 0
+                                toolbarState.scrollOffset =
+                                    toolbarState.scrollOffset - (value - (toolbarState.height + toolbarState.offset))
+                                if (toolbarState.scrollOffset == 0f) scope.coroutineContext.cancelChildren()
+                            }
+                        }
+                    }
+
+                    return super.onPostFling(consumed, available)
+                }
             }
         }
-    }
 
     Column {
         ScheduleTopAppBar(title = uiStates._currentTeacherName)
@@ -225,12 +227,14 @@ internal fun ScheduleScreen(
          * using the nestedScroll modifier.
          */
         Box(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .nestedScroll(nestedScrollConnection),
         ) {
             ScheduleList(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .background(MaterialTheme.colorScheme.background)
                     .fillMaxSize()
                     .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
@@ -249,7 +253,8 @@ internal fun ScheduleScreen(
             )
             ScheduleToolbar(
                 progress = toolbarState.progress,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .height(with(LocalDensity.current) { toolbarState.height.toDp() })
                     .graphicsLayer { translationY = toolbarState.offset },
@@ -271,14 +276,16 @@ private fun ScheduleTopAppBar(title: String) {
         title = {
             Text(
                 text = title,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .testTag(stringResource(id = R.string.tag_schedule_top_app_bar))
                     .semantics { contentDescription = title },
             )
         },
         navigationIcon = { },
         actions = { },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        colors =
+        TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
         ),
     )
@@ -337,28 +344,32 @@ internal fun ScheduleList(
                 }
             }
 
-            is TimeListUiState.Loading -> item {
-                val loading = stringResource(R.string.loading)
-                Text(
-                    text = loading,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier
-                        .padding(SPACING_LARGE.dp)
-                        .semantics { contentDescription = loading },
-                )
-            }
+            is TimeListUiState.Loading ->
+                item {
+                    val loading = stringResource(R.string.loading)
+                    Text(
+                        text = loading,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier =
+                        Modifier
+                            .padding(SPACING_LARGE.dp)
+                            .semantics { contentDescription = loading },
+                    )
+                }
 
-            is TimeListUiState.LoadFailed -> item {
-                val loadFailed = stringResource(R.string.load_failed)
-                Text(
-                    text = stringResource(R.string.load_failed),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier
-                        .padding(SPACING_LARGE.dp)
-                        .semantics { contentDescription = loadFailed },
-                )
-            }
+            is TimeListUiState.LoadFailed ->
+                item {
+                    val loadFailed = stringResource(R.string.load_failed)
+                    Text(
+                        text = stringResource(R.string.load_failed),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier =
+                        Modifier
+                            .padding(SPACING_LARGE.dp)
+                            .semantics { contentDescription = loadFailed },
+                    )
+                }
         }
 
         if (withBottomSpacer) {
@@ -414,13 +425,15 @@ fun WeekActionBar(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(actionBarSizeDp.dp)
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -437,7 +450,8 @@ fun WeekActionBar(
                 Icon(
                     imageVector = AtIcons.ArrowBackIosNew,
                     contentDescription = null,
-                    tint = if (uiStates.isAvailablePreviousWeek) {
+                    tint =
+                    if (uiStates.isAvailablePreviousWeek) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         LocalContentColor.current
@@ -446,13 +460,15 @@ fun WeekActionBar(
             }
 
             val (weekStart, weekEnd) = uiStates.weekDateText
-            val weekDataDescription = stringResource(R.string.content_description_week_date).format(
-                weekStart,
-                weekEnd,
-            )
+            val weekDataDescription =
+                stringResource(R.string.content_description_week_date).format(
+                    weekStart,
+                    weekEnd,
+                )
             val weekDateText = "$weekStart - $weekEnd"
             TextButton(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .weight(1f)
                     .semantics { contentDescription = weekDataDescription },
                 onClick = {
@@ -492,7 +508,8 @@ private fun WeekActionBarBottom(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .padding(horizontal = SPACING_LARGE.dp),
     ) {
@@ -514,7 +531,8 @@ private fun WeekActionBarBottom(
 }
 
 enum class ToolbarStatus {
-    Hidden, Visible
+    Hidden,
+    Visible,
 }
 
 @Composable
@@ -523,11 +541,12 @@ fun AnimateToolbarOffset(
     listState: LazyListState,
     toolbarHeightRange: IntRange,
 ) {
-    val toolbarStatus = remember {
-        derivedStateOf {
-            deriveToolbarStatus(topAppBarState.scrollOffset, toolbarHeightRange)
+    val toolbarStatus =
+        remember {
+            derivedStateOf {
+                deriveToolbarStatus(topAppBarState.scrollOffset, toolbarHeightRange)
+            }
         }
-    }
     val isScrollInProgress = rememberUpdatedState(newValue = listState.isScrollInProgress)
 
     LaunchedEffect(topAppBarState, isScrollInProgress.value) {
@@ -545,7 +564,10 @@ fun AnimateToolbarOffset(
     }
 }
 
-private fun deriveToolbarStatus(scrollOffset: Float, toolbarHeightRange: IntRange): ToolbarStatus {
+private fun deriveToolbarStatus(
+    scrollOffset: Float,
+    toolbarHeightRange: IntRange,
+): ToolbarStatus {
     val largeToolbarHalf = toolbarHeightRange.last / 2f
 
     return when {
@@ -554,7 +576,10 @@ private fun deriveToolbarStatus(scrollOffset: Float, toolbarHeightRange: IntRang
     }
 }
 
-private suspend fun animateTo(topAppBarState: TopAppBarState, targetValue: Float) {
+private suspend fun animateTo(
+    topAppBarState: TopAppBarState,
+    targetValue: Float,
+) {
     animate(
         initialValue = topAppBarState.scrollOffset,
         targetValue = targetValue,
@@ -596,7 +621,8 @@ fun ScheduleListPreview(
 ) {
     AtTheme {
         ScheduleList(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize(),
             timeListUiState = timeListUiState,

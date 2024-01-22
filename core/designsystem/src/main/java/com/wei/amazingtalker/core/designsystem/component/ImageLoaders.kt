@@ -16,17 +16,22 @@ import coil.request.ImageRequest
  * @return A Painter object for the image.
  */
 @Composable
-fun coilImagePainter(resId: Int, isPreview: Boolean = false): Painter {
+fun coilImagePainter(
+    resId: Int,
+    isPreview: Boolean = false,
+): Painter {
     val context = LocalContext.current
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
+    val imageLoader =
+        ImageLoader.Builder(context)
+            .components {
+                add(SvgDecoder.Factory())
+            }
+            .build()
 
-    val request = ImageRequest.Builder(context)
-        .data(resId)
-        .build()
+    val request =
+        ImageRequest.Builder(context)
+            .data(resId)
+            .build()
 
     return if (isPreview) {
         painterResource(id = resId)

@@ -73,7 +73,8 @@ fun MyCoursesTab(
     Tab(
         selected = isSelected,
         onClick = onTabClick,
-        modifier = Modifier.semantics {
+        modifier =
+        Modifier.semantics {
             contentDescription = myCourses
         },
     ) {
@@ -98,7 +99,8 @@ fun ChatTab(
     Tab(
         selected = isSelected,
         onClick = onTabClick,
-        modifier = Modifier.semantics {
+        modifier =
+        Modifier.semantics {
             contentDescription = chats
         },
     ) {
@@ -122,7 +124,8 @@ fun ChatTab(
 @Composable
 fun ChatCountBadge(count: String) {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .clip(shape = shapes.medium)
             .background(color = MaterialTheme.colorScheme.primary),
     ) {
@@ -136,13 +139,17 @@ fun ChatCountBadge(count: String) {
 }
 
 @Composable
-fun TutorsTab(isSelected: Boolean, onTabClick: () -> Unit) {
+fun TutorsTab(
+    isSelected: Boolean,
+    onTabClick: () -> Unit,
+) {
     val tutors = stringResource(id = R.string.tutors)
 
     Tab(
         selected = isSelected,
         onClick = onTabClick,
-        modifier = Modifier.semantics {
+        modifier =
+        Modifier.semantics {
             contentDescription = tutors
         },
     ) {
@@ -160,7 +167,8 @@ fun TutorsTab(isSelected: Boolean, onTabClick: () -> Unit) {
 fun HomeTabRowPreview() {
     AtTheme {
         HomeTabRow(
-            uiStates = HomeViewState(
+            uiStates =
+            HomeViewState(
                 selectedTab = Tab.MY_COURSES,
                 chatCount = 999,
             ),

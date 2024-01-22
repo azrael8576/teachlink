@@ -3,7 +3,9 @@ package com.wei.amazingtalker.feature.home.home
 import com.wei.amazingtalker.core.base.State
 
 enum class OnlineStatus {
-    FREE, BUSY, OFFLINE
+    FREE,
+    BUSY,
+    OFFLINE,
 }
 
 data class Contact(

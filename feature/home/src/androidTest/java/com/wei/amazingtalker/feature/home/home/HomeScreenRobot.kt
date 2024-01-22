@@ -32,8 +32,9 @@ internal fun homeScreenRobot(
 internal open class HomeScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
     private val userAvatarTag by composeTestRule.stringResource(R.string.tag_user_avatar)
@@ -177,9 +178,7 @@ internal open class HomeScreenRobot(
         )
     }
 
-    fun setHomeScreenContent(
-        uiStates: HomeViewState = testHomeViewState,
-    ) {
+    fun setHomeScreenContent(uiStates: HomeViewState = testHomeViewState) {
         composeTestRule.setContent {
             resetInteractionFlags()
             AtTheme {
@@ -311,23 +310,25 @@ internal open class HomeScreenRobot(
     }
 }
 
-val testHomeViewState: HomeViewState = HomeViewState(
-    loadingState = HomeViewLoadingState.Success,
-    userDisplayName = "Wei",
-    selectedTab = Tab.MY_COURSES,
-    chatCount = 102,
-    myCoursesContentState = MyCoursesContentState(
-        courseProgress = 20,
-        courseCount = 14,
-        pupilRating = 9.9,
-        tutorName = "TEST_TUTOR_NAME",
-        className = "TEST_CLASS_NAME",
-        lessonsCountDisplay = "30+",
-        ratingCount = 4.9,
-        startedDate = "11.04",
-        contacts = listOf(),
-        skillName = "TEST_SKILL_NAME",
-        skillLevel = "TEST_SKILL_LEVEL",
-        skillLevelProgress = 64,
-    ),
-)
+val testHomeViewState: HomeViewState =
+    HomeViewState(
+        loadingState = HomeViewLoadingState.Success,
+        userDisplayName = "Wei",
+        selectedTab = Tab.MY_COURSES,
+        chatCount = 102,
+        myCoursesContentState =
+        MyCoursesContentState(
+            courseProgress = 20,
+            courseCount = 14,
+            pupilRating = 9.9,
+            tutorName = "TEST_TUTOR_NAME",
+            className = "TEST_CLASS_NAME",
+            lessonsCountDisplay = "30+",
+            ratingCount = 4.9,
+            startedDate = "11.04",
+            contacts = listOf(),
+            skillName = "TEST_SKILL_NAME",
+            skillLevel = "TEST_SKILL_LEVEL",
+            skillLevelProgress = 64,
+        ),
+    )

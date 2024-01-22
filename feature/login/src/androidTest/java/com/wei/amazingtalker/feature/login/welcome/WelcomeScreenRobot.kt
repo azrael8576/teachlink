@@ -28,8 +28,9 @@ internal fun welcomeScreenRobot(
 internal open class WelcomeScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
     private val scheduleListTag by composeTestRule.stringResource(R.string.tag_welcome_graphics)

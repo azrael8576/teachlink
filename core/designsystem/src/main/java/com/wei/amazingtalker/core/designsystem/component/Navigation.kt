@@ -63,7 +63,8 @@ fun RowScope.AtNavigationBarItem(
         enabled = enabled,
         label = label,
         alwaysShowLabel = alwaysShowLabel,
-        colors = NavigationBarItemDefaults.colors(
+        colors =
+        NavigationBarItemDefaults.colors(
             selectedIconColor = AtNavigationDefaults.navigationSelectedItemColor(),
             unselectedIconColor = AtNavigationDefaults.navigationContentColor(),
             selectedTextColor = AtNavigationDefaults.navigationSelectedItemColor(),
@@ -125,7 +126,8 @@ fun AtNavigationRailItem(
         enabled = enabled,
         label = null,
         alwaysShowLabel = alwaysShowLabel,
-        colors = NavigationRailItemDefaults.colors(
+        colors =
+        NavigationRailItemDefaults.colors(
             selectedIconColor = AtNavigationDefaults.navigationSelectedItemColor(),
             unselectedIconColor = AtNavigationDefaults.navigationContentColor(),
             selectedTextColor = AtNavigationDefaults.navigationSelectedItemColor(),
@@ -196,7 +198,8 @@ fun AtNavigationDrawerItem(
                 label()
             }
         },
-        colors = NavigationDrawerItemDefaults.colors(
+        colors =
+        NavigationDrawerItemDefaults.colors(
             selectedIconColor = AtNavigationDefaults.navigationSelectedItemColor(),
             unselectedIconColor = AtNavigationDefaults.navigationContentColor(),
             selectedTextColor = AtNavigationDefaults.navigationSelectedItemColor(),
@@ -336,13 +339,15 @@ object AtNavigationDefaults {
 }
 
 internal val previewItems = listOf("Schedule", "Home", "Contact Me")
-internal val previewIcons = listOf(
-    AtIcons.ScheduleBorder,
-    AtIcons.HomeBorder,
-    AtIcons.ContactMeBorder,
-)
-internal val previewSelectedIcons = listOf(
-    AtIcons.Schedule,
-    AtIcons.Home,
-    AtIcons.ContactMe,
-)
+internal val previewIcons =
+    listOf(
+        AtIcons.ScheduleBorder,
+        AtIcons.HomeBorder,
+        AtIcons.ContactMeBorder,
+    )
+internal val previewSelectedIcons =
+    listOf(
+        AtIcons.Schedule,
+        AtIcons.Home,
+        AtIcons.ContactMe,
+    )

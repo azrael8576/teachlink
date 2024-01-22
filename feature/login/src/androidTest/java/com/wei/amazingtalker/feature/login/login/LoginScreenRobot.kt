@@ -39,14 +39,15 @@ internal fun loginScreenRobot(
 internal open class LoginScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
-
-    private fun withRole(role: Role) = SemanticsMatcher("${SemanticsProperties.Role.name} contains '$role'") {
-        val roleProperty = it.config.getOrNull(SemanticsProperties.Role) ?: false
-        roleProperty == role
-    }
+    private fun withRole(role: Role) =
+        SemanticsMatcher("${SemanticsProperties.Role.name} contains '$role'") {
+            val roleProperty = it.config.getOrNull(SemanticsProperties.Role) ?: false
+            roleProperty == role
+        }
 
     // The strings used for matching in these tests
     private val accountDescription by composeTestRule.stringResource(R.string.content_description_account)
@@ -96,11 +97,12 @@ internal open class LoginScreenRobot(
                     account = "",
                     password = "",
                     login = { account, password ->
-                        loginResult = if (TEST_ACCOUNT == account && TEST_PASSWORD == password) {
-                            LoginResultRobot.LoginResult.Success
-                        } else {
-                            LoginResultRobot.LoginResult.Failed
-                        }
+                        loginResult =
+                            if (TEST_ACCOUNT == account && TEST_PASSWORD == password) {
+                                LoginResultRobot.LoginResult.Success
+                            } else {
+                                LoginResultRobot.LoginResult.Failed
+                            }
                     },
                 )
             }
@@ -161,13 +163,13 @@ internal fun loginResultRobot(
 internal open class LoginResultRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-
     enum class LoginResult {
         Success,
         Failed,
     }
 
     private lateinit var result: LoginResult
+
     fun setResult(loginResult: LoginResult) {
         result = loginResult
     }

@@ -5,17 +5,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.wei.amazingtalker.feature.login.login.LoginRoute
 
-const val loginRoute = "login_route"
+const val LOGIN_ROUTE = "login_route"
 
 fun NavController.navigateToLogin() {
     this.popBackStack()
-    this.navigate(loginRoute)
+    this.navigate(LOGIN_ROUTE)
 }
 
-fun NavGraphBuilder.loginScreen(
-    onLoginNav: () -> Unit,
-) {
-    composable(route = loginRoute) {
+fun NavGraphBuilder.loginScreen(onLoginNav: () -> Unit) {
+    composable(route = LOGIN_ROUTE) {
         LoginRoute(
             onLoginNav = onLoginNav,
         )

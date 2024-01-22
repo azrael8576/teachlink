@@ -16,24 +16,15 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 interface DataModule {
+    @Binds
+    fun bindsProfileRepository(profileRepository: FakeProfileRepository): ProfileRepository
 
     @Binds
-    fun bindsProfileRepository(
-        profileRepository: FakeProfileRepository,
-    ): ProfileRepository
+    fun bindsTeacherScheduleRepository(teacherScheduleRepository: DefaultTeacherScheduleRepository): TeacherScheduleRepository
 
     @Binds
-    fun bindsTeacherScheduleRepository(
-        teacherScheduleRepository: DefaultTeacherScheduleRepository,
-    ): TeacherScheduleRepository
+    fun bindsNetworkMonitor(networkMonitor: ConnectivityManagerNetworkMonitor): NetworkMonitor
 
     @Binds
-    fun bindsNetworkMonitor(
-        networkMonitor: ConnectivityManagerNetworkMonitor,
-    ): NetworkMonitor
-
-    @Binds
-    fun bindsUserDataRepository(
-        userDataRepository: DefaultUserDataRepository,
-    ): UserDataRepository
+    fun bindsUserDataRepository(userDataRepository: DefaultUserDataRepository): UserDataRepository
 }

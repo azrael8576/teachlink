@@ -12,12 +12,11 @@ import kotlinx.coroutines.launch
 import kotlin.reflect.KProperty1
 
 /**
+ *
  * StateFlow 是用於封裝可重複使用的狀態的 Kotlin Coroutines API。
  * 當配置變化（如旋轉屏幕）時，它可以持續地提供相同的狀態值。
  * StateFlow 主要用於持久化 UI 狀態。
- */
-
-/**
+ *
  * StateFlow.observeState 是一個擴展函式，用於觀察 StateFlow 對象的狀態。
  * 它接收一個 LifecycleOwner 和一個 KProperty 對象，用於指定要觀察的狀態屬性。
  * 當狀態屬性發生變化時，會調用指定的 action 函式進行處理。

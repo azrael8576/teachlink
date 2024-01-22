@@ -12,7 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean
  * 這種一次性事件特別適用於 UI 事件，如顯示 Snackbar，導航到另一個頁面等。
  */
 class LiveDataEvents<T> : MutableLiveData<List<T>>() {
-
     /**
      * 保存所有 ObserverWrapper 的集合。
      */
@@ -23,7 +22,10 @@ class LiveDataEvents<T> : MutableLiveData<List<T>>() {
      * 為每個觀察者創建一個 ObserverWrapper，並將它加入到觀察者集合中。
      */
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<in List<T>>) {
+    override fun observe(
+        owner: LifecycleOwner,
+        observer: Observer<in List<T>>,
+    ) {
         // 為每個觀察者創建一個觀察者包裝器，並將它加入到集合中
         val wrapper = ObserverWrapper(observer)
         observers.add(wrapper)
@@ -49,7 +51,6 @@ class LiveDataEvents<T> : MutableLiveData<List<T>>() {
      * 當事件被消費後，會將 pending 設為 false，並清空待處理事件列表。
      */
     private class ObserverWrapper<T>(val observer: Observer<in List<T>>) : Observer<List<T>> {
-
         /**
          * 一個標記，用於指示是否有新的待處理事件。
          */

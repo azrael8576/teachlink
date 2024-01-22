@@ -12,14 +12,18 @@ import java.time.OffsetDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class LoginViewModel
+@Inject
+constructor(
     private val userDataRepository: UserDataRepository,
 ) : BaseViewModel<
     LoginViewAction,
     LoginViewState,
     >(LoginViewState()) {
-
-    private fun login(account: String, password: String) {
+    private fun login(
+        account: String,
+        password: String,
+    ) {
         // TODO 替換至 login API
         viewModelScope.launch {
             if (TEST_ACCOUNT == account && TEST_PASSWORD == password) {

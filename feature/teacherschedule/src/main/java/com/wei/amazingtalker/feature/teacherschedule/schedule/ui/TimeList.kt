@@ -33,17 +33,19 @@ val timeSlotFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 
 @Composable
 internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
-    val yourLocalTimeZone = String.format(
-        stringResource(R.string.your_local_time_zone),
-        clock.zone,
-        yourLocalTimeZoneFormatter.format(OffsetDateTime.now(clock).offset),
-    )
+    val yourLocalTimeZone =
+        String.format(
+            stringResource(R.string.your_local_time_zone),
+            clock.zone,
+            yourLocalTimeZoneFormatter.format(OffsetDateTime.now(clock).offset),
+        )
 
     Text(
         text = yourLocalTimeZone,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(top = SPACING_LARGE.dp)
             .padding(horizontal = SPACING_LARGE.dp)
             .semantics { contentDescription = yourLocalTimeZone },
@@ -52,18 +54,20 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
 
 @Composable
 internal fun DuringDay(duringDayType: DuringDayType) {
-    val duringDay = when (duringDayType) {
-        DuringDayType.Morning -> stringResource(R.string.morning)
-        DuringDayType.Afternoon -> stringResource(R.string.afternoon)
-        DuringDayType.Evening -> stringResource(R.string.evening)
-        else -> stringResource(R.string.morning)
-    }
+    val duringDay =
+        when (duringDayType) {
+            DuringDayType.Morning -> stringResource(R.string.morning)
+            DuringDayType.Afternoon -> stringResource(R.string.afternoon)
+            DuringDayType.Evening -> stringResource(R.string.evening)
+            else -> stringResource(R.string.morning)
+        }
 
     Text(
         text = duringDay,
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyMedium,
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(top = SPACING_LARGE.dp)
             .padding(horizontal = SPACING_LARGE.dp)
             .semantics { contentDescription = duringDay },
@@ -102,7 +106,8 @@ private fun AvailableTimeSlot(
 
     Button(
         onClick = { onTimeSlotClick() },
-        modifier = modifier
+        modifier =
+        modifier
             .padding(top = SPACING_LARGE.dp)
             .padding(horizontal = SPACING_LARGE.dp)
             .fillMaxWidth(0.5f)
@@ -131,13 +136,15 @@ private fun UnavailableTimeSlot(
     OutlinedButton(
         onClick = {},
         enabled = false,
-        modifier = modifier
+        modifier =
+        modifier
             .padding(top = SPACING_LARGE.dp)
             .padding(horizontal = SPACING_LARGE.dp)
             .fillMaxWidth(0.5f)
             .semantics { contentDescription = unavailableDescription },
         shape = shapes.medium,
-        colors = ButtonDefaults.outlinedButtonColors(
+        colors =
+        ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground,
         ),
@@ -173,7 +180,8 @@ fun AvailableTimeSlotPreview() {
     AtTheme {
         Box(modifier = Modifier.fillMaxWidth()) {
             AvailableTimeSlot(
-                timeSlot = IntervalScheduleTimeSlot(
+                timeSlot =
+                IntervalScheduleTimeSlot(
                     start = OffsetDateTime.now(),
                     end = OffsetDateTime.now(),
                     state = ScheduleState.AVAILABLE,
@@ -191,7 +199,8 @@ fun UnavailableTimeSlotPreview() {
     AtTheme {
         Box(modifier = Modifier.fillMaxWidth()) {
             UnavailableTimeSlot(
-                timeSlot = IntervalScheduleTimeSlot(
+                timeSlot =
+                IntervalScheduleTimeSlot(
                     start = OffsetDateTime.now(),
                     end = OffsetDateTime.now(),
                     state = ScheduleState.BOOKED,

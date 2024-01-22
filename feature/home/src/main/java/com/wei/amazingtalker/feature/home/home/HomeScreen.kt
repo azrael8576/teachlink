@@ -119,15 +119,15 @@ internal fun HomeScreen(
                 userName = uiStates.userDisplayName,
                 avatarId = R.drawable.he_wei,
                 onAddUserClick = {
-                    /*TODO*/
+                    // TODO
                     showPopup.value = true
                 },
                 onUserProfileImageClick = {
-                    /*TODO*/
+                    // TODO
                     showPopup.value = true
                 },
                 onMenuClick = {
-                    /*TODO*/
+                    // TODO
                     showPopup.value = true
                 },
             )
@@ -201,7 +201,8 @@ private fun UnavailableScreenContent() {
             text = screenNotAvailable,
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .semantics { contentDescription = screenNotAvailable },
         )
         Spacer(modifier = Modifier.weight(1f))
@@ -211,17 +212,20 @@ private fun UnavailableScreenContent() {
 @Composable
 private fun LoadingErrorContent() {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .testTag(stringResource(R.string.tag_loading_error_content)),
     ) {
         // TODO Error Content
-    } }
+    }
+}
 
 @Composable
 private fun LoadingContent() {
     Box(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxSize()
             .testTag(stringResource(R.string.tag_loading_content)),
         contentAlignment = Alignment.Center,
@@ -235,7 +239,8 @@ private fun LoadingContent() {
 fun HomeScreenPreview() {
     AtTheme {
         HomeScreen(
-            uiStates = HomeViewState(
+            uiStates =
+            HomeViewState(
                 loadingState = HomeViewLoadingState.Success,
                 userDisplayName = "Wei",
             ),

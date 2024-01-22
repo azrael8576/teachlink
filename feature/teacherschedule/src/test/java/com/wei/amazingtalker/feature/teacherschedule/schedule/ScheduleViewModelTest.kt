@@ -38,7 +38,6 @@ import java.time.ZoneOffset
  * {Arrange}{Act}{Assert}
  */
 class ScheduleViewModelTest {
-
     private lateinit var getTeacherScheduleUseCase: GetTeacherScheduleUseCase
     private lateinit var testTeacherScheduleRepo: TestTeacherScheduleRepository
     private lateinit var intervalizeScheduleUseCase: IntervalizeScheduleUseCase
@@ -50,8 +49,8 @@ class ScheduleViewModelTest {
     private lateinit var expectedState: MutableStateFlow<ScheduleViewState>
 
     // mock currentTime
-    private val fixedClock = Clock.fixed(Instant.parse(testCurrentTime), ZoneId.systemDefault())
-    private val fixedClockUtc = Clock.fixed(Instant.parse(testCurrentTime), ZoneOffset.UTC)
+    private val fixedClock = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneId.systemDefault())
+    private val fixedClockUtc = Clock.fixed(Instant.parse(TEST_CURRENT_TIME), ZoneOffset.UTC)
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
@@ -60,20 +59,22 @@ class ScheduleViewModelTest {
     fun setUp() {
         testTeacherScheduleRepo = TestTeacherScheduleRepository()
         intervalizeScheduleUseCase = IntervalizeScheduleUseCase()
-        getTeacherScheduleUseCase = GetTeacherScheduleUseCase(
-            teacherScheduleRepository = testTeacherScheduleRepo,
-            intervalizeScheduleUseCase = intervalizeScheduleUseCase,
-        )
+        getTeacherScheduleUseCase =
+            GetTeacherScheduleUseCase(
+                teacherScheduleRepository = testTeacherScheduleRepo,
+                intervalizeScheduleUseCase = intervalizeScheduleUseCase,
+            )
         weekDataHelper = WeekDataHelper()
         snackbarManager = SnackbarManager()
 
-        viewModel = ScheduleViewModel(
-            clock = fixedClock,
-            clockUtc = fixedClockUtc,
-            getTeacherScheduleUseCase = getTeacherScheduleUseCase,
-            weekDataHelper = weekDataHelper,
-            snackbarManager = snackbarManager,
-        )
+        viewModel =
+            ScheduleViewModel(
+                clock = fixedClock,
+                clockUtc = fixedClockUtc,
+                getTeacherScheduleUseCase = getTeacherScheduleUseCase,
+                weekDataHelper = weekDataHelper,
+                snackbarManager = snackbarManager,
+            )
 
         expectedState = MutableStateFlow(viewModel.states.value)
     }
@@ -100,19 +101,21 @@ class ScheduleViewModelTest {
         runTest {
             // Arrange
             val resId = R.string.clickWeekDate
-            val message = listOf(testTeacherName)
-            val testUiText = UiText.StringResource(
-                resId,
-                message.map {
-                    UiText.StringResource.Args.DynamicString(it)
-                }.toList(),
-            )
+            val message = listOf(TEST_TEACHER_NAME)
+            val testUiText =
+                UiText.StringResource(
+                    resId,
+                    message.map {
+                        UiText.StringResource.Args.DynamicString(it)
+                    }.toList(),
+                )
 
             // Act
-            val action = ScheduleViewAction.ShowSnackBar(
-                resId,
-                message = message,
-            )
+            val action =
+                ScheduleViewAction.ShowSnackBar(
+                    resId,
+                    message = message,
+                )
             viewModel.dispatch(action)
 
             // Assert
@@ -126,19 +129,21 @@ class ScheduleViewModelTest {
         runTest {
             // Arrange
             val resId = R.string.inquirying_teacher_calendar
-            val message = listOf(testTeacherName, testWeekDateText)
-            val testUiText = UiText.StringResource(
-                resId,
-                message.map {
-                    UiText.StringResource.Args.DynamicString(it)
-                }.toList(),
-            )
+            val message = listOf(TEST_TEACHER_NAME, TEST_WEEK_DATE_TEXT)
+            val testUiText =
+                UiText.StringResource(
+                    resId,
+                    message.map {
+                        UiText.StringResource.Args.DynamicString(it)
+                    }.toList(),
+                )
 
             // Act
-            val action = ScheduleViewAction.ShowSnackBar(
-                resId,
-                message = message,
-            )
+            val action =
+                ScheduleViewAction.ShowSnackBar(
+                    resId,
+                    message = message,
+                )
             viewModel.dispatch(action)
 
             // Assert
@@ -147,6 +152,7 @@ class ScheduleViewModelTest {
             Truth.assertThat(lastMessage?.uiText).isEqualTo(testUiText)
         }
 
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun `dispatch updateWeek action should update correct _queryDateUtc and resetToStartOfDay when weekAction is PREVIOUS_WEEK and previousWeekMondayLocalDate is the same as or later than the current local time`() =
         runTest {
@@ -160,7 +166,8 @@ class ScheduleViewModelTest {
             expectedState.setState {
                 copy(
                     selectedIndex = 0,
-                    _queryDateUtc = weekDataHelper.getQueryDateUtc(
+                    _queryDateUtc =
+                    weekDataHelper.getQueryDateUtc(
                         queryDateLocal = previousWeekMondayLocalDate,
                         resetToStartOfDay = true,
                     ),
@@ -171,10 +178,13 @@ class ScheduleViewModelTest {
             viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
 
             // Assert
-            Truth.assertThat(viewModel.states.value._queryDateUtc).isEqualTo(expectedState.value._queryDateUtc)
-            Truth.assertThat(viewModel.states.value.selectedIndex).isEqualTo(expectedState.value.selectedIndex)
+            Truth.assertThat(viewModel.states.value._queryDateUtc)
+                .isEqualTo(expectedState.value._queryDateUtc)
+            Truth.assertThat(viewModel.states.value.selectedIndex)
+                .isEqualTo(expectedState.value.selectedIndex)
         }
 
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun `dispatch updateWeek action update correct _queryDateUtc when weekAction is PREVIOUS_WEEK and previousWeekMondayLocalDate is earlier than the current time`() =
         runTest {
@@ -182,7 +192,8 @@ class ScheduleViewModelTest {
             expectedState.setState {
                 copy(
                     selectedIndex = 0,
-                    _queryDateUtc = weekDataHelper.getQueryDateUtc(
+                    _queryDateUtc =
+                    weekDataHelper.getQueryDateUtc(
                         queryDateLocal = OffsetDateTime.now(fixedClock).getLocalOffsetDateTime(),
                         resetToStartOfDay = false,
                     ),
@@ -193,8 +204,10 @@ class ScheduleViewModelTest {
             viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.PREVIOUS_WEEK))
 
             // Assert
-            Truth.assertThat(viewModel.states.value._queryDateUtc).isEqualTo(expectedState.value._queryDateUtc)
-            Truth.assertThat(viewModel.states.value.selectedIndex).isEqualTo(expectedState.value.selectedIndex)
+            Truth.assertThat(viewModel.states.value._queryDateUtc)
+                .isEqualTo(expectedState.value._queryDateUtc)
+            Truth.assertThat(viewModel.states.value.selectedIndex)
+                .isEqualTo(expectedState.value.selectedIndex)
         }
 
     @Test
@@ -204,7 +217,8 @@ class ScheduleViewModelTest {
             expectedState.setState {
                 copy(
                     selectedIndex = 0,
-                    _queryDateUtc = weekDataHelper.getQueryDateUtc(
+                    _queryDateUtc =
+                    weekDataHelper.getQueryDateUtc(
                         queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
                         resetToStartOfDay = true,
                     ),
@@ -215,8 +229,10 @@ class ScheduleViewModelTest {
             viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK))
 
             // Assert
-            Truth.assertThat(viewModel.states.value._queryDateUtc).isEqualTo(expectedState.value._queryDateUtc)
-            Truth.assertThat(viewModel.states.value.selectedIndex).isEqualTo(expectedState.value.selectedIndex)
+            Truth.assertThat(viewModel.states.value._queryDateUtc)
+                .isEqualTo(expectedState.value._queryDateUtc)
+            Truth.assertThat(viewModel.states.value.selectedIndex)
+                .isEqualTo(expectedState.value.selectedIndex)
         }
 
     @Test
@@ -226,7 +242,8 @@ class ScheduleViewModelTest {
             expectedState.setState {
                 copy(
                     selectedIndex = 0,
-                    _queryDateUtc = weekDataHelper.getQueryDateUtc(
+                    _queryDateUtc =
+                    weekDataHelper.getQueryDateUtc(
                         queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
                         resetToStartOfDay = true,
                     ),
@@ -237,8 +254,10 @@ class ScheduleViewModelTest {
             viewModel.dispatch(ScheduleViewAction.UpdateWeek(WeekAction.NEXT_WEEK))
 
             // Assert
-            Truth.assertThat(viewModel.states.value._queryDateUtc).isEqualTo(expectedState.value._queryDateUtc)
-            Truth.assertThat(viewModel.states.value.selectedIndex).isEqualTo(expectedState.value.selectedIndex)
+            Truth.assertThat(viewModel.states.value._queryDateUtc)
+                .isEqualTo(expectedState.value._queryDateUtc)
+            Truth.assertThat(viewModel.states.value.selectedIndex)
+                .isEqualTo(expectedState.value.selectedIndex)
         }
 
     @Test
@@ -249,27 +268,30 @@ class ScheduleViewModelTest {
             val testDate = OffsetDateTime.parse("2023-08-25T01:00+08:00")
             val expectedGroupedTimeSlots: Map<DuringDayType, List<IntervalScheduleTimeSlot>> =
                 mapOf(
-                    DuringDayType.Morning to listOf(
-                        IntervalScheduleTimeSlot(
-                            start = OffsetDateTime.parse("2023-08-25T01:00+08:00"),
-                            end = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
-                            state = ScheduleState.AVAILABLE,
-                            duringDayType = DuringDayType.Morning,
+                    DuringDayType.Morning to
+                        listOf(
+                            IntervalScheduleTimeSlot(
+                                start = OffsetDateTime.parse("2023-08-25T01:00+08:00"),
+                                end = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
+                                state = ScheduleState.AVAILABLE,
+                                duringDayType = DuringDayType.Morning,
+                            ),
+                            IntervalScheduleTimeSlot(
+                                start = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
+                                end = OffsetDateTime.parse("2023-08-25T02:00+08:00"),
+                                state = ScheduleState.AVAILABLE,
+                                duringDayType = DuringDayType.Morning,
+                            ),
                         ),
-                        IntervalScheduleTimeSlot(
-                            start = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
-                            end = OffsetDateTime.parse("2023-08-25T02:00+08:00"),
-                            state = ScheduleState.AVAILABLE,
-                            duringDayType = DuringDayType.Morning,
-                        ),
-                    ),
                 )
 
             // Act
             viewModel.filterTimeListByDate(testResult, testDate)
 
             // Assert
-            Truth.assertThat(viewModel.states.value.timeListUiState).isEqualTo(TimeListUiState.Success(groupedTimeSlots = expectedGroupedTimeSlots))
+            Truth.assertThat(
+                viewModel.states.value.timeListUiState,
+            ).isEqualTo(TimeListUiState.Success(groupedTimeSlots = expectedGroupedTimeSlots))
         }
 
     @Test
@@ -283,7 +305,8 @@ class ScheduleViewModelTest {
             viewModel.filterTimeListByDate(testResult, testDate)
 
             // Assert
-            Truth.assertThat(viewModel.states.value.timeListUiState).isEqualTo(TimeListUiState.LoadFailed)
+            Truth.assertThat(viewModel.states.value.timeListUiState)
+                .isEqualTo(TimeListUiState.LoadFailed)
         }
 
     @Test
@@ -297,42 +320,44 @@ class ScheduleViewModelTest {
             viewModel.filterTimeListByDate(testResult, testDate)
 
             // Assert
-            Truth.assertThat(viewModel.states.value.timeListUiState).isEqualTo(TimeListUiState.Loading)
+            Truth.assertThat(viewModel.states.value.timeListUiState)
+                .isEqualTo(TimeListUiState.Loading)
         }
 }
 
-const val testTeacherName = TEST_DATA_TEACHER_NAME
-const val testWeekDateText = "2023-08-14 - 08-20"
-const val testCurrentTime = "2023-08-18T00:00:00.00Z"
-private val testTimeSlotList = mutableListOf(
-    IntervalScheduleTimeSlot(
-        start = OffsetDateTime.parse("2023-08-19T16:00+08:00"),
-        end = OffsetDateTime.parse("2023-08-19T16:30+08:00"),
-        state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon,
-    ),
-    IntervalScheduleTimeSlot(
-        start = OffsetDateTime.parse("2023-08-20T13:30+08:00"),
-        end = OffsetDateTime.parse("2023-08-20T14:00+08:00"),
-        state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon,
-    ),
-    IntervalScheduleTimeSlot(
-        start = OffsetDateTime.parse("2023-08-20T14:00+08:00"),
-        end = OffsetDateTime.parse("2023-08-20T14:30+08:00"),
-        state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Afternoon,
-    ),
-    IntervalScheduleTimeSlot(
-        start = OffsetDateTime.parse("2023-08-25T01:00+08:00"),
-        end = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
-        state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Morning,
-    ),
-    IntervalScheduleTimeSlot(
-        start = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
-        end = OffsetDateTime.parse("2023-08-25T02:00+08:00"),
-        state = ScheduleState.AVAILABLE,
-        duringDayType = DuringDayType.Morning,
-    ),
-)
+const val TEST_TEACHER_NAME = TEST_DATA_TEACHER_NAME
+const val TEST_WEEK_DATE_TEXT = "2023-08-14 - 08-20"
+const val TEST_CURRENT_TIME = "2023-08-18T00:00:00.00Z"
+private val testTimeSlotList =
+    mutableListOf(
+        IntervalScheduleTimeSlot(
+            start = OffsetDateTime.parse("2023-08-19T16:00+08:00"),
+            end = OffsetDateTime.parse("2023-08-19T16:30+08:00"),
+            state = ScheduleState.AVAILABLE,
+            duringDayType = DuringDayType.Afternoon,
+        ),
+        IntervalScheduleTimeSlot(
+            start = OffsetDateTime.parse("2023-08-20T13:30+08:00"),
+            end = OffsetDateTime.parse("2023-08-20T14:00+08:00"),
+            state = ScheduleState.AVAILABLE,
+            duringDayType = DuringDayType.Afternoon,
+        ),
+        IntervalScheduleTimeSlot(
+            start = OffsetDateTime.parse("2023-08-20T14:00+08:00"),
+            end = OffsetDateTime.parse("2023-08-20T14:30+08:00"),
+            state = ScheduleState.AVAILABLE,
+            duringDayType = DuringDayType.Afternoon,
+        ),
+        IntervalScheduleTimeSlot(
+            start = OffsetDateTime.parse("2023-08-25T01:00+08:00"),
+            end = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
+            state = ScheduleState.AVAILABLE,
+            duringDayType = DuringDayType.Morning,
+        ),
+        IntervalScheduleTimeSlot(
+            start = OffsetDateTime.parse("2023-08-25T01:30+08:00"),
+            end = OffsetDateTime.parse("2023-08-25T02:00+08:00"),
+            state = ScheduleState.AVAILABLE,
+            duringDayType = DuringDayType.Morning,
+        ),
+    )

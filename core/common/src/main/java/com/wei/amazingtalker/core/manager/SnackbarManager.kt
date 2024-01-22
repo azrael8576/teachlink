@@ -9,7 +9,7 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val ErrorTextPrefix = "Error:"
+const val ERROR_TEXT_PREFIX = "Error:"
 
 enum class SnackbarState {
     Default,
@@ -22,18 +22,23 @@ data class Message(val id: Long, val state: SnackbarState, val uiText: UiText)
  * Class responsible for managing Snackbar messages to show on the screen
  */
 @Singleton
-class SnackbarManager @Inject constructor() {
-
+class SnackbarManager
+@Inject
+constructor() {
     private val _messages: MutableStateFlow<List<Message>> = MutableStateFlow(emptyList())
     val messages: StateFlow<List<Message>> get() = _messages.asStateFlow()
 
-    fun showMessage(state: SnackbarState, uiText: UiText) {
+    fun showMessage(
+        state: SnackbarState,
+        uiText: UiText,
+    ) {
         _messages.update { currentMessages ->
-            currentMessages + Message(
-                id = UUID.randomUUID().mostSignificantBits,
-                state = state,
-                uiText = uiText,
-            )
+            currentMessages +
+                Message(
+                    id = UUID.randomUUID().mostSignificantBits,
+                    state = state,
+                    uiText = uiText,
+                )
         }
     }
 

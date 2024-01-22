@@ -34,8 +34,9 @@ internal fun scheduleDetailScreenRobot(
 internal open class ScheduleDetailScreenRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
     private val startTimeDescription by composeTestRule.stringResource(R.string.content_description_start_time)
@@ -92,7 +93,8 @@ internal open class ScheduleDetailScreenRobot(
             AtTheme {
                 ScheduleDetailScreen(
                     uiStates = uiStates,
-                    onBackClick = { backClicked = true }, // Handle back click
+                    // Handle back click
+                    onBackClick = { backClicked = true },
                 )
             }
         }
@@ -143,7 +145,6 @@ internal fun scheduleDetailBackRobot(
 internal open class ScheduleDetailBackRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
 ) {
-
     private var isBackClicked: Boolean = false
 
     fun setIsBackClicked(backClicked: Boolean) {
@@ -156,10 +157,11 @@ internal open class ScheduleDetailBackRobot(
 }
 
 val now: OffsetDateTime = OffsetDateTime.now()
-val testUiState = ScheduleDetailViewState(
-    teacherName = "John Doe",
-    start = now,
-    end = now.plusMinutes(30),
-    state = ScheduleState.AVAILABLE,
-    duringDayType = DuringDayType.Afternoon,
-)
+val testUiState =
+    ScheduleDetailViewState(
+        teacherName = "John Doe",
+        start = now,
+        end = now.plusMinutes(30),
+        state = ScheduleState.AVAILABLE,
+        duringDayType = DuringDayType.Afternoon,
+    )

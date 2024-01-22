@@ -86,7 +86,8 @@ private fun DateTab(
         onClick = {
             onTabClick(index, tab)
         },
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(70.dp)
             .width(tabWidth())
             .semantics { contentDescription = date },
@@ -112,7 +113,8 @@ fun DateTabLayoutPreview() {
             DateTabLayout(
                 modifier = Modifier.fillMaxSize(),
                 selectedIndex = 0,
-                tabs = listOf(
+                tabs =
+                listOf(
                     OffsetDateTime.parse("2023-06-26T00:00+08:00"),
                     OffsetDateTime.parse("2023-06-27T00:00+08:00"),
                     OffsetDateTime.parse("2023-06-28T00:00+08:00"),

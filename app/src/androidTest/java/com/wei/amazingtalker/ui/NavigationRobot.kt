@@ -4,7 +4,9 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.wei.amazingtalker.MainActivity
+import com.wei.amazingtalker.R
 import kotlin.properties.ReadOnlyProperty
+import com.wei.amazingtalker.feature.teacherschedule.R as FeatureTeacherscheduleR
 
 /**
  * Robot for [NavigationTest].
@@ -23,14 +25,15 @@ internal fun navigationRobot(
 internal open class NavigationRobot(
     private val composeTestRule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>,
 ) {
-    private fun AndroidComposeTestRule<*, *>.stringResource(@StringRes resId: Int) =
-        ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
+    private fun AndroidComposeTestRule<*, *>.stringResource(
+        @StringRes resId: Int,
+    ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val schedule by composeTestRule.stringResource(com.wei.amazingtalker.R.string.schedule)
-    private val home by composeTestRule.stringResource(com.wei.amazingtalker.R.string.home)
-    private val contactMe by composeTestRule.stringResource(com.wei.amazingtalker.R.string.contact_me)
-    private val backDescription by composeTestRule.stringResource(com.wei.amazingtalker.feature.teacherschedule.R.string.content_description_back)
+    private val schedule by composeTestRule.stringResource(R.string.schedule)
+    private val home by composeTestRule.stringResource(R.string.home)
+    private val contactMe by composeTestRule.stringResource(R.string.contact_me)
+    private val backDescription by composeTestRule.stringResource(FeatureTeacherscheduleR.string.content_description_back)
 
     private val back by lazy {
         composeTestRule.onNodeWithContentDescription(

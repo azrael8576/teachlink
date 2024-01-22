@@ -108,7 +108,8 @@ internal fun ScheduleDetailScreen(
             Text(
                 text = teacherName,
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .testTag(stringResource(id = R.string.tag_teacher_name))
                     .semantics { contentDescription = teacherNameDescription },
@@ -119,7 +120,8 @@ internal fun ScheduleDetailScreen(
             Text(
                 text = startTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
                     .testTag(stringResource(id = R.string.tag_start_time))
@@ -131,7 +133,8 @@ internal fun ScheduleDetailScreen(
             Text(
                 text = endTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
                     .testTag(stringResource(id = R.string.tag_end_time))
@@ -143,7 +146,8 @@ internal fun ScheduleDetailScreen(
             Text(
                 text = state,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
                     .testTag(stringResource(id = R.string.tag_state))
@@ -156,7 +160,8 @@ internal fun ScheduleDetailScreen(
             Text(
                 text = duringDayType,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
                     .testTag(stringResource(id = R.string.tag_during_day_type))
@@ -195,7 +200,8 @@ fun ScheduleDetailScreenPreview() {
 
     AtTheme {
         ScheduleDetailScreen(
-            uiStates = ScheduleDetailViewState(
+            uiStates =
+            ScheduleDetailViewState(
                 teacherName = "Teacher Name",
                 start = nowTime,
                 end = nowTime.plusMinutes(30),

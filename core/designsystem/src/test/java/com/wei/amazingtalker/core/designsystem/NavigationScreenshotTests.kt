@@ -35,7 +35,6 @@ import org.robolectric.annotation.LooperMode
 @Config(application = HiltTestApplication::class, sdk = [33], qualifiers = "480dpi")
 @LooperMode(LooperMode.Mode.PAUSED)
 class NavigationScreenshotTests() {
-
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 

@@ -22,8 +22,10 @@ import org.robolectric.RuntimeEnvironment
 
 val DefaultRoborazziOptions =
     RoborazziOptions(
-        compareOptions = CompareOptions(changeThreshold = 0f), // Pixel-perfect matching
-        recordOptions = RecordOptions(resizeScale = 0.5), // Reduce the size of the PNGs
+        // Pixel-perfect matching
+        compareOptions = CompareOptions(changeThreshold = 0f),
+        // Reduce the size of the PNGs
+        recordOptions = RecordOptions(resizeScale = 0.5),
     )
 
 enum class DefaultTestDevices(val description: String, val spec: String) {
@@ -97,12 +99,13 @@ fun <A : ComponentActivity> AndroidComposeTestRule<ActivityScenarioRule<A>, A>.c
             ) {
                 // Keying is necessary in some cases (e.g. animations)
                 key(androidTheme, darkMode) {
-                    val description = generateDescription(
-                        shouldCompareDarkMode,
-                        darkMode,
-                        shouldCompareAndroidTheme,
-                        androidTheme,
-                    )
+                    val description =
+                        generateDescription(
+                            shouldCompareDarkMode,
+                            darkMode,
+                            shouldCompareAndroidTheme,
+                            androidTheme,
+                        )
                     content(description)
                 }
             }
@@ -140,17 +143,18 @@ private fun generateDescription(
     shouldCompareAndroidTheme: Boolean,
     androidTheme: Boolean,
 ): String {
-    val description = "" +
-        if (shouldCompareDarkMode) {
-            if (darkMode) "Dark" else "Light"
-        } else {
-            ""
-        } +
-        if (shouldCompareAndroidTheme) {
-            if (androidTheme) " Android" else " Default"
-        } else {
-            ""
-        }
+    val description =
+        "" +
+            if (shouldCompareDarkMode) {
+                if (darkMode) "Dark" else "Light"
+            } else {
+                ""
+            } +
+            if (shouldCompareAndroidTheme) {
+                if (androidTheme) " Android" else " Default"
+            } else {
+                ""
+            }
 
     return description.trim()
 }
@@ -159,8 +163,9 @@ private fun generateDescription(
  * Extracts some properties from the spec string. Note that this function is not exhaustive.
  */
 private fun extractSpecs(deviceSpec: String): TestDeviceSpecs {
-    val specs = deviceSpec.substringAfter("spec:")
-        .split(",").map { it.split("=") }.associate { it[0] to it[1] }
+    val specs =
+        deviceSpec.substringAfter("spec:")
+            .split(",").map { it.split("=") }.associate { it[0] to it[1] }
     val width = specs["width"]?.toInt() ?: 640
     val height = specs["height"]?.toInt() ?: 480
     val dpi = specs["dpi"]?.toInt() ?: 480

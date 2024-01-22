@@ -25,16 +25,19 @@ internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtensio
             val javaSources = variant.androidTest?.sources?.java?.all
             val kotlinSources = variant.androidTest?.sources?.kotlin?.all
 
-            val testSources = if (javaSources != null && kotlinSources != null) {
-                javaSources.zip(kotlinSources) { javaDirs, kotlinDirs ->
-                    javaDirs + kotlinDirs
+            val testSources =
+                if (javaSources != null && kotlinSources != null) {
+                    javaSources.zip(kotlinSources) { javaDirs, kotlinDirs ->
+                        javaDirs + kotlinDirs
+                    }
+                } else {
+                    javaSources ?: kotlinSources
                 }
-            } else javaSources ?: kotlinSources
 
             if (artifact != null && testSources != null) {
                 tasks.register(
                     "${variant.name}PrintTestApk",
-                    PrintApkLocationTask::class.java
+                    PrintApkLocationTask::class.java,
                 ) {
                     apkFolder.set(artifact)
                     builtArtifactsLoader.set(loader)
@@ -61,21 +64,24 @@ internal abstract class PrintApkLocationTask : DefaultTask() {
 
     @TaskAction
     fun taskAction() {
-        val hasFiles = sources.orNull?.any { directory ->
-            directory.asFileTree.files.any {
-                it.isFile && it.parentFile.path.contains("build${File.separator}generated").not()
-            }
-        } ?: throw RuntimeException("Cannot check androidTest sources")
+        val hasFiles =
+            sources.orNull?.any { directory ->
+                directory.asFileTree.files.any {
+                    it.isFile && it.parentFile.path.contains("build${File.separator}generated").not()
+                }
+            } ?: throw RuntimeException("Cannot check androidTest sources")
 
         // Don't print APK location if there are no androidTest source files
         if (!hasFiles) {
             return
         }
 
-        val builtArtifacts = builtArtifactsLoader.get().load(apkFolder.get())
-            ?: throw RuntimeException("Cannot load APKs")
-        if (builtArtifacts.elements.size != 1)
+        val builtArtifacts =
+            builtArtifactsLoader.get().load(apkFolder.get())
+                ?: throw RuntimeException("Cannot load APKs")
+        if (builtArtifacts.elements.size != 1) {
             throw RuntimeException("Expected one APK !")
+        }
         val apk = File(builtArtifacts.elements.single().outputFile).toPath()
         println(apk)
     }

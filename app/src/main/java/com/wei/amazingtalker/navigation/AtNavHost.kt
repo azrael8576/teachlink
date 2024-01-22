@@ -6,11 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.window.layout.DisplayFeature
 import com.wei.amazingtalker.core.designsystem.ui.DeviceOrientation
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeGraph
+import com.wei.amazingtalker.feature.home.home.navigation.HOME_ROUTE
 import com.wei.amazingtalker.feature.home.home.navigation.homeGraph
-import com.wei.amazingtalker.feature.home.home.navigation.homeRoute
 import com.wei.amazingtalker.feature.login.login.navigation.loginScreen
+import com.wei.amazingtalker.feature.login.welcome.navigation.WELCOME_ROUTE
 import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeGraph
-import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeRoute
 import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.scheduleGraph
 import com.wei.amazingtalker.feature.teacherschedule.scheduledetail.navigation.scheduleDetailScreen
 import com.wei.amazingtalker.ui.AtAppState
@@ -28,7 +28,7 @@ fun AtNavHost(
     appState: AtAppState,
     isTokenValid: Boolean,
     displayFeatures: List<DisplayFeature>,
-    startDestination: String = if (isTokenValid) homeRoute else welcomeRoute,
+    startDestination: String = if (isTokenValid) HOME_ROUTE else WELCOME_ROUTE,
 ) {
     val navController = appState.navController
     val navigationType = appState.navigationType

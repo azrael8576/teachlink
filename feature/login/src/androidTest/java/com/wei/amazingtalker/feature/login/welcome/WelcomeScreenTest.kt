@@ -9,7 +9,6 @@ import org.junit.Test
  * UI tests for [WelcomeScreen] composable.
  */
 class WelcomeScreenTest {
-
     /**
      * 通常我們使用 createComposeRule()，作為 composeTestRule
      *

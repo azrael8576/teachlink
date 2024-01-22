@@ -14,7 +14,6 @@ import org.junit.Test
  * {Arrange}{Act}{Assert}
  */
 class SnackbarManagerTest {
-
     private lateinit var snackbarManager: SnackbarManager
 
     @Before
@@ -23,32 +22,36 @@ class SnackbarManagerTest {
     }
 
     @Test
-    fun `test showMessage adds message to flow`() = runTest {
-        // Arrange
-        val testUiText =
-            UiText.StringResource(123, emptyList()) // Replace with an actual UiText instance
+    fun `test showMessage adds message to flow`() {
+        runTest {
+            // Arrange
+            val testUiText =
+                UiText.StringResource(123, emptyList()) // Replace with an actual UiText instance
 
-        // Act
-        snackbarManager.showMessage(SnackbarState.Error, testUiText)
+            // Act
+            snackbarManager.showMessage(SnackbarState.Error, testUiText)
 
-        // Assert
-        val messages = snackbarManager.messages.first()
-        assertThat(messages.first().uiText).isEqualTo(testUiText)
+            // Assert
+            val messages = snackbarManager.messages.first()
+            assertThat(messages.first().uiText).isEqualTo(testUiText)
+        }
     }
 
     @Test
-    fun `test setMessageShown removes message from flow`() = runTest {
-        // Arrange
-        val testUiText =
-            UiText.StringResource(123, emptyList()) // Replace with an actual UiText instance
+    fun `test setMessageShown removes message from flow`() {
+        runTest {
+            // Arrange
+            val testUiText =
+                UiText.StringResource(123, emptyList()) // Replace with an actual UiText instance
 
-        // Act
-        snackbarManager.showMessage(SnackbarState.Error, testUiText)
-        val messageId = snackbarManager.messages.first().first().id
-        snackbarManager.setMessageShown(messageId)
+            // Act
+            snackbarManager.showMessage(SnackbarState.Error, testUiText)
+            val messageId = snackbarManager.messages.first().first().id
+            snackbarManager.setMessageShown(messageId)
 
-        // Assert
-        val messagesAfterRemoval = snackbarManager.messages.first()
-        assertThat(messagesAfterRemoval).isEmpty()
+            // Assert
+            val messagesAfterRemoval = snackbarManager.messages.first()
+            assertThat(messagesAfterRemoval).isEmpty()
+        }
     }
 }

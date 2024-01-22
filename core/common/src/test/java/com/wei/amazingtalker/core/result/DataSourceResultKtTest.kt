@@ -19,31 +19,35 @@ import kotlin.test.assertEquals
  * 如果接收到的任何項目不符合預期，則會拋出異常，並使測試案例失敗。
  */
 class DataSourceResultKtTest {
-
     @Test
-    fun `dataSourceResult catches errors`() = runTest {
-        flow {
-            emit(1)
-            throw Exception("Test Done")
-        }
-            .asDataSourceResult()
-            .test {
-                assertEquals(DataSourceResult.Loading, awaitItem())
-                assertEquals(DataSourceResult.Success(1), awaitItem())
-
-                when (val errorResult = awaitItem()) {
-                    is DataSourceResult.Error -> assertEquals(
-                        "Test Done",
-                        errorResult.exception?.message,
-                    )
-                    DataSourceResult.Loading,
-                    is DataSourceResult.Success,
-                    -> throw IllegalStateException(
-                        "The flow should have emitted an Error Result",
-                    )
-                }
-
-                awaitComplete()
+    fun `dataSourceResult catches errors`() {
+        runTest {
+            flow {
+                emit(1)
+                throw Exception("Test Done")
             }
+                .asDataSourceResult()
+                .test {
+                    assertEquals(DataSourceResult.Loading, awaitItem())
+                    assertEquals(DataSourceResult.Success(1), awaitItem())
+
+                    when (val errorResult = awaitItem()) {
+                        is DataSourceResult.Error -> {
+                            assertEquals(
+                                "Test Done",
+                                errorResult.exception?.message,
+                            )
+                        }
+
+                        DataSourceResult.Loading,
+                        is DataSourceResult.Success,
+                        -> throw IllegalStateException(
+                            "The flow should have emitted an Error Result",
+                        )
+                    }
+
+                    awaitComplete()
+                }
+        }
     }
 }

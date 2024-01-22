@@ -5,5 +5,5 @@ package com.wei.amazingtalker
  */
 enum class AtBuildType(val applicationIdSuffix: String? = null) {
     DEBUG(".debug"),
-    RELEASE
+    RELEASE,
 }

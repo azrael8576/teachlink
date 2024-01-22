@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 @Module
 @InstallIn(SingletonComponent::class)
 object DispatchersModule {
-
     /**
      * 提供 IO CoroutineDispatcher 的實例，可以在需要進行 IO 操作的協程中使用。
      *

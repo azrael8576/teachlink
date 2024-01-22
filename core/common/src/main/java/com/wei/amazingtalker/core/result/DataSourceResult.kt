@@ -11,8 +11,10 @@ import kotlinx.coroutines.flow.onStart
  */
 sealed interface DataSourceResult<out T> {
     data class Success<T>(val data: T) : DataSourceResult<T>
+
     data class Error(val exception: Throwable? = null) : DataSourceResult<Nothing>
-    object Loading : DataSourceResult<Nothing>
+
+    data object Loading : DataSourceResult<Nothing>
 }
 
 /**

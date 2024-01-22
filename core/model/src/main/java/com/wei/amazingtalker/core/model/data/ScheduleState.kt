@@ -5,5 +5,6 @@ package com.wei.amazingtalker.core.model.data
  * 包含 AVAILABLE（可用）和 BOOKED（已預定）兩種狀態。
  */
 enum class ScheduleState {
-    AVAILABLE, BOOKED
+    AVAILABLE,
+    BOOKED,
 }

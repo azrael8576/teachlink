@@ -26,15 +26,15 @@ import com.wei.amazingtalker.core.designsystem.ui.DevicePosture
 import com.wei.amazingtalker.core.designsystem.ui.currentDeviceOrientation
 import com.wei.amazingtalker.core.designsystem.ui.isBookPosture
 import com.wei.amazingtalker.core.designsystem.ui.isSeparating
-import com.wei.amazingtalker.feature.contactme.contactme.navigation.contactMeRoute
+import com.wei.amazingtalker.feature.contactme.contactme.navigation.CONTACT_ME_ROUTE
 import com.wei.amazingtalker.feature.contactme.contactme.navigation.navigateToContactMe
-import com.wei.amazingtalker.feature.home.home.navigation.homeRoute
+import com.wei.amazingtalker.feature.home.home.navigation.HOME_ROUTE
 import com.wei.amazingtalker.feature.home.home.navigation.navigateToHome
-import com.wei.amazingtalker.feature.login.login.navigation.loginRoute
+import com.wei.amazingtalker.feature.login.login.navigation.LOGIN_ROUTE
+import com.wei.amazingtalker.feature.login.welcome.navigation.WELCOME_ROUTE
 import com.wei.amazingtalker.feature.login.welcome.navigation.navigateToWelcome
-import com.wei.amazingtalker.feature.login.welcome.navigation.welcomeRoute
+import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.SCHEDULE_ROUTE
 import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.navigateToSchedule
-import com.wei.amazingtalker.feature.teacherschedule.schedule.navigation.scheduleRoute
 import com.wei.amazingtalker.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -85,93 +85,100 @@ class AtAppState(
      */
     val foldingFeature = displayFeatures.filterIsInstance<FoldingFeature>().firstOrNull()
 
-    val foldingDevicePosture = when {
-        isBookPosture(foldingFeature) ->
-            DevicePosture.BookPosture(foldingFeature.bounds)
+    val foldingDevicePosture =
+        when {
+            isBookPosture(foldingFeature) ->
+                DevicePosture.BookPosture(foldingFeature.bounds)
 
-        isSeparating(foldingFeature) ->
-            DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
+            isSeparating(foldingFeature) ->
+                DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
 
-        else -> DevicePosture.NormalPosture
-    }
+            else -> DevicePosture.NormalPosture
+        }
 
     /**
      * This will help us select type of navigation and content type depending on window size and
      * fold state of the device.
      */
     val navigationType: AtNavigationType
-        @Composable get() = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> {
-                AtNavigationType.BOTTOM_NAVIGATION
-            }
+        @Composable get() =
+            when (windowSizeClass.widthSizeClass) {
+                WindowWidthSizeClass.Compact -> {
+                    AtNavigationType.BOTTOM_NAVIGATION
+                }
 
-            WindowWidthSizeClass.Medium -> {
-                AtNavigationType.NAVIGATION_RAIL
-            }
-
-            WindowWidthSizeClass.Expanded -> {
-                if (foldingDevicePosture is DevicePosture.BookPosture) {
+                WindowWidthSizeClass.Medium -> {
                     AtNavigationType.NAVIGATION_RAIL
-                } else {
-                    AtNavigationType.PERMANENT_NAVIGATION_DRAWER
+                }
+
+                WindowWidthSizeClass.Expanded -> {
+                    if (foldingDevicePosture is DevicePosture.BookPosture) {
+                        AtNavigationType.NAVIGATION_RAIL
+                    } else {
+                        AtNavigationType.PERMANENT_NAVIGATION_DRAWER
+                    }
+                }
+
+                else -> {
+                    AtNavigationType.BOTTOM_NAVIGATION
                 }
             }
 
-            else -> {
-                AtNavigationType.BOTTOM_NAVIGATION
-            }
-        }
-
     val contentType: AtContentType
-        @Composable get() = when (windowSizeClass.widthSizeClass) {
-            WindowWidthSizeClass.Compact -> {
-                AtContentType.SINGLE_PANE
-            }
+        @Composable get() =
+            when (windowSizeClass.widthSizeClass) {
+                WindowWidthSizeClass.Compact -> {
+                    AtContentType.SINGLE_PANE
+                }
 
-            WindowWidthSizeClass.Medium -> {
-                if (foldingDevicePosture != DevicePosture.NormalPosture) {
+                WindowWidthSizeClass.Medium -> {
+                    if (foldingDevicePosture != DevicePosture.NormalPosture) {
+                        AtContentType.DUAL_PANE
+                    } else {
+                        AtContentType.SINGLE_PANE
+                    }
+                }
+
+                WindowWidthSizeClass.Expanded -> {
                     AtContentType.DUAL_PANE
-                } else {
+                }
+
+                else -> {
                     AtContentType.SINGLE_PANE
                 }
             }
 
-            WindowWidthSizeClass.Expanded -> {
-                AtContentType.DUAL_PANE
-            }
-
-            else -> {
-                AtContentType.SINGLE_PANE
-            }
-        }
-
     val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+        @Composable get() =
+            navController
+                .currentBackStackEntryAsState().value?.destination
 
     val isFullScreenCurrentDestination: Boolean
-        @Composable get() = when (currentDestination?.route) {
-            null -> true
-            welcomeRoute -> true
-            loginRoute -> true
-            else -> false
-        }
+        @Composable get() =
+            when (currentDestination?.route) {
+                null -> true
+                WELCOME_ROUTE -> true
+                LOGIN_ROUTE -> true
+                else -> false
+            }
 
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = when (currentDestination?.route) {
-            homeRoute -> TopLevelDestination.HOME
-            scheduleRoute -> TopLevelDestination.SCHEDULE
-            contactMeRoute -> TopLevelDestination.CONTACT_ME
-            else -> null
-        }
+        @Composable get() =
+            when (currentDestination?.route) {
+                HOME_ROUTE -> TopLevelDestination.HOME
+                SCHEDULE_ROUTE -> TopLevelDestination.SCHEDULE
+                CONTACT_ME_ROUTE -> TopLevelDestination.CONTACT_ME
+                else -> null
+            }
 
-    val isOffline = networkMonitor.isOnline
-        .map(Boolean::not)
-        .stateIn(
-            scope = coroutineScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false,
-        )
+    val isOffline =
+        networkMonitor.isOnline
+            .map(Boolean::not)
+            .stateIn(
+                scope = coroutineScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = false,
+            )
 
     val showFunctionalityNotAvailablePopup: MutableState<Boolean> = mutableStateOf(false)
 
@@ -190,32 +197,36 @@ class AtAppState(
      */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         trace("Navigation: ${topLevelDestination.name}") {
-            val topLevelNavOptions = navOptions {
-                // Pop up to the start destination of the graph to
-                // avoid building up a large stack of destinations
-                // on the back stack as users select items
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
+            val topLevelNavOptions =
+                navOptions {
+                    // Pop up to the start destination of the graph to
+                    // avoid building up a large stack of destinations
+                    // on the back stack as users select items
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    // Avoid multiple copies of the same destination when
+                    // reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when reselecting a previously selected item
+                    restoreState = true
                 }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
 
             when (topLevelDestination) {
-                TopLevelDestination.HOME -> navController.navigateToHome(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.HOME ->
+                    navController.navigateToHome(
+                        topLevelNavOptions,
+                    )
 
-                TopLevelDestination.SCHEDULE -> navController.navigateToSchedule(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.SCHEDULE ->
+                    navController.navigateToSchedule(
+                        topLevelNavOptions,
+                    )
 
-                TopLevelDestination.CONTACT_ME -> navController.navigateToContactMe(
-                    topLevelNavOptions,
-                )
+                TopLevelDestination.CONTACT_ME ->
+                    navController.navigateToContactMe(
+                        topLevelNavOptions,
+                    )
 
                 else -> showFunctionalityNotAvailablePopup.value = true
             }
@@ -229,10 +240,11 @@ class AtAppState(
 
     fun tokenInvalidNavigate() {
         Timber.d("tokenInvalidNavigate()")
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(navController.graph.startDestinationId, true) // This will pop all screens
-            .setLaunchSingleTop(true)
-            .build()
+        val navOptions =
+            NavOptions.Builder()
+                .setPopUpTo(navController.graph.startDestinationId, true) // This will pop all screens
+                .setLaunchSingleTop(true)
+                .build()
 
         navController.navigateToWelcome(navOptions)
     }

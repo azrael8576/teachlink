@@ -52,12 +52,14 @@ fun ContactCard(
     val contactCard = stringResource(R.string.contact_card)
 
     Card(
-        modifier = modifier
+        modifier =
+        modifier
             .semantics {
                 contentDescription = contactCard
             },
         shape = shapes.extraLarge,
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             contentColor = MaterialTheme.colorScheme.onSecondary,
             containerColor = MaterialTheme.colorScheme.secondary,
         ),
@@ -104,14 +106,16 @@ internal fun ContactAvatar(
     val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .size(CONTACT_HEAD_SHOT_SIZE.dp)
             .statusIndicator(status),
     ) {
         Image(
             painter = painter,
             contentDescription = profilePictureDescription,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .matchParentSize()
                 .clip(CircleShape),
         )
@@ -123,51 +127,52 @@ fun Modifier.statusIndicator(
     canvasSize: Dp = 16.dp,
     statusIndicatorOffset: Dp = 3.dp,
     offlineStatusIndicatorOffset: Dp = 6.dp,
-): Modifier = composed {
-    val canvasBackground = MaterialTheme.colorScheme.secondary
+): Modifier =
+    composed {
+        val canvasBackground = MaterialTheme.colorScheme.secondary
 
-    this.then(
-        drawWithContent {
-            drawContent()
+        this.then(
+            drawWithContent {
+                drawContent()
 
-            val circleColor = when (status) {
-                OnlineStatus.FREE -> FreeColor
-                OnlineStatus.BUSY -> BusyColor
-                OnlineStatus.OFFLINE -> OfflineColor
-            }
+                val circleColor =
+                    when (status) {
+                        OnlineStatus.FREE -> FreeColor
+                        OnlineStatus.BUSY -> BusyColor
+                        OnlineStatus.OFFLINE -> OfflineColor
+                    }
 
-            val radius = size.minDimension.coerceAtMost(canvasSize.toPx()) / 2
-            val center = Offset(size.width - radius, size.height - radius)
+                val radius = size.minDimension.coerceAtMost(canvasSize.toPx()) / 2
+                val center = Offset(size.width - radius, size.height - radius)
 
-            drawCircle(
-                color = canvasBackground,
-                radius = radius,
-                center = center,
-            )
-
-            drawCircle(
-                color = circleColor,
-                radius = radius - statusIndicatorOffset.toPx(),
-                center = center,
-            )
-
-            if (status == OnlineStatus.OFFLINE) {
                 drawCircle(
                     color = canvasBackground,
-                    radius = radius - offlineStatusIndicatorOffset.toPx(),
+                    radius = radius,
                     center = center,
                 )
-            }
-        },
-    )
-}
+
+                drawCircle(
+                    color = circleColor,
+                    radius = radius - statusIndicatorOffset.toPx(),
+                    center = center,
+                )
+
+                if (status == OnlineStatus.OFFLINE) {
+                    drawCircle(
+                        color = canvasBackground,
+                        radius = radius - offlineStatusIndicatorOffset.toPx(),
+                        center = center,
+                    )
+                }
+            },
+        )
+    }
 
 @Composable
-fun PlaceholderAvatar(
-    modifier: Modifier = Modifier,
-) {
+fun PlaceholderAvatar(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .background(MaterialTheme.colorScheme.secondary)
             .size(CONTACT_HEAD_SHOT_SIZE.dp),
     )

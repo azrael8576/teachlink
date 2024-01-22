@@ -4,7 +4,6 @@ import com.wei.amazingtalker.core.model.data.UserData
 import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {
-
     /**
      * Stream of [UserData]
      */

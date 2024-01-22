@@ -37,7 +37,6 @@ private const val TAG = "MainActivity"
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var snackbarManager: SnackbarManager
 
@@ -95,11 +94,13 @@ class MainActivity : ComponentActivity() {
             // than the configuration's dark theme value based on the user preference.
             DisposableEffect(darkTheme) {
                 enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.auto(
+                    statusBarStyle =
+                    SystemBarStyle.auto(
                         android.graphics.Color.TRANSPARENT,
                         android.graphics.Color.TRANSPARENT,
                     ) { darkTheme },
-                    navigationBarStyle = SystemBarStyle.auto(
+                    navigationBarStyle =
+                    SystemBarStyle.auto(
                         lightScrim,
                         darkScrim,
                     ) { darkTheme },
@@ -107,7 +108,7 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
-            CompositionLocalProvider() {
+            CompositionLocalProvider {
                 AtTheme(darkTheme = darkTheme) {
                     AtApp(
                         networkMonitor = networkMonitor,
@@ -131,16 +132,16 @@ class MainActivity : ComponentActivity() {
  * current system context.
  */
 @Composable
-private fun shouldUseDarkTheme(
-    uiState: MainActivityUiState,
-): Boolean = when (uiState) {
-    Loading -> isSystemInDarkTheme()
-    is Success -> when (uiState.userData.darkThemeConfig) {
-        DarkThemeConfig.FOLLOW_SYSTEM -> isSystemInDarkTheme()
-        DarkThemeConfig.LIGHT -> false
-        DarkThemeConfig.DARK -> true
+private fun shouldUseDarkTheme(uiState: MainActivityUiState): Boolean =
+    when (uiState) {
+        Loading -> isSystemInDarkTheme()
+        is Success ->
+            when (uiState.userData.darkThemeConfig) {
+                DarkThemeConfig.FOLLOW_SYSTEM -> isSystemInDarkTheme()
+                DarkThemeConfig.LIGHT -> false
+                DarkThemeConfig.DARK -> true
+            }
     }
-}
 
 /**
  * The default light scrim, as defined by androidx and the platform:

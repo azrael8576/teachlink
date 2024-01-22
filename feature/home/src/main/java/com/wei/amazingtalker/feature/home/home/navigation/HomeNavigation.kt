@@ -6,17 +6,17 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.wei.amazingtalker.feature.home.home.HomeRoute
 
-const val homeRoute = "home_route"
+const val HOME_ROUTE = "home_route"
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
-    this.navigate(homeRoute, navOptions)
+    this.navigate(HOME_ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
     tokenInvalidNavigate: () -> Unit,
 ) {
-    composable(route = homeRoute) {
+    composable(route = HOME_ROUTE) {
         HomeRoute(
             navController = navController,
             tokenInvalidNavigate = tokenInvalidNavigate,

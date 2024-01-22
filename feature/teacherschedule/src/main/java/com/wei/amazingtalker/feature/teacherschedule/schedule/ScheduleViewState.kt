@@ -13,7 +13,8 @@ import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
 enum class WeekAction {
-    PREVIOUS_WEEK, NEXT_WEEK
+    PREVIOUS_WEEK,
+    NEXT_WEEK,
 }
 
 sealed class ScheduleViewAction : Action {
@@ -23,8 +24,10 @@ sealed class ScheduleViewAction : Action {
     ) : ScheduleViewAction()
 
     data class UpdateWeek(val weekAction: WeekAction) : ScheduleViewAction()
+
     data class SelectedTab(val date: Pair<Int, OffsetDateTime>) : ScheduleViewAction()
-    object ListScrolled : ScheduleViewAction()
+
+    data object ListScrolled : ScheduleViewAction()
 }
 
 data class ScheduleViewState(
@@ -51,7 +54,10 @@ data class ScheduleViewState(
 }
 
 sealed interface TimeListUiState {
-    data class Success(val groupedTimeSlots: Map<DuringDayType, List<IntervalScheduleTimeSlot>>) : TimeListUiState
+    data class Success(val groupedTimeSlots: Map<DuringDayType, List<IntervalScheduleTimeSlot>>) :
+        TimeListUiState
+
     object LoadFailed : TimeListUiState
+
     object Loading : TimeListUiState
 }

@@ -6,11 +6,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
+class ScheduleDetailViewModel
+@Inject
+constructor() : BaseViewModel<
     ScheduleDetailViewAction,
     ScheduleDetailViewState,
     >(ScheduleDetailViewState()) {
-
     private fun initNavData(
         teacherName: String,
         intervalScheduleTimeSlot: IntervalScheduleTimeSlot,
@@ -28,10 +29,11 @@ class ScheduleDetailViewModel @Inject constructor() : BaseViewModel<
 
     override fun dispatch(action: ScheduleDetailViewAction) {
         when (action) {
-            is ScheduleDetailViewAction.InitNavData -> initNavData(
-                teacherName = action.teacherName,
-                intervalScheduleTimeSlot = action.intervalScheduleTimeSlot,
-            )
+            is ScheduleDetailViewAction.InitNavData ->
+                initNavData(
+                    teacherName = action.teacherName,
+                    intervalScheduleTimeSlot = action.intervalScheduleTimeSlot,
+                )
         }
     }
 }

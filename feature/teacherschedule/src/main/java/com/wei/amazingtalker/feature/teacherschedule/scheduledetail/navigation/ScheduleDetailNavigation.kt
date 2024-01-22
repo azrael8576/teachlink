@@ -8,9 +8,9 @@ import androidx.navigation.compose.composable
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.feature.teacherschedule.scheduledetail.ScheduleDetailRoute
 
-const val scheduleDetailRoute = "schedule_detail_route"
-const val teacherNameArg = "teacherName"
-const val timeSlotArg = "timeSlot"
+const val SCHEDULE_DETAIL_ROUTE = "schedule_detail_route"
+const val TEACHER_NAME_ARG = "teacherName"
+const val TIME_SLOT_ARG = "timeSlot"
 
 fun NavController.navigateToScheduleDetail(
     navOptions: NavOptions? = null,
@@ -18,25 +18,25 @@ fun NavController.navigateToScheduleDetail(
     timeSlot: IntervalScheduleTimeSlot,
 ) {
     this.currentBackStackEntry?.savedStateHandle?.set(
-        key = teacherNameArg,
+        key = TEACHER_NAME_ARG,
         value = teacherName,
     )
     this.currentBackStackEntry?.savedStateHandle?.set(
-        key = timeSlotArg,
+        key = TIME_SLOT_ARG,
         value = timeSlot,
     )
-    this.navigate(scheduleDetailRoute, navOptions)
+    this.navigate(SCHEDULE_DETAIL_ROUTE, navOptions)
 }
 
 fun NavGraphBuilder.scheduleDetailScreen(navController: NavHostController) {
-    composable(route = scheduleDetailRoute) {
+    composable(route = SCHEDULE_DETAIL_ROUTE) {
         val teacherName =
             navController.previousBackStackEntry?.savedStateHandle?.get<String>(
-                teacherNameArg,
+                TEACHER_NAME_ARG,
             ) ?: ""
         val timeSlot =
             navController.previousBackStackEntry?.savedStateHandle?.get<IntervalScheduleTimeSlot>(
-                timeSlotArg,
+                TIME_SLOT_ARG,
             )
 
         if (teacherName.isNotBlank() && timeSlot != null) {
