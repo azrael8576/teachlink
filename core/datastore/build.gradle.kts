@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.at.android.library)
     alias(libs.plugins.at.android.hilt)
-    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -18,33 +17,8 @@ android {
     }
 }
 
-// Setup protobuf configuration, generating lite Java and Kotlin classes
-protobuf {
-    protoc {
-        artifact = libs.protobuf.protoc.get().toString()
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                register("java") {
-                    option("lite")
-                }
-                register("kotlin") {
-                    option("lite")
-                }
-            }
-        }
-    }
-}
-
-androidComponents.beforeVariants {
-    android.sourceSets.register(it.name) {
-        java.srcDir(buildDir.resolve("generated/source/proto/${it.name}/java"))
-        kotlin.srcDir(buildDir.resolve("generated/source/proto/${it.name}/kotlin"))
-    }
-}
-
 dependencies {
+    api(project(":core:datastore-proto"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
 

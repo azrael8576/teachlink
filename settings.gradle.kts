@@ -25,6 +25,7 @@ include(":core:domain")
 include(":core:designsystem")
 include(":core:testing")
 include(":core:datastore")
+include(":core:datastore-proto")
 include(":core:datastore-test")
 include(":core:data-test")
 
