@@ -26,9 +26,11 @@ include(":core:designsystem")
 include(":core:testing")
 include(":core:datastore")
 include(":core:datastore-test")
+include(":core:data-test")
+
+include(":ui-test-hilt-manifest")
 
 include(":feature:login")
 include(":feature:teacherschedule")
 include(":feature:contactme")
-include(":ui-test-hilt-manifest")
 include(":feature:home")
