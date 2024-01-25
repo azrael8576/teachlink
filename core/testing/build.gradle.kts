@@ -13,7 +13,6 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.domain)
-    implementation(projects.core.network)
     implementation(projects.core.designsystem)
 
     api(libs.junit4)
