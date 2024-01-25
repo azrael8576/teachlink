@@ -13,8 +13,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.model)
-
     // LifeCycle
     implementation(libs.androidx.lifecycle.runtimeCompose)
 
