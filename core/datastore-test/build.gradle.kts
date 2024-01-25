@@ -9,10 +9,10 @@ android {
 }
 
 dependencies {
-    api(project(":core:datastore"))
-    implementation(project(":core:testing"))
-    implementation(project(":core:common"))
-    implementation(project(":core:model"))
+    api(projects.core.datastore)
+    implementation(projects.core.testing)
+    implementation(projects.core.common)
+    implementation(projects.core.model)
 
     // DataStore
     implementation(libs.androidx.datastore)
