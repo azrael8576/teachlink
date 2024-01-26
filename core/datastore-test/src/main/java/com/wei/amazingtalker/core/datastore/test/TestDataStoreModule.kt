@@ -19,7 +19,7 @@ import javax.inject.Singleton
     components = [SingletonComponent::class],
     replaces = [DataStoreModule::class],
 )
-object TestDataStoreModule {
+internal object TestDataStoreModule {
     @Provides
     @Singleton
     fun providesUserPreferencesDataStore(
