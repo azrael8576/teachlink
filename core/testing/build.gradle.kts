@@ -9,12 +9,8 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.common)
-    implementation(projects.core.data)
-    implementation(projects.core.model)
-    implementation(projects.core.domain)
-    implementation(projects.core.network)
-    implementation(projects.core.designsystem)
+    api(projects.core.data)
+    api(projects.core.model)
 
     api(libs.junit4)
     api(libs.androidx.activity.compose)
@@ -37,4 +33,7 @@ dependencies {
     api(libs.roborazzi)
 
     debugApi(libs.androidx.compose.ui.testManifest)
+
+    implementation(projects.core.common)
+    implementation(projects.core.designsystem)
 }

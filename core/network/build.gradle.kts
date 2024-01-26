@@ -24,6 +24,9 @@ secrets {
 }
 
 dependencies {
+    api(projects.core.common)
+    api(projects.core.model)
+
     // Okhttp Interceptor
     implementation(libs.okhttp.logging)
 

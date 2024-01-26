@@ -1,9 +1,9 @@
 package com.wei.amazingtalker.core.domain
 
-import com.wei.amazingtalker.core.extensions.getDuringDayType
 import com.wei.amazingtalker.core.model.data.IntervalScheduleTimeSlot
 import com.wei.amazingtalker.core.model.data.ScheduleState
 import com.wei.amazingtalker.core.model.data.TimeSlots
+import com.wei.amazingtalker.core.model.data.getDuringDayType
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
