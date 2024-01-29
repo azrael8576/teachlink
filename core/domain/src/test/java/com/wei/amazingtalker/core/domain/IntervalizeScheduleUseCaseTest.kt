@@ -87,35 +87,35 @@ class IntervalizeScheduleUseCaseTest(
 private val testSchedules =
     TeacherSchedule(
         available =
-            listOf(
-                TimeSlots(
-                    startUtc = "2023-07-31T04:30:00Z",
-                    endUtc = "2023-07-31T09:30:00Z",
-                ),
-                TimeSlots(
-                    startUtc = "2023-07-31T12:30:00Z",
-                    endUtc = "2023-07-31T18:30:00Z",
-                ),
-                TimeSlots(
-                    startUtc = "2023-07-31T19:30:00Z",
-                    endUtc = "2023-07-31T20:30:00Z",
-                ),
-                // More Data...
+        listOf(
+            TimeSlots(
+                startUtc = "2023-07-31T04:30:00Z",
+                endUtc = "2023-07-31T09:30:00Z",
             ),
+            TimeSlots(
+                startUtc = "2023-07-31T12:30:00Z",
+                endUtc = "2023-07-31T18:30:00Z",
+            ),
+            TimeSlots(
+                startUtc = "2023-07-31T19:30:00Z",
+                endUtc = "2023-07-31T20:30:00Z",
+            ),
+            // More Data...
+        ),
         booked =
-            listOf(
-                TimeSlots(
-                    startUtc = "2023-07-31T09:30:00Z",
-                    endUtc = "2023-07-31T10:30:00Z",
-                ),
-                TimeSlots(
-                    startUtc = "2023-07-31T11:30:00Z",
-                    endUtc = "2023-07-31T12:30:00Z",
-                ),
-                TimeSlots(
-                    startUtc = "2023-07-31T18:30:00Z",
-                    endUtc = "2023-07-31T19:30:00Z",
-                ),
-                // More Data...
+        listOf(
+            TimeSlots(
+                startUtc = "2023-07-31T09:30:00Z",
+                endUtc = "2023-07-31T10:30:00Z",
             ),
+            TimeSlots(
+                startUtc = "2023-07-31T11:30:00Z",
+                endUtc = "2023-07-31T12:30:00Z",
+            ),
+            TimeSlots(
+                startUtc = "2023-07-31T18:30:00Z",
+                endUtc = "2023-07-31T19:30:00Z",
+            ),
+            // More Data...
+        ),
     )
