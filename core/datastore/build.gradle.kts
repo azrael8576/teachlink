@@ -22,10 +22,8 @@ dependencies {
     api(projects.core.model)
 
     implementation(projects.core.common)
-
     // DataStore
     implementation(libs.androidx.datastore)
-
     // Protobuf
     implementation(libs.protobuf.kotlin.lite)
 }
