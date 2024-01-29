@@ -27,7 +27,7 @@ class IntervalizeScheduleUseCaseTest(
         @JvmStatic
         @Parameterized.Parameters(name = "{0}")
         fun data(): Collection<Array<TimeInterval>> {
-            return TimeInterval.values().map { arrayOf(it) }
+            return TimeInterval.entries.map { arrayOf(it) }
         }
     }
 
