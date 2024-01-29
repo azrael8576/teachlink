@@ -9,31 +9,25 @@ android {
 }
 
 dependencies {
+    api(kotlin("test"))
+    api(libs.androidx.compose.ui.test)
+    // Google truth
+    api(libs.google.truth)
+    // For screenshot tests
+    api(libs.roborazzi)
     api(projects.core.data)
     api(projects.core.model)
 
-    api(libs.junit4)
-    api(libs.androidx.activity.compose)
-    api(libs.androidx.compose.ui.test)
-    api(libs.androidx.test.espresso.core)
-    api(libs.androidx.test.core)
-    api(libs.androidx.test.runner)
-    // testharness
-    api(libs.accompanist.testharness)
-    // Coroutines test
-    api(libs.kotlinx.coroutines.test)
-    api(libs.hilt.android.testing)
-    // Google truth
-    api(libs.google.truth)
-    // For flow test
-    api(libs.turbine)
-    // Android Unit Testing Framework
-    api(libs.robolectric.shadows)
-    // For screenshot tests
-    api(libs.roborazzi)
-
     debugApi(libs.androidx.compose.ui.testManifest)
 
+    // testharness
+    implementation(libs.accompanist.testharness)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.hilt.android.testing)
+    // Coroutines test
+    implementation(libs.kotlinx.coroutines.test)
+    // Android Unit Testing Framework
+    implementation(libs.robolectric.shadows)
     implementation(projects.core.common)
     implementation(projects.core.designsystem)
 }

@@ -9,14 +9,11 @@ android {
 }
 
 dependencies {
-    api(projects.core.datastore)
-    implementation(projects.core.testing)
     implementation(projects.core.common)
-    implementation(projects.core.model)
-
+    implementation(projects.core.datastore)
+    implementation(libs.hilt.android.testing)
     // DataStore
     implementation(libs.androidx.datastore)
-
     // Protobuf
     implementation(libs.protobuf.kotlin.lite)
 }
