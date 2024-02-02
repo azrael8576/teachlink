@@ -84,7 +84,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 ## Build
 該應用程序包含常用 `debug` 和 `release` build variants。
 
-此外，該應用程序也使用了[Product Flavors](https://developer.android.com/studio/build/build-variants#product-flavors)來控制應用內容的載入來源。
+此外，該應用程序也使用了 [_Product Flavors_](https://developer.android.com/studio/build/build-variants#product-flavors) 來控制應用內容的載入來源。
 
 - `demo` flavor 透過使用靜態本地數據，允許開發者立即建立應用並探索其使用者介面。
 - `prod` flavor 則透過向後端伺服器發起真實網路請求，提供最新的內容。 目前，尚未公開後端服務。
