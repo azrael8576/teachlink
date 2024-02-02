@@ -1,9 +1,12 @@
 package com.wei.amazingtalker.core.network.di
 
+import android.content.Context
 import com.wei.amazingtalker.core.network.BuildConfig
+import com.wei.amazingtalker.core.network.fake.FakeAssetManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -20,6 +23,12 @@ internal object NetworkModule {
         Json {
             ignoreUnknownKeys = true
         }
+
+    @Provides
+    @Singleton
+    fun providesFakeAssetManager(
+        @ApplicationContext context: Context,
+    ): FakeAssetManager = FakeAssetManager(context.assets::open)
 
     @Provides
     @Singleton
