@@ -82,9 +82,12 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 > **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/amazing-talker/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
 
 ## Build
-該應用程序包含常用 `demoDebug` 和 `demoRelease` build variants。(`prod` variants 保留未來供生產環境所使用).
+該應用程序包含常用 `debug` 和 `release` build variants。
 
-目前所有版本連線**均為測試環境**。
+此外，該應用程序也使用了[Product Flavors](https://developer.android.com/studio/build/build-variants#product-flavors)來控制應用內容的載入來源。
+
+- `demo` flavor 透過使用靜態本地數據，允許開發者立即建立應用並探索其使用者介面。
+- `prod` flavor 則透過向後端伺服器發起真實網路請求，提供最新的內容。 目前，尚未公開後端服務。
 
 對於正常開發，請使用該 `demoDebug` variant。對於 UI 性能測試，請使用該 `demoRelease` variant。
 
