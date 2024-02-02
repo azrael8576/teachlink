@@ -1,11 +1,11 @@
 plugins {
-    alias(libs.plugins.at.android.library)
-    alias(libs.plugins.at.android.hilt)
+    alias(libs.plugins.tl.android.library)
+    alias(libs.plugins.tl.android.hilt)
     alias(libs.plugins.protobuf)
 }
 
 android {
-    namespace = "com.wei.amazingtalker.core.datastore.test"
+    namespace = "com.wei.teachlink.core.datastore.test"
 }
 
 dependencies {

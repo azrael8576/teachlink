@@ -1,5 +1,5 @@
 import androidx.annotation.VisibleForTesting
-import com.wei.amazingtalker.core.network.fake.FakeAssetManager
+import com.wei.teachlink.core.network.fake.FakeAssetManager
 import java.io.File
 import java.io.InputStream
 import java.util.Properties

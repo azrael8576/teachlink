@@ -1,31 +1,31 @@
-# Amazing Talker
-[![Android CI](https://github.com/azrael8576/amazing-talker/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/amazing-talker/actions/workflows/Build.yml)
-[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/amazing-talker)](https://github.com/azrael8576/amazing-talker/releases)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE)
+# Teach Link
+[![Android CI](https://github.com/azrael8576/teach-link/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/azrael8576/teach-link/actions/workflows/Build.yml)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/azrael8576/teach-link)](https://github.com/azrael8576/teach-link/releases)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/teach-link/blob/main/LICENSE)
 
 ![Logo](docs/images/logo.png)
 
-"Amazing Talker" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
+"Teach Link" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
 UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
 
 這款 APP 的目標是展示如何遵循 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development?hl=en) 最佳實踐，同時提供完整的架構遷移指南和實用參考資訊給開發者。
 
 > [!NOTE]
-> 查看 [Amazing Talker：MAD 遷移之旅](https://github.com/azrael8576/amazing-talker/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
+> 查看 [Teach Link：MAD 遷移之旅](https://github.com/azrael8576/teach-link/blob/main/docs/MADMigrationJourney.md) ，了解本專案遷移路徑。
 
 ## Screenshots
 
 ### Phone
-<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_phone.png" alt="Phone">
-<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_phone_home.png" alt="Phone-Home">
+<img src="https://github.com/azrael8576/teach-link/blob/main/docs/demo/screenshots_phone.png" alt="Phone">
+<img src="https://github.com/azrael8576/teach-link/blob/main/docs/demo/screenshots_phone_home.png" alt="Phone-Home">
 
 ### Tablet
-<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_tablet_dark.png" alt="Tablet-Dark">
-<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/screenshots_tablet_home.png" alt="Tablet-Home">
+<img src="https://github.com/azrael8576/teach-link/blob/main/docs/demo/screenshots_tablet_dark.png" alt="Tablet-Dark">
+<img src="https://github.com/azrael8576/teach-link/blob/main/docs/demo/screenshots_tablet_home.png" alt="Tablet-Home">
 
 ### Fold
-<img src="https://github.com/azrael8576/amazing-talker/blob/main/docs/demo/display_fold_table.png" alt="Fold">
+<img src="https://github.com/azrael8576/teach-link/blob/main/docs/demo/display_fold_table.png" alt="Fold">
 
 ## Tech stack
 #### Architecture
@@ -79,7 +79,7 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 - `StateFlowStateExtensions.kt`：封裝 UI StateFlow 流，提供更方便的操作方式。
 - `DataSourceResult.kt`：封裝數據源結果的密封類別，封裝可能是成功 (`Success`)、錯誤 (`Error`) 或正在加載 (`Loading`) 的狀態。
 - `designsystem/ui/management/states/topappbar/*`：封裝以 Jetpack Compose 實現 Collapsing Toolbar 相關類，並提供`EnterAlwaysCollapsedState`、`EnterAlwaysState`、`ExitUntilCollapsedState` 或 `ScrollState` 的滾動行為 flags。
-> **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/amazing-talker/blob/main/feature/teacherschedule/src/main/java/com/wei/amazingtalker/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
+> **Note:** 在 [`ScheduleScreen`](https://github.com/azrael8576/teach-link/blob/main/feature/teacherschedule/src/main/java/com/wei/teachlink/feature/teacherschedule/schedule/ScheduleScreen.kt) 可以看到其搭配 Snap 動畫之使用範例。
 
 ## Build
 該應用程序包含常用 `debug` 和 `release` build variants。
@@ -122,13 +122,13 @@ UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack
 
 ## Modularization
 
-## Types of modules in Amazing Talker
-![image](https://github.com/azrael8576/amazing-talker/blob/main/docs/images/modularization-graph.drawio.png)
+## Types of modules in Teach Link
+![image](https://github.com/azrael8576/teach-link/blob/main/docs/images/modularization-graph.drawio.png)
 **Top tip**：模組圖（如上所示）在模組化規劃期間有助於視覺化展示模組間的依賴性。
 
-Amazing Talker 主要包含以下幾種模組:
+Teach Link 主要包含以下幾種模組:
 
-- `app` 模組 - 此模組包含 app 級別的核心組件和 scaffolding 類，例如 `MainActivity`、`AtApp` 以及 app 級別控制的導航。`app` 模組將會依賴所有的 `feature` 模組和必要的 `core` 模組。
+- `app` 模組 - 此模組包含 app 級別的核心組件和 scaffolding 類，例如 `MainActivity`、`TlApp` 以及 app 級別控制的導航。`app` 模組將會依賴所有的 `feature` 模組和必要的 `core` 模組。
 
 - `feature:` 模組 - 這些模組各自專注於某個特定功能或用戶的互動流程。每個模組都只聚焦於一個特定的功能職責。如果某個類別只被一個 `feature` 模組所需要，那麼它應只存在於該模組中；若非如此，則應該將其移至適當的 `core` 模組。每個 `feature` 模組應避免依賴其他 `feature` 模組，並只應依賴其所需的 `core` 模組。
 
@@ -138,20 +138,20 @@ Amazing Talker 主要包含以下幾種模組:
 
 ## Modules
 
-採用上述模組化策略，Amazing Talker 應用程序具有以下模組：
+採用上述模組化策略，Teach Link 應用程序具有以下模組：
 
-| Name | Responsibilities | Key classes and good examples |
-|:----:|:----:|:-----------------:|
-| `app` | 將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. UI scaffolding、navigation...等 | `AtApplication,`<br>`AtNavHost`<br>`TopLevelDestination`<br>`AtApp`<br>`AtAppState` |
-| `feature:1`,<br>`feature:2`<br>... | 負責實現某個特定功能或用戶的互動流程的部分。這通常包含 UI 組件、UseCase 和 ViewModel，並從其他模組讀取資料。例如：<br>• [`feature:teacherschedule`](https://github.com/azrael8576/amazing-talker/tree/main/feature/teacherschedule) 專注於展示教師預約時段的行事曆資訊。<br>• [`feature:login`](https://github.com/azrael8576/amazing-talker/tree/main/feature/login) 提供歡迎畫面和登入畫面。當 Token 失效時，會跨模組導航，導向此模組。 | `ScheduleScreen,`<br>`ScheduleListPreviewParameterProvider,`<br>`domain/GetTeacherScheduleUseCase`<br>... |
-| `core:data` | 負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|
-| `core:common` | 包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 | `network/AtDispatchers,`<br>`result/DataSourceResult,`<br>`authentication/TokenManager,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`utils/UiText`<br>... |
-| `core:domain` | 包含被多個模組共享的 UseCase。 | `IntervalizeScheduleUseCase` |
-| `core:model` | 提供整個應用程式所使用的模型類別。 | `IntervalScheduleTimeSlot,`<br>`ScheduleTimeSlot` |
-| `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitAtNetworkApi` |
-| `core:designsystem` | UI 依賴項。<br>eg. app theme、Core UI 元件樣式...等 | `AtTheme,`<br>`AtAppSnackbar`<br>`management/states/topappbar/*`<br>... |
-| `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`AtTestRunner,`<br>... |
-| `core:datastore` | 儲存持久性數據 | `AtPreferencesDataSource,`<br>`UserPreferencesSerializer,`<br>... |
+| Name | Responsibilities | Key classes and good examples |  
+|:----:|:----:|:-----------------:|  
+| `app` | 將所有必要元素整合在一起，確保應用程式的正確運作。<br>eg. UI scaffolding、navigation...等 | `TlApplication,`<br>`TlNavHost`<br>`TopLevelDestination`<br>`TlApp`<br>`TlAppState` |  
+| `feature:1`,<br>`feature:2`<br>... | 負責實現某個特定功能或用戶的互動流程的部分。這通常包含 UI 組件、UseCase 和 ViewModel，並從其他模組讀取資料。例如：<br>• [`feature:teacherschedule`](https://github.com/azrael8576/teach-link/tree/main/feature/teacherschedule) 專注於展示教師預約時段的行事曆資訊。<br>• [`feature:login`](https://github.com/azrael8576/teach-link/tree/main/feature/login) 提供歡迎畫面和登入畫面。當 Token 失效時，會跨模組導航，導向此模組。 | `ScheduleScreen,`<br>`ScheduleListPreviewParameterProvider,`<br>`domain/GetTeacherScheduleUseCase`<br>... |  
+| `core:data` | 負責從多個來源獲取應用程式的資料，並供其他功能模組共享。 | `TeacherScheduleRepository,` <br>`utils/ConnectivityManagerNetworkMonitor`|  
+| `core:common` | 包含被多個模組共享的通用類別。<br>eg. 工具類、擴展方法...等 | `network/TlDispatchers,`<br>`result/DataSourceResult,`<br>`authentication/TokenManager,`<br>`manager/SnackbarManager,`<br>`extensions/StateFlowStateExtensions,`<br>`utils/UiText`<br>... |  
+| `core:domain` | 包含被多個模組共享的 UseCase。 | `IntervalizeScheduleUseCase` |  
+| `core:model` | 提供整個應用程式所使用的模型類別。 | `IntervalScheduleTimeSlot,`<br>`ScheduleTimeSlot` |  
+| `core:network` | 負責發送網絡請求，並處理來自遠程數據源的回應。 | `RetrofitTlNetworkApi` |  
+| `core:designsystem` | UI 依賴項。<br>eg. app theme、Core UI 元件樣式...等 | `TlTheme,`<br>`TlAppSnackbar`<br>`management/states/topappbar/*`<br>... |  
+| `core:testing` | 測試依賴項、repositories 和 util 類。 | `MainDispatcherRule,`<br>`TlTestRunner,`<br>... |  
+| `core:datastore` | 儲存持久性數據 | `TlPreferencesDataSource,`<br>`UserPreferencesSerializer,`<br>... |
 
 
 ## Testing
@@ -160,10 +160,10 @@ Amazing Talker 主要包含以下幾種模組:
 
 ### 1. Test double
 
-在 **Amazing Talker** 專案中，我們使用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android?hl=en) 來進行依賴注入。而在資料層，我們將元件定義成接口形式，並依照具體需求進行實現綁定。
+在 **Teach Link** 專案中，我們使用了 [_Hilt_](https://developer.android.com/training/dependency-injection/hilt-android?hl=en) 來進行依賴注入。而在資料層，我們將元件定義成接口形式，並依照具體需求進行實現綁定。
 
 #### 策略亮點：
-- **Amazing Talker** 並**未使用**任何 mocking libraries，而選擇使用 Hilt 的測試 API，方便我們將正式版本輕鬆替換成測試版本。
+- **Teach Link** 並**未使用**任何 mocking libraries，而選擇使用 Hilt 的測試 API，方便我們將正式版本輕鬆替換成測試版本。
 - 測試版本與正式版本保持相同的接口，但是測試版本的實現更為簡單且真實，且有特定的測試掛鉤。
 - 這種設計策略不僅降低了測試的脆弱性，還有效提高了代碼覆蓋率。
 
@@ -172,7 +172,7 @@ Amazing Talker 主要包含以下幾種模組:
 
 ### 2. Robot Testing Pattern
 
-對於 UI Testing，**Amazing Talker** 採用了 [_Robot Testing Pattern_](https://jakewharton.com/testing-robots/?source=post_page-----fc820ce250f7--------------------------------)，其核心目的是建立一個抽象層，以聲明性的方式進行 UI 交互。
+對於 UI Testing，**Teach Link** 採用了 [_Robot Testing Pattern_](https://jakewharton.com/testing-robots/?source=post_page-----fc820ce250f7--------------------------------)，其核心目的是建立一個抽象層，以聲明性的方式進行 UI 交互。
 
 #### 策略特點：
 1. **易於理解**：測試內容直觀，使用者可以快速理解而不必深入了解其背後的實現。
@@ -180,18 +180,18 @@ Amazing Talker 主要包含以下幾種模組:
 3. **隔離實現細節**：透過策略分層，確保了代碼遵循單一責任原則，這不僅提高了代碼的維護性，還使得測試和優化過程更為簡便。
 
 ### 3. Screenshot tests
-**Amazing Talker** 使用 [_Roborazzi_](https://github.com/takahirom/roborazzi) 進行特定畫面和組件的截圖測試。要運行這些測試，請執行 `verifyRoborazziDemoDebug` 或 `recordRoborazziDemoDebug` 任務。
+**Teach Link** 使用 [_Roborazzi_](https://github.com/takahirom/roborazzi) 進行特定畫面和組件的截圖測試。要運行這些測試，請執行 `verifyRoborazziDemoDebug` 或 `recordRoborazziDemoDebug` 任務。
 
 > [!IMPORTANT]
 > 截圖是在 CI 上使用 Linux 記錄的，其他平台可能產生略有不同的圖像，使得測試失敗。
 
 ## Requirement Specification Document
-See the original assignment specification at [_Amazing Talker: Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293).
+See the original assignment specification at [_Teach Link: Android Assignment Option B_](https://powerful-cobweb-577.notion.site/Android-Assignment-Option-B-8271343ed7d64dcf9b7ea795aaf59293).
 
 ## License
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/azrael8576/teach-link/blob/main/LICENSE)
 
-**Amazing Talker** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/amazing-talker/blob/main/LICENSE) for more information.
+**Teach Link** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/azrael8576/teach-link/blob/main/LICENSE) for more information.
 
 ## Acknowledgments
 

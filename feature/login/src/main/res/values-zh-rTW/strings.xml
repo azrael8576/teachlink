@@ -2,8 +2,8 @@
 <resources>
 
     <!-- 歡迎頁面 -->
-    <string name="welcome_title">像好友一樣的
-        \n優質教師</string>
+    <string name="welcome_title">連接學習
+        \n啟迪未來</string>
     <string name="welcome_message">連接全球的線上家教進行1對1課程。
         \n隨時隨地學習，
         \n並根據您的需求定制課程！</string>

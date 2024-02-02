@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Amazing Talker</string>
+    <string name="app_name">TeachLink</string>
     <string name="not_connected">⚠️ You aren’t connected to the internet</string>
     <string name="schedule">Schedule</string>
     <string name="home">Home</string>
     <string name="contact_me">Contact Me</string>
 
     <!-- Test tag -->
-    <string name="tag_at_bottom_bar" translatable="false">AtBottomBar</string>
-    <string name="tag_at_nav_rail" translatable="false">AtNavRail</string>
-    <string name="tag_at_nav_drawer" translatable="false">AtNavDrawer</string>
+    <string name="tag_tl_bottom_bar" translatable="false">TlBottomBar</string>
+    <string name="tag_tl_nav_rail" translatable="false">TlNavRail</string>
+    <string name="tag_tl_nav_drawer" translatable="false">TlNavDrawer</string>
 
 </resources>

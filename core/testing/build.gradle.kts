@@ -1,11 +1,11 @@
 plugins {
-    alias(libs.plugins.at.android.library)
-    alias(libs.plugins.at.android.library.compose)
-    alias(libs.plugins.at.android.hilt)
+    alias(libs.plugins.tl.android.library)
+    alias(libs.plugins.tl.android.library.compose)
+    alias(libs.plugins.tl.android.hilt)
 }
 
 android {
-    namespace = "com.wei.amazingtalker.core.testing"
+    namespace = "com.wei.teachlink.core.testing"
 }
 
 dependencies {

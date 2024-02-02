@@ -1,6 +1,6 @@
 import com.android.build.gradle.LibraryExtension
-import com.wei.amazingtalker.configureGradleManagedDevices
-import com.wei.amazingtalker.libs
+import com.wei.teachlink.configureGradleManagedDevices
+import com.wei.teachlink.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -10,14 +10,14 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
-                apply("at.android.library")
-                apply("at.android.hilt")
+                apply("tl.android.library")
+                apply("tl.android.hilt")
                 apply("androidx.navigation.safeargs.kotlin")
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
                     testInstrumentationRunner =
-                        "com.wei.amazingtalker.core.testing.AtTestRunner"
+                        "com.wei.teachlink.core.testing.TlTestRunner"
                 }
                 configureGradleManagedDevices(this)
             }

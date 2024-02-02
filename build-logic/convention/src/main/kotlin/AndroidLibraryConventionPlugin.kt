@@ -1,11 +1,11 @@
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
-import com.wei.amazingtalker.configureFlavors
-import com.wei.amazingtalker.configureGradleManagedDevices
-import com.wei.amazingtalker.configureKotlinAndroid
-import com.wei.amazingtalker.configurePrintApksTask
-import com.wei.amazingtalker.disableUnnecessaryAndroidTests
-import com.wei.amazingtalker.libs
+import com.wei.teachlink.configureFlavors
+import com.wei.teachlink.configureGradleManagedDevices
+import com.wei.teachlink.configureKotlinAndroid
+import com.wei.teachlink.configurePrintApksTask
+import com.wei.teachlink.disableUnnecessaryAndroidTests
+import com.wei.teachlink.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
