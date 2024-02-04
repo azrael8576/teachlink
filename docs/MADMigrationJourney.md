@@ -1,6 +1,6 @@
-# **Amazing Talker：MAD 遷移之旅**
+# **TeachLink：MAD 遷移之旅**
 
-在這段遷移之旅中，您將會深入了解 Amazing Talker 的遷移策略。
+在這段遷移之旅中，您將會深入了解 TeachLink 的遷移策略。
 本文旨在指引您理解如何一步一步地將現有的專案重構，符合 [_Modern Android Development (現代 Android 開發方法)_](https://developer.android.com/modern-android-development?hl=en) 的最新架構。
 
 ### 已完成的遷移項目：

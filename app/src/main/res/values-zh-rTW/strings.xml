@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Amazing Talker</string>
+    <string name="app_name">TeachLink</string>
     <string name="not_connected">⚠️ 您沒有網路連線</string>
     <string name="schedule">行事曆</string>
     <string name="home">首頁</string>
