@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.at.android.library)
-    alias(libs.plugins.at.android.library.compose)
-    alias(libs.plugins.at.android.hilt)
+    alias(libs.plugins.tl.android.library)
+    alias(libs.plugins.tl.android.library.compose)
+    alias(libs.plugins.tl.android.hilt)
     alias(libs.plugins.roborazzi)
 }
 
 android {
-    namespace = "com.wei.amazingtalker.core.designsystem"
+    namespace = "com.wei.teachlink.core.designsystem"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

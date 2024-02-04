@@ -29,10 +29,10 @@ setup.
 
 Current list of convention plugins:
 
-- [`at.android.application`](convention/src/main/kotlin/AndroidApplicationConventionPlugin.kt),
-  [`at.android.library`](convention/src/main/kotlin/AndroidLibraryConventionPlugin.kt),
-  [`at.android.test`](convention/src/main/kotlin/AndroidTestConventionPlugin.kt):
+- [`tl.android.application`](convention/src/main/kotlin/AndroidApplicationConventionPlugin.kt),
+  [`tl.android.library`](convention/src/main/kotlin/AndroidLibraryConventionPlugin.kt),
+  [`tl.android.test`](convention/src/main/kotlin/AndroidTestConventionPlugin.kt):
   Configures common Android and Kotlin options.
-- [`at.android.application.compose`](convention/src/main/kotlin/AndroidApplicationComposeConventionPlugin.kt),
-  [`at.android.library.compose`](convention/src/main/kotlin/AndroidLibraryComposeConventionPlugin.kt):
+- [`tl.android.application.compose`](convention/src/main/kotlin/AndroidApplicationComposeConventionPlugin.kt),
+  [`tl.android.library.compose`](convention/src/main/kotlin/AndroidLibraryComposeConventionPlugin.kt):
   Configures Jetpack Compose options

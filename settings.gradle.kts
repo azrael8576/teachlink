@@ -14,7 +14,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "amazingtalker"
+//teachlink
+rootProject.name = "teachlink"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")

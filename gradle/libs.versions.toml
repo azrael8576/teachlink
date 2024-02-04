@@ -188,12 +188,12 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 
 
 # Plugins defined by this project
-at-android-application = { id = "at.android.application", version = "unspecified" }
-at-android-application-compose = { id = "at.android.application.compose", version = "unspecified" }
-at-android-application-flavors = { id = "at.android.application.flavors", version = "unspecified" }
-at-android-feature = { id = "at.android.feature", version = "unspecified" }
-at-android-hilt = { id = "at.android.hilt", version = "unspecified" }
-at-android-library = { id = "at.android.library", version = "unspecified" }
-at-android-library-compose = { id = "at.android.library.compose", version = "unspecified" }
-at-android-test = { id = "at.android.test", version = "unspecified" }
-at-jvm-library = { id = "at.jvm.library", version = "unspecified" }
+tl-android-application = { id = "tl.android.application", version = "unspecified" }
+tl-android-application-compose = { id = "tl.android.application.compose", version = "unspecified" }
+tl-android-application-flavors = { id = "tl.android.application.flavors", version = "unspecified" }
+tl-android-feature = { id = "tl.android.feature", version = "unspecified" }
+tl-android-hilt = { id = "tl.android.hilt", version = "unspecified" }
+tl-android-library = { id = "tl.android.library", version = "unspecified" }
+tl-android-library-compose = { id = "tl.android.library.compose", version = "unspecified" }
+tl-android-test = { id = "tl.android.test", version = "unspecified" }
+tl-jvm-library = { id = "tl.jvm.library", version = "unspecified" }

@@ -1,10 +1,10 @@
 plugins {
-    alias(libs.plugins.at.android.library)
+    alias(libs.plugins.tl.android.library)
     alias(libs.plugins.protobuf)
 }
 
 android {
-    namespace = "com.wei.amazingtalker.core.datastore.proto"
+    namespace = "com.wei.teachlink.core.datastore.proto"
 }
 
 // Setup protobuf configuration, generating lite Java and Kotlin classes
