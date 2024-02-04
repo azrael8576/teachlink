@@ -1,4 +1,4 @@
-import com.wei.amazingtalker.configureKotlinJvm
+import com.wei.teachlink.configureKotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

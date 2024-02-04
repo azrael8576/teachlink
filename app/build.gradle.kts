@@ -1,18 +1,18 @@
-import com.wei.amazingtalker.AtBuildType
+import com.wei.teachlink.TlBuildType
 
 plugins {
-    alias(libs.plugins.at.android.application)
-    alias(libs.plugins.at.android.application.compose)
-    alias(libs.plugins.at.android.application.flavors)
-    alias(libs.plugins.at.android.hilt)
+    alias(libs.plugins.tl.android.application)
+    alias(libs.plugins.tl.android.application.compose)
+    alias(libs.plugins.tl.android.application.flavors)
+    alias(libs.plugins.tl.android.hilt)
     alias(libs.plugins.roborazzi)
 }
 
 android {
-    namespace = "com.wei.amazingtalker"
+    namespace = "com.wei.teachlink"
 
     defaultConfig {
-        applicationId = "com.wei.amazingtalker"
+        applicationId = "com.wei.teachlink"
         /**
          * Version Code: AABCXYZ
          *
@@ -31,7 +31,7 @@ android {
         versionName = "0.7.0"
 
         // Custom test runner to set up Hilt dependency graph
-        testInstrumentationRunner = "com.wei.amazingtalker.core.testing.AtTestRunner"
+        testInstrumentationRunner = "com.wei.teachlink.core.testing.TlTestRunner"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -40,11 +40,11 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix = AtBuildType.DEBUG.applicationIdSuffix
+            applicationIdSuffix = TlBuildType.DEBUG.applicationIdSuffix
         }
         release {
             isMinifyEnabled = true
-            applicationIdSuffix = AtBuildType.RELEASE.applicationIdSuffix
+            applicationIdSuffix = TlBuildType.RELEASE.applicationIdSuffix
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",

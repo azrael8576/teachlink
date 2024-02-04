@@ -1,11 +1,11 @@
 plugins {
-    alias(libs.plugins.at.android.feature)
-    alias(libs.plugins.at.android.library.compose)
-    alias(libs.plugins.at.android.hilt)
+    alias(libs.plugins.tl.android.feature)
+    alias(libs.plugins.tl.android.library.compose)
+    alias(libs.plugins.tl.android.hilt)
 }
 
 android {
-    namespace = "com.wei.amazingtalker.feature.home"
+    namespace = "com.wei.teachlink.feature.home"
 }
 
 dependencies {

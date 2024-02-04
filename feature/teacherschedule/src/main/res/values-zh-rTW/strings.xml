@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Amazing Talker</string>
+    <string name="app_name">TeachLink</string>
 
     <!-- 教師行事曆頁面 -->
     <string name="your_local_time_zone">您當地的時區: %1$s GMT %2$s</string>

@@ -1,7 +1,7 @@
-package com.wei.amazingtalker.core.network.di
+package com.wei.teachlink.core.network.di
 
-import com.wei.amazingtalker.core.network.AtNetworkDataSource
-import com.wei.amazingtalker.core.network.retrofit.RetrofitAtNetwork
+import com.wei.teachlink.core.network.TlNetworkDataSource
+import com.wei.teachlink.core.network.retrofit.RetrofitTlNetwork
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 internal interface FlavoredNetworkModule {
     @Binds
-    fun binds(implementation: RetrofitAtNetwork): AtNetworkDataSource
+    fun binds(implementation: RetrofitTlNetwork): TlNetworkDataSource
 }

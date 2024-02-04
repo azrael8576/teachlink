@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.at.android.library)
-    alias(libs.plugins.at.android.hilt)
+    alias(libs.plugins.tl.android.library)
+    alias(libs.plugins.tl.android.hilt)
     alias(libs.plugins.secrets)
     id("kotlinx-serialization")
 }
 
 android {
-    namespace = "com.wei.amazingtalker.core.network"
+    namespace = "com.wei.teachlink.core.network"
 
     buildFeatures {
         buildConfig = true
