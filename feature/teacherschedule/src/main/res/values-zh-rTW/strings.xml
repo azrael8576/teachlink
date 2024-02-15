@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TeachLink</string>
+    <string name="feature_teacherschedule_app_name">TeachLink</string>
 
     <!-- 教師行事曆頁面 -->
-    <string name="your_local_time_zone">您當地的時區: %1$s GMT %2$s</string>
-    <string name="inquirying_teacher_calendar">您正在查詢 %1$s 老師
+    <string name="feature_teacherschedule_your_local_time_zone">您當地的時區: %1$s GMT %2$s</string>
+    <string name="feature_teacherschedule_inquirying_teacher_calendar">您正在查詢 %1$s 老師
         \n%2$s 的行事曆。</string>
-    <string name="clickWeekDate">開啟日曆: %s</string>
-    <string name="morning">上午</string>
-    <string name="afternoon">下午</string>
-    <string name="evening">晚上</string>
-    <string name="loading">Loading…</string>
-    <string name="load_failed">🛠️ Load failed</string>
+    <string name="feature_teacherschedule_clickWeekDate">開啟日曆: %s</string>
+    <string name="feature_teacherschedule_morning">上午</string>
+    <string name="feature_teacherschedule_afternoon">下午</string>
+    <string name="feature_teacherschedule_evening">晚上</string>
+    <string name="feature_teacherschedule_loading">Loading…</string>
+    <string name="feature_teacherschedule_load_failed">🛠️ Load failed</string>
 
     <!-- 教師行事曆頁面 ContentDescription -->
-    <string name="content_description_week_date">日期範圍 %1$s 到 %2$s</string>
-    <string name="content_description_previous_week">上一週</string>
-    <string name="content_description_next_week">下一週</string>
-    <string name="content_description_available_time_slot">可預訂時段 %s</string>
-    <string name="content_description_unavailable_time_slot">不可預定時段 %s</string>
+    <string name="feature_teacherschedule_content_description_week_date">日期範圍 %1$s 到 %2$s</string>
+    <string name="feature_teacherschedule_content_description_previous_week">上一週</string>
+    <string name="feature_teacherschedule_content_description_next_week">下一週</string>
+    <string name="feature_teacherschedule_content_description_available_time_slot">可預訂時段 %s</string>
+    <string name="feature_teacherschedule_content_description_unavailable_time_slot">不可預定時段 %s</string>
 
     <!-- 教師行事曆明細頁 ContentDescription -->
-    <string name="content_description_teacher_name">%s</string>
-    <string name="content_description_start_time">開始時間： %s</string>
-    <string name="content_description_end_time">結束時間： %s</string>
-    <string name="content_description_state">狀態 %s</string>
-    <string name="content_description_during_day_type">時間區間 %s</string>
-    <string name="content_description_back">上一頁</string>
+    <string name="feature_teacherschedule_content_description_teacher_name">%s</string>
+    <string name="feature_teacherschedule_content_description_start_time">開始時間： %s</string>
+    <string name="feature_teacherschedule_content_description_end_time">結束時間： %s</string>
+    <string name="feature_teacherschedule_content_description_state">狀態 %s</string>
+    <string name="feature_teacherschedule_content_description_during_day_type">時間區間 %s</string>
+    <string name="feature_teacherschedule_content_description_back">上一頁</string>
 
 </resources>

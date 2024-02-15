@@ -50,11 +50,11 @@ internal open class LoginScreenRobot(
         }
 
     // The strings used for matching in these tests
-    private val accountDescription by composeTestRule.stringResource(R.string.content_description_account)
-    private val passwordDescription by composeTestRule.stringResource(R.string.content_description_password)
-    private val forgotPasswordDescription by composeTestRule.stringResource(R.string.forgot_password)
-    private val loginString by composeTestRule.stringResource(R.string.login)
-    private val loginDescription by composeTestRule.stringResource(R.string.content_description_login)
+    private val accountDescription by composeTestRule.stringResource(R.string.feature_login_content_description_account)
+    private val passwordDescription by composeTestRule.stringResource(R.string.feature_login_content_description_password)
+    private val forgotPasswordDescription by composeTestRule.stringResource(R.string.feature_login_forgot_password)
+    private val loginString by composeTestRule.stringResource(R.string.feature_login_login)
+    private val loginDescription by composeTestRule.stringResource(R.string.feature_login_content_description_login)
 
     private val loginTitle by lazy {
         composeTestRule.onNode(

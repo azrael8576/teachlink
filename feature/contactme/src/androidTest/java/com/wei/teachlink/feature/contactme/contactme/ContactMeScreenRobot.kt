@@ -42,11 +42,11 @@ internal open class ContactMeScreenRobot(
         @StringRes resId: Int,
     ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
-    private val profilePictureDescription by composeTestRule.stringResource(R.string.profile_picture)
-    private val linkedinString by composeTestRule.stringResource(R.string.linkedin)
-    private val emailString by composeTestRule.stringResource(R.string.email)
-    private val timezoneString by composeTestRule.stringResource(R.string.timezone)
-    private val callDescription by composeTestRule.stringResource(R.string.call)
+    private val profilePictureDescription by composeTestRule.stringResource(R.string.feature_contactme_profile_picture)
+    private val linkedinString by composeTestRule.stringResource(R.string.feature_contactme_linkedin)
+    private val emailString by composeTestRule.stringResource(R.string.feature_contactme_email)
+    private val timezoneString by composeTestRule.stringResource(R.string.feature_contactme_timezone)
+    private val callDescription by composeTestRule.stringResource(R.string.feature_contactme_call)
 
     private val profilePicture by lazy {
         composeTestRule.onNodeWithContentDescription(

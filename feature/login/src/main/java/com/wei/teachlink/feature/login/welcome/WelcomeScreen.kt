@@ -175,7 +175,7 @@ fun TlLogoImg(
     modifier: Modifier = Modifier,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.ic_logo
+    val resId = R.drawable.feature_login_ic_logo
     val painter = coilImagePainter(resId, isPreview)
 
     Image(
@@ -190,7 +190,7 @@ fun GetStartedButton(
     modifier: Modifier = Modifier,
     onGetStartedButtonClicked: () -> Unit,
 ) {
-    val getStarted = stringResource(R.string.get_started)
+    val getStarted = stringResource(R.string.feature_login_get_started)
     IconButton(
         onClick = { onGetStartedButtonClicked() },
     ) {
@@ -206,7 +206,7 @@ fun WelcomeGraphics(
     modifier: Modifier = Modifier,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.welcome_background
+    val resId = R.drawable.feature_login_welcome_background
     val painter = coilImagePainter(resId, isPreview)
 
     Box(modifier = modifier.fillMaxWidth()) {
@@ -216,7 +216,7 @@ fun WelcomeGraphics(
             modifier =
             modifier
                 .fillMaxSize()
-                .testTag(stringResource(R.string.tag_welcome_graphics)),
+                .testTag(stringResource(R.string.feature_login_tag_welcome_graphics)),
             contentScale = ContentScale.Crop,
         )
     }
@@ -246,7 +246,7 @@ fun WelcomeTitlePortrait(
     modifier: Modifier = Modifier,
     style: TextStyle,
 ) {
-    val welcomeTitle = stringResource(R.string.welcome_title)
+    val welcomeTitle = stringResource(R.string.feature_login_welcome_title)
 
     Box(
         modifier =
@@ -273,7 +273,7 @@ fun WelcomeTitleLandscape(
     modifier: Modifier = Modifier,
     style: TextStyle,
 ) {
-    val welcomeTitle = stringResource(R.string.welcome_title)
+    val welcomeTitle = stringResource(R.string.feature_login_welcome_title)
 
     Box(
         modifier =

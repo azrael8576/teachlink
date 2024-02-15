@@ -39,15 +39,15 @@ internal open class ScheduleDetailScreenRobot(
     ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val startTimeDescription by composeTestRule.stringResource(R.string.content_description_start_time)
-    private val endTimeDescription by composeTestRule.stringResource(R.string.content_description_end_time)
-    private val backDescription by composeTestRule.stringResource(R.string.content_description_back)
+    private val startTimeDescription by composeTestRule.stringResource(R.string.feature_teacherschedule_content_description_start_time)
+    private val endTimeDescription by composeTestRule.stringResource(R.string.feature_teacherschedule_content_description_end_time)
+    private val backDescription by composeTestRule.stringResource(R.string.feature_teacherschedule_content_description_back)
 
-    private val teacherNameTag by composeTestRule.stringResource(R.string.tag_teacher_name)
-    private val startTimeTag by composeTestRule.stringResource(R.string.tag_start_time)
-    private val endTimeTag by composeTestRule.stringResource(R.string.tag_end_time)
-    private val stateTag by composeTestRule.stringResource(R.string.tag_state)
-    private val duringDayTypeTag by composeTestRule.stringResource(R.string.tag_during_day_type)
+    private val teacherNameTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_teacher_name)
+    private val startTimeTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_start_time)
+    private val endTimeTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_end_time)
+    private val stateTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_state)
+    private val duringDayTypeTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_during_day_type)
 
     private val teacherName by lazy {
         composeTestRule.onNodeWithTag(

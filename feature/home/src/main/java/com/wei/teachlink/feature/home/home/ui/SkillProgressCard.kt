@@ -40,7 +40,7 @@ fun SkillProgressCard(
 ) {
     val contentSkillProgressCard =
         stringResource(
-            R.string.skill_progress_card,
+            R.string.feature_home_skill_progress_card,
             skillName,
             skillLevel,
             progress,
@@ -66,7 +66,7 @@ fun SkillProgressCard(
                     style = MaterialTheme.typography.titleLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.testTag(stringResource(R.string.tag_skill_name)),
+                    modifier = Modifier.testTag(stringResource(R.string.feature_home_tag_skill_name)),
                 )
                 Text(
                     text = skillLevel,
@@ -74,14 +74,14 @@ fun SkillProgressCard(
                     color = MaterialTheme.colorScheme.outlineVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.testTag(stringResource(R.string.tag_skill_level)),
+                    modifier = Modifier.testTag(stringResource(R.string.feature_home_tag_skill_level)),
                 )
                 Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                 CircularProgress(
                     modifier =
                     Modifier
                         .weight(1f)
-                        .testTag(stringResource(R.string.tag_circular_progress)),
+                        .testTag(stringResource(R.string.feature_home_tag_circular_progress)),
                     progress = progress,
                 )
             },

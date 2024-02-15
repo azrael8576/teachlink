@@ -112,10 +112,10 @@ fun CourseProgressCard(
     courseCount: Int,
     onClick: () -> Unit,
 ) {
-    val completed = stringResource(id = R.string.completed)
+    val completed = stringResource(id = R.string.feature_home_completed)
     val contentCourseProgressCard =
         stringResource(
-            R.string.course_progress_card,
+            R.string.feature_home_course_progress_card,
             completed,
             courseProgress,
             courseCount,
@@ -124,7 +124,7 @@ fun CourseProgressCard(
     StatusCard(
         modifier =
         modifier
-            .testTag(stringResource(R.string.tag_course_progress_card))
+            .testTag(stringResource(R.string.feature_home_tag_course_progress_card))
             .semantics {
                 contentDescription = contentCourseProgressCard
             },
@@ -157,14 +157,14 @@ fun PupilRatingCard(
     pupilRating: Double,
     onClick: () -> Unit,
 ) {
-    val pupil = stringResource(id = R.string.pupil)
-    val rating = stringResource(id = R.string.rating)
+    val pupil = stringResource(id = R.string.feature_home_pupil)
+    val rating = stringResource(id = R.string.feature_home_rating)
     val contentPupilRatingCard = "$pupil $rating $pupilRating"
 
     StatusCard(
         modifier =
         modifier
-            .testTag(stringResource(R.string.tag_pupil_rating_card))
+            .testTag(stringResource(R.string.feature_home_tag_pupil_rating_card))
             .semantics {
                 contentDescription = contentPupilRatingCard
             },
@@ -259,9 +259,9 @@ private fun ClassInfo(
     ratingCount: Double,
     startedDate: String,
 ) {
-    val lessons = stringResource(id = R.string.lessons)
-    val rating = stringResource(id = R.string.rating)
-    val started = stringResource(id = R.string.started)
+    val lessons = stringResource(id = R.string.feature_home_lessons)
+    val rating = stringResource(id = R.string.feature_home_rating)
+    val started = stringResource(id = R.string.feature_home_started)
     val contentClassInfo =
         "$lessons $lessonsCountDisplay, $rating $ratingCount, $started $startedDate"
 
@@ -269,7 +269,7 @@ private fun ClassInfo(
         modifier =
         Modifier
             .padding(horizontal = SPACING_SMALL.dp)
-            .testTag(stringResource(R.string.tag_class_info))
+            .testTag(stringResource(R.string.feature_home_tag_class_info))
             .semantics {
                 contentDescription = contentClassInfo
             },
@@ -324,7 +324,7 @@ private fun ClassName(className: String) {
         modifier =
         Modifier
             .padding(horizontal = SPACING_SMALL.dp)
-            .testTag(stringResource(R.string.tag_class_name))
+            .testTag(stringResource(R.string.feature_home_tag_class_name))
             .semantics {
                 contentDescription = className
             },
@@ -343,7 +343,7 @@ private fun TutorButton(
     tutorName: String,
     onTutorClick: () -> Unit,
 ) {
-    val tutor = stringResource(id = R.string.tutor)
+    val tutor = stringResource(id = R.string.feature_home_tutor)
     val contentTutorButton = "$tutor $tutorName"
 
     Button(
@@ -356,7 +356,7 @@ private fun TutorButton(
         modifier =
         Modifier
             .testTag(
-                stringResource(R.string.tag_tutor_button),
+                stringResource(R.string.feature_home_tag_tutor_button),
             )
             .semantics {
                 contentDescription = contentTutorButton

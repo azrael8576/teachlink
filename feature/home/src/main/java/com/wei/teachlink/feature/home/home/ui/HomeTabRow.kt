@@ -68,7 +68,7 @@ fun MyCoursesTab(
     isSelected: Boolean,
     onTabClick: () -> Unit,
 ) {
-    val myCourses = stringResource(id = R.string.my_courses)
+    val myCourses = stringResource(id = R.string.feature_home_my_courses)
 
     Tab(
         selected = isSelected,
@@ -94,7 +94,7 @@ fun ChatTab(
     shouldDisplayChatCount: Boolean,
     onTabClick: () -> Unit,
 ) {
-    val chats = stringResource(R.string.chats)
+    val chats = stringResource(R.string.feature_home_chats)
 
     Tab(
         selected = isSelected,
@@ -143,7 +143,7 @@ fun TutorsTab(
     isSelected: Boolean,
     onTabClick: () -> Unit,
 ) {
-    val tutors = stringResource(id = R.string.tutors)
+    val tutors = stringResource(id = R.string.feature_home_tutors)
 
     Tab(
         selected = isSelected,

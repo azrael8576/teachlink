@@ -1,19 +1,17 @@
 package com.wei.teachlink.core.designsystem.management.states.topappbar.scrollflags
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.structuralEqualityPolicy
 import com.wei.teachlink.core.designsystem.management.states.topappbar.ScrollFlagState
 
 class EnterAlwaysCollapsedState(
     heightRange: IntRange,
     scrollOffset: Float = 0f,
 ) : ScrollFlagState(heightRange) {
-    override var mScrollOffset by mutableStateOf(
+    override var mScrollOffset by mutableFloatStateOf(
         value = scrollOffset.coerceIn(0f, maxHeight.toFloat()),
-        policy = structuralEqualityPolicy(),
     )
 
     override val offset: Float

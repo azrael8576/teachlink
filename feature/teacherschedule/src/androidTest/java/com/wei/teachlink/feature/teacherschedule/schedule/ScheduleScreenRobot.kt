@@ -59,22 +59,28 @@ internal open class ScheduleScreenRobot(
     ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val morningString by composeTestRule.stringResource(R.string.morning)
-    private val afternoonString by composeTestRule.stringResource(R.string.afternoon)
-    private val eveningString by composeTestRule.stringResource(R.string.evening)
-    private val loadingString by composeTestRule.stringResource(R.string.loading)
-    private val loadFailedString by composeTestRule.stringResource(R.string.load_failed)
-    private val yourLocalTimeZoneString by composeTestRule.stringResource(R.string.your_local_time_zone)
+    private val morningString by composeTestRule.stringResource(R.string.feature_teacherschedule_morning)
+    private val afternoonString by composeTestRule.stringResource(R.string.feature_teacherschedule_afternoon)
+    private val eveningString by composeTestRule.stringResource(R.string.feature_teacherschedule_evening)
+    private val loadingString by composeTestRule.stringResource(R.string.feature_teacherschedule_loading)
+    private val loadFailedString by composeTestRule.stringResource(R.string.feature_teacherschedule_load_failed)
+    private val yourLocalTimeZoneString by composeTestRule.stringResource(R.string.feature_teacherschedule_your_local_time_zone)
 
-    private val previousWeekDescription by composeTestRule.stringResource(R.string.content_description_previous_week)
-    private val nextWeekDescription by composeTestRule.stringResource(R.string.content_description_next_week)
-    private val weekDateDescription by composeTestRule.stringResource(R.string.content_description_week_date)
-    private val availableTimeSlotDescription by composeTestRule.stringResource(R.string.content_description_available_time_slot)
-    private val unavailableTimeSlotDescription by composeTestRule.stringResource(R.string.content_description_unavailable_time_slot)
+    private val previousWeekDescription by composeTestRule.stringResource(
+        R.string.feature_teacherschedule_content_description_previous_week,
+    )
+    private val nextWeekDescription by composeTestRule.stringResource(R.string.feature_teacherschedule_content_description_next_week)
+    private val weekDateDescription by composeTestRule.stringResource(R.string.feature_teacherschedule_content_description_week_date)
+    private val availableTimeSlotDescription by composeTestRule.stringResource(
+        R.string.feature_teacherschedule_content_description_available_time_slot,
+    )
+    private val unavailableTimeSlotDescription by composeTestRule.stringResource(
+        R.string.feature_teacherschedule_content_description_unavailable_time_slot,
+    )
 
-    private val scheduleTopAppBarTag by composeTestRule.stringResource(R.string.tag_schedule_top_app_bar)
-    private val scheduleToolbarTag by composeTestRule.stringResource(R.string.tag_schedule_toolbar)
-    private val scheduleListTag by composeTestRule.stringResource(R.string.tag_schedule_list)
+    private val scheduleTopAppBarTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_schedule_top_app_bar)
+    private val scheduleToolbarTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_schedule_toolbar)
+    private val scheduleListTag by composeTestRule.stringResource(R.string.feature_teacherschedule_tag_schedule_list)
 
     private val scheduleViewState =
         ScheduleViewState(

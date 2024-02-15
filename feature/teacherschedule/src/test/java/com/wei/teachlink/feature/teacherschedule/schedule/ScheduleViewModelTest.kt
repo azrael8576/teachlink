@@ -100,7 +100,7 @@ class ScheduleViewModelTest {
     fun `dispatch showSnackBar action should set correct snackbar when message with single arg`() =
         runTest {
             // Arrange
-            val resId = R.string.clickWeekDate
+            val resId = R.string.feature_teacherschedule_clickWeekDate
             val message = listOf(TEST_TEACHER_NAME)
             val testUiText =
                 UiText.StringResource(
@@ -128,7 +128,7 @@ class ScheduleViewModelTest {
     fun `dispatch showSnackBar action should set correct snackbar when message with multiple args`() =
         runTest {
             // Arrange
-            val resId = R.string.inquirying_teacher_calendar
+            val resId = R.string.feature_teacherschedule_inquirying_teacher_calendar
             val message = listOf(TEST_TEACHER_NAME, TEST_WEEK_DATE_TEXT)
             val testUiText =
                 UiText.StringResource(

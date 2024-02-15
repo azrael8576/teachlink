@@ -49,7 +49,7 @@ fun ContactCard(
     val maxDisplayContacts = 4
     val contactsPerRow = 2
     val spacingSize = SPACING_EXTRA_SMALL.dp
-    val contactCard = stringResource(R.string.contact_card)
+    val contactCard = stringResource(R.string.feature_home_contact_card)
 
     Card(
         modifier =
@@ -103,7 +103,7 @@ internal fun ContactAvatar(
     isPreview: Boolean,
 ) {
     val painter = coilImagePainter(avatarId, true)
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
+    val profilePictureDescription = stringResource(R.string.feature_home_profile_picture).format(name)
 
     Box(
         modifier =

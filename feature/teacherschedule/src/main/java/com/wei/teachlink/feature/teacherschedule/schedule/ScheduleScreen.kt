@@ -243,7 +243,7 @@ internal fun ScheduleScreen(
                             onPress = { scope.coroutineContext.cancelChildren() },
                         )
                     }
-                    .testTag(stringResource(R.string.tag_schedule_list)),
+                    .testTag(stringResource(R.string.feature_teacherschedule_tag_schedule_list)),
                 timeListUiState = uiStates.timeListUiState,
                 listState = listState,
                 contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
@@ -278,7 +278,7 @@ private fun ScheduleTopAppBar(title: String) {
                 text = title,
                 modifier =
                 Modifier
-                    .testTag(stringResource(id = R.string.tag_schedule_top_app_bar))
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_schedule_top_app_bar))
                     .semantics { contentDescription = title },
             )
         },
@@ -346,7 +346,7 @@ internal fun ScheduleList(
 
             is TimeListUiState.Loading ->
                 item {
-                    val loading = stringResource(R.string.loading)
+                    val loading = stringResource(R.string.feature_teacherschedule_loading)
                     Text(
                         text = loading,
                         style = MaterialTheme.typography.bodyLarge,
@@ -359,9 +359,9 @@ internal fun ScheduleList(
 
             is TimeListUiState.LoadFailed ->
                 item {
-                    val loadFailed = stringResource(R.string.load_failed)
+                    val loadFailed = stringResource(R.string.feature_teacherschedule_load_failed)
                     Text(
-                        text = stringResource(R.string.load_failed),
+                        text = stringResource(R.string.feature_teacherschedule_load_failed),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.error,
                         modifier =
@@ -391,7 +391,7 @@ private fun ScheduleToolbar(
     onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     Surface(
-        modifier = modifier.testTag(stringResource(id = R.string.tag_schedule_toolbar)),
+        modifier = modifier.testTag(stringResource(id = R.string.feature_teacherschedule_tag_schedule_toolbar)),
     ) {
         Column {
             WeekActionBar(
@@ -438,7 +438,7 @@ fun WeekActionBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val previousWeekDescription = stringResource(R.string.content_description_previous_week)
+            val previousWeekDescription = stringResource(R.string.feature_teacherschedule_content_description_previous_week)
             IconButton(
                 onClick = {
                     if (uiStates.isAvailablePreviousWeek) {
@@ -461,7 +461,7 @@ fun WeekActionBar(
 
             val (weekStart, weekEnd) = uiStates.weekDateText
             val weekDataDescription =
-                stringResource(R.string.content_description_week_date).format(
+                stringResource(R.string.feature_teacherschedule_content_description_week_date).format(
                     weekStart,
                     weekEnd,
                 )
@@ -472,7 +472,7 @@ fun WeekActionBar(
                     .weight(1f)
                     .semantics { contentDescription = weekDataDescription },
                 onClick = {
-                    onWeekDateClick(R.string.clickWeekDate, weekDateText)
+                    onWeekDateClick(R.string.feature_teacherschedule_clickWeekDate, weekDateText)
                 },
             ) {
                 Text(
@@ -483,7 +483,7 @@ fun WeekActionBar(
                 )
             }
 
-            val nextWeekDescription = stringResource(R.string.content_description_next_week)
+            val nextWeekDescription = stringResource(R.string.feature_teacherschedule_content_description_next_week)
             IconButton(
                 onClick = {
                     onNextWeekClick()

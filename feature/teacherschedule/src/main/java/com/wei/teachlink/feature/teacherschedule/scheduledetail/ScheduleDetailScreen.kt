@@ -104,19 +104,19 @@ internal fun ScheduleDetailScreen(
 
             val teacherName = uiStates.teacherName.toString()
             val teacherNameDescription =
-                stringResource(R.string.content_description_teacher_name).format(teacherName)
+                stringResource(R.string.feature_teacherschedule_content_description_teacher_name).format(teacherName)
             Text(
                 text = teacherName,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier =
                 Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
-                    .testTag(stringResource(id = R.string.tag_teacher_name))
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_teacher_name))
                     .semantics { contentDescription = teacherNameDescription },
             )
 
             val startTimeDescription =
-                stringResource(R.string.content_description_start_time).format(uiStates.start.toString())
+                stringResource(R.string.feature_teacherschedule_content_description_start_time).format(uiStates.start.toString())
             Text(
                 text = startTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
@@ -124,12 +124,12 @@ internal fun ScheduleDetailScreen(
                 Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
-                    .testTag(stringResource(id = R.string.tag_start_time))
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_start_time))
                     .semantics { contentDescription = startTimeDescription },
             )
 
             val endTimeDescription =
-                stringResource(R.string.content_description_end_time).format(uiStates.end.toString())
+                stringResource(R.string.feature_teacherschedule_content_description_end_time).format(uiStates.end.toString())
             Text(
                 text = endTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
@@ -137,12 +137,12 @@ internal fun ScheduleDetailScreen(
                 Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
-                    .testTag(stringResource(id = R.string.tag_end_time))
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_end_time))
                     .semantics { contentDescription = endTimeDescription },
             )
 
             val state = uiStates.state?.name.toString()
-            val stateDescription = stringResource(R.string.content_description_state).format(state)
+            val stateDescription = stringResource(R.string.feature_teacherschedule_content_description_state).format(state)
             Text(
                 text = state,
                 style = MaterialTheme.typography.bodyMedium,
@@ -150,13 +150,13 @@ internal fun ScheduleDetailScreen(
                 Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
-                    .testTag(stringResource(id = R.string.tag_state))
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_state))
                     .semantics { contentDescription = stateDescription },
             )
 
             val duringDayType = uiStates.duringDayType?.name.toString()
             val duringDayTypeDescription =
-                stringResource(R.string.content_description_during_day_type).format(duringDayType)
+                stringResource(R.string.feature_teacherschedule_content_description_during_day_type).format(duringDayType)
             Text(
                 text = duringDayType,
                 style = MaterialTheme.typography.bodyMedium,
@@ -164,7 +164,7 @@ internal fun ScheduleDetailScreen(
                 Modifier
                     .padding(horizontal = SPACING_LARGE.dp)
                     .padding(top = SPACING_MEDIUM.dp)
-                    .testTag(stringResource(id = R.string.tag_during_day_type))
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_during_day_type))
                     .semantics { contentDescription = duringDayTypeDescription },
             )
         }
@@ -180,7 +180,7 @@ private fun ScheduleDetailToolbar(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth(),
     ) {
-        val back = stringResource(R.string.content_description_back)
+        val back = stringResource(R.string.feature_teacherschedule_content_description_back)
         IconButton(
             onClick = { onBackClick() },
             modifier = Modifier.semantics { contentDescription = back },

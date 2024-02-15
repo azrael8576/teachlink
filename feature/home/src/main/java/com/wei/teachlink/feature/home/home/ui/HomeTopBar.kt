@@ -60,7 +60,7 @@ fun HomeTopBar(
             MenuButton(onMenuClick = onMenuClick)
         }
         Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
-        val helloUserName = stringResource(R.string.hello, userName)
+        val helloUserName = stringResource(R.string.feature_home_hello, userName)
 
         Text(
             text = helloUserName,
@@ -68,7 +68,7 @@ fun HomeTopBar(
             fontWeight = FontWeight.Normal,
             modifier =
             Modifier
-                .testTag(stringResource(R.string.tag_hello_user_name_text))
+                .testTag(stringResource(R.string.feature_home_tag_hello_user_name_text))
                 .semantics { contentDescription = helloUserName },
         )
         Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
@@ -81,7 +81,7 @@ private fun AddUserButton(
     onAddUserClick: () -> Unit,
 ) {
     Box(modifier = modifier) {
-        val addUser = stringResource(R.string.add_user)
+        val addUser = stringResource(R.string.feature_home_add_user)
 
         IconButton(
             onClick = {
@@ -110,14 +110,14 @@ internal fun UserAvatar(
     onUserProfileImageClick: () -> Unit,
 ) {
     val painter = coilImagePainter(avatarId, true)
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(userName)
+    val profilePictureDescription = stringResource(R.string.feature_home_profile_picture).format(userName)
 
     IconButton(
         onClick = onUserProfileImageClick,
         modifier =
         modifier
             .size(48.dp)
-            .testTag(stringResource(R.string.tag_user_avatar))
+            .testTag(stringResource(R.string.feature_home_tag_user_avatar))
             .semantics {
                 contentDescription = profilePictureDescription
             },
@@ -135,7 +135,7 @@ internal fun UserAvatar(
 
 @Composable
 private fun MenuButton(onMenuClick: () -> Unit) {
-    val menu = stringResource(R.string.menu)
+    val menu = stringResource(R.string.feature_home_menu)
 
     IconButton(
         onClick = onMenuClick,
@@ -161,7 +161,7 @@ fun HomeTopBarPreview() {
             HomeTopBar(
                 modifier = Modifier.padding(horizontal = SPACING_LARGE.dp),
                 userName = "TEST_NAME",
-                avatarId = R.drawable.he_wei,
+                avatarId = R.drawable.feature_home_he_wei,
                 onUserProfileImageClick = {},
                 onAddUserClick = {},
                 onMenuClick = {},

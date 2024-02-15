@@ -16,7 +16,7 @@ fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         text = {
-            val functionalityNotAvailable = stringResource(R.string.functionality_not_available)
+            val functionalityNotAvailable = stringResource(R.string.core_designsystem_functionality_not_available)
             Text(
                 text = functionalityNotAvailable,
                 style = MaterialTheme.typography.bodyMedium,
@@ -24,7 +24,7 @@ fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
             )
         },
         confirmButton = {
-            val close = stringResource(id = R.string.close)
+            val close = stringResource(id = R.string.core_designsystem_close)
             TextButton(onClick = onDismiss) {
                 Text(
                     text = close,

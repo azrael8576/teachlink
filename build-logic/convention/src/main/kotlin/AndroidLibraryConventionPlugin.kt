@@ -18,6 +18,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
+                apply("tl.android.lint")
             }
 
             extensions.configure<LibraryExtension> {
@@ -25,6 +26,11 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 defaultConfig.targetSdk = 34
                 configureFlavors(this)
                 configureGradleManagedDevices(this)
+                // The resource prefix is derived from the module name,
+                // so resources inside ":core:module1" must be prefixed with "core_module1_"
+                resourcePrefix =
+                    path.split("""\W""".toRegex()).drop(1).distinct().joinToString(separator = "_")
+                        .lowercase() + "_"
             }
             extensions.configure<LibraryAndroidComponentsExtension> {
                 configurePrintApksTask(this)

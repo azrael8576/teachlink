@@ -147,7 +147,7 @@ internal fun LoginScreen(
 
 @Composable
 private fun Title(modifier: Modifier = Modifier) {
-    val title = stringResource(R.string.login)
+    val title = stringResource(R.string.feature_login_login)
 
     Text(
         text = title,
@@ -160,8 +160,8 @@ private fun Title(modifier: Modifier = Modifier) {
 
 @Composable
 internal fun AccountTextField(accountState: MutableState<String>) {
-    val account = stringResource(R.string.account)
-    val accountDescription = stringResource(R.string.content_description_account)
+    val account = stringResource(R.string.feature_login_account)
+    val accountDescription = stringResource(R.string.feature_login_content_description_account)
 
     TextField(
         value = accountState.value,
@@ -180,8 +180,8 @@ internal fun AccountTextField(accountState: MutableState<String>) {
 
 @Composable
 internal fun PasswordTextField(passwordState: MutableState<String>) {
-    val password = stringResource(R.string.password)
-    val passwordDescription = stringResource(R.string.content_description_password)
+    val password = stringResource(R.string.feature_login_password)
+    val passwordDescription = stringResource(R.string.feature_login_content_description_password)
 
     TextField(
         value = passwordState.value,
@@ -201,7 +201,7 @@ internal fun PasswordTextField(passwordState: MutableState<String>) {
 
 @Composable
 internal fun ForgotPasswordText(modifier: Modifier = Modifier) {
-    val forgotPassword = stringResource(R.string.forgot_password)
+    val forgotPassword = stringResource(R.string.feature_login_forgot_password)
 
     Text(
         text = forgotPassword,
@@ -219,8 +219,8 @@ internal fun LoginButton(
     passwordState: MutableState<String>,
     login: (String, String) -> Unit,
 ) {
-    val loginText = stringResource(R.string.login)
-    val loginTextDescription = stringResource(R.string.content_description_login)
+    val loginText = stringResource(R.string.feature_login_login)
+    val loginTextDescription = stringResource(R.string.feature_login_content_description_login)
 
     Button(
         onClick = {

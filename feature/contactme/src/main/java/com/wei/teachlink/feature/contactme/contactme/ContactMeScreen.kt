@@ -301,10 +301,10 @@ internal fun DisplayHeadShot(
     name: String,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.he_wei
+    val resId = R.drawable.feature_contactme_he_wei
     val painter = coilImagePainter(resId, isPreview)
 
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
+    val profilePictureDescription = stringResource(R.string.feature_contactme_profile_picture).format(name)
     Image(
         painter = painter,
         contentDescription = profilePictureDescription,
@@ -352,17 +352,17 @@ fun ContactMeCard(
                 )
             }
             ProfileProperty(
-                label = stringResource(id = R.string.linkedin),
+                label = stringResource(id = R.string.feature_contactme_linkedin),
                 value = uiStates.linkedinUrl,
                 isLink = true,
             )
             ProfileProperty(
-                label = stringResource(id = R.string.email),
+                label = stringResource(id = R.string.feature_contactme_email),
                 value = uiStates.email,
                 isLink = true,
             )
             ProfileProperty(
-                label = stringResource(id = R.string.timezone),
+                label = stringResource(id = R.string.feature_contactme_timezone),
                 value = uiStates.timeZone,
                 isLink = false,
             )
@@ -417,7 +417,7 @@ private fun PhoneButton(
         )
     }
 
-    val phoneDescription = stringResource(id = R.string.call).format(name)
+    val phoneDescription = stringResource(id = R.string.feature_contactme_call).format(name)
     IconButton(
         onClick = {
             showPopup.value = true

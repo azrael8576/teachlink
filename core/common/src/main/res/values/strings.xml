@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="generic_hello" translatable="false">Hello</string>
-    <string name="greeting_with_name" translatable="false">Hello, %s!</string>
-    <string name="greeting_with_name_and_weather" translatable="false">Hello, %1$s! It\'s a %2$s day today.</string>
+    <string name="core_common_generic_hello" translatable="false">Hello</string>
+    <string name="core_common_greeting_with_name" translatable="false">Hello, %s!</string>
+    <string name="core_common_greeting_with_name_and_weather" translatable="false">Hello, %1$s! It\'s a %2$s day today.</string>
 </resources>
