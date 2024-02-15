@@ -112,9 +112,9 @@ internal fun LoginScreen(
     ) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(SPACING_LARGE.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(SPACING_LARGE.dp),
             contentAlignment = Alignment.Center,
         ) {
             Column(
@@ -153,8 +153,8 @@ private fun Title(modifier: Modifier = Modifier) {
         text = title,
         style = MaterialTheme.typography.displayMedium,
         modifier =
-            modifier
-                .semantics { contentDescription = "" },
+        modifier
+            .semantics { contentDescription = "" },
     )
 }
 
@@ -166,8 +166,8 @@ internal fun AccountTextField(accountState: MutableState<String>) {
     TextField(
         value = accountState.value,
         modifier =
-            Modifier
-                .semantics { contentDescription = accountDescription },
+        Modifier
+            .semantics { contentDescription = accountDescription },
         onValueChange = {
             accountState.value = it
         },
@@ -186,8 +186,8 @@ internal fun PasswordTextField(passwordState: MutableState<String>) {
     TextField(
         value = passwordState.value,
         modifier =
-            Modifier
-                .semantics { contentDescription = passwordDescription },
+        Modifier
+            .semantics { contentDescription = passwordDescription },
         onValueChange = {
             passwordState.value = it
         },
@@ -207,9 +207,9 @@ internal fun ForgotPasswordText(modifier: Modifier = Modifier) {
         text = forgotPassword,
         style = MaterialTheme.typography.bodyMedium,
         modifier =
-            Modifier
-                .padding(top = SPACING_LARGE.dp)
-                .semantics { contentDescription = forgotPassword },
+        Modifier
+            .padding(top = SPACING_LARGE.dp)
+            .semantics { contentDescription = forgotPassword },
     )
 }
 
@@ -227,9 +227,9 @@ internal fun LoginButton(
             login(accountState.value, passwordState.value)
         },
         modifier =
-            Modifier
-                .padding(top = SPACING_SMALL.dp)
-                .semantics { contentDescription = loginTextDescription },
+        Modifier
+            .padding(top = SPACING_SMALL.dp)
+            .semantics { contentDescription = loginTextDescription },
     ) {
         Text(
             loginText,

@@ -53,16 +53,16 @@ fun ContactCard(
 
     Card(
         modifier =
-            modifier
-                .semantics {
-                    contentDescription = contactCard
-                },
+        modifier
+            .semantics {
+                contentDescription = contactCard
+            },
         shape = shapes.extraLarge,
         colors =
-            CardDefaults.cardColors(
-                contentColor = MaterialTheme.colorScheme.onSecondary,
-                containerColor = MaterialTheme.colorScheme.secondary,
-            ),
+        CardDefaults.cardColors(
+            contentColor = MaterialTheme.colorScheme.onSecondary,
+            containerColor = MaterialTheme.colorScheme.secondary,
+        ),
     ) {
         Column(
             modifier = Modifier.padding(SPACING_MEDIUM.dp),
@@ -107,17 +107,17 @@ internal fun ContactAvatar(
 
     Box(
         modifier =
-            modifier
-                .size(CONTACT_HEAD_SHOT_SIZE.dp)
-                .statusIndicator(status),
+        modifier
+            .size(CONTACT_HEAD_SHOT_SIZE.dp)
+            .statusIndicator(status),
     ) {
         Image(
             painter = painter,
             contentDescription = profilePictureDescription,
             modifier =
-                Modifier
-                    .matchParentSize()
-                    .clip(CircleShape),
+            Modifier
+                .matchParentSize()
+                .clip(CircleShape),
         )
     }
 }
@@ -172,9 +172,9 @@ fun Modifier.statusIndicator(
 fun PlaceholderAvatar(modifier: Modifier = Modifier) {
     Box(
         modifier =
-            modifier
-                .background(MaterialTheme.colorScheme.secondary)
-                .size(CONTACT_HEAD_SHOT_SIZE.dp),
+        modifier
+            .background(MaterialTheme.colorScheme.secondary)
+            .size(CONTACT_HEAD_SHOT_SIZE.dp),
     )
 }
 

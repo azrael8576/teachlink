@@ -125,8 +125,8 @@ internal fun ContactMeScreen(
 ) {
     Surface(
         modifier =
-            Modifier
-                .fillMaxSize(),
+        Modifier
+            .fillMaxSize(),
     ) {
         if (contentType == TlContentType.DUAL_PANE) {
             Box(
@@ -155,19 +155,19 @@ internal fun ContactMeScreen(
                         )
                     },
                     strategy =
-                        HorizontalTwoPaneStrategy(
-                            splitFraction = 0.5f,
-                            gapWidth = SPACING_LARGE.dp,
-                        ),
+                    HorizontalTwoPaneStrategy(
+                        splitFraction = 0.5f,
+                        gapWidth = SPACING_LARGE.dp,
+                    ),
                     displayFeatures = displayFeatures,
                 )
             }
         } else {
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .background(color = MaterialTheme.colorScheme.background),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = MaterialTheme.colorScheme.background),
                 contentAlignment = Alignment.Center,
             ) {
                 DecorativeBackgroundText(
@@ -309,10 +309,10 @@ internal fun DisplayHeadShot(
         painter = painter,
         contentDescription = profilePictureDescription,
         modifier =
-            modifier
-                .clip(CircleShape)
-                .size(300.dp)
-                .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape),
+        modifier
+            .clip(CircleShape)
+            .size(300.dp)
+            .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape),
     )
 }
 
@@ -324,19 +324,19 @@ fun ContactMeCard(
 ) {
     Card(
         modifier =
-            modifier
-                .padding(horizontal = SPACING_EXTRA_LARGE.dp)
-                .clip(CardDefaults.shape),
+        modifier
+            .padding(horizontal = SPACING_EXTRA_LARGE.dp)
+            .clip(CardDefaults.shape),
         colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            ),
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ),
     ) {
         Column(
             modifier =
-                Modifier
-                    .padding(SPACING_LARGE.dp)
-                    .fillMaxWidth(),
+            Modifier
+                .padding(SPACING_LARGE.dp)
+                .fillMaxWidth(),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -384,9 +384,9 @@ private fun NameAndPosition(
             text = name,
             style = MaterialTheme.typography.headlineSmall,
             modifier =
-                Modifier
-                    .baselineHeight(32.dp)
-                    .semantics { contentDescription = name },
+            Modifier
+                .baselineHeight(32.dp)
+                .semantics { contentDescription = name },
         )
         val position = uiStates.position
         Text(
@@ -394,10 +394,10 @@ private fun NameAndPosition(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier =
-                Modifier
-                    .padding(bottom = 20.dp)
-                    .baselineHeight(SPACING_EXTRA_LARGE.dp)
-                    .semantics { contentDescription = position },
+            Modifier
+                .padding(bottom = 20.dp)
+                .baselineHeight(SPACING_EXTRA_LARGE.dp)
+                .semantics { contentDescription = position },
         )
     }
 }
@@ -424,10 +424,10 @@ private fun PhoneButton(
             onPhoneClick()
         },
         modifier =
-            Modifier
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surface)
-                .semantics { contentDescription = phoneDescription },
+        Modifier
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.surface)
+            .semantics { contentDescription = phoneDescription },
     ) {
         Icon(
             imageVector = TlIcons.Phone,

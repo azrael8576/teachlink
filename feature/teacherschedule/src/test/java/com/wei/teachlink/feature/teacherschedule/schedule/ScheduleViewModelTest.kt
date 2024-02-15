@@ -167,10 +167,10 @@ class ScheduleViewModelTest {
                 copy(
                     selectedIndex = 0,
                     _queryDateUtc =
-                        weekDataHelper.getQueryDateUtc(
-                            queryDateLocal = previousWeekMondayLocalDate,
-                            resetToStartOfDay = true,
-                        ),
+                    weekDataHelper.getQueryDateUtc(
+                        queryDateLocal = previousWeekMondayLocalDate,
+                        resetToStartOfDay = true,
+                    ),
                 )
             }
 
@@ -193,10 +193,10 @@ class ScheduleViewModelTest {
                 copy(
                     selectedIndex = 0,
                     _queryDateUtc =
-                        weekDataHelper.getQueryDateUtc(
-                            queryDateLocal = OffsetDateTime.now(fixedClock).getLocalOffsetDateTime(),
-                            resetToStartOfDay = false,
-                        ),
+                    weekDataHelper.getQueryDateUtc(
+                        queryDateLocal = OffsetDateTime.now(fixedClock).getLocalOffsetDateTime(),
+                        resetToStartOfDay = false,
+                    ),
                 )
             }
 
@@ -218,10 +218,10 @@ class ScheduleViewModelTest {
                 copy(
                     selectedIndex = 0,
                     _queryDateUtc =
-                        weekDataHelper.getQueryDateUtc(
-                            queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
-                            resetToStartOfDay = true,
-                        ),
+                    weekDataHelper.getQueryDateUtc(
+                        queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
+                        resetToStartOfDay = true,
+                    ),
                 )
             }
 
@@ -243,10 +243,10 @@ class ScheduleViewModelTest {
                 copy(
                     selectedIndex = 0,
                     _queryDateUtc =
-                        weekDataHelper.getQueryDateUtc(
-                            queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
-                            resetToStartOfDay = true,
-                        ),
+                    weekDataHelper.getQueryDateUtc(
+                        queryDateLocal = viewModel.states.value.weekStart.plusWeeks(1),
+                        resetToStartOfDay = true,
+                    ),
                 )
             }
 

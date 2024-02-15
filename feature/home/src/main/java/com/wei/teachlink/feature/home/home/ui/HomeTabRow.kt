@@ -74,9 +74,9 @@ fun MyCoursesTab(
         selected = isSelected,
         onClick = onTabClick,
         modifier =
-            Modifier.semantics {
-                contentDescription = myCourses
-            },
+        Modifier.semantics {
+            contentDescription = myCourses
+        },
     ) {
         Text(
             text = myCourses,
@@ -100,9 +100,9 @@ fun ChatTab(
         selected = isSelected,
         onClick = onTabClick,
         modifier =
-            Modifier.semantics {
-                contentDescription = chats
-            },
+        Modifier.semantics {
+            contentDescription = chats
+        },
     ) {
         Row(
             modifier = Modifier.padding(SPACING_LARGE.dp),
@@ -125,9 +125,9 @@ fun ChatTab(
 fun ChatCountBadge(count: String) {
     Box(
         modifier =
-            Modifier
-                .clip(shape = shapes.medium)
-                .background(color = MaterialTheme.colorScheme.primary),
+        Modifier
+            .clip(shape = shapes.medium)
+            .background(color = MaterialTheme.colorScheme.primary),
     ) {
         Text(
             text = count,
@@ -149,9 +149,9 @@ fun TutorsTab(
         selected = isSelected,
         onClick = onTabClick,
         modifier =
-            Modifier.semantics {
-                contentDescription = tutors
-            },
+        Modifier.semantics {
+            contentDescription = tutors
+        },
     ) {
         Text(
             text = tutors,
@@ -168,10 +168,10 @@ fun HomeTabRowPreview() {
     TlTheme {
         HomeTabRow(
             uiStates =
-                HomeViewState(
-                    selectedTab = Tab.MY_COURSES,
-                    chatCount = 999,
-                ),
+            HomeViewState(
+                selectedTab = Tab.MY_COURSES,
+                chatCount = 999,
+            ),
             onTabSelected = {},
         )
     }

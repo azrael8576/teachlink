@@ -47,15 +47,15 @@ fun SkillProgressCard(
         )
     Card(
         modifier =
-            modifier.semantics {
-                contentDescription = contentSkillProgressCard
-            },
+        modifier.semantics {
+            contentDescription = contentSkillProgressCard
+        },
         shape = shapes.extraLarge,
         colors =
-            CardDefaults.cardColors(
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
+        CardDefaults.cardColors(
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primary,
+        ),
         onClick = onClick,
     ) {
         Column(
@@ -79,9 +79,9 @@ fun SkillProgressCard(
                 Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
                 CircularProgress(
                     modifier =
-                        Modifier
-                            .weight(1f)
-                            .testTag(stringResource(R.string.feature_home_tag_circular_progress)),
+                    Modifier
+                        .weight(1f)
+                        .testTag(stringResource(R.string.feature_home_tag_circular_progress)),
                     progress = progress,
                 )
             },
@@ -134,9 +134,9 @@ fun HomeScreenPreview() {
     TlTheme {
         SkillProgressCard(
             modifier =
-                Modifier
-                    .width(200.dp)
-                    .height(152.dp),
+            Modifier
+                .width(200.dp)
+                .height(152.dp),
             skillName = "Business English",
             skillLevel = "Advanced level",
             progress = 64,

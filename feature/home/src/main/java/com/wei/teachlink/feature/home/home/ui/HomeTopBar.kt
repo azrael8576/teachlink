@@ -67,9 +67,9 @@ fun HomeTopBar(
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Normal,
             modifier =
-                Modifier
-                    .testTag(stringResource(R.string.feature_home_tag_hello_user_name_text))
-                    .semantics { contentDescription = helloUserName },
+            Modifier
+                .testTag(stringResource(R.string.feature_home_tag_hello_user_name_text))
+                .semantics { contentDescription = helloUserName },
         )
         Spacer(modifier = Modifier.height(SPACING_SMALL.dp))
     }
@@ -88,10 +88,10 @@ private fun AddUserButton(
                 onAddUserClick()
             },
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
-                    .semantics { contentDescription = addUser },
+            Modifier
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .semantics { contentDescription = addUser },
         ) {
             Icon(
                 imageVector = TlIcons.Add,
@@ -115,20 +115,20 @@ internal fun UserAvatar(
     IconButton(
         onClick = onUserProfileImageClick,
         modifier =
-            modifier
-                .size(48.dp)
-                .testTag(stringResource(R.string.feature_home_tag_user_avatar))
-                .semantics {
-                    contentDescription = profilePictureDescription
-                },
+        modifier
+            .size(48.dp)
+            .testTag(stringResource(R.string.feature_home_tag_user_avatar))
+            .semantics {
+                contentDescription = profilePictureDescription
+            },
     ) {
         Image(
             painter = painter,
             contentDescription = null,
             modifier =
-                modifier
-                    .clip(CircleShape)
-                    .fillMaxSize(),
+            modifier
+                .clip(CircleShape)
+                .fillMaxSize(),
         )
     }
 }
@@ -140,10 +140,10 @@ private fun MenuButton(onMenuClick: () -> Unit) {
     IconButton(
         onClick = onMenuClick,
         modifier =
-            Modifier
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
-                .semantics { contentDescription = menu },
+        Modifier
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .semantics { contentDescription = menu },
     ) {
         Icon(
             imageVector = TlIcons.Menu,

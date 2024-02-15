@@ -109,10 +109,10 @@ internal fun ScheduleDetailScreen(
                 text = teacherName,
                 style = MaterialTheme.typography.headlineLarge,
                 modifier =
-                    Modifier
-                        .padding(horizontal = SPACING_LARGE.dp)
-                        .testTag(stringResource(id = R.string.feature_teacherschedule_tag_teacher_name))
-                        .semantics { contentDescription = teacherNameDescription },
+                Modifier
+                    .padding(horizontal = SPACING_LARGE.dp)
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_teacher_name))
+                    .semantics { contentDescription = teacherNameDescription },
             )
 
             val startTimeDescription =
@@ -121,11 +121,11 @@ internal fun ScheduleDetailScreen(
                 text = startTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                    Modifier
-                        .padding(horizontal = SPACING_LARGE.dp)
-                        .padding(top = SPACING_MEDIUM.dp)
-                        .testTag(stringResource(id = R.string.feature_teacherschedule_tag_start_time))
-                        .semantics { contentDescription = startTimeDescription },
+                Modifier
+                    .padding(horizontal = SPACING_LARGE.dp)
+                    .padding(top = SPACING_MEDIUM.dp)
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_start_time))
+                    .semantics { contentDescription = startTimeDescription },
             )
 
             val endTimeDescription =
@@ -134,11 +134,11 @@ internal fun ScheduleDetailScreen(
                 text = endTimeDescription,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                    Modifier
-                        .padding(horizontal = SPACING_LARGE.dp)
-                        .padding(top = SPACING_MEDIUM.dp)
-                        .testTag(stringResource(id = R.string.feature_teacherschedule_tag_end_time))
-                        .semantics { contentDescription = endTimeDescription },
+                Modifier
+                    .padding(horizontal = SPACING_LARGE.dp)
+                    .padding(top = SPACING_MEDIUM.dp)
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_end_time))
+                    .semantics { contentDescription = endTimeDescription },
             )
 
             val state = uiStates.state?.name.toString()
@@ -147,11 +147,11 @@ internal fun ScheduleDetailScreen(
                 text = state,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                    Modifier
-                        .padding(horizontal = SPACING_LARGE.dp)
-                        .padding(top = SPACING_MEDIUM.dp)
-                        .testTag(stringResource(id = R.string.feature_teacherschedule_tag_state))
-                        .semantics { contentDescription = stateDescription },
+                Modifier
+                    .padding(horizontal = SPACING_LARGE.dp)
+                    .padding(top = SPACING_MEDIUM.dp)
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_state))
+                    .semantics { contentDescription = stateDescription },
             )
 
             val duringDayType = uiStates.duringDayType?.name.toString()
@@ -161,11 +161,11 @@ internal fun ScheduleDetailScreen(
                 text = duringDayType,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                    Modifier
-                        .padding(horizontal = SPACING_LARGE.dp)
-                        .padding(top = SPACING_MEDIUM.dp)
-                        .testTag(stringResource(id = R.string.feature_teacherschedule_tag_during_day_type))
-                        .semantics { contentDescription = duringDayTypeDescription },
+                Modifier
+                    .padding(horizontal = SPACING_LARGE.dp)
+                    .padding(top = SPACING_MEDIUM.dp)
+                    .testTag(stringResource(id = R.string.feature_teacherschedule_tag_during_day_type))
+                    .semantics { contentDescription = duringDayTypeDescription },
             )
         }
     }
@@ -201,13 +201,13 @@ fun ScheduleDetailScreenPreview() {
     TlTheme {
         ScheduleDetailScreen(
             uiStates =
-                ScheduleDetailViewState(
-                    teacherName = "Teacher Name",
-                    start = nowTime,
-                    end = nowTime.plusMinutes(30),
-                    state = ScheduleState.BOOKED,
-                    duringDayType = DuringDayType.Morning,
-                ),
+            ScheduleDetailViewState(
+                teacherName = "Teacher Name",
+                start = nowTime,
+                end = nowTime.plusMinutes(30),
+                state = ScheduleState.BOOKED,
+                duringDayType = DuringDayType.Morning,
+            ),
             onBackClick = { },
         )
     }

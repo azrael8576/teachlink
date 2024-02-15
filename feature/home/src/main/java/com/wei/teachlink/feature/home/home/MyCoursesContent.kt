@@ -91,9 +91,9 @@ fun MyCoursesContent(
                 Spacer(modifier = Modifier.width(SPACING_SMALL.dp))
                 SkillProgressCard(
                     modifier =
-                        Modifier
-                            .size(cardSize.dp)
-                            .weight(1f),
+                    Modifier
+                        .size(cardSize.dp)
+                        .weight(1f),
                     skillName = uiStates.skillName,
                     skillLevel = uiStates.skillLevel,
                     progress = uiStates.skillLevelProgress,
@@ -123,11 +123,11 @@ fun CourseProgressCard(
 
     StatusCard(
         modifier =
-            modifier
-                .testTag(stringResource(R.string.feature_home_tag_course_progress_card))
-                .semantics {
-                    contentDescription = contentCourseProgressCard
-                },
+        modifier
+            .testTag(stringResource(R.string.feature_home_tag_course_progress_card))
+            .semantics {
+                contentDescription = contentCourseProgressCard
+            },
         onClick = onClick,
         content = {
             Row {
@@ -163,11 +163,11 @@ fun PupilRatingCard(
 
     StatusCard(
         modifier =
-            modifier
-                .testTag(stringResource(R.string.feature_home_tag_pupil_rating_card))
-                .semantics {
-                    contentDescription = contentPupilRatingCard
-                },
+        modifier
+            .testTag(stringResource(R.string.feature_home_tag_pupil_rating_card))
+            .semantics {
+                contentDescription = contentPupilRatingCard
+            },
         onClick = onClick,
         content = {
             Row {
@@ -267,12 +267,12 @@ private fun ClassInfo(
 
     Row(
         modifier =
-            Modifier
-                .padding(horizontal = SPACING_SMALL.dp)
-                .testTag(stringResource(R.string.feature_home_tag_class_info))
-                .semantics {
-                    contentDescription = contentClassInfo
-                },
+        Modifier
+            .padding(horizontal = SPACING_SMALL.dp)
+            .testTag(stringResource(R.string.feature_home_tag_class_info))
+            .semantics {
+                contentDescription = contentClassInfo
+            },
     ) {
         Row(
             verticalAlignment = Alignment.Bottom,
@@ -322,12 +322,12 @@ private fun ClassInfo(
 private fun ClassName(className: String) {
     Row(
         modifier =
-            Modifier
-                .padding(horizontal = SPACING_SMALL.dp)
-                .testTag(stringResource(R.string.feature_home_tag_class_name))
-                .semantics {
-                    contentDescription = className
-                },
+        Modifier
+            .padding(horizontal = SPACING_SMALL.dp)
+            .testTag(stringResource(R.string.feature_home_tag_class_name))
+            .semantics {
+                contentDescription = className
+            },
     ) {
         Text(
             text = className,
@@ -349,18 +349,18 @@ private fun TutorButton(
     Button(
         onClick = onTutorClick,
         colors =
-            ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.background,
-            ),
+        ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.background,
+        ),
         contentPadding = ButtonDefaults.TextButtonContentPadding,
         modifier =
-            Modifier
-                .testTag(
-                    stringResource(R.string.feature_home_tag_tutor_button),
-                )
-                .semantics {
-                    contentDescription = contentTutorButton
-                },
+        Modifier
+            .testTag(
+                stringResource(R.string.feature_home_tag_tutor_button),
+            )
+            .semantics {
+                contentDescription = contentTutorButton
+            },
     ) {
         Icon(
             imageVector = TlIcons.Person,
@@ -396,20 +396,20 @@ fun MyCoursesContentPreview() {
             MyCoursesContent(
                 modifier = Modifier.padding(horizontal = SPACING_LARGE.dp),
                 uiStates =
-                    MyCoursesContentState(
-                        courseProgress = 20,
-                        courseCount = 30,
-                        pupilRating = 9.9,
-                        tutorName = TEST_TUTOR_NAME,
-                        className = TEST_CLASS_NAME,
-                        lessonsCountDisplay = "40+",
-                        ratingCount = 4.9,
-                        startedDate = "11.04",
-                        contacts = TestContacts,
-                        skillName = TEST_SKILL_NAME,
-                        skillLevel = TEST_SKILL_LEVEL,
-                        skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
-                    ),
+                MyCoursesContentState(
+                    courseProgress = 20,
+                    courseCount = 30,
+                    pupilRating = 9.9,
+                    tutorName = TEST_TUTOR_NAME,
+                    className = TEST_CLASS_NAME,
+                    lessonsCountDisplay = "40+",
+                    ratingCount = 4.9,
+                    startedDate = "11.04",
+                    contacts = TestContacts,
+                    skillName = TEST_SKILL_NAME,
+                    skillLevel = TEST_SKILL_LEVEL,
+                    skillLevelProgress = TEST_SKILL_LEVEL_PROGRESS,
+                ),
                 isPreview = true,
                 onCardClick = {},
             )
