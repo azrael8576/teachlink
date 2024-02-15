@@ -42,7 +42,7 @@ internal open class LoginEndToEndRobotRobot(
         }
 
     // The strings used for matching in these tests
-    private val loginDescription by composeTestRule.stringResource(FeatureLoginR.string.content_description_login)
+    private val loginDescription by composeTestRule.stringResource(FeatureLoginR.string.feature_login_content_description_login)
 
     private val loginButton by lazy {
         composeTestRule.onNode(

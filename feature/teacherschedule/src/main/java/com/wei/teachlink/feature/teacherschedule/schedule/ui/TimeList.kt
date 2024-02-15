@@ -35,7 +35,7 @@ val timeSlotFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("H:mm")
 internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
     val yourLocalTimeZone =
         String.format(
-            stringResource(R.string.your_local_time_zone),
+            stringResource(R.string.feature_teacherschedule_your_local_time_zone),
             clock.zone,
             yourLocalTimeZoneFormatter.format(OffsetDateTime.now(clock).offset),
         )
@@ -45,10 +45,10 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
         modifier =
-        Modifier
-            .padding(top = SPACING_LARGE.dp)
-            .padding(horizontal = SPACING_LARGE.dp)
-            .semantics { contentDescription = yourLocalTimeZone },
+            Modifier
+                .padding(top = SPACING_LARGE.dp)
+                .padding(horizontal = SPACING_LARGE.dp)
+                .semantics { contentDescription = yourLocalTimeZone },
     )
 }
 
@@ -56,10 +56,10 @@ internal fun YourLocalTimeZoneText(clock: Clock = Clock.systemDefaultZone()) {
 internal fun DuringDay(duringDayType: DuringDayType) {
     val duringDay =
         when (duringDayType) {
-            DuringDayType.Morning -> stringResource(R.string.morning)
-            DuringDayType.Afternoon -> stringResource(R.string.afternoon)
-            DuringDayType.Evening -> stringResource(R.string.evening)
-            else -> stringResource(R.string.morning)
+            DuringDayType.Morning -> stringResource(R.string.feature_teacherschedule_morning)
+            DuringDayType.Afternoon -> stringResource(R.string.feature_teacherschedule_afternoon)
+            DuringDayType.Evening -> stringResource(R.string.feature_teacherschedule_evening)
+            else -> stringResource(R.string.feature_teacherschedule_morning)
         }
 
     Text(
@@ -67,10 +67,10 @@ internal fun DuringDay(duringDayType: DuringDayType) {
         color = MaterialTheme.colorScheme.onSurface,
         style = MaterialTheme.typography.bodyMedium,
         modifier =
-        Modifier
-            .padding(top = SPACING_LARGE.dp)
-            .padding(horizontal = SPACING_LARGE.dp)
-            .semantics { contentDescription = duringDay },
+            Modifier
+                .padding(top = SPACING_LARGE.dp)
+                .padding(horizontal = SPACING_LARGE.dp)
+                .semantics { contentDescription = duringDay },
     )
 }
 
@@ -100,18 +100,18 @@ private fun AvailableTimeSlot(
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val availableDescription =
         String.format(
-            stringResource(R.string.content_description_available_time_slot),
+            stringResource(R.string.feature_teacherschedule_content_description_available_time_slot),
             startTimeText,
         )
 
     Button(
         onClick = { onTimeSlotClick() },
         modifier =
-        modifier
-            .padding(top = SPACING_LARGE.dp)
-            .padding(horizontal = SPACING_LARGE.dp)
-            .fillMaxWidth(0.5f)
-            .semantics { contentDescription = availableDescription },
+            modifier
+                .padding(top = SPACING_LARGE.dp)
+                .padding(horizontal = SPACING_LARGE.dp)
+                .fillMaxWidth(0.5f)
+                .semantics { contentDescription = availableDescription },
         shape = shapes.medium,
     ) {
         Text(
@@ -129,7 +129,7 @@ private fun UnavailableTimeSlot(
     val startTimeText = timeSlotFormatter.format(timeSlot.start)
     val unavailableDescription =
         String.format(
-            stringResource(R.string.content_description_unavailable_time_slot),
+            stringResource(R.string.feature_teacherschedule_content_description_unavailable_time_slot),
             startTimeText,
         )
 
@@ -137,17 +137,17 @@ private fun UnavailableTimeSlot(
         onClick = {},
         enabled = false,
         modifier =
-        modifier
-            .padding(top = SPACING_LARGE.dp)
-            .padding(horizontal = SPACING_LARGE.dp)
-            .fillMaxWidth(0.5f)
-            .semantics { contentDescription = unavailableDescription },
+            modifier
+                .padding(top = SPACING_LARGE.dp)
+                .padding(horizontal = SPACING_LARGE.dp)
+                .fillMaxWidth(0.5f)
+                .semantics { contentDescription = unavailableDescription },
         shape = shapes.medium,
         colors =
-        ButtonDefaults.outlinedButtonColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground,
-        ),
+            ButtonDefaults.outlinedButtonColors(
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = MaterialTheme.colorScheme.onBackground,
+            ),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
     ) {
         Text(
@@ -181,12 +181,12 @@ fun AvailableTimeSlotPreview() {
         Box(modifier = Modifier.fillMaxWidth()) {
             AvailableTimeSlot(
                 timeSlot =
-                IntervalScheduleTimeSlot(
-                    start = OffsetDateTime.now(),
-                    end = OffsetDateTime.now(),
-                    state = ScheduleState.AVAILABLE,
-                    duringDayType = DuringDayType.Morning,
-                ),
+                    IntervalScheduleTimeSlot(
+                        start = OffsetDateTime.now(),
+                        end = OffsetDateTime.now(),
+                        state = ScheduleState.AVAILABLE,
+                        duringDayType = DuringDayType.Morning,
+                    ),
                 onTimeSlotClick = { },
             )
         }
@@ -200,12 +200,12 @@ fun UnavailableTimeSlotPreview() {
         Box(modifier = Modifier.fillMaxWidth()) {
             UnavailableTimeSlot(
                 timeSlot =
-                IntervalScheduleTimeSlot(
-                    start = OffsetDateTime.now(),
-                    end = OffsetDateTime.now(),
-                    state = ScheduleState.BOOKED,
-                    duringDayType = DuringDayType.Morning,
-                ),
+                    IntervalScheduleTimeSlot(
+                        start = OffsetDateTime.now(),
+                        end = OffsetDateTime.now(),
+                        state = ScheduleState.BOOKED,
+                        duringDayType = DuringDayType.Morning,
+                    ),
             )
         }
     }

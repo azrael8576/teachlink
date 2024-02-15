@@ -228,22 +228,22 @@ internal fun ScheduleScreen(
          */
         Box(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .nestedScroll(nestedScrollConnection),
+                Modifier
+                    .fillMaxSize()
+                    .nestedScroll(nestedScrollConnection),
         ) {
             ScheduleList(
                 modifier =
-                Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .fillMaxSize()
-                    .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { scope.coroutineContext.cancelChildren() },
-                        )
-                    }
-                    .testTag(stringResource(R.string.tag_schedule_list)),
+                    Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .fillMaxSize()
+                        .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = { scope.coroutineContext.cancelChildren() },
+                            )
+                        }
+                        .testTag(stringResource(R.string.feature_teacherschedule_tag_schedule_list)),
                 timeListUiState = uiStates.timeListUiState,
                 listState = listState,
                 contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
@@ -254,10 +254,10 @@ internal fun ScheduleScreen(
             ScheduleToolbar(
                 progress = toolbarState.progress,
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(with(LocalDensity.current) { toolbarState.height.toDp() })
-                    .graphicsLayer { translationY = toolbarState.offset },
+                    Modifier
+                        .fillMaxWidth()
+                        .height(with(LocalDensity.current) { toolbarState.height.toDp() })
+                        .graphicsLayer { translationY = toolbarState.offset },
                 uiStates = uiStates,
                 onPreviousWeekClick = onPreviousWeekClick,
                 onNextWeekClick = onNextWeekClick,
@@ -277,17 +277,17 @@ private fun ScheduleTopAppBar(title: String) {
             Text(
                 text = title,
                 modifier =
-                Modifier
-                    .testTag(stringResource(id = R.string.tag_schedule_top_app_bar))
-                    .semantics { contentDescription = title },
+                    Modifier
+                        .testTag(stringResource(id = R.string.feature_teacherschedule_tag_schedule_top_app_bar))
+                        .semantics { contentDescription = title },
             )
         },
         navigationIcon = { },
         actions = { },
         colors =
-        TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color.Transparent,
-        ),
+            TopAppBarDefaults.centerAlignedTopAppBarColors(
+                containerColor = Color.Transparent,
+            ),
     )
 }
 
@@ -346,28 +346,28 @@ internal fun ScheduleList(
 
             is TimeListUiState.Loading ->
                 item {
-                    val loading = stringResource(R.string.loading)
+                    val loading = stringResource(R.string.feature_teacherschedule_loading)
                     Text(
                         text = loading,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier =
-                        Modifier
-                            .padding(SPACING_LARGE.dp)
-                            .semantics { contentDescription = loading },
+                            Modifier
+                                .padding(SPACING_LARGE.dp)
+                                .semantics { contentDescription = loading },
                     )
                 }
 
             is TimeListUiState.LoadFailed ->
                 item {
-                    val loadFailed = stringResource(R.string.load_failed)
+                    val loadFailed = stringResource(R.string.feature_teacherschedule_load_failed)
                     Text(
-                        text = stringResource(R.string.load_failed),
+                        text = stringResource(R.string.feature_teacherschedule_load_failed),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.error,
                         modifier =
-                        Modifier
-                            .padding(SPACING_LARGE.dp)
-                            .semantics { contentDescription = loadFailed },
+                            Modifier
+                                .padding(SPACING_LARGE.dp)
+                                .semantics { contentDescription = loadFailed },
                     )
                 }
         }
@@ -391,7 +391,7 @@ private fun ScheduleToolbar(
     onTabClick: (Int, OffsetDateTime) -> Unit,
 ) {
     Surface(
-        modifier = modifier.testTag(stringResource(id = R.string.tag_schedule_toolbar)),
+        modifier = modifier.testTag(stringResource(id = R.string.feature_teacherschedule_tag_schedule_toolbar)),
     ) {
         Column {
             WeekActionBar(
@@ -426,19 +426,19 @@ fun WeekActionBar(
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-        Modifier
-            .height(actionBarSizeDp.dp)
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceVariant),
+            Modifier
+                .height(actionBarSizeDp.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth(),
+                Modifier
+                    .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val previousWeekDescription = stringResource(R.string.content_description_previous_week)
+            val previousWeekDescription = stringResource(R.string.feature_teacherschedule_content_description_previous_week)
             IconButton(
                 onClick = {
                     if (uiStates.isAvailablePreviousWeek) {
@@ -451,28 +451,28 @@ fun WeekActionBar(
                     imageVector = TlIcons.ArrowBackIosNew,
                     contentDescription = null,
                     tint =
-                    if (uiStates.isAvailablePreviousWeek) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        LocalContentColor.current
-                    },
+                        if (uiStates.isAvailablePreviousWeek) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            LocalContentColor.current
+                        },
                 )
             }
 
             val (weekStart, weekEnd) = uiStates.weekDateText
             val weekDataDescription =
-                stringResource(R.string.content_description_week_date).format(
+                stringResource(R.string.feature_teacherschedule_content_description_week_date).format(
                     weekStart,
                     weekEnd,
                 )
             val weekDateText = "$weekStart - $weekEnd"
             TextButton(
                 modifier =
-                Modifier
-                    .weight(1f)
-                    .semantics { contentDescription = weekDataDescription },
+                    Modifier
+                        .weight(1f)
+                        .semantics { contentDescription = weekDataDescription },
                 onClick = {
-                    onWeekDateClick(R.string.clickWeekDate, weekDateText)
+                    onWeekDateClick(R.string.feature_teacherschedule_clickWeekDate, weekDateText)
                 },
             ) {
                 Text(
@@ -483,7 +483,7 @@ fun WeekActionBar(
                 )
             }
 
-            val nextWeekDescription = stringResource(R.string.content_description_next_week)
+            val nextWeekDescription = stringResource(R.string.feature_teacherschedule_content_description_next_week)
             IconButton(
                 onClick = {
                     onNextWeekClick()
@@ -509,9 +509,9 @@ private fun WeekActionBarBottom(
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(horizontal = SPACING_LARGE.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = SPACING_LARGE.dp),
     ) {
         Column {
             Spacer(modifier = Modifier.height(SPACING_LARGE.dp))
@@ -622,9 +622,9 @@ fun ScheduleListPreview(
     TlTheme {
         ScheduleList(
             modifier =
-            Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize(),
+                Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize(),
             timeListUiState = timeListUiState,
             listState = rememberLazyListState(),
             contentPadding = PaddingValues(bottom = 0.dp),

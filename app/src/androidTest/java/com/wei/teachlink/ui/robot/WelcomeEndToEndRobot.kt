@@ -32,8 +32,8 @@ internal open class WelcomeEndToEndRobot(
     ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val welcomeTitleString by composeTestRule.stringResource(FeatureLoginR.string.welcome_title)
-    private val getStartedString by composeTestRule.stringResource(FeatureLoginR.string.get_started)
+    private val welcomeTitleString by composeTestRule.stringResource(FeatureLoginR.string.feature_login_welcome_title)
+    private val getStartedString by composeTestRule.stringResource(FeatureLoginR.string.feature_login_get_started)
 
     private val welcomeTitle by lazy {
         composeTestRule.onNodeWithContentDescription(

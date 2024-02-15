@@ -118,8 +118,8 @@ internal fun WelcomeScreen(
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier =
-            Modifier
-                .fillMaxSize(),
+                Modifier
+                    .fillMaxSize(),
         ) {
             if (withTopSpacer) {
                 Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
@@ -127,13 +127,13 @@ internal fun WelcomeScreen(
 
             WelcomeScreenToolbar(
                 modifier =
-                if (isPortrait) {
-                    Modifier.padding(horizontal = SPACING_LARGE.dp)
-                } else {
-                    Modifier.padding(
-                        horizontal = SPACING_EXTRA_LARGE.dp,
-                    )
-                },
+                    if (isPortrait) {
+                        Modifier.padding(horizontal = SPACING_LARGE.dp)
+                    } else {
+                        Modifier.padding(
+                            horizontal = SPACING_EXTRA_LARGE.dp,
+                        )
+                    },
                 isPreview = isPreview,
                 onGetStartedButtonClicked = onGetStartedButtonClicked,
             )
@@ -175,7 +175,7 @@ fun TlLogoImg(
     modifier: Modifier = Modifier,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.ic_logo
+    val resId = R.drawable.feature_login_ic_logo
     val painter = coilImagePainter(resId, isPreview)
 
     Image(
@@ -190,7 +190,7 @@ fun GetStartedButton(
     modifier: Modifier = Modifier,
     onGetStartedButtonClicked: () -> Unit,
 ) {
-    val getStarted = stringResource(R.string.get_started)
+    val getStarted = stringResource(R.string.feature_login_get_started)
     IconButton(
         onClick = { onGetStartedButtonClicked() },
     ) {
@@ -206,7 +206,7 @@ fun WelcomeGraphics(
     modifier: Modifier = Modifier,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.welcome_background
+    val resId = R.drawable.feature_login_welcome_background
     val painter = coilImagePainter(resId, isPreview)
 
     Box(modifier = modifier.fillMaxWidth()) {
@@ -214,9 +214,9 @@ fun WelcomeGraphics(
             painter = painter,
             contentDescription = null,
             modifier =
-            modifier
-                .fillMaxSize()
-                .testTag(stringResource(R.string.tag_welcome_graphics)),
+                modifier
+                    .fillMaxSize()
+                    .testTag(stringResource(R.string.feature_login_tag_welcome_graphics)),
             contentScale = ContentScale.Crop,
         )
     }
@@ -246,20 +246,20 @@ fun WelcomeTitlePortrait(
     modifier: Modifier = Modifier,
     style: TextStyle,
 ) {
-    val welcomeTitle = stringResource(R.string.welcome_title)
+    val welcomeTitle = stringResource(R.string.feature_login_welcome_title)
 
     Box(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .gradientBackgroundPortrait(),
+            modifier
+                .fillMaxWidth()
+                .gradientBackgroundPortrait(),
     ) {
         Text(
             modifier =
-            Modifier
-                .padding(vertical = SPACING_EXTRA_LARGE.dp)
-                .semantics { contentDescription = welcomeTitle }
-                .align(alignment = Alignment.Center),
+                Modifier
+                    .padding(vertical = SPACING_EXTRA_LARGE.dp)
+                    .semantics { contentDescription = welcomeTitle }
+                    .align(alignment = Alignment.Center),
             style = style,
             text = welcomeTitle,
             textAlign = TextAlign.Center,
@@ -273,20 +273,20 @@ fun WelcomeTitleLandscape(
     modifier: Modifier = Modifier,
     style: TextStyle,
 ) {
-    val welcomeTitle = stringResource(R.string.welcome_title)
+    val welcomeTitle = stringResource(R.string.feature_login_welcome_title)
 
     Box(
         modifier =
-        modifier
-            .fillMaxHeight()
-            .gradientBackgroundLandscape(),
+            modifier
+                .fillMaxHeight()
+                .gradientBackgroundLandscape(),
     ) {
         Text(
             modifier =
-            Modifier
-                .padding(horizontal = SPACING_EXTRA_LARGE.dp)
-                .semantics { contentDescription = welcomeTitle }
-                .align(alignment = Alignment.Center),
+                Modifier
+                    .padding(horizontal = SPACING_EXTRA_LARGE.dp)
+                    .semantics { contentDescription = welcomeTitle }
+                    .align(alignment = Alignment.Center),
             style = style,
             text = welcomeTitle,
             textAlign = TextAlign.Start,
@@ -298,25 +298,25 @@ fun WelcomeTitleLandscape(
 internal fun Modifier.gradientBackgroundPortrait(): Modifier =
     this.background(
         brush =
-        Brush.verticalGradient(
-            colors =
-            listOf(
-                Color.Black.copy(alpha = 0f),
-                Color.Black.copy(alpha = 0.5f),
+            Brush.verticalGradient(
+                colors =
+                    listOf(
+                        Color.Black.copy(alpha = 0f),
+                        Color.Black.copy(alpha = 0.5f),
+                    ),
             ),
-        ),
     )
 
 internal fun Modifier.gradientBackgroundLandscape(): Modifier =
     this.background(
         brush =
-        Brush.horizontalGradient(
-            colors =
-            listOf(
-                Color.White.copy(alpha = 0.5f),
-                Color.White.copy(alpha = 0f),
+            Brush.horizontalGradient(
+                colors =
+                    listOf(
+                        Color.White.copy(alpha = 0.5f),
+                        Color.White.copy(alpha = 0f),
+                    ),
             ),
-        ),
     )
 
 @DevicePortraitPreviews

@@ -33,7 +33,9 @@ internal open class NavigationRobot(
     private val schedule by composeTestRule.stringResource(R.string.schedule)
     private val home by composeTestRule.stringResource(R.string.home)
     private val contactMe by composeTestRule.stringResource(R.string.contact_me)
-    private val backDescription by composeTestRule.stringResource(FeatureTeacherscheduleR.string.content_description_back)
+    private val backDescription by composeTestRule.stringResource(
+        FeatureTeacherscheduleR.string.feature_teacherschedule_content_description_back,
+    )
 
     private val back by lazy {
         composeTestRule.onNodeWithContentDescription(

@@ -1,41 +1,41 @@
 <resources>
-    <string name="app_name">TeachLink</string>
+    <string name="feature_teacherschedule_app_name">TeachLink</string>
 
     <!-- 教師行事曆頁面 -->
-    <string name="your_local_time_zone">Your local time zone: %1$s GMT %2$s</string>
-    <string name="inquirying_teacher_calendar">You are inquiring about %1$s\'s calendar for
+    <string name="feature_teacherschedule_your_local_time_zone">Your local time zone: %1$s GMT %2$s</string>
+    <string name="feature_teacherschedule_inquirying_teacher_calendar">You are inquiring about %1$s\'s calendar for
         \n%2$s.</string>
-    <string name="clickWeekDate">Open calendar: %s</string>
-    <string name="morning">Morning</string>
-    <string name="afternoon">Afternoon</string>
-    <string name="evening">Evening</string>
-    <string name="loading">Loading…</string>
-    <string name="load_failed">🛠️ Load failed</string>
+    <string name="feature_teacherschedule_clickWeekDate">Open calendar: %s</string>
+    <string name="feature_teacherschedule_morning">Morning</string>
+    <string name="feature_teacherschedule_afternoon">Afternoon</string>
+    <string name="feature_teacherschedule_evening">Evening</string>
+    <string name="feature_teacherschedule_loading">Loading…</string>
+    <string name="feature_teacherschedule_load_failed">🛠️ Load failed</string>
 
     <!-- 教師行事曆頁面 ContentDescription -->
-    <string name="content_description_week_date">The date range is from %1$s to %2$s</string>
-    <string name="content_description_previous_week">Previous Week</string>
-    <string name="content_description_next_week">Next Week</string>
-    <string name="content_description_available_time_slot">Available Time Slot %s</string>
-    <string name="content_description_unavailable_time_slot">Unavailable Time Slot %s</string>
+    <string name="feature_teacherschedule_content_description_week_date">The date range is from %1$s to %2$s</string>
+    <string name="feature_teacherschedule_content_description_previous_week">Previous Week</string>
+    <string name="feature_teacherschedule_content_description_next_week">Next Week</string>
+    <string name="feature_teacherschedule_content_description_available_time_slot">Available Time Slot %s</string>
+    <string name="feature_teacherschedule_content_description_unavailable_time_slot">Unavailable Time Slot %s</string>
 
 
     <!-- 教師行事曆明細頁 ContentDescription -->
-    <string name="content_description_teacher_name">%s</string>
-    <string name="content_description_start_time">Start Time: %s</string>
-    <string name="content_description_end_time">End Time: %s</string>
-    <string name="content_description_state">State %s</string>
-    <string name="content_description_during_day_type">During Day %s</string>
-    <string name="content_description_back">Navigate up</string>
+    <string name="feature_teacherschedule_content_description_teacher_name">%s</string>
+    <string name="feature_teacherschedule_content_description_start_time">Start Time: %s</string>
+    <string name="feature_teacherschedule_content_description_end_time">End Time: %s</string>
+    <string name="feature_teacherschedule_content_description_state">State %s</string>
+    <string name="feature_teacherschedule_content_description_during_day_type">During Day %s</string>
+    <string name="feature_teacherschedule_content_description_back">Navigate up</string>
 
     <!-- Test tag -->
-    <string name="tag_schedule_top_app_bar" translatable="false">tag_schedule_top_app_bar</string>
-    <string name="tag_schedule_toolbar" translatable="false">tag_schedule_toolbar</string>
-    <string name="tag_schedule_list" translatable="false">tag_schedule_list</string>
+    <string name="feature_teacherschedule_tag_schedule_top_app_bar" translatable="false">tag_schedule_top_app_bar</string>
+    <string name="feature_teacherschedule_tag_schedule_toolbar" translatable="false">tag_schedule_toolbar</string>
+    <string name="feature_teacherschedule_tag_schedule_list" translatable="false">tag_schedule_list</string>
 
-    <string name="tag_teacher_name" translatable="false">tag_teacher_name</string>
-    <string name="tag_start_time" translatable="false">tag_start_time</string>
-    <string name="tag_end_time" translatable="false">tag_end_time</string>
-    <string name="tag_state" translatable="false">tag_state</string>
-    <string name="tag_during_day_type" translatable="false">tag_during_day_type</string>
+    <string name="feature_teacherschedule_tag_teacher_name" translatable="false">tag_teacher_name</string>
+    <string name="feature_teacherschedule_tag_start_time" translatable="false">tag_start_time</string>
+    <string name="feature_teacherschedule_tag_end_time" translatable="false">tag_end_time</string>
+    <string name="feature_teacherschedule_tag_state" translatable="false">tag_state</string>
+    <string name="feature_teacherschedule_tag_during_day_type" translatable="false">tag_during_day_type</string>
 </resources>

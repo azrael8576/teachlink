@@ -41,7 +41,7 @@ internal open class HomeEndToEndRobot(
         }
 
     // The strings used for matching in these tests
-    private val menuDescription by composeTestRule.stringResource(FeatureHomeR.string.menu)
+    private val menuDescription by composeTestRule.stringResource(FeatureHomeR.string.feature_home_menu)
 
     private val menuButton by lazy {
         composeTestRule.onNode(

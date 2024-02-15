@@ -117,7 +117,7 @@ internal fun HomeScreen(
             HomeTopBar(
                 modifier = horizontalBasePadding,
                 userName = uiStates.userDisplayName,
-                avatarId = R.drawable.he_wei,
+                avatarId = R.drawable.feature_home_he_wei,
                 onAddUserClick = {
                     // TODO
                     showPopup.value = true
@@ -193,7 +193,7 @@ private fun TabContent(
 
 @Composable
 private fun UnavailableScreenContent() {
-    val screenNotAvailable = stringResource(R.string.screen_not_available)
+    val screenNotAvailable = stringResource(R.string.feature_home_screen_not_available)
 
     Column {
         Spacer(modifier = Modifier.weight(1f))
@@ -202,8 +202,8 @@ private fun UnavailableScreenContent() {
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.headlineMedium,
             modifier =
-            Modifier
-                .semantics { contentDescription = screenNotAvailable },
+                Modifier
+                    .semantics { contentDescription = screenNotAvailable },
         )
         Spacer(modifier = Modifier.weight(1f))
     }
@@ -213,9 +213,9 @@ private fun UnavailableScreenContent() {
 private fun LoadingErrorContent() {
     Box(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .testTag(stringResource(R.string.tag_loading_error_content)),
+            Modifier
+                .fillMaxSize()
+                .testTag(stringResource(R.string.feature_home_tag_loading_error_content)),
     ) {
         // TODO Error Content
     }
@@ -225,9 +225,9 @@ private fun LoadingErrorContent() {
 private fun LoadingContent() {
     Box(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .testTag(stringResource(R.string.tag_loading_content)),
+            Modifier
+                .fillMaxSize()
+                .testTag(stringResource(R.string.feature_home_tag_loading_content)),
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(modifier = Modifier.size(30.dp))
@@ -240,10 +240,10 @@ fun HomeScreenPreview() {
     TlTheme {
         HomeScreen(
             uiStates =
-            HomeViewState(
-                loadingState = HomeViewLoadingState.Success,
-                userDisplayName = "Wei",
-            ),
+                HomeViewState(
+                    loadingState = HomeViewLoadingState.Success,
+                    userDisplayName = "Wei",
+                ),
             isPreview = true,
             onTabClick = { },
         )

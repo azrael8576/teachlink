@@ -125,8 +125,8 @@ internal fun ContactMeScreen(
 ) {
     Surface(
         modifier =
-        Modifier
-            .fillMaxSize(),
+            Modifier
+                .fillMaxSize(),
     ) {
         if (contentType == TlContentType.DUAL_PANE) {
             Box(
@@ -155,19 +155,19 @@ internal fun ContactMeScreen(
                         )
                     },
                     strategy =
-                    HorizontalTwoPaneStrategy(
-                        splitFraction = 0.5f,
-                        gapWidth = SPACING_LARGE.dp,
-                    ),
+                        HorizontalTwoPaneStrategy(
+                            splitFraction = 0.5f,
+                            gapWidth = SPACING_LARGE.dp,
+                        ),
                     displayFeatures = displayFeatures,
                 )
             }
         } else {
             Box(
                 modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.background),
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.background),
                 contentAlignment = Alignment.Center,
             ) {
                 DecorativeBackgroundText(
@@ -301,18 +301,18 @@ internal fun DisplayHeadShot(
     name: String,
     isPreview: Boolean,
 ) {
-    val resId = R.drawable.he_wei
+    val resId = R.drawable.feature_contactme_he_wei
     val painter = coilImagePainter(resId, isPreview)
 
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
+    val profilePictureDescription = stringResource(R.string.feature_contactme_profile_picture).format(name)
     Image(
         painter = painter,
         contentDescription = profilePictureDescription,
         modifier =
-        modifier
-            .clip(CircleShape)
-            .size(300.dp)
-            .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape),
+            modifier
+                .clip(CircleShape)
+                .size(300.dp)
+                .border(2.dp, MaterialTheme.colorScheme.onBackground, CircleShape),
     )
 }
 
@@ -324,19 +324,19 @@ fun ContactMeCard(
 ) {
     Card(
         modifier =
-        modifier
-            .padding(horizontal = SPACING_EXTRA_LARGE.dp)
-            .clip(CardDefaults.shape),
+            modifier
+                .padding(horizontal = SPACING_EXTRA_LARGE.dp)
+                .clip(CardDefaults.shape),
         colors =
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            ),
     ) {
         Column(
             modifier =
-            Modifier
-                .padding(SPACING_LARGE.dp)
-                .fillMaxWidth(),
+                Modifier
+                    .padding(SPACING_LARGE.dp)
+                    .fillMaxWidth(),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -352,17 +352,17 @@ fun ContactMeCard(
                 )
             }
             ProfileProperty(
-                label = stringResource(id = R.string.linkedin),
+                label = stringResource(id = R.string.feature_contactme_linkedin),
                 value = uiStates.linkedinUrl,
                 isLink = true,
             )
             ProfileProperty(
-                label = stringResource(id = R.string.email),
+                label = stringResource(id = R.string.feature_contactme_email),
                 value = uiStates.email,
                 isLink = true,
             )
             ProfileProperty(
-                label = stringResource(id = R.string.timezone),
+                label = stringResource(id = R.string.feature_contactme_timezone),
                 value = uiStates.timeZone,
                 isLink = false,
             )
@@ -384,9 +384,9 @@ private fun NameAndPosition(
             text = name,
             style = MaterialTheme.typography.headlineSmall,
             modifier =
-            Modifier
-                .baselineHeight(32.dp)
-                .semantics { contentDescription = name },
+                Modifier
+                    .baselineHeight(32.dp)
+                    .semantics { contentDescription = name },
         )
         val position = uiStates.position
         Text(
@@ -394,10 +394,10 @@ private fun NameAndPosition(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier =
-            Modifier
-                .padding(bottom = 20.dp)
-                .baselineHeight(SPACING_EXTRA_LARGE.dp)
-                .semantics { contentDescription = position },
+                Modifier
+                    .padding(bottom = 20.dp)
+                    .baselineHeight(SPACING_EXTRA_LARGE.dp)
+                    .semantics { contentDescription = position },
         )
     }
 }
@@ -417,17 +417,17 @@ private fun PhoneButton(
         )
     }
 
-    val phoneDescription = stringResource(id = R.string.call).format(name)
+    val phoneDescription = stringResource(id = R.string.feature_contactme_call).format(name)
     IconButton(
         onClick = {
             showPopup.value = true
             onPhoneClick()
         },
         modifier =
-        Modifier
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surface)
-            .semantics { contentDescription = phoneDescription },
+            Modifier
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surface)
+                .semantics { contentDescription = phoneDescription },
     ) {
         Icon(
             imageVector = TlIcons.Phone,

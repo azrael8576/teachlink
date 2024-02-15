@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 首頁 -->
-    <string name="profile_picture">%s\'s profile picture</string>
-    <string name="add_user">Add User</string>
-    <string name="menu">Menu</string>
-    <string name="tutor">Tutor</string>
-    <string name="tutors">Tutors</string>
-    <string name="chats">Chats</string>
-    <string name="my_courses">My Courses</string>
-    <string name="completed">Completed</string>
-    <string name="pupil">Pupil</string>
-    <string name="rating">Rating</string>
-    <string name="lessons">Lessons</string>
-    <string name="started">Started</string>
-    <string name="hello">Hello, %1$s</string>
-    <string name="course_progress_card">%1$s, percentage %2$s, count %3$s</string>
-    <string name="contact_card">聯絡人卡牌</string>
-    <string name="skill_progress_card">%1$s %2$s, percentage %3$s</string>
-    <string name="screen_not_available" translatable="false">Screen not available 🙈</string>
+    <string name="feature_home_profile_picture">%s\'s profile picture</string>
+    <string name="feature_home_add_user">Add User</string>
+    <string name="feature_home_menu">Menu</string>
+    <string name="feature_home_tutor">Tutor</string>
+    <string name="feature_home_tutors">Tutors</string>
+    <string name="feature_home_chats">Chats</string>
+    <string name="feature_home_my_courses">My Courses</string>
+    <string name="feature_home_completed">Completed</string>
+    <string name="feature_home_pupil">Pupil</string>
+    <string name="feature_home_rating">Rating</string>
+    <string name="feature_home_lessons">Lessons</string>
+    <string name="feature_home_started">Started</string>
+    <string name="feature_home_hello">Hello, %1$s</string>
+    <string name="feature_home_course_progress_card">%1$s, percentage %2$s, count %3$s</string>
+    <string name="feature_home_contact_card">聯絡人卡牌</string>
+    <string name="feature_home_skill_progress_card">%1$s %2$s, percentage %3$s</string>
+    <string name="feature_home_screen_not_available" translatable="false">Screen not available 🙈</string>
 
     <!-- Test tag -->
-    <string name="tag_user_avatar" translatable="false">UserAvatar</string>
-    <string name="tag_hello_user_name_text" translatable="false">HelloUserNameText</string>
-    <string name="tag_course_progress_card" translatable="false">CourseProgressCard</string>
-    <string name="tag_pupil_rating_card" translatable="false">PupilRatingCard</string>
-    <string name="tag_tutor_button" translatable="false">TutorButton</string>
-    <string name="tag_class_name" translatable="false">ClassName</string>
-    <string name="tag_class_info" translatable="false">ClassInfo</string>
-    <string name="tag_skill_name" translatable="false">SkillName</string>
-    <string name="tag_skill_level" translatable="false">SkillLevel</string>
-    <string name="tag_circular_progress" translatable="false">CircularProgress</string>
-    <string name="tag_loading_content" translatable="false">LoadingContent</string>
-    <string name="tag_loading_error_content" translatable="false">LoadingErrorContent</string>
+    <string name="feature_home_tag_user_avatar" translatable="false">UserAvatar</string>
+    <string name="feature_home_tag_hello_user_name_text" translatable="false">HelloUserNameText</string>
+    <string name="feature_home_tag_course_progress_card" translatable="false">CourseProgressCard</string>
+    <string name="feature_home_tag_pupil_rating_card" translatable="false">PupilRatingCard</string>
+    <string name="feature_home_tag_tutor_button" translatable="false">TutorButton</string>
+    <string name="feature_home_tag_class_name" translatable="false">ClassName</string>
+    <string name="feature_home_tag_class_info" translatable="false">ClassInfo</string>
+    <string name="feature_home_tag_skill_name" translatable="false">SkillName</string>
+    <string name="feature_home_tag_skill_level" translatable="false">SkillLevel</string>
+    <string name="feature_home_tag_circular_progress" translatable="false">CircularProgress</string>
+    <string name="feature_home_tag_loading_content" translatable="false">LoadingContent</string>
+    <string name="feature_home_tag_loading_error_content" translatable="false">LoadingErrorContent</string>
 
 </resources>

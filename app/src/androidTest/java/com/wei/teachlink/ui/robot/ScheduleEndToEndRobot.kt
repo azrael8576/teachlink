@@ -31,7 +31,9 @@ internal open class ScheduleEndToEndRobot(
     ) = ReadOnlyProperty<Any?, String> { _, _ -> activity.getString(resId) }
 
     // The strings used for matching in these tests
-    private val scheduleTopAppBarTag by composeTestRule.stringResource(FeatureTeacherScheduleR.string.tag_schedule_top_app_bar)
+    private val scheduleTopAppBarTag by composeTestRule.stringResource(
+        FeatureTeacherScheduleR.string.feature_teacherschedule_tag_schedule_top_app_bar,
+    )
 
     private val scheduleTopAppBar by lazy {
         composeTestRule.onNodeWithTag(

@@ -2,19 +2,19 @@
 <resources>
 
     <!-- 歡迎頁面 -->
-    <string name="welcome_title">像好友一樣的
+    <string name="feature_login_welcome_title">像好友一樣的
         \n優質教師</string>
-    <string name="get_started">Get Started</string>
+    <string name="feature_login_get_started">Get Started</string>
 
     <!-- 登入頁面 -->
-    <string name="account">Account</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="forgot_password">忘記密碼？</string>
+    <string name="feature_login_account">Account</string>
+    <string name="feature_login_password">Password</string>
+    <string name="feature_login_login">Login</string>
+    <string name="feature_login_forgot_password">忘記密碼？</string>
 
     <!-- 登入頁面 ContentDescription -->
-    <string name="content_description_account">帳號</string>
-    <string name="content_description_password">密碼</string>
-    <string name="content_description_login">登入</string>
+    <string name="feature_login_content_description_account">帳號</string>
+    <string name="feature_login_content_description_password">密碼</string>
+    <string name="feature_login_content_description_login">登入</string>
 
 </resources>

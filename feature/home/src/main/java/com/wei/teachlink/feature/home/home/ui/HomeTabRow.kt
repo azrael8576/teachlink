@@ -68,15 +68,15 @@ fun MyCoursesTab(
     isSelected: Boolean,
     onTabClick: () -> Unit,
 ) {
-    val myCourses = stringResource(id = R.string.my_courses)
+    val myCourses = stringResource(id = R.string.feature_home_my_courses)
 
     Tab(
         selected = isSelected,
         onClick = onTabClick,
         modifier =
-        Modifier.semantics {
-            contentDescription = myCourses
-        },
+            Modifier.semantics {
+                contentDescription = myCourses
+            },
     ) {
         Text(
             text = myCourses,
@@ -94,15 +94,15 @@ fun ChatTab(
     shouldDisplayChatCount: Boolean,
     onTabClick: () -> Unit,
 ) {
-    val chats = stringResource(R.string.chats)
+    val chats = stringResource(R.string.feature_home_chats)
 
     Tab(
         selected = isSelected,
         onClick = onTabClick,
         modifier =
-        Modifier.semantics {
-            contentDescription = chats
-        },
+            Modifier.semantics {
+                contentDescription = chats
+            },
     ) {
         Row(
             modifier = Modifier.padding(SPACING_LARGE.dp),
@@ -125,9 +125,9 @@ fun ChatTab(
 fun ChatCountBadge(count: String) {
     Box(
         modifier =
-        Modifier
-            .clip(shape = shapes.medium)
-            .background(color = MaterialTheme.colorScheme.primary),
+            Modifier
+                .clip(shape = shapes.medium)
+                .background(color = MaterialTheme.colorScheme.primary),
     ) {
         Text(
             text = count,
@@ -143,15 +143,15 @@ fun TutorsTab(
     isSelected: Boolean,
     onTabClick: () -> Unit,
 ) {
-    val tutors = stringResource(id = R.string.tutors)
+    val tutors = stringResource(id = R.string.feature_home_tutors)
 
     Tab(
         selected = isSelected,
         onClick = onTabClick,
         modifier =
-        Modifier.semantics {
-            contentDescription = tutors
-        },
+            Modifier.semantics {
+                contentDescription = tutors
+            },
     ) {
         Text(
             text = tutors,
@@ -168,10 +168,10 @@ fun HomeTabRowPreview() {
     TlTheme {
         HomeTabRow(
             uiStates =
-            HomeViewState(
-                selectedTab = Tab.MY_COURSES,
-                chatCount = 999,
-            ),
+                HomeViewState(
+                    selectedTab = Tab.MY_COURSES,
+                    chatCount = 999,
+                ),
             onTabSelected = {},
         )
     }

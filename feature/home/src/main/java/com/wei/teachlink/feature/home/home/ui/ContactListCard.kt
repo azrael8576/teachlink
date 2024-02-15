@@ -49,20 +49,20 @@ fun ContactCard(
     val maxDisplayContacts = 4
     val contactsPerRow = 2
     val spacingSize = SPACING_EXTRA_SMALL.dp
-    val contactCard = stringResource(R.string.contact_card)
+    val contactCard = stringResource(R.string.feature_home_contact_card)
 
     Card(
         modifier =
-        modifier
-            .semantics {
-                contentDescription = contactCard
-            },
+            modifier
+                .semantics {
+                    contentDescription = contactCard
+                },
         shape = shapes.extraLarge,
         colors =
-        CardDefaults.cardColors(
-            contentColor = MaterialTheme.colorScheme.onSecondary,
-            containerColor = MaterialTheme.colorScheme.secondary,
-        ),
+            CardDefaults.cardColors(
+                contentColor = MaterialTheme.colorScheme.onSecondary,
+                containerColor = MaterialTheme.colorScheme.secondary,
+            ),
     ) {
         Column(
             modifier = Modifier.padding(SPACING_MEDIUM.dp),
@@ -103,21 +103,21 @@ internal fun ContactAvatar(
     isPreview: Boolean,
 ) {
     val painter = coilImagePainter(avatarId, true)
-    val profilePictureDescription = stringResource(R.string.profile_picture).format(name)
+    val profilePictureDescription = stringResource(R.string.feature_home_profile_picture).format(name)
 
     Box(
         modifier =
-        modifier
-            .size(CONTACT_HEAD_SHOT_SIZE.dp)
-            .statusIndicator(status),
+            modifier
+                .size(CONTACT_HEAD_SHOT_SIZE.dp)
+                .statusIndicator(status),
     ) {
         Image(
             painter = painter,
             contentDescription = profilePictureDescription,
             modifier =
-            Modifier
-                .matchParentSize()
-                .clip(CircleShape),
+                Modifier
+                    .matchParentSize()
+                    .clip(CircleShape),
         )
     }
 }
@@ -172,9 +172,9 @@ fun Modifier.statusIndicator(
 fun PlaceholderAvatar(modifier: Modifier = Modifier) {
     Box(
         modifier =
-        modifier
-            .background(MaterialTheme.colorScheme.secondary)
-            .size(CONTACT_HEAD_SHOT_SIZE.dp),
+            modifier
+                .background(MaterialTheme.colorScheme.secondary)
+                .size(CONTACT_HEAD_SHOT_SIZE.dp),
     )
 }
 

@@ -1,21 +1,21 @@
 <resources>
 
     <!-- 歡迎頁面 -->
-    <string name="welcome_title">Quality teachers
+    <string name="feature_login_welcome_title">Quality teachers
         \nwho are like friends</string>
-    <string name="get_started">Get Started</string>
+    <string name="feature_login_get_started">Get Started</string>
 
     <!-- 登入頁面 -->
-    <string name="account">Account</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="feature_login_account">Account</string>
+    <string name="feature_login_password">Password</string>
+    <string name="feature_login_login">Login</string>
+    <string name="feature_login_forgot_password">Forgot Password?</string>
 
     <!-- 登入頁面 ContentDescription -->
-    <string name="content_description_account">Account</string>
-    <string name="content_description_password">Password</string>
-    <string name="content_description_login">Login</string>
+    <string name="feature_login_content_description_account">Account</string>
+    <string name="feature_login_content_description_password">Password</string>
+    <string name="feature_login_content_description_login">Login</string>
 
     <!-- Test tag -->
-    <string name="tag_welcome_graphics" translatable="false">tag_welcome_graphics</string>
+    <string name="feature_login_tag_welcome_graphics" translatable="false">tag_welcome_graphics</string>
 </resources>
