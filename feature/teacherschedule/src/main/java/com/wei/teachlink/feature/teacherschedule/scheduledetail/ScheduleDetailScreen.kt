@@ -31,6 +31,7 @@ import com.wei.teachlink.core.designsystem.icon.TlIcons
 import com.wei.teachlink.core.designsystem.theme.SPACING_LARGE
 import com.wei.teachlink.core.designsystem.theme.SPACING_MEDIUM
 import com.wei.teachlink.core.designsystem.theme.TlTheme
+import com.wei.teachlink.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.teachlink.core.model.data.DuringDayType
 import com.wei.teachlink.core.model.data.IntervalScheduleTimeSlot
 import com.wei.teachlink.core.model.data.ScheduleState
@@ -80,6 +81,7 @@ internal fun ScheduleDetailRoute(
             intervalScheduleTimeSlot = timeSlot,
         ),
     )
+    TrackScreenViewEvent(screenName = "ScheduleDetail, $teacherName / ${timeSlot.start}")
 
     ScheduleDetailScreen(
         uiStates = uiStates,

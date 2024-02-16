@@ -33,6 +33,7 @@ import com.wei.teachlink.core.designsystem.component.FunctionalityNotAvailablePo
 import com.wei.teachlink.core.designsystem.component.ThemePreviews
 import com.wei.teachlink.core.designsystem.theme.SPACING_LARGE
 import com.wei.teachlink.core.designsystem.theme.TlTheme
+import com.wei.teachlink.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.teachlink.feature.home.R
 import com.wei.teachlink.feature.home.home.ui.HomeTabRow
 import com.wei.teachlink.feature.home.home.ui.HomeTopBar
@@ -148,6 +149,7 @@ internal fun HomeScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "Home")
 }
 
 @Composable

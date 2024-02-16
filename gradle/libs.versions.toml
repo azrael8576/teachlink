@@ -20,6 +20,11 @@ androidxActivity = "1.8.0-rc01"
 androidxBrowser = "1.7.0"
 androidx-window = "1.2.0-beta01"
 androidGradlePlugin = "8.1.0-rc01"
+androidTools = "31.2.0"
+firebaseBom = "32.4.0"
+firebaseCrashlyticsPlugin = "2.9.9"
+firebasePerfPlugin = "1.4.2"
+gmsPlugin = "4.4.0"
 kotlin = "1.9.10"
 navigationSafeArgsKotlin = "2.7.6"
 androidxComposeCompiler = "1.5.3"
@@ -35,10 +40,13 @@ coil = "2.5.0"
 accompanist = "0.32.0"
 ksp = "1.9.10-1.0.13"
 secrets = "2.0.1"
-lint = "31.2.0"
 robolectric = "4.11.1"
 roborazzi = "1.9.0-alpha-3"
 leakcanary = "2.13"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+appcompat = "1.6.1"
+material = "1.11.0"
 
 [libraries]
 
@@ -155,7 +163,14 @@ accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive",
 accompanist-testharness = { group = "com.google.accompanist", name = "accompanist-testharness", version.ref = "accompanist" }
 
 # lint
-lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
+lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "androidTools" }
+
+# firebase
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
 
 # robolectric - Android Unit Testing Framework
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
@@ -169,13 +184,23 @@ leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", v
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+firebase-crashlytics-gradlePlugin = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsPlugin" }
+firebase-performance-gradlePlugin = { group = "com.google.firebase", name = "perf-plugin", version.ref = "firebasePerfPlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
+firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
+gms = { id = "com.google.gms.google-services", version.ref = "gmsPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationSafeArgsKotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -190,6 +215,7 @@ roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
 # Plugins defined by this project
 tl-android-application = { id = "tl.android.application", version = "unspecified" }
 tl-android-application-compose = { id = "tl.android.application.compose", version = "unspecified" }
+tl-android-application-firebase = { id = "tl.android.application.firebase", version = "unspecified" }
 tl-android-application-flavors = { id = "tl.android.application.flavors", version = "unspecified" }
 tl-android-feature = { id = "tl.android.feature", version = "unspecified" }
 tl-android-hilt = { id = "tl.android.hilt", version = "unspecified" }

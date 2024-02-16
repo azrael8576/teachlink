@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.tl.android.application)
     alias(libs.plugins.tl.android.application.compose)
     alias(libs.plugins.tl.android.application.flavors)
+    alias(libs.plugins.tl.android.application.firebase)
     alias(libs.plugins.tl.android.hilt)
     alias(libs.plugins.roborazzi)
 }
@@ -75,6 +76,7 @@ dependencies {
     implementation(projects.feature.login)
     implementation(projects.feature.teacherschedule)
 
+    implementation(projects.core.analytics)
     implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.datastore)
