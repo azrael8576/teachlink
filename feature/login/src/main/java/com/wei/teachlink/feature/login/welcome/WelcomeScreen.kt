@@ -48,6 +48,7 @@ import com.wei.teachlink.core.designsystem.theme.SPACING_LARGE
 import com.wei.teachlink.core.designsystem.theme.TlTheme
 import com.wei.teachlink.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.teachlink.core.designsystem.ui.DevicePortraitPreviews
+import com.wei.teachlink.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.teachlink.feature.login.R
 import com.wei.teachlink.feature.login.login.navigation.navigateToLogin
 import com.wei.teachlink.core.designsystem.R as DesignsystemR
@@ -152,6 +153,7 @@ internal fun WelcomeScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "Welcome")
 }
 
 @Composable

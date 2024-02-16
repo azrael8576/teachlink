@@ -16,6 +16,7 @@ android {
 dependencies {
     androidTestImplementation(projects.core.testing)
 
+    api(projects.core.analytics)
     // Material Design 3
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.material.iconsExtended)

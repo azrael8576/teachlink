@@ -55,6 +55,7 @@ import com.wei.teachlink.core.designsystem.ui.DeviceLandscapePreviews
 import com.wei.teachlink.core.designsystem.ui.DevicePortraitPreviews
 import com.wei.teachlink.core.designsystem.ui.TlContentType
 import com.wei.teachlink.core.designsystem.ui.TlNavigationType
+import com.wei.teachlink.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.teachlink.feature.contactme.R
 import com.wei.teachlink.feature.contactme.contactme.ui.DecorativeBackgroundText
 import com.wei.teachlink.feature.contactme.contactme.ui.ProfileProperty
@@ -185,6 +186,7 @@ internal fun ContactMeScreen(
             }
         }
     }
+    TrackScreenViewEvent(screenName = "ContactMe")
 }
 
 @Composable

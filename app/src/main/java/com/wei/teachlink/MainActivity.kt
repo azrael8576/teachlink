@@ -20,6 +20,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 import com.wei.teachlink.MainActivityUiState.Loading
 import com.wei.teachlink.MainActivityUiState.Success
+import com.wei.teachlink.core.analytics.AnalyticsHelper
+import com.wei.teachlink.core.analytics.LocalAnalyticsHelper
 import com.wei.teachlink.core.authentication.TokenManager
 import com.wei.teachlink.core.authentication.TokenState
 import com.wei.teachlink.core.data.utils.NetworkMonitor
@@ -42,6 +44,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     private val viewModel: MainActivityViewModel by viewModels()
     private var uiState: MainActivityUiState = Loading
@@ -108,7 +113,7 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
-            CompositionLocalProvider {
+            CompositionLocalProvider(LocalAnalyticsHelper provides analyticsHelper) {
                 TlTheme(darkTheme = darkTheme) {
                     TlApp(
                         networkMonitor = networkMonitor,

@@ -72,6 +72,7 @@ import com.wei.teachlink.core.designsystem.management.states.topappbar.TopAppBar
 import com.wei.teachlink.core.designsystem.management.states.topappbar.scrollflags.EnterAlwaysState
 import com.wei.teachlink.core.designsystem.theme.SPACING_LARGE
 import com.wei.teachlink.core.designsystem.theme.TlTheme
+import com.wei.teachlink.core.designsystem.ui.TrackScreenViewEvent
 import com.wei.teachlink.core.model.data.IntervalScheduleTimeSlot
 import com.wei.teachlink.feature.teacherschedule.R
 import com.wei.teachlink.feature.teacherschedule.schedule.ui.DateTabLayout
@@ -267,6 +268,7 @@ internal fun ScheduleScreen(
             AnimateToolbarOffset(toolbarState, listState, toolbarHeightRange)
         }
     }
+    TrackScreenViewEvent(screenName = "Schedule, ${uiStates._currentTeacherName}")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -438,7 +440,8 @@ fun WeekActionBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val previousWeekDescription = stringResource(R.string.feature_teacherschedule_content_description_previous_week)
+            val previousWeekDescription =
+                stringResource(R.string.feature_teacherschedule_content_description_previous_week)
             IconButton(
                 onClick = {
                     if (uiStates.isAvailablePreviousWeek) {
@@ -483,7 +486,8 @@ fun WeekActionBar(
                 )
             }
 
-            val nextWeekDescription = stringResource(R.string.feature_teacherschedule_content_description_next_week)
+            val nextWeekDescription =
+                stringResource(R.string.feature_teacherschedule_content_description_next_week)
             IconButton(
                 onClick = {
                     onNextWeekClick()

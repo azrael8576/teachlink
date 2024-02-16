@@ -14,12 +14,13 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-//teachlink
+// teachlink
 rootProject.name = "teachlink"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 
+include(":core:analytics")
 include(":core:network")
 include(":core:data")
 include(":core:common")
