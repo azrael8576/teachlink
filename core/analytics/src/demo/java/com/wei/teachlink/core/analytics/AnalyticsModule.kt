@@ -1,6 +1,5 @@
 package com.wei.teachlink.core.analytics
 
-import com.google.firebase.analytics.ktx.analytics
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
