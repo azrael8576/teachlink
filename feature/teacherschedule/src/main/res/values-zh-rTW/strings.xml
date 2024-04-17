@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feature_teacherschedule_app_name">TeachLink</string>
-
     <!-- 教師行事曆頁面 -->
     <string name="feature_teacherschedule_your_local_time_zone">您當地的時區: %1$s GMT %2$s</string>
     <string name="feature_teacherschedule_inquirying_teacher_calendar">您正在查詢 %1$s 老師
