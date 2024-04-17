@@ -91,8 +91,8 @@ internal fun LoginRoute(
 @Composable
 internal fun LoginScreen(
     // TODO: These are test account credentials for demo purposes. Please ensure to clear them (set to "") before any release or production usage.
-    account: String = if (BuildConfig.DEBUG) TEST_ACCOUNT else "",
-    password: String = if (BuildConfig.DEBUG) TEST_PASSWORD else "",
+    account: String = if ("demo" == BuildConfig.FLAVOR) TEST_ACCOUNT else "",
+    password: String = if ("demo" == BuildConfig.FLAVOR) TEST_PASSWORD else "",
     login: (String, String) -> Unit,
     withTopSpacer: Boolean = true,
     withBottomSpacer: Boolean = true,
