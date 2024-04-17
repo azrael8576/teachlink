@@ -25,11 +25,11 @@ android {
          *
          * XYZ: App version (050 for 0.5.0)
          */
-        versionCode = 3414071
+        versionCode = 3414072
         /**
          * SemVer major.minor.patch
          */
-        versionName = "0.7.1"
+        versionName = "0.7.2"
 
         // Custom test runner to set up Hilt dependency graph
         testInstrumentationRunner = "com.wei.teachlink.core.testing.TlTestRunner"
