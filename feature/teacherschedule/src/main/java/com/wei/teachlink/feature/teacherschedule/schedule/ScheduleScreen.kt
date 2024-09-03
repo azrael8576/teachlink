@@ -12,13 +12,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -70,6 +73,7 @@ import com.wei.teachlink.core.designsystem.icon.TlIcons
 import com.wei.teachlink.core.designsystem.management.states.topappbar.FixedScrollFlagState
 import com.wei.teachlink.core.designsystem.management.states.topappbar.TopAppBarState
 import com.wei.teachlink.core.designsystem.management.states.topappbar.scrollflags.EnterAlwaysState
+import com.wei.teachlink.core.designsystem.management.states.topappbar.scrollflags.ExitUntilCollapsedState
 import com.wei.teachlink.core.designsystem.theme.SPACING_LARGE
 import com.wei.teachlink.core.designsystem.theme.TlTheme
 import com.wei.teachlink.core.designsystem.ui.TrackScreenViewEvent
@@ -159,8 +163,8 @@ internal fun ScheduleRoute(
  */
 @Composable
 private fun rememberToolbarState(toolbarHeightRange: IntRange): TopAppBarState {
-    return rememberSaveable(saver = EnterAlwaysState.Saver) {
-        EnterAlwaysState(toolbarHeightRange)
+    return rememberSaveable(saver = ExitUntilCollapsedState.Saver) {
+        ExitUntilCollapsedState(toolbarHeightRange)
     }
 }
 
@@ -230,28 +234,37 @@ internal fun ScheduleScreen(
         Box(
             modifier =
             Modifier
-                .fillMaxSize()
-                .nestedScroll(nestedScrollConnection),
+                .fillMaxSize(),
         ) {
-            ScheduleList(
-                modifier =
-                Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .fillMaxSize()
-                    .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
-                    .pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = { scope.coroutineContext.cancelChildren() },
-                        )
-                    }
-                    .testTag(stringResource(R.string.feature_teacherschedule_tag_schedule_list)),
-                timeListUiState = uiStates.timeListUiState,
-                listState = listState,
-                contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
-                isScrollInProgress = uiStates.isScrollInProgress,
-                onListScroll = onListScroll,
-                onTimeSlotClick = onTimeSlotClick,
-            )
+            Row(modifier =
+            Modifier
+                .background(MaterialTheme.colorScheme.background)
+                .fillMaxSize()
+                .graphicsLayer { translationY = toolbarState.height + toolbarState.offset }
+                ) {
+                LeftList()
+                ScheduleList(
+                    modifier =
+                    Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .fillMaxHeight()
+                        .weight(1f)
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = { scope.coroutineContext.cancelChildren() },
+                            )
+                        }
+                        .nestedScroll(nestedScrollConnection)
+                        .testTag(stringResource(R.string.feature_teacherschedule_tag_schedule_list)),
+                    timeListUiState = uiStates.timeListUiState,
+                    listState = listState,
+                    contentPadding = PaddingValues(bottom = if (toolbarState is FixedScrollFlagState) MinToolbarHeight else 0.dp),
+                    isScrollInProgress = uiStates.isScrollInProgress,
+                    onListScroll = onListScroll,
+                    onTimeSlotClick = onTimeSlotClick,
+                )
+            }
+
             ScheduleToolbar(
                 progress = toolbarState.progress,
                 modifier =
@@ -270,6 +283,24 @@ internal fun ScheduleScreen(
     }
     TrackScreenViewEvent(screenName = "Schedule, ${uiStates._currentTeacherName}")
 }
+
+@Composable
+fun RowScope.LeftList() {
+    LazyColumn(
+        modifier = Modifier
+            .width(100.dp)
+            .fillMaxHeight()
+    ) {
+        items(50) {
+            Text(text = "Item $it", modifier = Modifier.padding(16.dp))
+        }
+        item {
+
+            Spacer(modifier = Modifier.height(MaxToolbarHeight))
+        }
+    }
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
