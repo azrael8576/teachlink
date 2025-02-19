@@ -18,9 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v3
-
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
@@ -31,7 +28,14 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          validate-wrappers: true
+
+        # If the test fails, execute the following command to apply fixes.
+        # ./gradlew spotlessApply --init-script gradle/init.gradle.kts --no-configuration-cache
+      - name: Check spotless
+        run: ./gradlew spotlessCheck --init-script gradle/init.gradle.kts --no-configuration-cache
 
       - name: Build all build type and flavor permutations
         run: ./gradlew assemble
@@ -43,7 +47,7 @@ jobs:
           path: '**/build/outputs/apk/**/*.apk'
 
       - name: Run local tests
-        run: ./gradlew test
+        run: ./gradlew testDemoDebug testProdDebug
 
   test:
     runs-on: ubuntu-latest
@@ -57,9 +61,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/wrapper-validation-action@v3
-
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
@@ -70,7 +71,36 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          validate-wrappers: true
+
+      - name: Run all local screenshot tests (Roborazzi)
+        id: screenshotsverify
+        continue-on-error: true
+        run: ./gradlew verifyRoborazziDemoDebug
+
+      - name: Prevent pushing new screenshots if this is a fork
+        id: checkfork
+        continue-on-error: false
+        if: steps.screenshotsverify.outcome == 'failure' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "::error::Screenshot tests failed, please create a PR in your fork first." && exit 1
+
+      # Runs if previous job failed
+      - name: Generate new screenshots if verification failed and it's a PR
+        id: screenshotsrecord
+        if: steps.screenshotsverify.outcome == 'failure' && github.event_name == 'pull_request'
+        run: |
+          ./gradlew recordRoborazziDemoDebug
+
+      - name: Push new screenshots if available
+        uses: stefanzweifel/git-auto-commit-action@v5
+        if: steps.screenshotsrecord.outcome == 'success'
+        with:
+          file_pattern: '*/*.png'
+          disable_globbing: true
+          commit_message: "🤖 Updates screenshots"
 
       # Run local tests after screenshot tests to avoid wrong UP-TO-DATE. TODO: Ignore screenshots.
       - name: Run local tests
@@ -84,13 +114,23 @@ jobs:
           name: test-results
           path: '**/build/test-results/test*UnitTest/**.xml'
 
+      - name: Check lint
+        run: ./gradlew :app:lintProdRelease
+
+      - name: Upload lint reports (HTML)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-reports
+          path: '**/build/reports/lint-results-*.html'
+
   androidTest:
     needs: build
     runs-on: macOS-latest # enables hardware acceleration in the virtual machine
     timeout-minutes: 55
     strategy:
       matrix:
-        api-level: [26, 30]
+        api-level: [ 26, 30 ]
 
     steps:
       - name: Checkout
@@ -106,28 +146,22 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          validate-wrappers: true
 
       - name: Build AndroidTest apps
         run: ./gradlew packageDemoDebug packageDemoDebugAndroidTest --daemon
 
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
-        continue-on-error: true
         with:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
           disable-animations: true
           disk-size: 6000M
           heap-size: 600M
-          script: ./gradlew connectedDemoDebugAndroidTest --daemon --profile
-
-      - name: Upload Profiling Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: profiling-report-${{ matrix.api-level }}
-          path: '**/build/reports/profile'
+          script: ./gradlew connectedDemoDebugAndroidTest --daemon
 
       - name: Upload test reports
         if: always()
