@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.reflect.KProperty1
 
@@ -95,6 +96,6 @@ fun <T, A, B, C> StateFlow<T>.observeState(
  * 這個轉換函式會接收當前狀態作為 receiver（即 this），並返回一個新的狀態。
  */
 fun <T> MutableStateFlow<T>.setState(reducer: T.() -> T) {
-    // 我們調用 reducer 來轉換當前狀態，並將結果設為新的狀態
-    this.value = this.value.reducer()
+    // 使用 update 來確保狀態更新是原子的
+    this.update { currentState -> currentState.reducer() }
 }
