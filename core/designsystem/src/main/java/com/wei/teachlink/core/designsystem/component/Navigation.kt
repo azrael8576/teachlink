@@ -88,8 +88,8 @@ fun TlNavigationBar(
 ) {
     NavigationBar(
         modifier = modifier,
+        containerColor = Color.Transparent,
         contentColor = TlNavigationDefaults.navigationContentColor(),
-        tonalElevation = 0.dp,
         content = content,
     )
 }
@@ -241,25 +241,27 @@ fun TlNavigationDrawer(
 @Composable
 fun TlNavigationBarPreview() {
     TlTheme {
-        TlNavigationBar {
-            previewItems.forEachIndexed { index, item ->
-                TlNavigationBarItem(
-                    selected = index == 0,
-                    onClick = { },
-                    icon = {
-                        Icon(
-                            imageVector = previewIcons[index],
-                            contentDescription = item,
-                        )
-                    },
-                    selectedIcon = {
-                        Icon(
-                            imageVector = previewSelectedIcons[index],
-                            contentDescription = item,
-                        )
-                    },
-                    label = { Text(item) },
-                )
+        TlBackground {
+            TlNavigationBar {
+                previewItems.forEachIndexed { index, item ->
+                    TlNavigationBarItem(
+                        selected = index == 0,
+                        onClick = { },
+                        icon = {
+                            Icon(
+                                imageVector = previewIcons[index],
+                                contentDescription = item,
+                            )
+                        },
+                        selectedIcon = {
+                            Icon(
+                                imageVector = previewSelectedIcons[index],
+                                contentDescription = item,
+                            )
+                        },
+                        label = { Text(item) },
+                    )
+                }
             }
         }
     }
