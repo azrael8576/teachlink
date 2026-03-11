@@ -131,7 +131,7 @@ jobs:
     timeout-minutes: 55
     strategy:
       matrix:
-        api-level: [ 28, 32 ]
+        api-level: [ 28, 35 ]
 
     steps:
       - name: Enable KVM group perms
@@ -165,6 +165,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.api-level == 35 && 'google_apis' || 'default' }}
           arch: x86_64
           disable-animations: true
           disk-size: 6000M

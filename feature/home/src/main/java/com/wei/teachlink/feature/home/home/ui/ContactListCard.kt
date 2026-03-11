@@ -131,41 +131,39 @@ fun Modifier.statusIndicator(
     composed {
         val canvasBackground = MaterialTheme.colorScheme.secondary
 
-        this.then(
-            drawWithContent {
-                drawContent()
+        this.drawWithContent {
+            drawContent()
 
-                val circleColor =
-                    when (status) {
-                        OnlineStatus.FREE -> FreeColor
-                        OnlineStatus.BUSY -> BusyColor
-                        OnlineStatus.OFFLINE -> OfflineColor
-                    }
+            val circleColor =
+                when (status) {
+                    OnlineStatus.FREE -> FreeColor
+                    OnlineStatus.BUSY -> BusyColor
+                    OnlineStatus.OFFLINE -> OfflineColor
+                }
 
-                val radius = size.minDimension.coerceAtMost(canvasSize.toPx()) / 2
-                val center = Offset(size.width - radius, size.height - radius)
+            val radius = size.minDimension.coerceAtMost(canvasSize.toPx()) / 2
+            val center = Offset(size.width - radius, size.height - radius)
 
+            drawCircle(
+                color = canvasBackground,
+                radius = radius,
+                center = center,
+            )
+
+            drawCircle(
+                color = circleColor,
+                radius = radius - statusIndicatorOffset.toPx(),
+                center = center,
+            )
+
+            if (status == OnlineStatus.OFFLINE) {
                 drawCircle(
                     color = canvasBackground,
-                    radius = radius,
+                    radius = radius - offlineStatusIndicatorOffset.toPx(),
                     center = center,
                 )
-
-                drawCircle(
-                    color = circleColor,
-                    radius = radius - statusIndicatorOffset.toPx(),
-                    center = center,
-                )
-
-                if (status == OnlineStatus.OFFLINE) {
-                    drawCircle(
-                        color = canvasBackground,
-                        radius = radius - offlineStatusIndicatorOffset.toPx(),
-                        center = center,
-                    )
-                }
-            },
-        )
+            }
+        }
     }
 
 @Composable
