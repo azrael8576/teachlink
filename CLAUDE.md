@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Contribution Workflow
+
+**Before opening any PR, always read all files under `.github/` first**, including `pull_request_template.md` and `ISSUE_TEMPLATE/`. Follow whatever policies are defined there.
+
+> When using `gh pr create`, always pass the template content manually via `--body` — GitHub templates are only auto-populated in the browser UI.
+
 ## Build Commands
 
 ```bash
