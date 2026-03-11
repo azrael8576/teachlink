@@ -18,7 +18,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 34
+                defaultConfig.targetSdk = 35
                 configureGradleManagedDevices(this)
             }
             extensions.configure<ApplicationAndroidComponentsExtension> {
