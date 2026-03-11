@@ -236,4 +236,84 @@ class NavigationUiTest {
             verifyTlNavDrawerDoesNotExist()
         }
     }
+
+    // region Snackbar Visibility Tests (Issue #38)
+
+    /**
+     * Verifies that Snackbar is displayed on compact-width (phone) devices.
+     * Regression test for Issue #38: Snackbar should be visible without extra bottom space.
+     */
+    @Test
+    fun compactWidth_compactHeight_whenSnackbarMessageShown_snackbarIsDisplayed() {
+        navigationUiRobot(composeTestRule) {
+            setTlAppContent(
+                dpSize = DpSize(COMPACT_WIDTH, COMPACT_HEIGHT),
+                networkMonitor = networkMonitor,
+                snackbarManager = snackbarManager,
+            )
+
+            showSnackbarMessage(snackbarManager)
+            verifySnackbarIsDisplayed()
+            verifyTlBottomBarDisplayed()
+        }
+    }
+
+    /**
+     * Verifies that Snackbar is displayed on medium-width (tablet) devices with Navigation Rail.
+     * Regression test for Issue #38: Snackbar should not be obscured by system navigation bar.
+     */
+    @Test
+    fun mediumWidth_compactHeight_whenSnackbarMessageShown_snackbarIsDisplayed() {
+        navigationUiRobot(composeTestRule) {
+            setTlAppContent(
+                dpSize = DpSize(MEDIUM_WIDTH, COMPACT_HEIGHT),
+                networkMonitor = networkMonitor,
+                snackbarManager = snackbarManager,
+            )
+
+            showSnackbarMessage(snackbarManager)
+            verifySnackbarIsDisplayed()
+            verifyTlNavRailDisplayed()
+        }
+    }
+
+    /**
+     * Verifies that Snackbar is displayed on expanded-width (tablet) devices with Navigation Drawer.
+     * Regression test for Issue #38: Snackbar should not be obscured by system navigation bar.
+     */
+    @Test
+    fun expandedWidth_compactHeight_whenSnackbarMessageShown_snackbarIsDisplayed() {
+        navigationUiRobot(composeTestRule) {
+            setTlAppContent(
+                dpSize = DpSize(EXPANDED_WIDTH, COMPACT_HEIGHT),
+                networkMonitor = networkMonitor,
+                snackbarManager = snackbarManager,
+            )
+
+            showSnackbarMessage(snackbarManager)
+            verifySnackbarIsDisplayed()
+            verifyTlNavDrawerDisplayed()
+        }
+    }
+
+    /**
+     * Verifies that Snackbar is displayed on foldable devices in book posture (Navigation Rail).
+     * Regression test for Issue #38: Snackbar should not be obscured by system navigation bar.
+     */
+    @Test
+    fun expandedWidth_compactHeight_whenFoldingDevicePostureIsBookPosture_whenSnackbarMessageShown_snackbarIsDisplayed() {
+        navigationUiRobot(composeTestRule) {
+            setTlAppContentWithBookPosture(
+                dpSize = DpSize(EXPANDED_WIDTH, COMPACT_HEIGHT),
+                networkMonitor = networkMonitor,
+                snackbarManager = snackbarManager,
+            )
+
+            showSnackbarMessage(snackbarManager)
+            verifySnackbarIsDisplayed()
+            verifyTlNavRailDisplayed()
+        }
+    }
+
+    // endregion
 }

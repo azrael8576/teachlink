@@ -5,7 +5,9 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.unit.DpSize
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.window.layout.FoldingFeature
@@ -13,10 +15,14 @@ import com.google.accompanist.testharness.TestHarness
 import com.wei.teachlink.R
 import com.wei.teachlink.core.data.utils.NetworkMonitor
 import com.wei.teachlink.core.manager.SnackbarManager
+import com.wei.teachlink.core.manager.SnackbarState
+import com.wei.teachlink.core.utils.UiText
 import com.wei.teachlink.ui.TlApp
 import com.wei.teachlink.uitesthiltmanifest.HiltComponentActivity
 import com.wei.teachlink.utilities.FoldingDeviceUtil
 import kotlin.properties.ReadOnlyProperty
+
+internal const val TEST_SNACKBAR_MESSAGE = "Test snackbar message"
 
 /**
  * Robot for [NavigationUiTest].
@@ -123,5 +129,25 @@ internal open class NavigationUiRobot(
 
     fun verifyTlNavDrawerDoesNotExist() {
         tlNavDrawer.assertDoesNotExist()
+    }
+
+    fun showSnackbarMessage(
+        snackbarManager: SnackbarManager,
+        message: String = TEST_SNACKBAR_MESSAGE,
+    ) {
+        snackbarManager.showMessage(
+            state = SnackbarState.Default,
+            uiText = UiText.DynamicString(message),
+        )
+        composeTestRule.waitUntil(timeoutMillis = 3000) {
+            composeTestRule
+                .onAllNodesWithText(message)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+    }
+
+    fun verifySnackbarIsDisplayed(message: String = TEST_SNACKBAR_MESSAGE) {
+        composeTestRule.onNodeWithText(message).assertExists().assertIsDisplayed()
     }
 }
