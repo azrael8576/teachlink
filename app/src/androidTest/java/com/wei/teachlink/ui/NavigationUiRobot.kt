@@ -1,6 +1,5 @@
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.ui.test.assertIsDisplayed
