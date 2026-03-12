@@ -73,7 +73,7 @@ internal open class NavigationUiRobot(
     ) {
         composeTestRule.setContent {
             TestHarness(dpSize) {
-                BoxWithConstraints {
+                androidx.compose.foundation.layout.Box {
                     val displayFeatures =
                         if (foldingState != null) {
                             val foldBounds = FoldingDeviceUtil.getFoldBounds(dpSize)
