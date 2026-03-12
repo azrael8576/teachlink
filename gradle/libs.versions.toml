@@ -21,10 +21,10 @@ androidxBrowser = "1.7.0"
 androidx-window = "1.2.0-beta01"
 androidGradlePlugin = "8.9.2"
 androidTools = "31.9.2"
-firebaseBom = "32.4.0"
-firebaseCrashlyticsPlugin = "2.9.9"
-firebasePerfPlugin = "1.4.2"
-gmsPlugin = "4.4.0"
+firebaseBom = "33.7.0"
+firebaseCrashlyticsPlugin = "3.0.3"
+firebasePerfPlugin = "2.0.2"
+gmsPlugin = "4.4.4"
 kotlin = "1.9.24"
 navigationSafeArgsKotlin = "2.7.7"
 androidxComposeCompiler = "1.5.14"
@@ -162,11 +162,11 @@ accompanist-testharness = { group = "com.google.accompanist", name = "accompanis
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "androidTools" }
 
 # firebase
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
+firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-performance = { group = "com.google.firebase", name = "firebase-perf" }
 
 # robolectric - Android Unit Testing Framework
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
