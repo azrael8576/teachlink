@@ -57,15 +57,13 @@ class TlAppStateTest {
             composeTestRule.setContent {
                 val navController = rememberTestNavController()
                 state =
-                    remember(navController) {
-                        TlAppState(
-                            navController = navController,
-                            coroutineScope = backgroundScope,
-                            windowSizeClass = getCompactWindowClass(),
-                            networkMonitor = networkMonitor,
-                            displayFeatures = emptyList(),
-                        )
-                    }
+                    rememberTlAppState(
+                        navController = navController,
+                        coroutineScope = backgroundScope,
+                        windowSizeClass = getCompactWindowClass(),
+                        networkMonitor = networkMonitor,
+                        displayFeatures = emptyList(),
+                    )
 
                 // Update currentDestination whenever it changes
                 currentDestination = state.currentDestination?.route

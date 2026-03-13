@@ -19,15 +19,15 @@ androidxHiltNavigationCompose = "1.1.0"
 androidxActivity = "1.9.0-rc01"
 androidxBrowser = "1.7.0"
 androidx-window = "1.2.0-beta01"
-androidGradlePlugin = "8.7.0"
-androidTools = "31.7.0"
-firebaseBom = "32.4.0"
-firebaseCrashlyticsPlugin = "2.9.9"
-firebasePerfPlugin = "1.4.2"
-gmsPlugin = "4.4.0"
-kotlin = "1.9.10"
+androidGradlePlugin = "8.9.2"
+androidTools = "31.9.2"
+firebaseBom = "33.7.0"
+firebaseCrashlyticsPlugin = "3.0.3"
+firebasePerfPlugin = "2.0.2"
+gmsPlugin = "4.4.4"
+kotlin = "1.9.24"
 navigationSafeArgsKotlin = "2.7.7"
-androidxComposeCompiler = "1.5.3"
+androidxComposeCompiler = "1.5.14"
 androidxEspresso = "3.5.1"
 androidxTestCore = "1.5.0"
 googleTruth = "1.3.0"
@@ -38,7 +38,7 @@ protobufPlugin = "0.9.4"
 androidxCoreSplashscreen = "1.0.1"
 coil = "2.5.0"
 accompanist = "0.32.0"
-ksp = "1.9.10-1.0.13"
+ksp = "1.9.24-1.0.20"
 secrets = "2.0.1"
 robolectric = "4.11.1"
 roborazzi = "1.9.0-alpha-4"
@@ -162,11 +162,11 @@ accompanist-testharness = { group = "com.google.accompanist", name = "accompanis
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "androidTools" }
 
 # firebase
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
+firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-performance = { group = "com.google.firebase", name = "firebase-perf" }
 
 # robolectric - Android Unit Testing Framework
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
