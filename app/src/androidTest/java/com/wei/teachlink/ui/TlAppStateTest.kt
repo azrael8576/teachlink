@@ -58,6 +58,8 @@ class TlAppStateTest {
                 val navController = rememberTestNavController()
                 state =
                     rememberTlAppState(
+                        navController = navController,
+                        coroutineScope = backgroundScope,
                         windowSizeClass = getCompactWindowClass(),
                         networkMonitor = networkMonitor,
                         displayFeatures = emptyList(),
