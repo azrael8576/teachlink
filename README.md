@@ -6,8 +6,6 @@
 
 ![Logo](docs/images/logo.png)
 
-A practical Modern Android Development reference project for scalable Jetpack Compose apps and AI-assisted OSS maintenance.
-
 "TeachLink" 是一款基於 Single Activity MVI 架構並完全使用 Jetpack Compose UI 構建，模擬預約教師行事曆的多模組 Android 應用程式。
 
 UI 設計採用 [_Material 3 Design_](https://m3.material.io/) ，並以 Jetpack Compose 實作 Collapsing Toolbar 帶有 Snap 動畫效果。
